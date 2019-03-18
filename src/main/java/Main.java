@@ -1,6 +1,3 @@
-/**
- *
- */
 import java.sql.*;
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +21,7 @@ public class Main {
 
         try {
             // substitute your database name for myDB
-            connection = DriverManager.getConnection("jdbc:derby:myDB;create=true");
+            connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
         } catch (SQLException e) {
             System.out.println("Connection failed. Check output console.");
             e.printStackTrace();
