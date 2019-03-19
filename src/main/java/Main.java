@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 import java.sql.*;
 public class Main {
     public static void main(String[] args) {
@@ -28,5 +30,10 @@ public class Main {
             return;
         }
         System.out.println("Java DB connection established!");
+
+
+        AppXML app = new AppXML();
+        app.main(args);
+
     }
 }

@@ -1,0 +1,26 @@
+*{
+    -primary:#9a1c24;
+    -white:#ffffff;
+}
+.bg-primary {
+    -fx-background-color: -primary;
+}
+.bg-secondary {
+    -fx-background-color:gray;
+}
+.text-white {
+    -fx-text-fill: -white;
+}
+.btn-primary {
+    -fx-background-color: -primary;
+    -fx-text-fill: -white;
+    -fx-background-radius:0;
+    -fx-border-radius:0;
+    -fx-cursor: hand;
+}
+.btn-primary:hover {
+    -fx-background-color: #68151d;
+}
+.btn-primary:pressed {
+    -fx-background-color: #68151d;
+}
