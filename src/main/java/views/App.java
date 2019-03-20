@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 
 import java.net.URL;
@@ -19,6 +21,8 @@ public class App implements Initializable {
     private Button bathroomButton;
     @FXML
     private Button foodButton;
+    @FXML
+    private Button fullscreenButton;
 
     @FXML
     public void roomButtonClick(ActionEvent e) {
@@ -40,6 +44,11 @@ public class App implements Initializable {
         a.setContentText("You clicked on the food button!");
         a.showAndWait();
 //        this.foodButton.setText("test");
+    }
+
+    @FXML
+    public void fullscreenButtonClick(ActionEvent e) {
+        ((Stage)this.fullscreenButton.getScene().getWindow()).setFullScreen(true);
     }
 
 

@@ -13,6 +13,8 @@ public class AppXML extends Application {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource("views/app.fxml")));
             s.setScene(scene);
             s.getIcons().add(new Image("img/icon.png"));
+            s.setMaximized(true);
+            s.setTitle("App");
             s.show();
         } catch (IOException e) {
             e.printStackTrace();
