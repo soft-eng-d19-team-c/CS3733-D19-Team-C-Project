@@ -1,6 +1,10 @@
 import javafx.stage.Stage;
 
 import java.sql.*;
+
+/**
+ * @author Ryan LaMarche.
+ */
 public class Main {
     public static void main(String[] args) {
         System.out.println("-------Embedded Java DB Connection Testing --------");
@@ -31,7 +35,7 @@ public class Main {
         }
         System.out.println("Java DB connection established!");
 
-
+        // creates new AppXML object that loads app.fxml on a new thread, starting at its main method.
         AppXML app = new AppXML();
         app.main(args);
 

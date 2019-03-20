@@ -6,7 +6,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * @author Ryan LaMarche.
+ */
 public class AppXML extends Application {
+    /**
+     * Starting routine for AppXML view.
+     * @param s the Stage to start on.
+     */
     @Override
     public void start(Stage s) {
         try {
@@ -21,6 +28,10 @@ public class AppXML extends Application {
         }
     }
 
+    /**
+     * The main method / entry point for launching the AppXML instance.
+     * @param args arguments provided to main method.
+     */
     public static void main(String[] args) {
         launch(args);
     }
