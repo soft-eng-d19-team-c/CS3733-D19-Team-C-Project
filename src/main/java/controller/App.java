@@ -37,7 +37,7 @@ public class App implements Initializable {
     @FXML
     public void roomButtonClick(ActionEvent e) {
         try {
-            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("pathfinding.fxml"));
+            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("/views/pathfinding.fxml"));
             this.fullscreenButton.getScene().setRoot(newSceneRoot);
         } catch (IOException err) {
             err.printStackTrace();
