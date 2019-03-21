@@ -1,6 +1,7 @@
 /* variables */
 *{
-    -primary:#9a1c24;
+    -primary:#089ECF;
+    -primary-dark:#0898C7;
     -secondary:lightgray;
     -white:#ffffff;
     -black:#000000;
@@ -34,9 +35,10 @@
 .btn-primary {
     -fx-background-color: -primary;
     -fx-text-fill: -white;
+    -jfx-button-type: FLAT;
 }
 .btn-primary:hover, .btn-primary:pressed {
-    -fx-background-color: #68151d;
+    -fx-background-color: -primary-dark;
 }
 .btn-secondary {
     -fx-background-color: -secondary;

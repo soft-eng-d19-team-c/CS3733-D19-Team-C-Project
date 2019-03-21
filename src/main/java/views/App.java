@@ -1,15 +1,17 @@
 package views;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,17 +27,21 @@ public class App implements Initializable {
     private Button foodButton;
     @FXML
     private Button fullscreenButton;
+    @FXML
+    private Button changeSceneButton;
 
     /**
-     *
+     * Changes scene root fxml file from app to pathfinding.
      * @param e the event that is triggered when roomButton is clicked.
      */
     @FXML
     public void roomButtonClick(ActionEvent e) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText("You clicked on the room button!");
-        a.showAndWait();
-//        this.roomButton.setText("test");
+        try {
+            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("pathfinding.fxml"));
+            this.fullscreenButton.getScene().setRoot(newSceneRoot);
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
     }
     /**
      *
@@ -46,7 +52,6 @@ public class App implements Initializable {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText("You clicked on the bathroom button!");
         a.showAndWait();
-//        this.bathroomButton.setText("test");
     }
 
     /**
@@ -58,7 +63,6 @@ public class App implements Initializable {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText("You clicked on the food button!");
         a.showAndWait();
-//        this.foodButton.setText("test");
     }
 
     /**

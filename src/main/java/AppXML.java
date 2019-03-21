@@ -10,6 +10,7 @@ import java.io.IOException;
  * @author Ryan LaMarche.
  */
 public class AppXML extends Application {
+    private Stage primaryStage;
     /**
      * Starting routine for AppXML view.
      * @param s the Stage to start on.
@@ -21,11 +22,12 @@ public class AppXML extends Application {
             s.setScene(scene);
             s.getIcons().add(new Image("img/icon.png"));
             s.setMaximized(true);
-            s.setTitle("App");
+            s.setTitle("BWH Navigation Kiosk");
             s.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.primaryStage = s;
     }
 
     /**
