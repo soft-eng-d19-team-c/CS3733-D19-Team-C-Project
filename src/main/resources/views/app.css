@@ -35,7 +35,7 @@
 .btn-primary {
     -fx-background-color: -primary;
     -fx-text-fill: -white;
-    -jfx-button-type: FLAT;
+    -jfx-button-type: RAISED;
 }
 .btn-primary:hover, .btn-primary:pressed {
     -fx-background-color: -primary-dark;

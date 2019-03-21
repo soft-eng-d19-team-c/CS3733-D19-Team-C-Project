@@ -22,7 +22,7 @@ public class App implements Initializable {
     @FXML
     private Button roomButton;
     @FXML
-    private Button bathroomButton;
+    private Button restroomButton;
     @FXML
     private Button foodButton;
     @FXML
@@ -48,7 +48,7 @@ public class App implements Initializable {
      * @param e the event that is triggered when bathroomButton is clicked.
      */
     @FXML
-    public void bathroomButtonClick(ActionEvent e) {
+    public void restroomButtonClick(ActionEvent e) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText("You clicked on the bathroom button!");
         a.showAndWait();
