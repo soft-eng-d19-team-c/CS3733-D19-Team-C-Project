@@ -1,16 +1,19 @@
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author Ryan LaMarche.
  */
 public class AppXML extends Application {
     private Stage primaryStage;
+//    private HashMap<String, Parent> scenes = new HashMap<>();
     /**
      * Starting routine for AppXML view.
      * @param s the Stage to start on.
