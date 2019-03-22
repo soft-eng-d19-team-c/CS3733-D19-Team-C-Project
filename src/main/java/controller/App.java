@@ -27,8 +27,6 @@ public class App implements Initializable {
     private Button foodButton;
     @FXML
     private Button fullscreenButton;
-    @FXML
-    private Button changeSceneButton;
 
     /**
      * Changes scene root fxml file from app to pathfinding.
@@ -38,7 +36,7 @@ public class App implements Initializable {
     public void roomButtonClick(ActionEvent e) {
         try {
             Parent newSceneRoot = FXMLLoader.load(getClass().getResource("/views/pathfinding.fxml"));
-            this.fullscreenButton.getScene().setRoot(newSceneRoot);
+            this.roomButton.getScene().setRoot(newSceneRoot);
         } catch (IOException err) {
             err.printStackTrace();
         }

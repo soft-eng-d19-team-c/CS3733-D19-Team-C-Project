@@ -1,5 +1,3 @@
-import javafx.stage.Stage;
-
 import java.sql.*;
 
 /**
@@ -35,8 +33,8 @@ public class Main {
         }
         System.out.println("Java DB connection established!");
 
-        // creates new AppXML object that loads app.fxml on a new thread, starting at its main method.
-        AppXML app = new AppXML();
+        // creates new MainFXML object that loads main.fxml on a new thread, starting at its main method.
+        MainFXML app = new MainFXML();
         app.main(args);
 
     }
