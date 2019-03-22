@@ -2,6 +2,7 @@ Project Development Requirements
 - IntelliJ IDEA Ultimate 2018
 - jdk 8u202
 - Derby 10.14.2.0 stored in /jdk1.8.0_202/db/
+- JFoenix .jar stored in /jdk1.8.0_202/jfoenix/
 
 
 // -------------------------------------------------------

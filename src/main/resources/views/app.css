@@ -1,0 +1,49 @@
+/* variables */
+*{
+    -primary:#089ECF;
+    -primary-dark:#0898C7;
+    -secondary:lightgray;
+    -white:#ffffff;
+    -black:#000000;
+}
+/* utilities */
+.bg-primary {
+    -fx-background-color: -primary;
+}
+.bg-secondary {
+    -fx-background-color:-secondary;
+}
+.text-white {
+    -fx-text-fill: -white;
+}
+.h1{
+    -fx-font-size: 7em;
+}
+/* styling for buttons */
+.btn {
+    -fx-background-radius:0;
+    -fx-border-radius:0;
+    -fx-cursor: hand;
+    -fx-font-size: 3em;
+}
+.btn-sm {
+    -fx-font-size: 1em;
+}
+.btn-lg {
+    -fx-font-size: 5em;
+}
+.btn-primary {
+    -fx-background-color: -primary;
+    -fx-text-fill: -white;
+    -jfx-button-type: RAISED;
+}
+.btn-primary:hover, .btn-primary:pressed {
+    -fx-background-color: -primary-dark;
+}
+.btn-secondary {
+    -fx-background-color: -secondary;
+    -fx-text-fill: -black;
+}
+.btn-secondary:hover,.btn-secondary:pressed {
+    -fx-background-color: darkgray;
+}
