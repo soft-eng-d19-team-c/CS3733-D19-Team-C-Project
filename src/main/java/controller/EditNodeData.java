@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,13 +19,17 @@ import java.util.ResourceBundle;
 public class EditNodeData implements Initializable {
     @FXML
     private TextField testInput;
+    Node nodeData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // nothing here we write a custom method yo
+        Platform.runLater(() -> {
+            testInput.setText(nodeData.getID());
+        });
     }
 
-    public void initController(Node data) {
-        testInput.setText(data.getID());
+    public void setNodeData(Node dataCursor) {
+        this.nodeData = dataCursor;
     }
 }

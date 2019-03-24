@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +20,6 @@ import model.Node;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class NodeDataRead implements Initializable {
@@ -50,14 +48,18 @@ public class NodeDataRead implements Initializable {
         @Override
         public void handle(ActionEvent e) {
             dataCursor = new Node("TEST", 12, 52);
-            Stage s = new Stage();
-            FXMLLoader newRoot = null;
+            Stage stage = (Stage) table.getScene().getWindow();
             try {
-                newRoot = FXMLLoader.load(getClass().getResource("/views/edit.fxml"));
-                s.setScene(new Scene(newRoot.load()));
-                newRoot.<EditNodeData>getController().initController(dataCursor);
-                s.show();
-//                table.getScene().setRoot(newRoot.load());
+                // try to load the FXML file and send the data to the controller
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/edit.fxml"));
+
+                // try to change scene
+                Parent newRoot = loader.load();
+                EditNodeData controller = loader.getController();
+                controller.setNodeData(dataCursor);
+                Scene newScene = new Scene(newRoot);
+                stage.setScene(newScene);
+                stage.show();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
