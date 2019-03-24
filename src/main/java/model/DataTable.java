@@ -27,15 +27,17 @@ public class DataTable {
 //        //Node temp = new Node();
         try {
             Statement stmt = connection.createStatement();
-            String str = "SELECT * FROM edges";
+            String str = "SELECT * FROM PROTOTYPENODES";
             ResultSet rs = stmt.executeQuery(str);
-//            while(rs.next()) {
-//                String ID = rs.getString("NodeID");
-//                int x = rs.getInt("xcoord");
-//                int y = rs.getInt("ycoord");
-//
-////                this.data.add();
-//            }
+
+            while(rs.next()) {
+                String ID = rs.getString("NodeID");
+                int x = rs.getInt("xcoord");
+                int y = rs.getInt("ycoord");
+
+
+//                this.data.add();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +45,7 @@ public class DataTable {
         return data;
     }
 
-    public boolean setData(String[] data) {
+    public boolean setData(Node n) {
 //        try {
 //            Statement stmt = connection.createStatement();
 //            String str = "UPDATE PROTOTYPENODES SET field=filedData WHERE ID="+ data[0];
