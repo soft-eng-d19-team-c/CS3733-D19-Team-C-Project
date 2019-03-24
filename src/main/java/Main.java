@@ -37,19 +37,22 @@ public class Main {
         }
         System.out.println("Java DB connection established!");
         /**
-         * read in data from CSV to the database
+         * Read in data from CSV to database for prototype.
+         *
+         * This is a little messy by derby doesn't support MERGE statements or IF EXISTS statements the way I'm used to doing them.
+         * We first try to insert the prototype node from the CSV.
+         * If we get an error because there is a duplicate key, we just update those fields instead.
          */
         URL csvFile = Main.class.getResource("/data/PrototypeNodes.csv");
         BufferedReader br = null;
-        String line = "";
+        String line;
         String cvsSplitBy = ",";
         try {
             br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
             br.readLine(); // throw away header
             while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] nodeData = line.split(cvsSplitBy);
+                String[] nodeData = line.split(cvsSplitBy); // split by comma
+                // get fields
                 String nodeID = nodeData[0];
                 int xcoord = parseInt(nodeData[1]);
                 int ycoord = parseInt(nodeData[2]);
@@ -58,48 +61,39 @@ public class Main {
                 String nodeType = nodeData[5];
                 String longName = nodeData[6];
                 String shortName = nodeData[7];
-                Statement stmt = null;
+                // prepare the insert sql statement with room to insert variables
                 PreparedStatement ps = null;
-                try {
-                    stmt = connection.createStatement();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                String sqlCmd = " MERGE INTO PrototypeNodes AS target USING Nodes AS source ON target.NodeID = ?"+
-                                " WHEN MATCHED THEN"+
-                                    " UPDATE SET NodeID = ?, xcoord = ?, ycoord = ?, floor= ?, building= ?, nodeType = ?, longName = ?, shortName = ?"
-                                +" WHEN NOT MATCHED THEN" +
-                                    " INSERT (NodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+                String sqlCmd = "INSERT INTO PROTOTYPENODES (NodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 try {
                     ps = connection.prepareStatement(sqlCmd);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                try {
                     ps.setString(1, nodeID);
-                    ps.setString(2, nodeID);
-                    ps.setInt(3, xcoord);
-                    ps.setInt(4, ycoord);
-                    ps.setString(5, floor);
-                    ps.setString(6, building);
-                    ps.setString(7, nodeType);
-                    ps.setString(8, longName);
-                    ps.setString(9, shortName);
-                    ps.setString(10, nodeID);
-                    ps.setInt(11, xcoord);
-                    ps.setInt(12, ycoord);
-                    ps.setString(13, floor);
-                    ps.setString(14, building);
-                    ps.setString(15, nodeType);
-                    ps.setString(16, longName);
-                    ps.setString(17, shortName);
+                    ps.setInt(2, xcoord);
+                    ps.setInt(3, ycoord);
+                    ps.setString(4, floor);
+                    ps.setString(5, building);
+                    ps.setString(6, nodeType);
+                    ps.setString(7, longName);
+                    ps.setString(8, shortName);
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    ps.execute();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        sqlCmd = "UPDATE PrototypeNodes SET xcoord = ?, ycoord = ?, floor= ?, building= ?, nodeType = ?, longName = ?, shortName = ? WHERE NodeID = ?";
+                        try {
+                            ps = connection.prepareStatement(sqlCmd);
+                            ps.setInt(1, xcoord);
+                            ps.setInt(2, ycoord);
+                            ps.setString(3, floor);
+                            ps.setString(4, building);
+                            ps.setString(5, nodeType);
+                            ps.setString(6, longName);
+                            ps.setString(7, shortName);
+                            ps.setString(8, nodeID);
+                            ps.executeUpdate();
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
@@ -117,8 +111,8 @@ public class Main {
         }
 
         // creates new MainFXML object that loads main.fxml on a new thread, starting at its main method.
-//        MainFXML app = new MainFXML();
-//        app.main(args);
+        MainFXML app = new MainFXML();
+        app.main(args);
 
     }
 }
