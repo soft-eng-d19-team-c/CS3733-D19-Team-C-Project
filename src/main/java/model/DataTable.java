@@ -22,8 +22,17 @@ public class DataTable {
             e.printStackTrace();
         }
 
-
-        System.out.println(getDataById("BHALL00802"));
+//        System.out.println(getDataById("BHALL00802"));
+//        Node temp = getDataById("BHALL00802");
+//        temp.setX(50);
+//        temp.setY(60);
+//        temp.setBuilding("building 1");
+//        temp.setFloor("floor 2");
+//        temp.setNodeType("node type test");
+//        temp.setShortName("short name");
+//        temp.setLongName("LOOOOOOOOOONG name");
+//        setData(temp);
+//        System.out.println(getDataById("BHALL00802"));
     }
 
     public ObservableList<Node> getAllData() {
@@ -49,24 +58,56 @@ public class DataTable {
 
     public boolean setData(Node node) {
 
-
         try {
-            Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET field=XCOORD WHERE ID=" + node.getID();
-            return stmt.execute(str);
+
+            //Statement stmt = connection.createStatement();
+            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
+                    "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
+            PreparedStatement ps = connection.prepareStatement(str);
+            ps.setInt(1, node.getX());
+            ps.setInt(2, node.getY());
+            ps.setString(3, node.getFloor());
+            ps.setString(4, node.getBuilding());
+            ps.setString(5, node.getNodeType());
+            ps.setString(6, node.getLongName());
+            ps.setString(7, node.getShortName());
+            ps.setString(8, node.getID());
+
+            return ps.execute();
+
+
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return false;
+
+
+//        try {
+//            Statement stmt = connection.createStatement();
+//            String str = "UPDATE PROTOTYPENODES SET field=XCOORD WHERE ID=" + node.getID();
+//            return stmt.execute(str);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
     }
 
     public Node getDataById(String ID) {
 
         try {
 
-            Statement stmt = connection.createStatement();
-            String str = "SELECT * FROM PROTOTYPENODES WHERE NODEID=" + ID;
-            ResultSet rs = stmt.executeQuery(str);
+            //Statement stmt = connection.createStatement();
+            String str = "SELECT * FROM PROTOTYPENODES WHERE NODEID = ?";
+            PreparedStatement ps = connection.prepareStatement(str);
+            ps.setString(1, ID);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
             return parseResultSet(rs);
 
 
@@ -94,6 +135,7 @@ public class DataTable {
             e.printStackTrace();
         }
         return null;
+
 
 
     }
