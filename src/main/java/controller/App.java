@@ -27,6 +27,8 @@ public class App implements Initializable {
     private Button foodButton;
     @FXML
     private Button fullscreenButton;
+    @FXML
+    private Button downloadButton;
 
     /**
      * Changes scene root fxml file from app to pathfinding.
@@ -35,12 +37,28 @@ public class App implements Initializable {
     @FXML
     public void roomButtonClick(ActionEvent e) {
         try {
-            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("/views/pathfinding.fxml"));
+            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("/views/downloadscreen.fxml"));
             this.roomButton.getScene().setRoot(newSceneRoot);
         } catch (IOException err) {
             err.printStackTrace();
         }
     }
+
+    /**
+     * Changes scene root fxml file from app to pathfinding.
+     * @param e the event that is triggered when downloadButton is clicked.
+     */
+
+    @FXML
+    public void downloadButtonClick(ActionEvent e) {
+        try {
+            Parent newSceneRoot = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
+            this.downloadButton.getScene().setRoot(newSceneRoot);
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+    }
+
     /**
      *
      * @param e the event that is triggered when bathroomButton is clicked.
@@ -71,6 +89,7 @@ public class App implements Initializable {
     public void fullscreenButtonClick(ActionEvent e) {
         ((Stage)this.fullscreenButton.getScene().getWindow()).setFullScreen(true);
     }
+
 
 
     @Override

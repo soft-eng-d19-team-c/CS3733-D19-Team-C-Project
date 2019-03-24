@@ -5,9 +5,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: crimson;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: crimson;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="dataTable" fixedCellSize="0.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+      <TableView fx:id="dataTable" fixedCellSize="0.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
         <columns>
           <TableColumn id="nodeID" fx:id="nodeID" minWidth="-1.0" prefWidth="75.0" text="Node ID" />
           <TableColumn id="xCoord" minWidth="-1.0" prefWidth="63.383392333984375" text="X Coord" fx:id="xCoord" />
@@ -17,7 +17,6 @@
             <TableColumn id="nodeType" fx:id="nodeType" minWidth="-1.0" prefWidth="63.1328125" text="Node Type" />
             <TableColumn id="longName" fx:id="longName" minWidth="-1.0" prefWidth="65.96954345703125" text="Long Name" />
             <TableColumn id="shortName" fx:id="shortName" minWidth="-1.0" prefWidth="63.0552978515625" text="Short Name" />
-            <TableColumn id="edit" fx:id="edit" minWidth="-1.0" prefWidth="45.68011474609375" text="Edit" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
