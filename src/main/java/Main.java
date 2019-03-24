@@ -1,15 +1,11 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.sql.*;
 
 /**
  * @author Ryan LaMarche.
  */
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
+        /*
         System.out.println("-------Embedded Java DB Connection Testing --------");
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -37,6 +33,7 @@ public class Main {
             return;
         }
         System.out.println("Java DB connection established!");
+        */
 
         // creates new MainFXML object that loads main.fxml on a new thread, starting at its main method.
         MainFXML app = new MainFXML();

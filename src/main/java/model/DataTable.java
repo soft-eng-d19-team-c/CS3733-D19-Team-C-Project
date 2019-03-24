@@ -1,14 +1,19 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
-import java.util.LinkedList;
 
 public class DataTable {
-    private LinkedList<String[]> data;
+    private ObservableList<Node> data;
     private Connection connection;
 
     public DataTable() {
-        this.data = new LinkedList<>();
+        this.data = FXCollections.observableArrayList(
+                new Node("id1", 1, 2),
+                new Node("New ID", 1242, 21)
+        );
         try {
             this.connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
         } catch (SQLException e) {
@@ -16,21 +21,21 @@ public class DataTable {
         }
     }
 
-    public LinkedList<String[]> getAllData() {
-        try {
-            Statement stmt = connection.createStatement();
-            String str = "SELECT * FROM PrototypeNodes";
-            ResultSet rs = stmt.executeQuery(str);
-            while(rs.next()) {
-                String ID = rs.getString("NodeID");
-                int x = rs.getInt("xcoord");
-                int y = rs.getInt("ycoord");
-
-//                this.data.add();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ObservableList<Node> getAllData() {
+//        try {
+//            Statement stmt = connection.createStatement();
+//            String str = "SELECT * FROM PrototypeNodes";
+//            ResultSet rs = stmt.executeQuery(str);
+//            while(rs.next()) {
+//                String ID = rs.getString("NodeID");
+//                int x = rs.getInt("xcoord");
+//                int y = rs.getInt("ycoord");
+//
+////                this.data.add();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return data;
     }
 
@@ -46,7 +51,7 @@ public class DataTable {
         return false;
     }
 
-    public String[] getDataById(String ID) {
+    public Node getDataById(String ID) {
         return null;
     }
 
