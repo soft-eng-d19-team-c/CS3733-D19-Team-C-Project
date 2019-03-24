@@ -10,22 +10,25 @@ public class DataTable {
     private Connection connection;
 
     public DataTable() {
+        this.data = FXCollections.observableArrayList();
         this.data = FXCollections.observableArrayList(
                 new Node("id1", 1, 2),
                 new Node("New ID", 1242, 21)
         );
         try {
             this.connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
+            System.out.println("Connected");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public ObservableList<Node> getAllData() {
-//        try {
-//            Statement stmt = connection.createStatement();
-//            String str = "SELECT * FROM PrototypeNodes";
-//            ResultSet rs = stmt.executeQuery(str);
+//        //Node temp = new Node();
+        try {
+            Statement stmt = connection.createStatement();
+            String str = "SELECT * FROM edges";
+            ResultSet rs = stmt.executeQuery(str);
 //            while(rs.next()) {
 //                String ID = rs.getString("NodeID");
 //                int x = rs.getInt("xcoord");
@@ -33,21 +36,22 @@ public class DataTable {
 //
 ////                this.data.add();
 //            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return data;
     }
 
     public boolean setData(String[] data) {
-        try {
-            Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET field=filedData WHERE ID="+ data[0];
-            boolean rs = stmt.execute(str);
-            return rs;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Statement stmt = connection.createStatement();
+//            String str = "UPDATE PROTOTYPENODES SET field=filedData WHERE ID="+ data[0];
+//            boolean rs = stmt.execute(str);
+//            return rs;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return false;
     }
 
