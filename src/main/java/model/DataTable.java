@@ -3,6 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.*;
 import java.sql.*;
 
 public class DataTable {
@@ -11,40 +12,39 @@ public class DataTable {
 
     public DataTable() {
         this.data = FXCollections.observableArrayList();
-//        this.data = FXCollections.observableArrayList(
-//                new Node("id1", 1, 2),
-//                new Node("New ID", 1242, 21)
-//        );
+
         try {
             this.connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
             System.out.println("Connected");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+ // ~~~~~~~~~~~~~~~~Tests used ~~~~~~~~~~~~~~~~~~~~
+        System.out.println(getDataById("BHALL00802"));
+        Node temp = getDataById("BHALL00802");
+        temp.setX(-10);
+        temp.setY(-20);
+        temp.setBuilding("building asdklfsdklfhaskldfj1");
+        temp.setFloor("floor 2asd.,fsad;lf");
+        temp.setNodeType("node type teasd,jfsadj.fhas.dst");
+        temp.setShortName("short nameasd.,fn,asd.fn");
+        temp.setLongName("LOOOOOOOOOONG nasad.fsdafjme");
+        temp.update();
+        System.out.println(getDataById("BHALL00802"));
 
-//        System.out.println(getDataById("BHALL00802"));
-//        Node temp = getDataById("BHALL00802");
-//        temp.setX(50);
-//        temp.setY(60);
-//        temp.setBuilding("building 1");
-//        temp.setFloor("floor 2");
-//        temp.setNodeType("node type test");
-//        temp.setShortName("short name");
-//        temp.setLongName("LOOOOOOOOOONG name");
-//        setData(temp);
-//        System.out.println(getDataById("BHALL00802"));
+        printToCsv();
     }
 
+    // Goes through the database and collects all of the data
     public ObservableList<Node> getAllData() {
-
-//        //Node temp = new Node();
+        //Node temp = new Node();
         try {
             Statement stmt = connection.createStatement();
             String str = "SELECT * FROM PROTOTYPENODES";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
-                Node temp = parseResultSet(rs);
+                Node temp = ResultSetToNode(rs);
                 //System.out.println(ID);
 
                 this.data.add(temp);
@@ -56,61 +56,16 @@ public class DataTable {
         return data;
     }
 
-    public boolean setData(Node node) {
-
-        try {
-
-            //Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
-                    "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
-            PreparedStatement ps = connection.prepareStatement(str);
-            ps.setInt(1, node.getX());
-            ps.setInt(2, node.getY());
-            ps.setString(3, node.getFloor());
-            ps.setString(4, node.getBuilding());
-            ps.setString(5, node.getNodeType());
-            ps.setString(6, node.getLongName());
-            ps.setString(7, node.getShortName());
-            ps.setString(8, node.getID());
-
-            return ps.execute();
-
-
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-
-
-//        try {
-//            Statement stmt = connection.createStatement();
-//            String str = "UPDATE PROTOTYPENODES SET field=XCOORD WHERE ID=" + node.getID();
-//            return stmt.execute(str);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-    }
-
     public Node getDataById(String ID) {
 
         try {
-
             //Statement stmt = connection.createStatement();
             String str = "SELECT * FROM PROTOTYPENODES WHERE NODEID = ?";
             PreparedStatement ps = connection.prepareStatement(str);
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
-
             rs.next();
-
-            return parseResultSet(rs);
-
-
+            return ResultSetToNode(rs);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +74,8 @@ public class DataTable {
         return null;
     }
 
-    private Node parseResultSet(ResultSet rs){
+    // This function is used to parse result sets into a node
+    private Node ResultSetToNode(ResultSet rs){
 
         try {
             String ID = rs.getString("NodeID");
@@ -130,14 +86,57 @@ public class DataTable {
             String nodeType = rs.getString("nodetype");
             String longName = rs.getString("longname");
             String shortName = rs.getString("shortname");
-            return new Node(ID, x, y, floor, building, nodeType, longName, shortName);
+            return new Node(ID, x, y, floor, building, nodeType, longName, shortName, connection);
         } catch (SQLException e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    // This function print a csv file of the prototypenodes table to the current directory
+    // Returns true if it worked and false otherwise
+    // This works by building a large string and then writing it to a file
+    public boolean printToCsv() {
+        ObservableList<Node> nodes = getAllData();
+        String fileName = "prototypenodes.csv";
+
+        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+            StringBuilder sb = new StringBuilder();
+            // add headers
+
+            sb.append("nodeid,");
+            sb.append("xcoord,");
+            sb.append("ycoord,");
+            sb.append("floor,");
+            sb.append("building,");
+            sb.append("nodetype,");
+            sb.append("longname,");
+            sb.append("shortname\n");
+
+            // add data for each node
+            for (Node n : nodes) {
+                sb.append(n.getID() + ",");
+                sb.append(n.getX() + ",");
+                sb.append(n.getY() + ",");
+                sb.append(n.getFloor() + ",");
+                sb.append(n.getBuilding() + ",");
+                sb.append(n.getNodeType() + ",");
+                sb.append(n.getLongName() + ",");
+                sb.append(n.getShortName() + "\n");
+            }
+
+            writer.write(sb.toString());
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
+        // print header
+        // print each node
 
+
+        return false;
     }
 
 }

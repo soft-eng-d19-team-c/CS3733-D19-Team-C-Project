@@ -1,5 +1,12 @@
 package model;
 
+import javafx.collections.FXCollections;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Node {
     private String ID;
     private int x;
@@ -9,6 +16,7 @@ public class Node {
     private String nodeType;
     private String longName;
     private String shortName;
+    private Connection connection;
 
 
     public String getID() {
@@ -29,7 +37,7 @@ public class Node {
         this.y = y;
     }
 
-    public Node(String ID, int x, int y, String floor, String building, String nodeType, String longName, String shortName) {
+    public Node(String ID, int x, int y, String floor, String building, String nodeType, String longName, String shortName, Connection connection) {
         this.ID = ID;
         this.x = x;
         this.y = y;
@@ -38,6 +46,7 @@ public class Node {
         this.nodeType = nodeType;
         this.longName = longName;
         this.shortName = shortName;
+        this.connection = connection;
     }
 
     public String getFloor() {
@@ -102,5 +111,30 @@ public class Node {
                 ", longName='" + longName + '\'' +
                 ", shortName='" + shortName + '\'' +
                 '}';
+    }
+
+    // Node connects to the database and updates its values in the database
+    public boolean update() {
+        try {
+            //Statement stmt = connection.createStatement();
+            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
+                    "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
+            PreparedStatement ps = connection.prepareStatement(str);
+            ps.setInt(1, this.getX());
+            ps.setInt(2, this.getY());
+            ps.setString(3, this.getFloor());
+            ps.setString(4, this.getBuilding());
+            ps.setString(5, this.getNodeType());
+            ps.setString(6, this.getLongName());
+            ps.setString(7, this.getShortName());
+            ps.setString(8, this.getID());
+
+            return ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
