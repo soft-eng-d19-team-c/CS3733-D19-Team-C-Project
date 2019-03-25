@@ -19,13 +19,39 @@ import java.util.ResourceBundle;
 public class EditNodeData implements Initializable {
     @FXML
     private TextField testInput;
+    @FXML
+    private TextField nodeID;
+    @FXML
+    private TextField xcoord;
+    @FXML
+    private TextField ycoord;
+    @FXML
+    private TextField floor;
+    @FXML
+    private TextField building;
+    @FXML
+    private TextField nodeType;
+    @FXML
+    private TextField longName;
+    @FXML
+    private TextField shortName;
+
+
     Node nodeData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // nothing here we write a custom method yo
         Platform.runLater(() -> {
             testInput.setText(nodeData.getID());
+            nodeID.setText(nodeData.getID());
+            xcoord.setText(Integer.toString(nodeData.getX()));
+            ycoord.setText(Integer.toString(nodeData.getY()));
+            floor.setText(nodeData.getFloor());
+            building.setText(nodeData.getBuilding());
+            nodeType.setText(nodeData.getNodeType());
+            longName.setText(nodeData.getLongName());
+            shortName.setText(nodeData.getShortName());
+
         });
     }
 
