@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="entryTable" alignment="CENTER" layoutX="-10.0" layoutY="175.0" style="-fx-background-color: light gray;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXTextField alignment="CENTER" focusColor="RED" promptText="xCoord" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="xCoord" />
+            <JFXTextField fx:id="yCoord" alignment="CENTER" focusColor="RED" promptText="yCoord" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="floor" alignment="CENTER" focusColor="RED" promptText="Floor" unFocusColor="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="building" alignment="CENTER" focusColor="RED" promptText="Building" unFocusColor="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="nodeType" alignment="CENTER" focusColor="RED" promptText="nodeType" unFocusColor="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="longName" alignment="CENTER" focusColor="RED" promptText="longName" unFocusColor="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="shortName" alignment="CENTER" focusColor="RED" promptText="shortName" unFocusColor="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="nodeID" alignment="CENTER" editable="false" focusColor="#405aa800" text="Node ID" unFocusColor="#ff000000" GridPane.rowIndex="1" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Long Name" unFocusColor="BLACK" GridPane.columnIndex="6" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Node ID" unFocusColor="BLACK" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="X Coord" unFocusColor="BLACK" GridPane.columnIndex="1" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Y Coord" unFocusColor="BLACK" GridPane.columnIndex="2" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Floor" unFocusColor="BLACK" GridPane.columnIndex="3" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Building" unFocusColor="BLACK" GridPane.columnIndex="4" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Node Type" unFocusColor="BLACK" GridPane.columnIndex="5" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="TRANSPARENT" labelFloat="true" text="Short Name" unFocusColor="BLACK" GridPane.columnIndex="7" />
+         </children>
+      </GridPane>
+      <JFXButton fx:id="saveChangesButton" layoutX="379.0" layoutY="301.0" onAction="#saveButtonClick" prefHeight="54.0" prefWidth="166.0" style="-fx-background-color: green;" text="Commit Changes" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="55.0" />
+      <Text layoutX="24.0" layoutY="80.1865234375" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Your Changes into the Fields Below" wrappingWidth="519.44580078125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="16.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(You may not edit the Node ID)" AnchorPane.bottomAnchor="181.7412109375" AnchorPane.leftAnchor="16.0">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
