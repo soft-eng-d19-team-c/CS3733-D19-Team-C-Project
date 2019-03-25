@@ -45,6 +45,7 @@ public class NodeDataRead implements Initializable {
     private TableColumn shortName;
     // data to put in the table, consists of model.Node class members
     private ObservableList<Node> data;
+    private int rowCount = -2;
 
     private Node dataCursor;
 
@@ -57,7 +58,9 @@ public class NodeDataRead implements Initializable {
     EventHandler<ActionEvent> editButtonClicked = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-            dataCursor = new Node("TEST", 12, 52);
+            Button b = (Button) e.getSource();
+            int index = (int)b.getProperties().get("index");
+            dataCursor = dataTable.getItems().get(index);
             Stage stage = (Stage) dataTable.getScene().getWindow();
             try {
                 // try to load the FXML file and send the data to the controller
@@ -104,6 +107,7 @@ public class NodeDataRead implements Initializable {
                     private final Button btn = new Button("Edit");
                     {
                         btn.setOnAction(editButtonClicked);
+                        btn.getProperties().put("index", rowCount++);
                     }
 
                     @Override
