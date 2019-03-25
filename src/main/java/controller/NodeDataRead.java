@@ -25,14 +25,24 @@ import java.util.ResourceBundle;
 public class NodeDataRead implements Initializable {
     // get table
     @FXML
-    private TableView<Node> table;
+    private TableView<Node> dataTable;
     // get columns
     @FXML
     private TableColumn nodeID;
     @FXML
-    private TableColumn xcoord;
+    private TableColumn xCoord;
     @FXML
-    private TableColumn ycoord;
+    private TableColumn yCoord;
+    @FXML
+    private TableColumn floor;
+    @FXML
+    private TableColumn building;
+    @FXML
+    private TableColumn nodeType;
+    @FXML
+    private TableColumn longName;
+    @FXML
+    private TableColumn shortName;
     // data to put in the table, consists of model.Node class members
     private ObservableList<Node> data;
 
@@ -48,7 +58,7 @@ public class NodeDataRead implements Initializable {
         @Override
         public void handle(ActionEvent e) {
             dataCursor = new Node("TEST", 12, 52);
-            Stage stage = (Stage) table.getScene().getWindow();
+            Stage stage = (Stage) dataTable.getScene().getWindow();
             try {
                 // try to load the FXML file and send the data to the controller
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/edit.fxml"));
@@ -75,8 +85,14 @@ public class NodeDataRead implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeID.setCellValueFactory(new PropertyValueFactory("ID"));
-        xcoord.setCellValueFactory(new PropertyValueFactory("x"));
-        ycoord.setCellValueFactory(new PropertyValueFactory("y"));
+        xCoord.setCellValueFactory(new PropertyValueFactory("X"));
+        yCoord.setCellValueFactory(new PropertyValueFactory("Y"));
+        floor.setCellValueFactory(new PropertyValueFactory("Floor"));
+        building.setCellValueFactory(new PropertyValueFactory("Building"));
+        nodeType.setCellValueFactory(new PropertyValueFactory("NodeType"));
+        longName.setCellValueFactory(new PropertyValueFactory("LongName"));
+        shortName.setCellValueFactory(new PropertyValueFactory("ShortName"));
+
         DataTable dt = new DataTable();
         this.data = dt.getAllData();
         // create edit buttons for each row in the table and append
@@ -104,8 +120,8 @@ public class NodeDataRead implements Initializable {
             }
         };
         colBtn.setCellFactory(cellFactory);
-        table.getColumns().add(colBtn);
-        table.setItems(this.data);
-        table.refresh();
+        dataTable.getColumns().add(colBtn);
+        dataTable.setItems(this.data);
+        dataTable.refresh();
     }
 }
