@@ -2,24 +2,14 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DownloadScreen">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DownloadScreen">
    <children>
-      <JFXButton fx:id="downloadButton" blendMode="COLOR_BURN" buttonType="RAISED" onAction="#downloadButtonClick" style="-fx-background-color: Green;" text="DOWNLOAD" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <JFXButton fx:id="downloadButton" blendMode="COLOR_BURN" buttonType="RAISED" onAction="#downloadButtonClick" style="-fx-background-color: Green;" text="DOWNLOAD" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font name="System Bold" size="76.0" />
          </font>
-         <ripplerFill>
-            <RadialGradient centerX="0.48295454545454547" centerY="0.49514563106796117" cycleMethod="REFLECT" radius="0.5">
-               <stops>
-                  <Stop color="#8113d0" />
-                  <Stop color="#d4ff00" offset="1.0" />
-               </stops>
-            </RadialGradient>
-         </ripplerFill>
       </JFXButton>
    </children>
 </AnchorPane>
