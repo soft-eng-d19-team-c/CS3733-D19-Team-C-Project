@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import model.DataTable;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -38,6 +38,7 @@ public class NodeDataRead implements Initializable {
     @FXML
     private TableColumn shortName;
     // data to put in the table, consists of model.Node class members
+    DataTable dt;
     private ObservableList<Node> data;
 
     private Node dataCursor;
@@ -76,8 +77,8 @@ public class NodeDataRead implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/downloadscreen.fxml"));
             // try to change scene content
             Parent newRoot = loader.load();
-            EditNodeData controller = loader.getController();
-            controller.setDataTable(dataTable);
+            DownloadScreen controller = loader.getController();
+            controller.setDataTable(dt);
             dataTable.getScene().setRoot(newRoot);
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -101,7 +102,7 @@ public class NodeDataRead implements Initializable {
         longName.setCellValueFactory(new PropertyValueFactory("LongName"));
         shortName.setCellValueFactory(new PropertyValueFactory("ShortName"));
 
-        DataTable dt = new DataTable();
+        dt = new DataTable();
         this.data = dt.getAllData();
         // create edit buttons for each row in the table and append
         dataTable.setItems(this.data);
