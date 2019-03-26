@@ -18,7 +18,7 @@ public class MainFXML extends Application {
     @Override
     public void start(Stage s) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/views/table.fxml")));
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/views/emptyTable.fxml")));
             s.setScene(scene);
             s.getIcons().add(new Image("img/icon.png"));
             s.setMaximized(true);

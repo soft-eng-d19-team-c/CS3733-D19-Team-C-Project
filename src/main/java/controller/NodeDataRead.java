@@ -64,7 +64,7 @@ public class NodeDataRead implements Initializable {
             Stage stage = (Stage) dataTable.getScene().getWindow();
             try {
                 // try to load the FXML file and send the data to the controller
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/edit.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/editTableRow.fxml"));
 
                 // try to change scene
                 Parent newRoot = loader.load();

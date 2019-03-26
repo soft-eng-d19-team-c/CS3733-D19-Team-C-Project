@@ -1,30 +1,22 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import model.Node;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditNodeData implements Initializable {
     @FXML
-    private TextField testInput;
-    @FXML
     private TextField nodeID;
     @FXML
-    private TextField xcoord;
+    private TextField xCoord;
     @FXML
-    private TextField ycoord;
+    private TextField yCoord;
     @FXML
     private TextField floor;
     @FXML
@@ -39,13 +31,17 @@ public class EditNodeData implements Initializable {
 
     Node nodeData;
 
+    @FXML
+    public void saveButtonClick(ActionEvent e) {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
-            testInput.setText(nodeData.getID());
             nodeID.setText(nodeData.getID());
-            xcoord.setText(Integer.toString(nodeData.getX()));
-            ycoord.setText(Integer.toString(nodeData.getY()));
+            xCoord.setText(Integer.toString(nodeData.getX()));
+            yCoord.setText(Integer.toString(nodeData.getY()));
             floor.setText(nodeData.getFloor());
             building.setText(nodeData.getBuilding());
             nodeType.setText(nodeData.getNodeType());
