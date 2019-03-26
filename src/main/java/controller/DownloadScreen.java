@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import model.DataTable;
 
 import java.io.IOException;
@@ -14,12 +14,14 @@ import java.util.ResourceBundle;
 
 public class DownloadScreen implements Initializable {
     @FXML
-    private TextField downloadButton;
+    private Button downloadButton;
 
-    DataTable dataTable = new DataTable();
+    private DataTable dataTable;
 
     public void setDataTable(DataTable dataTable) {
+        System.out.println(dataTable);
         this.dataTable = dataTable;
+        System.out.println(this.dataTable);
     }
 
     @Override
@@ -34,7 +36,8 @@ public class DownloadScreen implements Initializable {
             2. trigger download method and return to table page
          */
 
-        dataTable.printToCsv();
+        System.out.println(this.dataTable);
+        this.dataTable.printToCsv();
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/emptyTable.fxml"));
