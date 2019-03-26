@@ -2,34 +2,19 @@ package controller;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.DataTable;
 import model.Node;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-/*
-    TODO
-    change how we go to edit page.
-    probably do something like:
-    1. select row
-    2. click "edit" button on page (one on page rather than one per row)
-    3. route with data based on currently selected row
- */
 
 public class NodeDataRead implements Initializable {
     // get table
@@ -54,7 +39,6 @@ public class NodeDataRead implements Initializable {
     private TableColumn shortName;
     // data to put in the table, consists of model.Node class members
     private ObservableList<Node> data;
-    private int rowCount = -2;
 
     private Node dataCursor;
 
@@ -64,29 +48,41 @@ public class NodeDataRead implements Initializable {
      *
      * @param e
      */
-    EventHandler<ActionEvent> editButtonClicked = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent e) {
-            Button b = (Button) e.getSource();
-            int index = (int)b.getProperties().get("index");
-            dataCursor = dataTable.getItems().get(index);
-            Stage stage = (Stage) dataTable.getScene().getWindow();
-            try {
-                // try to load the FXML file and send the data to the controller
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/editTableRow.fxml"));
-
-                // try to change scene
-                Parent newRoot = loader.load();
-                EditNodeData controller = loader.getController();
-                controller.setNodeData(dataCursor);
-                Scene newScene = new Scene(newRoot);
-                stage.setScene(newScene);
-                stage.show();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+    public void editSelectedNode(ActionEvent e) {
+        dataCursor = dataTable.getSelectionModel().getSelectedItem();
+        if (dataCursor == null) {
+            return;
         }
-    };
+        try {
+            // try to load the FXML file and send the data to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/editTableRow.fxml"));
+            // try to change scene content
+            Parent newRoot = loader.load();
+            EditNodeData controller = loader.getController();
+            controller.setNodeData(dataCursor);
+            dataTable.getScene().setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    /**
+     * Route to download page with data.
+     * @param e
+     */
+    public void downloadButtonClicked(ActionEvent e) {
+        try {
+            // try to load the FXML file and send the data to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/downloadscreen.fxml"));
+            // try to change scene content
+            Parent newRoot = loader.load();
+            EditNodeData controller = loader.getController();
+            controller.setDataTable(dataTable);
+            dataTable.getScene().setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 
     /**
      * Starting routing for this jfx view.
@@ -108,32 +104,6 @@ public class NodeDataRead implements Initializable {
         DataTable dt = new DataTable();
         this.data = dt.getAllData();
         // create edit buttons for each row in the table and append
-        TableColumn<Node, Void> colBtn = new TableColumn("Edit");
-        Callback<TableColumn<Node, Void>, TableCell<Node, Void>> cellFactory = new Callback<TableColumn<Node, Void>, TableCell<Node, Void>>() {
-            @Override
-            public TableCell<Node, Void> call(final TableColumn<Node, Void> param) {
-                final TableCell<Node, Void> cell = new TableCell<Node, Void>() {
-                    private final Button btn = new Button("Edit");
-                    {
-                        btn.setOnAction(editButtonClicked);
-                        btn.getProperties().put("index", rowCount++);
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-        colBtn.setCellFactory(cellFactory);
-        dataTable.getColumns().add(colBtn);
         dataTable.setItems(this.data);
         dataTable.refresh();
     }
