@@ -74,6 +74,7 @@ public class Main {
                     ps.setString(6, nodeType);
                     ps.setString(7, longName);
                     ps.setString(8, shortName);
+                    ps.execute();
                 } catch (SQLException e) {
                     if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
                         sqlCmd = "UPDATE PrototypeNodes SET xcoord = ?, ycoord = ?, floor= ?, building= ?, nodeType = ?, longName = ?, shortName = ? WHERE NodeID = ?";
