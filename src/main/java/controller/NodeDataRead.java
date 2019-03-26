@@ -22,6 +22,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*
+    TODO
+    change how we go to edit page.
+    probably do something like:
+    1. select row
+    2. click "edit" button on page (one on page rather than one per row)
+    3. route with data based on currently selected row
+ */
+
 public class NodeDataRead implements Initializable {
     // get table
     @FXML

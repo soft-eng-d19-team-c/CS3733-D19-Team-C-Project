@@ -29,11 +29,16 @@ public class EditNodeData implements Initializable {
     private TextField shortName;
 
 
-    Node nodeData;
+    private Node nodeData;
 
-    @FXML
     public void saveButtonClick(ActionEvent e) {
-
+        /*
+            TODO
+            1. collect data from input fields
+            2. parse and sanitize data
+            3. trigger update
+            4. return to previous page if update returns true
+         */
     }
 
     @Override

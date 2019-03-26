@@ -17,7 +17,8 @@
          <children>
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Assets/BWHealth%20Logo.png" />
+                  <!--<Image url="@../Assets/BWHealth%20Logo.png" />-->
+                  <Image url="@../img/icon.png" />
                </image>
             </ImageView>
             <VBox alignment="CENTER" maxWidth="300.0" prefWidth="300.0">

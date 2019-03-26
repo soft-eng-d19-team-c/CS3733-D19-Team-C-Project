@@ -20,6 +20,7 @@ public class DataTable {
             e.printStackTrace();
         }
  // ~~~~~~~~~~~~~~~~Tests used ~~~~~~~~~~~~~~~~~~~~
+        /*
         System.out.println(getDataById("BHALL00802"));
         Node temp = getDataById("BHALL00802");
         temp.setX(-10);
@@ -33,6 +34,7 @@ public class DataTable {
         System.out.println(getDataById("BHALL00802"));
 
         printToCsv();
+        */
     }
 
     // Goes through the database and collects all of the data
