@@ -8,9 +8,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DownloadScreen">
    <children>
-      <JFXButton fx:id="downloadButton" blendMode="COLOR_BURN" buttonType="RAISED" onAction="#downloadButtonClick" style="-fx-background-color: Green;" text="DOWNLOAD" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <JFXButton fx:id="downloadButton" blendMode="COLOR_BURN" buttonType="RAISED" onAction="#downloadButtonClick" style="-fx-background-color: Green;" text="DOWNLOAD" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font name="System Bold" size="76.0" />
+         </font>
+         <ripplerFill>
+            <RadialGradient centerX="0.48295454545454547" centerY="0.49514563106796117" cycleMethod="REFLECT" radius="0.5">
+               <stops>
+                  <Stop color="#8113d0" />
+                  <Stop color="#d4ff00" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </ripplerFill>
+      </JFXButton>
+      <JFXButton fx:id="backButton" blendMode="COLOR_BURN" buttonType="RAISED" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: Red;" text="BACK" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
          </font>
          <ripplerFill>
             <RadialGradient centerX="0.48295454545454547" centerY="0.49514563106796117" cycleMethod="REFLECT" radius="0.5">

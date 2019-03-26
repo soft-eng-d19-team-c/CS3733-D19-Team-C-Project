@@ -111,7 +111,12 @@ public class Node {
     }
 
     // Node connects to the database and updates its values in the database
-    public boolean update() {
+
+    /**
+     *
+     * @return number of updated items
+     */
+    public int update() {
         try {
             //Statement stmt = connection.createStatement();
             String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
@@ -126,12 +131,12 @@ public class Node {
             ps.setString(7, this.getShortName());
             ps.setString(8, this.getID());
 
-            return ps.execute();
+            return ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return 0;
     }
 }
