@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class DataTable {
@@ -59,12 +60,12 @@ public class DataTable {
 
         try {
             //Statement stmt = connection.createStatement();
-            String str = "SELECT * FROM PROTOTYPENODES WHERE NODEID = ?";
+            String str = "SELECT * FROM PROJECTCNODES WHERE NODEID = ?";
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            return ResultSetToNode(rs);
+            if (rs.next())
+                return ResultSetToNode(rs);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,6 +87,19 @@ public class DataTable {
             String longName = rs.getString("longname");
             String shortName = rs.getString("shortname");
             return new Node(ID, x, y, floor, building, nodeType, longName, shortName);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }// This function is used to parse result sets into a edge
+    private Edge ResultSetToEdge(ResultSet rs){
+
+        try {
+            String ID = rs.getString("edgeID");
+            String startNode = rs.getString("startNode");
+            String endNode = rs.getString("endNode");
+            return new Edge(ID, startNode, endNode);
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -140,4 +154,26 @@ public class DataTable {
         return false;
     }
 
+    public HashMap<String, Edge> getProjectCEdges(LinkedList<Node> nodeList) {
+        HashMap<String, Edge> list = new HashMap<>();
+
+        for (Node n : nodeList) {
+
+            try {
+
+                Statement stmt = Main.database.getConnection().createStatement();
+                String str = "SELECT * FROM PROJECTCEDGES WHERE startNode = '" + n.getID() +"' OR ENDNODE = '" + n.getID() + "'";
+                ResultSet rs = stmt.executeQuery(str);
+
+                while (rs.next()) {
+                    Edge temp = ResultSetToEdge(rs);
+                    list.put(temp.getEdgeId(), temp);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return list;
+    }
 }
