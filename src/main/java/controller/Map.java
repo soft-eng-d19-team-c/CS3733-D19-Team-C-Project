@@ -51,7 +51,7 @@ public class Map implements Initializable {
                 g = Math.random();
                 b = Math.random();
                 Color color2 = new Color(r, g, b, 1.0);
-                FillTransition ft = new FillTransition(Duration.millis(3000), circle, color, color2);
+                FillTransition ft = new FillTransition(Duration.millis(250), circle, color, color2);
                 ft.setCycleCount(Animation.INDEFINITE);
                 ft.setAutoReverse(true);
 
