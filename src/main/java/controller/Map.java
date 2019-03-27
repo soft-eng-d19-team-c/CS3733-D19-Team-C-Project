@@ -3,8 +3,12 @@ package controller;
 import javafx.animation.Animation;
 import javafx.animation.FillTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -14,6 +18,7 @@ import javafx.util.Duration;
 import model.DataTable;
 import model.Node;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -23,24 +28,36 @@ public class Map implements Initializable {
     private ImageView mapImg;
     @FXML
     private Pane imInPane;
+    @FXML
+    private ToggleButton dancePartyBtn;
 
     private DataTable dt;
 
     private String floorPlan;
 
+    private LinkedList<Node> list;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Platform.runLater(() -> {
-            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+this.floorPlan+"_NoIcons.png"))));
+    public void backBtnClick(ActionEvent e) {
+        try {
+            // try to load the FXML file and send the data to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/emptyTable.fxml"));
+            // try to change scene content
+            Parent newRoot = loader.load();
+            imInPane.getScene().setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 
-            dt = new DataTable();
-            LinkedList<Node> list = dt.getProjectCNodesByFloor(this.floorPlan);
-
-            for (Node n : list){
+    public void danceParty(ActionEvent e) {
+        imInPane.getChildren().remove(1, imInPane.getChildren().size());
+        if (dancePartyBtn.isSelected()) {
+            double mapX = mapImg.getLayoutX();
+            double mapY = mapImg.getLayoutY();
+            for (Node n : list) {
                 Circle circle = new Circle();
-                circle.setCenterX(n.getX()/4.0);
-                circle.setCenterY(n.getY()/4.0);
+                circle.setCenterX(mapX + n.getX() / 4.0);
+                circle.setCenterY(mapY + n.getY() / 4.0);
                 circle.setRadius(1.0 + (Math.random() * 5.0));
                 double r = Math.random();
                 double g = Math.random();
@@ -54,8 +71,40 @@ public class Map implements Initializable {
                 FillTransition ft = new FillTransition(Duration.millis(250), circle, color, color2);
                 ft.setCycleCount(Animation.INDEFINITE);
                 ft.setAutoReverse(true);
-
                 ft.play();
+            }
+        } else {
+            double mapX = mapImg.getLayoutX();
+            double mapY = mapImg.getLayoutY();
+
+            for (Node n : list){
+                Circle circle = new Circle();
+                circle.setCenterX(mapX + n.getX()/4.0);
+                circle.setCenterY(mapY + n.getY()/4.0);
+                circle.setRadius(3.0);
+                imInPane.getChildren().add(circle);
+            }
+        }
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Platform.runLater(() -> {
+            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+this.floorPlan+"_NoIcons.png"))));
+
+            dt = new DataTable();
+            list = dt.getProjectCNodesByFloor(this.floorPlan);
+
+            double mapX = mapImg.getLayoutX();
+            double mapY = mapImg.getLayoutY();
+
+            for (Node n : list){
+                Circle circle = new Circle();
+                circle.setCenterX(mapX + n.getX()/4.0);
+                circle.setCenterY(mapY + n.getY()/4.0);
+                circle.setRadius(3.0);
+                imInPane.getChildren().add(circle);
             }
 
 
