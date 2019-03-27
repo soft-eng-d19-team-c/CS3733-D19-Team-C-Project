@@ -69,7 +69,6 @@ public class DataTable {
 
             while(rs.next()) {
                 Node temp = ResultSetToNode(rs);
-                System.out.println(temp.getFloor());
                     list.add(temp);
             }
         } catch (SQLException e) {
