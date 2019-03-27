@@ -1,10 +1,13 @@
-import java.sql.*;
+package base;
 
-/**
- * @author Ryan LaMarche.
- */
-public class Main {
-    public static void main(String[] args) {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Database {
+    Connection connection;
+
+    public Database() {
         System.out.println("-------Embedded Java DB Connection Testing --------");
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -19,23 +22,20 @@ public class Main {
             e.printStackTrace();
             return;
         }
-
         System.out.println("Java DB driver registered!");
-        Connection connection = null;
 
         try {
             // substitute your database name for myDB
-            connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
+            this.connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
         } catch (SQLException e) {
             System.out.println("Connection failed. Check output console.");
             e.printStackTrace();
             return;
         }
         System.out.println("Java DB connection established!");
+    }
 
-        // creates new MainFXML object that loads main.fxml on a new thread, starting at its main method.
-        MainFXML app = new MainFXML();
-        app.main(args);
-
+    public Connection getConnection() {
+        return this.connection;
     }
 }

@@ -1,3 +1,6 @@
+package base;
+
+import controller.Facade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,28 +13,27 @@ import java.io.IOException;
  * @author Ryan LaMarche.
  */
 public class MainFXML extends Application {
-    private Stage primaryStage;
     /**
-     * Starting routine for MainFXML view.
+     * Starting routine for base.MainFXML view.
      * @param s the Stage to start on.
      */
     @Override
     public void start(Stage s) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/views/main.fxml")));
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/views/prototypeNodeTable.fxml")));
             s.setScene(scene);
             s.getIcons().add(new Image("img/icon.png"));
             s.setMaximized(true);
             s.setTitle("BWH Navigation Kiosk");
             s.show();
+            Main.screenController = new Facade(s.getScene());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.primaryStage = s;
     }
 
     /**
-     * The main method / entry point for launching the MainFXML instance.
+     * The main method / entry point for launching the base.MainFXML instance.
      * @param args arguments provided to main method.
      */
     public static void main(String[] args) {
