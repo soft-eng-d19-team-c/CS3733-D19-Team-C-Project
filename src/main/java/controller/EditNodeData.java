@@ -1,22 +1,17 @@
 package controller;
 
+import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.Node;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditNodeData implements Initializable {
+public class EditNodeData extends Controller implements Initializable {
     @FXML
     private TextField nodeID;
     @FXML
@@ -37,29 +32,22 @@ public class EditNodeData implements Initializable {
 
     private Node nodeData;
 
+
+    @Override
+    public void init(URL location, ResourceBundle resources) {
+        initialize(location, resources);
+    }
+
     private boolean strshorterthan255 (String str){
         return (str.length() < 255);
     }
 
     public void backButtonClick(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/emptyTable.fxml"));
-            Parent newRoot = loader.load();
-            nodeID.getScene().setRoot(newRoot);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        Main.screenController.setScreen(EnumScreenType.NODETABLE);
     }
 
     public void saveButtonClick(ActionEvent e) {
-        /*
-            TODO
-            1. collect data from input fields
-            2. parse and sanitize data
-            3. trigger update
-            4. return to previous page if update returns true
-         */
-        try{
+        try {
             int X = Integer.parseInt(xCoord.getText());
             int Y = Integer.parseInt(yCoord.getText());
             nodeData.setX(X);
@@ -93,6 +81,8 @@ public class EditNodeData implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nodeData = (Node) Main.screenController.getData("node");
+
         Platform.runLater(() -> {
             nodeID.setText(nodeData.getID());
             xCoord.setText(Integer.toString(nodeData.getX()));
@@ -106,7 +96,4 @@ public class EditNodeData implements Initializable {
         });
     }
 
-    public void setNodeData(Node dataCursor) {
-        this.nodeData = dataCursor;
-    }
 }

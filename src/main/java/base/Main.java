@@ -1,3 +1,7 @@
+package base;
+
+import controller.Facade;
+
 import java.io.*;
 import java.net.URL;
 import java.sql.*;
@@ -8,34 +12,9 @@ import static java.lang.Integer.parseInt;
  * @author Ryan LaMarche.
  */
 public class Main {
+    public static Facade screenController;
+    public static Database database = new Database();
     public static void main(String[] args) {
-        System.out.println("-------Embedded Java DB Connection Testing --------");
-        try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Java DB Driver not found. Add the classpath to your module.");
-            System.out.println("For IntelliJ do the following:");
-            System.out.println("File | Project Structure, Modules, Dependency tab");
-            System.out.println("Add by clicking on the green plus icon on the right of the window");
-            System.out.println("Select JARs or directories. Go to the folder where the Java JDK is installed");
-            System.out.println("Select the folder java/jdk1.8.xxx/db/lib where xxx is the version.");
-            System.out.println("Click OK, compile the code and run it.");
-            e.printStackTrace();
-            return;
-        }
-
-        System.out.println("Java DB driver registered!");
-        Connection connection = null;
-
-        try {
-            // substitute your database name for myDB
-            connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
-        } catch (SQLException e) {
-            System.out.println("Connection failed. Check output console.");
-            e.printStackTrace();
-            return;
-        }
-        System.out.println("Java DB connection established!");
         /**
          * Read in data from CSV to database for prototype.
          *
@@ -65,7 +44,7 @@ public class Main {
                 PreparedStatement ps = null;
                 String sqlCmd = "INSERT INTO PROTOTYPENODES (NodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 try {
-                    ps = connection.prepareStatement(sqlCmd);
+                    ps = database.getConnection().prepareStatement(sqlCmd);
                     ps.setString(1, nodeID);
                     ps.setInt(2, xcoord);
                     ps.setInt(3, ycoord);
@@ -79,7 +58,7 @@ public class Main {
                     if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
                         sqlCmd = "UPDATE PrototypeNodes SET xcoord = ?, ycoord = ?, floor= ?, building= ?, nodeType = ?, longName = ?, shortName = ? WHERE NodeID = ?";
                         try {
-                            ps = connection.prepareStatement(sqlCmd);
+                            ps = database.getConnection().prepareStatement(sqlCmd);
                             ps.setInt(1, xcoord);
                             ps.setInt(2, ycoord);
                             ps.setString(3, floor);
@@ -111,7 +90,7 @@ public class Main {
             }
         }
 
-        // creates new MainFXML object that loads main.fxml on a new thread, starting at its main method.
+        // creates new base.MainFXML object that loads main.fxml on a new thread, starting at its main method.
         MainFXML app = new MainFXML();
         app.main(args);
 

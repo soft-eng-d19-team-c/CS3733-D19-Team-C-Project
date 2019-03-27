@@ -1,5 +1,6 @@
 package model;
 
+import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -9,40 +10,16 @@ import java.util.LinkedList;
 
 public class DataTable {
     private ObservableList<Node> data;
-    private Connection connection;
 
     public DataTable() {
         this.data = FXCollections.observableArrayList();
-
-        try {
-            this.connection = DriverManager.getConnection("jdbc:derby:TeamC;create=true");
-            System.out.println("Connected");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
- // ~~~~~~~~~~~~~~~~Tests used ~~~~~~~~~~~~~~~~~~~~
-        /*
-        System.out.println(getDataById("BHALL00802"));
-        Node temp = getDataById("BHALL00802");
-        temp.setX(-10);
-        temp.setY(-20);
-        temp.setBuilding("building asdklfsdklfhaskldfj1");
-        temp.setFloor("floor 2asd.,fsad;lf");
-        temp.setNodeType("node type teasd,jfsadj.fhas.dst");
-        temp.setShortName("short nameasd.,fn,asd.fn");
-        temp.setLongName("LOOOOOOOOOONG nasad.fsdafjme");
-        temp.update();
-        System.out.println(getDataById("BHALL00802"));
-
-        printToCsv();
-        */
     }
 
     // Goes through the database and collects all of the data
     public ObservableList<Node> getAllData() {
         //Node temp = new Node();
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = Main.database.getConnection().createStatement();
             String str = "SELECT * FROM PROTOTYPENODES";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -63,7 +40,7 @@ public class DataTable {
         LinkedList<Node> list = new LinkedList<>();
         try {
 
-            Statement stmt = connection.createStatement();
+            Statement stmt = Main.database.getConnection().createStatement();
             String str = "SELECT * FROM PROJECTCNODES WHERE FLOOR = '"+floor+"'";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -83,7 +60,7 @@ public class DataTable {
         try {
             //Statement stmt = connection.createStatement();
             String str = "SELECT * FROM PROTOTYPENODES WHERE NODEID = ?";
-            PreparedStatement ps = connection.prepareStatement(str);
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -108,12 +85,14 @@ public class DataTable {
             String nodeType = rs.getString("nodetype");
             String longName = rs.getString("longname");
             String shortName = rs.getString("shortname");
-            return new Node(ID, x, y, floor, building, nodeType, longName, shortName, connection);
+            return new Node(ID, x, y, floor, building, nodeType, longName, shortName);
         } catch (SQLException e){
             e.printStackTrace();
         }
         return null;
     }
+
+
 
     // This function print a csv file of the prototypenodes table to the current directory
     // Returns true if it worked and false otherwise
