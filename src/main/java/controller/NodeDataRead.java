@@ -85,6 +85,34 @@ public class NodeDataRead implements Initializable {
         }
     }
 
+    public void mapBtnL1Click(ActionEvent e) {
+        try {
+            // try to load the FXML file and send the data to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/map.fxml"));
+            // try to change scene content
+            Parent newRoot = loader.load();
+            Map controller = loader.getController();
+            controller.setFloorPlan("L1");
+            dataTable.getScene().setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void mapBtnL2Click(ActionEvent e) {
+        try {
+            // try to load the FXML file and send the data to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/map.fxml"));
+            // try to change scene content
+            Parent newRoot = loader.load();
+            Map controller = loader.getController();
+            controller.setFloorPlan("L2");
+            dataTable.getScene().setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     /**
      * Starting routing for this jfx view.
      *

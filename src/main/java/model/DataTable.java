@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.sql.*;
+import java.util.LinkedList;
 
 public class DataTable {
     private ObservableList<Node> data;
@@ -56,6 +57,26 @@ public class DataTable {
         }
 
         return data;
+    }
+
+    public LinkedList<Node> getProjectCNodesByFloor(String floor){
+        LinkedList<Node> list = new LinkedList<>();
+        try {
+
+            Statement stmt = connection.createStatement();
+            String str = "SELECT * FROM PROJECTCNODES WHERE FLOOR = '"+floor+"'";
+            ResultSet rs = stmt.executeQuery(str);
+
+            while(rs.next()) {
+                Node temp = ResultSetToNode(rs);
+                System.out.println(temp.getFloor());
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     public Node getDataById(String ID) {

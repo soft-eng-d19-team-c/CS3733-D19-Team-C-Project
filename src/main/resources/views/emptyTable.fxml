@@ -37,5 +37,19 @@
             <String fx:value="btn-sm" />
          </styleClass>
       </JFXButton>
+      <JFXButton fx:id="mapBtnL1" layoutX="333.0" layoutY="358.0" onAction="#mapBtnL1Click" text="Show me the map L1" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="250.0">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="btn-secondary" />
+            <String fx:value="btn-sm" />
+         </styleClass>
+      </JFXButton>
+      <JFXButton fx:id="mapBtnL2" layoutX="14.0" layoutY="358.0" onAction="#mapBtnL2Click" text="Show me the map L2" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="btn-secondary" />
+            <String fx:value="btn-sm" />
+         </styleClass>
+      </JFXButton>
    </children>
 </AnchorPane>
