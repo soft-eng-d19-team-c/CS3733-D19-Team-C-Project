@@ -9,8 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -24,6 +28,8 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class Map implements Initializable {
+    @FXML
+    private AnchorPane bigPane;
     @FXML
     private ImageView mapImg;
     @FXML
@@ -54,6 +60,12 @@ public class Map implements Initializable {
         if (dancePartyBtn.isSelected()) {
             double mapX = mapImg.getLayoutX();
             double mapY = mapImg.getLayoutY();
+            ColorAdjust blackout = new ColorAdjust();
+            blackout.setBrightness(-0.4);
+            mapImg.setEffect(blackout);
+            Color c = new Color(0,0,0,1.0);
+            bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
+            dancePartyBtn.setTextFill(new Color(1, 1, 1, 1.0));
             for (Node n : list) {
                 Circle circle = new Circle();
                 circle.setCenterX(mapX + n.getX() / 4.0);
@@ -77,6 +89,13 @@ public class Map implements Initializable {
             double mapX = mapImg.getLayoutX();
             double mapY = mapImg.getLayoutY();
 
+            Color c = new Color(1,1,1,1.0);
+            bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
+            dancePartyBtn.setTextFill(new Color(0, 0, 0, 1.0));
+
+            ColorAdjust reset = new ColorAdjust();
+            reset.setBrightness(0);
+            mapImg.setEffect(reset);
             for (Node n : list){
                 Circle circle = new Circle();
                 circle.setCenterX(mapX + n.getX()/4.0);
