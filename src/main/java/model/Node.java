@@ -139,4 +139,24 @@ public class Node {
 
         return 0;
     }
+
+    /*/BEGIN experimental node deletion
+    // Node connects to the database deletes it from the database
+    public int delete() {
+        try {
+            //Statement stmt = connection.createStatement();
+            String str = "DELETE NODES WHERE NODEID = ?";
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+
+            int result = ps.executeUpdate(); //Should I change to Delete? Sounds like a controller thing.
+            System.out.println(result);
+            return result;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+     //END experimental node deletion*/
 }
