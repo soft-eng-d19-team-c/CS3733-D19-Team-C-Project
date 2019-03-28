@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -16,7 +17,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class NodeDataRead extends Controller implements Initializable {
+public class NodeTable extends Controller implements Initializable {
     // get table
     @FXML
     private TableView<Node> dataTable;

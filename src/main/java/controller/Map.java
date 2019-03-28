@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.animation.Animation;
 import javafx.animation.FillTransition;
@@ -41,8 +42,6 @@ public class Map extends Controller implements Initializable {
     private ToggleButton dancePartyBtn;
 
     private DataTable dt;
-
-    private String floorPlan;
 
     private LinkedList<Node> nodeList;
 
