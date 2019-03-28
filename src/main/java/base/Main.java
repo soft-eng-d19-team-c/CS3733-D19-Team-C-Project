@@ -1,7 +1,5 @@
 package base;
 
-import controller.Facade;
-
 /**
  * @author Ryan LaMarche.
  */

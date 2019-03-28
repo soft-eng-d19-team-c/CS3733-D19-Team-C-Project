@@ -1,4 +1,4 @@
-package controller;
+package base;
 
 public enum EnumScreenType {
     NODETABLE("/views/prototypeNodeTable.fxml"),

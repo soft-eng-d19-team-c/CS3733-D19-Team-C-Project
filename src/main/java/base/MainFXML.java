@@ -1,6 +1,5 @@
 package base;
 
-import controller.Facade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
