@@ -59,9 +59,9 @@ public class AStar{
     }
 
     public HashMap<String, Edge> findPath(Node startNode, Node endNode){
-        ArrayList<PathValue> queueOfNodes = new ArrayList<PathValue>();
+        ArrayList<PathValue> queueOfNodes = new ArrayList<>();
         PathValue sNode = new PathValue(startNode.getID(), 0, 0);
-        HashMap<String, Edge> currentPath = new HashMap<String, Edge>();
+        HashMap<String, Edge> currentPath = new HashMap<>();
         queueOfNodes.add(sNode);
         for(PathValue p: queueOfNodes){
             queueOfNodes.remove(p);
@@ -74,15 +74,23 @@ public class AStar{
                 Node eEndNode = nodesList.get(e.getEndNode());
                 boolean needToAdd = true;
                 for(int i = 0; i < queueOfNodes.size(); i++){
-                    if(e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
-                        PathValue path = new PathValue(e.findOtherNode(p.getNode()), e.getDistance(), 0);
+                    //if the node we encounter is already in the list, lower its totalCost if need be
+                    if(e.findOtherNode(p.getNode()).equals(queueOfNodes.get(i).getNode())){
+                        if(e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
+                            queueOfNodes.get(i).setTotalPathCost(p.getTotalPathCost() + e.getDistance());
+                            needToAdd = false;
+                            i = queueOfNodes.size(); //break out of loop
+                        }
+                    }
+                    if(needToAdd && e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
+                        PathValue path = new PathValue(e.findOtherNode(p.getNode()), p.getTotalPathCost()+ e.getDistance(), 0);
                         queueOfNodes.add(i, path);
                         needToAdd = false;
                         i = queueOfNodes.size(); //break out of loop
                     }
                 }
                 if(needToAdd){
-                    PathValue path = new PathValue(e.findOtherNode(p.getNode()), e.getDistance(), 0);
+                    PathValue path = new PathValue(e.findOtherNode(p.getNode()), p.getTotalPathCost()+ e.getDistance(), 0);
                     queueOfNodes.add(path);
                 }
             }
