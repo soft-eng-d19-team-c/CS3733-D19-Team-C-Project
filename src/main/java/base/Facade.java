@@ -15,6 +15,7 @@ public final class Facade {
     private Scene primaryScene;
     private HashMap<String, Object> data;
     private Stack<EnumScreenType> history;
+    private EnumScreenType prevType;
 
     public Facade(Scene s) {
         this.screens = new HashMap<>();
@@ -22,6 +23,7 @@ public final class Facade {
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
+        this.prevType = EnumScreenType.NODETABLE;
     }
 
     public void setScreen(EnumScreenType type) {
@@ -30,7 +32,8 @@ public final class Facade {
 
     public void setScreen(EnumScreenType type, HashMap<String, Object> data) {
         this.data = data;
-        this.history.push(type);
+        this.history.push(prevType);
+        this.prevType = type;
         if (this.screens.containsKey(type)) {
             loadCachedScreen(type);
         } else {

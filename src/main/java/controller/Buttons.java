@@ -20,9 +20,7 @@ public class Buttons extends Controller implements Initializable {
     }
 
     public void homeButtonClick(ActionEvent actionEvent) {
-
-        System.out.println("go home");
-       // Main.screenController.setScreen(EnumScreenType.HOME);
+        Main.screenController.setScreen(EnumScreenType.NODETABLE);
     }
 
     public void logOutButtonClick(ActionEvent actionEvent) {
@@ -31,8 +29,7 @@ public class Buttons extends Controller implements Initializable {
     }
 
     public void returnButtonClick(ActionEvent actionEvent) {
-        System.out.println("returned");
-        // Main.screenController.setScreen(EnumScreenType.);
+        Main.screenController.goBack();
     }
 
 }
