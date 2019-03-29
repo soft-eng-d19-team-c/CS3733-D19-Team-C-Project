@@ -6,6 +6,21 @@ import java.sql.*;
 
 import static java.lang.Integer.parseInt;
 
+/*
+TODO:
+
+SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE
+FROM NODES
+LEFT JOIN EDGES
+ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE;
+
+return as HashMap<String, LinkedList<Edge>> hm;
+return as HashMap<String, Node>;
+where string is nodeID
+ */
+
+
+
 public final class Database {
     Connection connection;
     public Database() {
@@ -81,8 +96,8 @@ public final class Database {
         // read in data from CSVs to build the database
 
         // import nodes
-        System.out.println("Attempting to import nodes from /data/nodes.csv...");
-        URL csvFile = getClass().getResource("/data/nodes.csv");
+        System.out.println("Attempting to import nodes from /data/nodesv2.csv...");
+        URL csvFile = getClass().getResource("/data/nodesv2.csv");
         BufferedReader br = null;
         String line;
         String cvsSplitBy = ",";
@@ -152,8 +167,8 @@ public final class Database {
 
         // import edges
 
-        System.out.println("Attempting to import edges from /data/edges.csv...");
-        csvFile = getClass().getResource("/data/edges.csv");
+        System.out.println("Attempting to import edges from /data/edgesv2.csv...");
+        csvFile = getClass().getResource("/data/edgesv2.csv");
         try {
             br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
             br.readLine(); // throw away header
