@@ -23,6 +23,7 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.REQUESTSERVICE);
     }
 
     public void findRoomButtonClick(ActionEvent actionEvent) {

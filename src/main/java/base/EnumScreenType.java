@@ -6,7 +6,8 @@ public enum EnumScreenType {
     NODEEDIT("/views/prototypeNodeEdit.fxml"),
     DOWNLOADCSV("/views/downloadscreen.fxml"),
     DASHBOARD("/views/dashboard.fxml"),
-    SEARCH("/views/autocompleteSearchBar.fxml");
+    SEARCH("/views/autocompleteSearchBar.fxml"),
+    REQUESTSERVICE("/views/requestServiceView.fxml");
 
     protected String path;
 
