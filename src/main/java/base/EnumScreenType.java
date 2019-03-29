@@ -5,7 +5,8 @@ public enum EnumScreenType {
     MAP("/views/prototypeMap.fxml"),
     NODEEDIT("/views/prototypeNodeEdit.fxml"),
     DOWNLOADCSV("/views/downloadscreen.fxml"),
-    DASHBOARD("/views/dashboard.fxml");
+    DASHBOARD("/views/dashboard.fxml"),
+    SEARCH("/views/autocompleteSearchBar.fxml");
 
     protected String path;
 
