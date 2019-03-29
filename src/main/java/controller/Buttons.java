@@ -1,11 +1,10 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import base.EnumScreenType;
 import base.Main;
-import jdk.management.cmm.SystemResourcePressureMXBean;
-//import javafx.event.ActionEvent;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
