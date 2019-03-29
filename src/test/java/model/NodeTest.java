@@ -9,8 +9,9 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 
 public class NodeTest {
-    Node n1;
-    Node n2;
+    private Node n1;
+    private Node n2;
+    private Field f;
 
 
     @Before
@@ -60,22 +61,75 @@ public class NodeTest {
     @Test
     public void setFloor() throws NoSuchFieldException, IllegalAccessException {
         n2.setFloor("3");
-        final Field field1 = n2.getClass().getDeclaredField("floor");
-        field1.setAccessible(true);
-        assertEquals("Fields didn't match", "3", field1.get(n2));
+        f = n2.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "3", f.get(n2));
 
+        n2.setFloor("L1");
+        f = n2.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "L1", f.get(n2));
+
+        /**
+         * If the developer tries to enter "l2" instead of "L2",
+         * the setter should be able to recognize it and change it automatically
+         */
+        n2.setFloor("l2");
+        f = n2.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "L2", f.get(n2));
+
+        /**
+         * There is no floor 4, expect the setter to change nothing and give a notification
+         */
         n1.setFloor("4");
-        final Field field2 = n1.getClass().getDeclaredField("floor");
-        field2.setAccessible(true);
-        assertEquals("Fields didn't match", "4", field2.get(n1));
+        f = n1.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "2", f.get(n1));
+
+        /**
+         * There is no floor 0, expect the setter to change nothing and give a notification
+         */
+        n1.setFloor("0");
+        f = n1.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "2", f.get(n1));
+
+        /**
+         * floor "-1" and "-2" is an unclear expression, expect the setter to change nothing and give a notification
+         */
+        n1.setFloor("-1");
+        f = n1.getClass().getDeclaredField("floor");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "2", f.get(n1));
     }
 
     @Test
     public void setBuilding() throws NoSuchFieldException, IllegalAccessException {
         n2.setBuilding("BTM");
-        final Field field = n2.getClass().getDeclaredField("building");
-        field.setAccessible(true);
-        assertEquals("Fields didn't match", "BTM", field.get(n2));
+        f = n2.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "BTM", f.get(n2));
+
+        n2.setBuilding("15 Francis");
+        f = n2.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "15 Francis", f.get(n2));
+
+        n2.setBuilding("45 Francis");
+        f = n2.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "45 Francis", f.get(n2));
+
+        n2.setBuilding("Shapiro");
+        f = n2.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "Shapiro", f.get(n2));
+
+        n2.setBuilding("Tower");
+        f = n2.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "Tower", f.get(n2));
 
         /**
          * if the developer tries to enter a building that does not exist
@@ -83,22 +137,42 @@ public class NodeTest {
          * and the field should not change
          */
         n1.setBuilding("46 Francis");
-        final Field field1 = n1.getClass().getDeclaredField("building");
-        field1.setAccessible(true);
-        assertEquals("Fields didn't match", field1.get(n1), "BTM");
+        f = n1.getClass().getDeclaredField("building");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "BTM", f.get(n1));
     }
 
     @Test
     public void setNodeType() throws NoSuchFieldException, IllegalAccessException {
-        n2.setNodeType("CONF");
-        final Field field = n2.getClass().getDeclaredField("nodeType");
-        field.setAccessible(true);
-        assertEquals("Fields didn't match", field.get(n2), "CONF");
+        n2.setNodeType("BATH");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "BATH", f.get(n2));
 
         n2.setNodeType("CONF");
-        final Field field1 = n2.getClass().getDeclaredField("nodeType");
-        field1.setAccessible(true);
-        assertEquals("Fields didn't match", field1.get(n2), "CONF");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "CONF", f.get(n2));
+
+        n2.setNodeType("DEPT");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "DEPT", f.get(n2));
+
+        n2.setNodeType("ELEV");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "ELEV", f.get(n2));
+
+        n2.setNodeType("EXIT");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "EXIT", f.get(n2));
+
+        n2.setNodeType("HALL");
+        f = n2.getClass().getDeclaredField("nodeType");
+        f.setAccessible(true);
+        assertEquals("Fields didn't match", "HALL", f.get(n2));
     }
 
     @Test
