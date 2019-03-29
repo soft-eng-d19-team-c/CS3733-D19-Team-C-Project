@@ -4,21 +4,24 @@ import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
-import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DataTable {
-    private ObservableList<Node> data;
+    private ObservableList<Node> nodeData;
 
     public DataTable() {
-        this.data = FXCollections.observableArrayList();
+        this.nodeData = FXCollections.observableArrayList();
     }
 
-    // Goes through the database and collects all of the data
-    public ObservableList<Node> getAllData() {
-        this.data = FXCollections.observableArrayList();
+    // Goes through the database and collects all of the nodeData
+    public ObservableList<Node> getAllNodeData() {
+        this.nodeData = FXCollections.observableArrayList();
         try {
             Statement stmt = Main.database.getConnection().createStatement();
             String str = "SELECT * FROM NODES";
@@ -26,35 +29,15 @@ public class DataTable {
 
             while(rs.next()) {
                 Node temp = ResultSetToNode(rs);
-                this.data.add(temp);
+                this.nodeData.add(temp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return data;
-    }
-
-    public LinkedList<Node> getProjectCNodesByFloor(String floor){
-        LinkedList<Node> list = new LinkedList<>();
-        try {
-
-            Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM NODES WHERE FLOOR = '"+floor+"'";
-            ResultSet rs = stmt.executeQuery(str);
-
-            while(rs.next()) {
-                Node temp = ResultSetToNode(rs);
-                    list.add(temp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return list;
+        return nodeData;
     }
 
     public Node getDataById(String ID) {
-
         try {
             //Statement stmt = connection.createStatement();
             String str = "SELECT * FROM NODES WHERE NODEID = ?";
@@ -67,7 +50,6 @@ public class DataTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -90,26 +72,12 @@ public class DataTable {
         return null;
 
     }// This function is used to parse result sets into a edge
-    private Edge ResultSetToEdge(ResultSet rs){
-
-        try {
-            String ID = rs.getString("edgeID");
-            String startNode = rs.getString("startNode");
-            String endNode = rs.getString("endNode");
-            return new Edge(ID, startNode, endNode);
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
 
     // This function print a csv file of the prototypenodes table to the current directory
     // Returns true if it worked and false otherwise
     // This works by building a large string and then writing it to a file
     public boolean printToCsv() {
-        ObservableList<Node> nodes = getAllData();
+        ObservableList<Node> nodes = getAllNodeData();
         String fileName = "nodes.csv";
 
         try (PrintWriter writer = new PrintWriter(new File(fileName))) {
@@ -125,7 +93,7 @@ public class DataTable {
             sb.append("longname,");
             sb.append("shortname\n");
 
-            // add data for each node
+            // add nodeData for each node
             for (Node n : nodes) {
                 sb.append(n.getID() + ",");
                 sb.append(n.getX() + ",");
@@ -142,20 +110,6 @@ public class DataTable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
-        // print header
-        // print each node
-
-
         return false;
-    }
-
-    public HashMap<String, Edge> getProjectCEdges(LinkedList<Node> nodeList) {
-        HashMap<String, Edge> list = new HashMap<>();
-        for (Node n : nodeList) {
-            n.getEdges(list);
-        }
-        return list;
     }
 }

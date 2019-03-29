@@ -103,7 +103,7 @@ public class NodeTable extends Controller implements Initializable {
             shortName.setCellValueFactory(new PropertyValueFactory("ShortName"));
 
             dt = new DataTable();
-            this.data = dt.getAllData();
+            this.data = dt.getAllNodeData();
             // create edit buttons for each row in the table and append
             dataTable.setItems(this.data);
             dataTable.refresh();

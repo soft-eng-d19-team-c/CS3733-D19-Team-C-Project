@@ -122,8 +122,8 @@ public class Map extends Controller implements Initializable {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
         Platform.runLater(() -> {
             dt = new DataTable();
-            nodeList = dt.getProjectCNodesByFloor((String) Main.screenController.getData("floor"));
-            edgeList = dt.getProjectCEdges(nodeList);
+            nodeList = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
+//            edgeList = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
             dancePartyBtn.setSelected(false);
             drawNodes();
         });
