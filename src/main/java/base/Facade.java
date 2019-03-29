@@ -21,6 +21,7 @@ public final class Facade {
         this.controllers= new HashMap<>();
         this.data = new HashMap<>();
         this.primaryScene = s;
+        this.history = new Stack<>();
     }
 
     public void setScreen(EnumScreenType type) {
