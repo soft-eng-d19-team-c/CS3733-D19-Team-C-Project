@@ -18,22 +18,19 @@ public class DataTable {
 
     // Goes through the database and collects all of the data
     public ObservableList<Node> getAllData() {
-        //Node temp = new Node();
+        this.data = FXCollections.observableArrayList();
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM PROTOTYPENODES";
+            String str = "SELECT * FROM NODES";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
                 Node temp = ResultSetToNode(rs);
-                //System.out.println(ID);
-
                 this.data.add(temp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return data;
     }
 
@@ -42,7 +39,7 @@ public class DataTable {
         try {
 
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM PROJECTCNODES WHERE FLOOR = '"+floor+"'";
+            String str = "SELECT * FROM NODES WHERE FLOOR = '"+floor+"'";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -60,7 +57,7 @@ public class DataTable {
 
         try {
             //Statement stmt = connection.createStatement();
-            String str = "SELECT * FROM PROJECTCNODES WHERE NODEID = ?";
+            String str = "SELECT * FROM NODES WHERE NODEID = ?";
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
@@ -113,7 +110,7 @@ public class DataTable {
     // This works by building a large string and then writing it to a file
     public boolean printToCsv() {
         ObservableList<Node> nodes = getAllData();
-        String fileName = "prototypenodes.csv";
+        String fileName = "nodes.csv";
 
         try (PrintWriter writer = new PrintWriter(new File(fileName))) {
             StringBuilder sb = new StringBuilder();

@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.animation.Animation;
 import javafx.animation.FillTransition;
@@ -41,8 +42,6 @@ public class Map extends Controller implements Initializable {
     private ToggleButton dancePartyBtn;
 
     private DataTable dt;
-
-    private String floorPlan;
 
     private LinkedList<Node> nodeList;
 
@@ -118,7 +117,6 @@ public class Map extends Controller implements Initializable {
         }
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
@@ -169,5 +167,7 @@ public class Map extends Controller implements Initializable {
             }
         }
     }
+
+
 
 }
