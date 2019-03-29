@@ -6,7 +6,7 @@ import java.sql.*;
 
 import static java.lang.Integer.parseInt;
 
-public class Database {
+public final class Database {
     Connection connection;
     public Database() {
         System.out.println("Attempting to connect to the embedded database...");
