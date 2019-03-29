@@ -1,5 +1,5 @@
 group 'edu.wpi.cs3733d18.teamC' // replace with your package name
-version '0.1'
+version '1.0'
 
 apply plugin: 'java'
 apply plugin: 'idea'

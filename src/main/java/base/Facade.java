@@ -7,42 +7,71 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Stack;
 
-public class Facade {
+public final class Facade {
     private HashMap<EnumScreenType, Parent> screens;
     private HashMap<EnumScreenType, Controller> controllers;
     private Scene primaryScene;
     private HashMap<String, Object> data;
+    private Stack<EnumScreenType> history;
+    private EnumScreenType prevType;
 
     public Facade(Scene s) {
         this.screens = new HashMap<>();
         this.controllers= new HashMap<>();
         this.data = new HashMap<>();
         this.primaryScene = s;
-    }
-
-    public void setScreen(EnumScreenType type, HashMap<String, Object> data) {
-        this.data = data;
-        if (this.screens.containsKey(type)) {
-            this.primaryScene.setRoot(this.screens.get(type));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
-            this.controllers.get(type).init(getClass().getResource(type.getPath()), loader.getResources());
-        } else {
-            try {
-                // try to load the FXML file and send the data to the controller
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
-                Parent newRoot = loader.load();
-                this.screens.put(type, newRoot);
-                this.controllers.put(type, loader.getController());
-                this.primaryScene.setRoot(newRoot);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
+        this.history = new Stack<>();
+        this.prevType = EnumScreenType.NODETABLE;
     }
 
     public void setScreen(EnumScreenType type) {
         setScreen(type, null);
+    }
+
+    public void setScreen(EnumScreenType type, HashMap<String, Object> data) {
+        this.data = data;
+        this.history.push(prevType);
+        this.prevType = type;
+        if (this.screens.containsKey(type)) {
+            loadCachedScreen(type);
+        } else {
+            loadNewScreen(type);
+        }
+        if (type == EnumScreenType.DASHBOARD) {
+            clearHistory();
+        }
+    }
+
+    private void loadNewScreen(EnumScreenType type) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
+            Parent newRoot = loader.load();
+            this.screens.put(type, newRoot);
+            this.controllers.put(type, loader.getController());
+            this.primaryScene.setRoot(newRoot);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void loadCachedScreen(EnumScreenType type) {
+        this.primaryScene.setRoot(this.screens.get(type));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
+        this.controllers.get(type).init(getClass().getResource(type.getPath()), loader.getResources());
+    }
+
+    public void goBack() {
+        goBack(null);
+    }
+
+    public void goBack(HashMap<String, Object> data) {
+        setScreen(this.history.pop(), data);
+    }
+
+    private void clearHistory() {
+        this.history.clear();
     }
 
     public Object getData(String key) {

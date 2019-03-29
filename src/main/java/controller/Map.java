@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -41,11 +40,6 @@ public class Map extends Controller implements Initializable {
     private Pane imInPane;
     @FXML
     private ToggleButton dancePartyBtn;
-
-    //home button
-    //need the word "Controller" after the button name for this to work
-//    @FXML
-//    private Buttons homeButtonController;
 
     private DataTable dt;
 
@@ -122,7 +116,6 @@ public class Map extends Controller implements Initializable {
             drawNodes();
         }
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

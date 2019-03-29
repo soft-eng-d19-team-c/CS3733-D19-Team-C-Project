@@ -1,11 +1,10 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import base.EnumScreenType;
 import base.Main;
-import jdk.management.cmm.SystemResourcePressureMXBean;
-//import javafx.event.ActionEvent;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,13 +19,16 @@ public class Buttons extends Controller implements Initializable {
     }
 
     public void homeButtonClick(ActionEvent actionEvent) {
-
-        System.out.println("go home");
-       // Main.screenController.setScreen(EnumScreenType.HOME);
+        Main.screenController.setScreen(EnumScreenType.NODETABLE);
     }
 
     public void logOutButtonClick(ActionEvent actionEvent) {
+        System.out.println("logged out");
+        // Main.screenController.setScreen(EnumScreenType.LOGIN);
+    }
 
+    public void returnButtonClick(ActionEvent actionEvent) {
+        Main.screenController.goBack();
     }
 
 }
