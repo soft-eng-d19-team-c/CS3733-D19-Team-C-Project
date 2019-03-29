@@ -118,7 +118,7 @@ public class Node {
     public int update() {
         try {
             //Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
+            String str = "UPDATE NODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
                     "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setInt(1, this.getX());
