@@ -13,7 +13,13 @@ SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUI
 FROM NODES
 LEFT JOIN EDGES
 ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE;
+
+return as HashMap<String, LinkedList<Edge>> hm;
+return as HashMap<String, Node>;
+where string is nodeID
  */
+
+
 
 public final class Database {
     Connection connection;
