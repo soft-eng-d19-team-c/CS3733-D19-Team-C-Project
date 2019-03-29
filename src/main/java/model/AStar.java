@@ -68,16 +68,25 @@ public class AStar{
             if(p.getNode().equals(endNode.getID())) {
                 return currentPath;
             }
-            p.getNode().getEdges(currentPath);
-            for(Edge e : currentPath.values()){
+            LinkedList<Edge> currentNodeEdges = this.adjacencyList.get(p.getNode()); //database magic
+            for(Edge e : currentNodeEdges){
+                Node eStartNode = nodesList.get(e.getStartNode());
+                Node eEndNode = nodesList.get(e.getEndNode());
+                boolean needToAdd = true;
                 for(int i = 0; i < queueOfNodes.size(); i++){
-                    if(e.getDistance() < queueOfNodes.get(i).getTotalPathCost()){
+                    if(e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
                         PathValue path = new PathValue(e.findOtherNode(p.getNode()), e.getDistance(), 0);
-                        queueOfNodes.add(path);
+                        queueOfNodes.add(i, path);
+                        needToAdd = false;
                         i = queueOfNodes.size(); //break out of loop
                     }
                 }
+                if(needToAdd){
+                    PathValue path = new PathValue(e.findOtherNode(p.getNode()), e.getDistance(), 0);
+                    queueOfNodes.add(path);
+                }
             }
         }
+        return null;
     }
 }

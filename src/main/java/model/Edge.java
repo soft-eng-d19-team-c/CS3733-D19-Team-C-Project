@@ -1,5 +1,7 @@
 package model;
 
+import static java.lang.Math.sqrt;
+
 public class Edge {
     private String edgeId;
     private String startNode;
@@ -26,8 +28,12 @@ public class Edge {
     }
 
     public double getDistance(){
+        return this.distance;
+    }
+
+    public double getDistance(Node sNode, Node eNode){
         if(this.distance < 0){
-            this.distance = findEuclideanDistance();
+            this.distance = findEuclideanDistance(sNode, eNode);
         }
         return this.distance;
     }
@@ -41,9 +47,10 @@ public class Edge {
                 '}';
     }
 
-    private double findEuclideanDistance(){
-        int xDistance = startNode.x - endNode.x;
-        int yDistance = startNode.y - endNode.y;
+    private double findEuclideanDistance(Node sNode, Node eNode){
+        //query database for the nodes from the strings
+        int xDistance = sNode.getX() - eNode.getX();
+        int yDistance = sNode.getY() - eNode.getY();
         int distSquared = (xDistance*xDistance) + (yDistance*yDistance);
         return sqrt(distSquared);
     }
