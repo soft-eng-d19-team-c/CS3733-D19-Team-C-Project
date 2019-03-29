@@ -17,8 +17,6 @@
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES">
                <children>
                      <fx:include fx:id="homeButton" source="partialButtons.fxml"/>
-                     <fx:include fx:id="returnButton" source="partialButtons.fxml"/>
-                     <fx:include fx:id="logOutButton" source="partialButtons.fxml"/>
                   <JFXButton fx:id="backBtn" onAction="#backBtnClick" text="Back">
                      <styleClass>
                         <String fx:value="btn" />
