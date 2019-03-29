@@ -6,6 +6,7 @@ public enum EnumScreenType {
     NODEEDIT("/views/prototypeNodeEdit.fxml"),
     DOWNLOADCSV("/views/downloadscreen.fxml");
 
+
     protected String path;
 
     EnumScreenType(String str) {
