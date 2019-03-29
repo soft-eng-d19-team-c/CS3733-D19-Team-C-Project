@@ -1,18 +1,31 @@
 package model;
 
 import base.Database;
+import base.Main;
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
 public class DataTableTest {
     Database db;
+    DataTable dt;
+    ResultSet rs;
 
     @Before
     public void setUp() throws Exception {
          db = new Database();
+         Statement stmt = db.getConnection().createStatement();
+         String str = "SELECT * FROM PROTOTYPENODES";
+         rs = stmt.executeQuery(str);
+         dt = new DataTable();
+
     }
 
     @After
@@ -20,7 +33,8 @@ public class DataTableTest {
     }
 
     @Test
-    public void getAllData() {
+    public void getAllData() throws SQLException {
+        ObservableList<Node> ObsL = dt.getAllData(); // getting data from the database built in main
     }
 
     @Test
