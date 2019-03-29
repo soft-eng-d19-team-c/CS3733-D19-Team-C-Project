@@ -47,6 +47,16 @@ public class Node {
         this.longName = longName;
         this.shortName = shortName;
     }
+    public Node(String ID, int x, int y, String floor, String building, String nodeType) {
+        this.ID = ID;
+        this.x = x;
+        this.y = y;
+        this.floor = floor;
+        this.building = building;
+        this.nodeType = nodeType;
+        this.longName = null;
+        this.shortName = null;
+    }
 
     public String getFloor() {
         return floor;
