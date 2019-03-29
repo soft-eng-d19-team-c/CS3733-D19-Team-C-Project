@@ -3,7 +3,10 @@ package model;
 import base.Main;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 
 public class Node {
     private String ID;
@@ -43,6 +46,16 @@ public class Node {
         this.nodeType = nodeType;
         this.longName = longName;
         this.shortName = shortName;
+    }
+    public Node(String ID, int x, int y, String floor, String building, String nodeType) {
+        this.ID = ID;
+        this.x = x;
+        this.y = y;
+        this.floor = floor;
+        this.building = building;
+        this.nodeType = nodeType;
+        this.longName = null;
+        this.shortName = null;
     }
 
     public String getFloor() {
@@ -138,5 +151,19 @@ public class Node {
         }
 
         return 0;
+    }
+    public HashMap<String, Edge> getEdges(HashMap<String, Edge> list){
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            String str = "SELECT * FROM PROJECTCEDGES WHERE startNode = '" + this.ID +"' OR ENDNODE = '" + this.ID + "'";
+            ResultSet rs = stmt.executeQuery(str);
+
+            while (rs.next()) {
+                Edge temp = ResultSetToEdge(rs);
+                list.put(temp.getEdgeId(), temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

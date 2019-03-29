@@ -156,24 +156,9 @@ public class DataTable {
 
     public HashMap<String, Edge> getProjectCEdges(LinkedList<Node> nodeList) {
         HashMap<String, Edge> list = new HashMap<>();
-
         for (Node n : nodeList) {
-
-            try {
-
-                Statement stmt = Main.database.getConnection().createStatement();
-                String str = "SELECT * FROM PROJECTCEDGES WHERE startNode = '" + n.getID() +"' OR ENDNODE = '" + n.getID() + "'";
-                ResultSet rs = stmt.executeQuery(str);
-
-                while (rs.next()) {
-                    Edge temp = ResultSetToEdge(rs);
-                    list.put(temp.getEdgeId(), temp);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            n.getEdges(list);
         }
-
         return list;
     }
 }
