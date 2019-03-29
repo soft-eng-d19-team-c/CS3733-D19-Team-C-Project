@@ -3,7 +3,10 @@ package model;
 import base.Main;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 
 public class Node {
     private String ID;
@@ -139,24 +142,18 @@ public class Node {
 
         return 0;
     }
-
-    /*/BEGIN experimental node deletion
-    // Node connects to the database deletes it from the database
-    public int delete() {
+    public HashMap<String, Edge> getEdges(HashMap<String, Edge> list){
         try {
-            //Statement stmt = connection.createStatement();
-            String str = "DELETE NODES WHERE NODEID = ?";
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            Statement stmt = Main.database.getConnection().createStatement();
+            String str = "SELECT * FROM PROJECTCEDGES WHERE startNode = '" + this.ID +"' OR ENDNODE = '" + this.ID + "'";
+            ResultSet rs = stmt.executeQuery(str);
 
-            int result = ps.executeUpdate(); //Should I change to Delete? Sounds like a controller thing.
-            System.out.println(result);
-            return result;
-
+            while (rs.next()) {
+                Edge temp = ResultSetToEdge(rs);
+                list.put(temp.getEdgeId(), temp);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return 0;
     }
-     //END experimental node deletion*/
 }
