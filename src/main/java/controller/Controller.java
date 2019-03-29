@@ -10,4 +10,10 @@ public abstract class Controller {
 
     @FXML
     private Buttons homeButtonController;
+
+    @FXML
+    private Buttons logOutButtonController;
+
+    @FXML
+    private Buttons returnButtonController;
 }
