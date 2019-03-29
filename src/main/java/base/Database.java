@@ -6,6 +6,15 @@ import java.sql.*;
 
 import static java.lang.Integer.parseInt;
 
+/*
+TODO:
+
+SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE
+FROM NODES
+LEFT JOIN EDGES
+ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE;
+ */
+
 public final class Database {
     Connection connection;
     public Database() {
