@@ -2,11 +2,12 @@ package model;
 
 import base.Main;
 
-import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+
+import static java.lang.Math.sqrt;
 
 public class AStar{
     private Node originNode;
@@ -69,6 +70,42 @@ public class AStar{
         }
     }
 
+    public AStar(){
+        this.adjacencyList = new HashMap<>();
+        this.nodesList = new HashMap<>();
+        String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(getMeNodesAndEdges);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String type= rs.getString("NODETYPE");
+                this.nodesList.put(rs.getString("NODEID"), new Node(nodeID, x, y, floor, building, type));
+                String edgeID = rs.getString("EDGEID");
+                String startNodeID = rs.getString("STARTNODE");
+                String endNodeID = rs.getString("ENDNODE");
+                Edge newEdge;
+                if (nodeID.equals(startNodeID))
+                    newEdge = new Edge(edgeID, startNodeID, endNodeID);
+                else
+                    newEdge = new Edge(edgeID, endNodeID, startNodeID);
+                if (this.adjacencyList.containsKey(nodeID)) {
+                    this.adjacencyList.get(nodeID).add(newEdge);
+                } else {
+                    LinkedList<Edge> newEdgeList = new LinkedList<>();
+                    newEdgeList.add(newEdge);
+                    this.adjacencyList.put(nodeID, newEdgeList);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 //    public HashMap<String, Edge> dijkstra(Node startNode, Node endNode){
 //        ArrayList<PathValue> queueOfNodes = new ArrayList<>();
 //        PathValue sNode = new PathValue(startNode.getID(), 0, 0);
@@ -87,21 +124,21 @@ public class AStar{
 //                for(int i = 0; i < queueOfNodes.size(); i++){
 //                    //if the node we encounter is already in the list, lower its totalCost if need be
 //                    if(e.findOtherNode(p.previousNode()).equals(queueOfNodes.get(i).previousNode())){
-//                        if(e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
-//                            queueOfNodes.get(i).setTotalPathCost(p.getTotalPathCost() + e.getDistance());
+//                        if(e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalCostFromStart()){
+//                            queueOfNodes.get(i).setTotalCostFromStart(p.getTotalCostFromStart() + e.getDistance());
 //                            needToAdd = false;
 //                            i = queueOfNodes.size(); //break out of loop
 //                        }
 //                    }
-//                    if(needToAdd && e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalPathCost()){
-//                        PathValue path = new PathValue(e.findOtherNode(p.previousNode()), p.getTotalPathCost()+ e.getDistance(), 0);
+//                    if(needToAdd && e.getDistance(eStartNode, eEndNode) < queueOfNodes.get(i).getTotalCostFromStart()){
+//                        PathValue path = new PathValue(e.findOtherNode(p.previousNode()), p.getTotalCostFromStart()+ e.getDistance(), 0);
 //                        queueOfNodes.add(i, path);
 //                        needToAdd = false;
 //                        i = queueOfNodes.size(); //break out of loop
 //                    }
 //                }
 //                if(needToAdd){
-//                    PathValue path = new PathValue(e.findOtherNode(p.previousNode()), p.getTotalPathCost()+ e.getDistance(), 0);
+//                    PathValue path = new PathValue(e.findOtherNode(p.previousNode()), p.getTotalCostFromStart()+ e.getDistance(), 0);
 //                    queueOfNodes.add(path);
 //                }
 //            }
@@ -111,11 +148,11 @@ public class AStar{
 
     // This is a star
     public LinkedList<Node> findPath(Node startNode, Node endNode){
-       // keeps track of visted nodes in PathValue class
+        // keeps track of visted nodes in PathValue class
         // list of nodes kept in nodeList
 
         HashMap<Node, PathValue> pathValues = new HashMap<>();
-        pathValues.put(startNode, new PathValue(startNode, 0, 0));
+        pathValues.put(startNode, new PathValue(startNode));
 
         Queue<PathValue> queue = new PriorityQueue<>();
         queue.add(pathValues.get(startNode));
@@ -124,15 +161,40 @@ public class AStar{
             PathValue currentPathValue = queue.remove();
             Node currentNode = currentPathValue.getNode();
 
-            if (!currentPathValue.isVisted()){ // makes sure the current node has not be
+            if (!currentPathValue.visted()){ // makes sure the current node has not be
                 currentPathValue.setVisted(true);
 
                 if (currentNode.equals(endNode)) {
+
+                    System.out.println("Found end node!");
                     return createPath(currentNode, startNode, pathValues);
                 }
 
-                LinkedList<Edge> adjacentNodes = adjacencyList.get(currentNode);
-                System.out.println(adjacentNodes);
+                LinkedList<Edge> adjacentEdges= adjacencyList.get(currentNode.getID());
+                LinkedList<Node> adjacentNodes = new LinkedList<>();
+
+                for (Edge e : adjacentEdges){
+                    String nodeID = e.findOtherNode(currentNode.getID());
+                    adjacentNodes.add(nodesList.get(nodeID));
+                }
+
+                for (Node n : adjacentNodes){
+                    if (!pathValues.containsKey(n)){
+                        pathValues.put(n, new PathValue(n,currentNode));
+                    }
+
+                    PathValue path = pathValues.get(n);
+                    if (!path.visted()){
+                        double costOfPrevToStart;
+                        double costFromPrev;
+                        double predictedCostToEnd;
+
+                        costOfPrevToStart = currentPathValue.getTotalCostFromStart();
+                        costFromPrev = 0;
+                        predictedCostToEnd = 0;
+                    }
+                }
+
             }
 
 
@@ -159,4 +221,24 @@ public class AStar{
     private LinkedList<Node> createPath(Node startNode, Node endNode, HashMap<Node, PathValue> pathValues){
         return null; // will return the path between nodes
     }
+
+    private double distanceBetweenFloors(Node a, Node b){
+        int aFloor = a.getFloorNumber();
+        int bFloor = b.getFloorNumber();
+        return Math.abs(aFloor - bFloor)*10;
+    }
+
+    private double findEuclideanDistance(Node a, Node b){
+
+        int aX = a.getX();
+        int bX = a.getY();
+
+
+        int xDistance = this.x - endNode.getX();
+        int yDistance = this.y - endNode.getY();
+        int distSquared = (xDistance*xDistance) + (yDistance*yDistance);
+        return sqrt(distSquared);
+    }
+
+
 }

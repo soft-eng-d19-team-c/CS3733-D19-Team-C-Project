@@ -3,30 +3,27 @@ package model;
 public class PathValue{
     private Node node; // the node the path value is attached to
     private Node previousNode;
-    private double totalPathCost;
-    private double heuristicCost;
+    private double totalCostFromStart;
+    private double predictedCostToEnd;
+    private double totalCost;
     private boolean visted; // true if visted
-
-    public PathValue(Node node, double totalPathCost, double heuristicCost, boolean visited) {
-        this.node = node;
-        this.totalPathCost = totalPathCost;
-        this.heuristicCost = heuristicCost;
-        this.visted = visited;
-    }
-
-    public PathValue(Node node, double totalPathCost, double heuristicCost) {
-        this.node = node;
-        this.totalPathCost = totalPathCost;
-        this.heuristicCost = heuristicCost;
-        this.visted = false;
-    }
 
     public PathValue(Node node) {
         this.node = node;
-        this.totalPathCost = Double.MAX_VALUE;
-        this.heuristicCost = Double.MAX_VALUE;
+        this.totalCostFromStart = 0;
+        this.predictedCostToEnd = 0;
         this.visted = false;
     }
+
+    public PathValue(Node node, Node previousNode) {
+        this.node = node;
+        this.previousNode = previousNode;
+        this.totalCostFromStart = Double.MAX_VALUE;
+        this.predictedCostToEnd = Double.MAX_VALUE;
+        this.totalCost = Double.MAX_VALUE;
+        this.visted = false;
+    }
+
 
     public Node getNode() {
         return node;
@@ -44,23 +41,23 @@ public class PathValue{
         this.previousNode = previousNode;
     }
 
-    public double getTotalPathCost() {
-        return totalPathCost;
+    public double getTotalCostFromStart() {
+        return totalCostFromStart;
     }
 
-    public void setTotalPathCost(double totalPathCost) {
-        this.totalPathCost = totalPathCost;
+    public void setTotalCostFromStart(double totalCostFromStart) {
+        this.totalCostFromStart = totalCostFromStart;
     }
 
-    public double getHeuristicCost() {
-        return heuristicCost;
+    public double getPredictedCostToEnd() {
+        return predictedCostToEnd;
     }
 
-    public void setHeuristicCost(double heuristicCost) {
-        this.heuristicCost = heuristicCost;
+    public void setPredictedCostToEnd(double predictedCostToEnd) {
+        this.predictedCostToEnd = predictedCostToEnd;
     }
 
-    public boolean isVisted() {
+    public boolean visted() {
         return visted;
     }
 
