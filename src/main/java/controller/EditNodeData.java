@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
