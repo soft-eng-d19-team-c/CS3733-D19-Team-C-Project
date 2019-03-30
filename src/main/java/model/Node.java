@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
+import static java.lang.Math.sqrt;
+
 public class Node {
     private String ID;
     private int x;
@@ -17,6 +19,8 @@ public class Node {
     private String nodeType;
     private String longName;
     private String shortName;
+
+    //private
 
 
     public String getID() {
@@ -197,5 +201,27 @@ public class Node {
             e.printStackTrace();
         }
         return nodes;
+    }
+
+
+
+    // Floor 3  4
+    // Floor 2  3
+    // Floor 1  2
+    // Floor L1 1
+    // Floor L2 0
+
+    public int getFloorNumber(){
+        switch (this.floor){
+            case "3": return 4;
+            case "2": return 3;
+            case "1": return 2;
+            case "L1": return 1;
+            case "L2": return 0;
+            default:
+                System.out.println("Error in node.getfloornumber");
+                return -1;
+
+        }
     }
 }
