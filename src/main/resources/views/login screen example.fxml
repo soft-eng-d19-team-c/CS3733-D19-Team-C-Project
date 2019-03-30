@@ -28,17 +28,17 @@
                         <Font size="38.0" />
                      </font>
                   </Label>
-                  <PasswordField promptText="username">
-                     <VBox.margin>
-                        <Insets bottom="8.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <TextField promptText="password">
+                  <TextField promptText="username">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" textAlignment="CENTER">
+                  <PasswordField promptText="password">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Button fx:id="loginButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginButtonClick" text="Login" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
