@@ -1,8 +1,5 @@
 package base;
 
-/**
- * @author Ryan LaMarche.
- */
 public class Main {
     public static Facade screenController;
     public static Database database;

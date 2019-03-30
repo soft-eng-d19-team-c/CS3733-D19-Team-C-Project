@@ -17,17 +17,24 @@ import java.util.ResourceBundle;
 public class AutocompleteSearchBar implements Initializable {
     @FXML
     private JFXTextField acTextInput;
-//    DataTable dt;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        dt = new DataTable();
+        /*
+             We can get all of the nodes from the database here and populate
+             a JFoenix autocomplete popup with them here.
+             We can then override the default behavior of JFoenix autocomplete (which uses .toString() method)
+             to set our own custom value for the ListCell to whatever we want it to be.
+             We then listen for changes to the text field and populate with results containing
+             the search bar text.
+             When the item is selcted, we have an event listener for this so we can do whatever
+             we want with the selcted Node (like get its ID and such).
+         */
         LinkedList<Node> nodes = Node.getNodes();
         JFXAutoCompletePopup<Node> acSuggestions = new JFXAutoCompletePopup<>();
         for (Node n : nodes) {
             acSuggestions.getSuggestions().add(n);
         }
-
         acSuggestions.setSuggestionsCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
             @Override
             public ListCell<Node> call(ListView<Node> param) {
@@ -42,13 +49,10 @@ public class AutocompleteSearchBar implements Initializable {
                 };
             }
         });
-
-
         // when item is selected
         acSuggestions.setSelectionHandler(event -> {
             acTextInput.setText(event.getObject().getShortName());
         });
-
         // listen for changes to text field and filter results
         acTextInput.textProperty().addListener(observable -> {
             acSuggestions.filter(string -> string.getShortName().toLowerCase().contains(acTextInput.getText().toLowerCase()));
@@ -58,6 +62,5 @@ public class AutocompleteSearchBar implements Initializable {
                 acSuggestions.show(acTextInput);
             }
         });
-        
     }
 }

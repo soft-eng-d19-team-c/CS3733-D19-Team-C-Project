@@ -10,9 +10,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-/**
- * @author Ryan LaMarche.
- */
 public class MainFXML extends Application {
     /**
      * Starting routine for base.MainFXML view.
