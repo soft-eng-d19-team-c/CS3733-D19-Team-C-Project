@@ -6,13 +6,21 @@ public class PathValue{
     private double totalCostFromStart;
     private double predictedCostToEnd;
     private double totalCost;
-    private boolean visted; // true if visted
+    private boolean visited; // true if visited
 
     public PathValue(Node node) {
         this.node = node;
         this.totalCostFromStart = 0;
         this.predictedCostToEnd = 0;
-        this.visted = false;
+        this.visited = false;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
     public PathValue(Node node, Node previousNode) {
@@ -21,7 +29,7 @@ public class PathValue{
         this.totalCostFromStart = Double.MAX_VALUE;
         this.predictedCostToEnd = Double.MAX_VALUE;
         this.totalCost = Double.MAX_VALUE;
-        this.visted = false;
+        this.visited = false;
     }
 
 
@@ -57,11 +65,11 @@ public class PathValue{
         this.predictedCostToEnd = predictedCostToEnd;
     }
 
-    public boolean visted() {
-        return visted;
+    public boolean visited() {
+        return visited;
     }
 
-    public void setVisted(boolean visted) {
-        this.visted = visted;
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 }

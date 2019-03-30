@@ -148,7 +148,7 @@ public class AStar{
 
     // This is a star
     public LinkedList<Node> findPath(Node startNode, Node endNode){
-        // keeps track of visted nodes in PathValue class
+        // keeps track of visited nodes in PathValue class
         // list of nodes kept in nodeList
 
         HashMap<Node, PathValue> pathValues = new HashMap<>();
@@ -161,8 +161,8 @@ public class AStar{
             PathValue currentPathValue = queue.remove();
             Node currentNode = currentPathValue.getNode();
 
-            if (!currentPathValue.visted()){ // makes sure the current node has not be
-                currentPathValue.setVisted(true);
+            if (!currentPathValue.visited()){ // makes sure the current node has not be
+                currentPathValue.setVisited(true);
 
                 if (currentNode.equals(endNode)) {
 
@@ -184,29 +184,27 @@ public class AStar{
                     }
 
                     PathValue path = pathValues.get(n);
-                    if (!path.visted()){
+                    if (!path.visited()){
                         double costOfPrevToStart;
                         double costFromPrev;
                         double predictedCostToEnd;
+                        double totalCost;
 
                         costOfPrevToStart = currentPathValue.getTotalCostFromStart();
                         costFromPrev = 0;
-                        predictedCostToEnd = 0;
+                        predictedCostToEnd = findEuclideanDistance(n, currentNode);
+                        totalCost = costOfPrevToStart + costFromPrev + predictedCostToEnd;
+                        //if this calculated total cost is less than a previous total cost, relax the node and set the parent
+                        if(totalCost < path.getTotalCost()){
+                            path.setTotalCostFromStart(costOfPrevToStart + costFromPrev);
+                            path.setPredictedCostToEnd(predictedCostToEnd);
+                            path.setTotalCost(totalCost);
+                            path.setPreviousNode(currentNode);
+                        }
                     }
                 }
-
             }
-
-
-
         }
-
-
-
-
-
-
-
         return null;
     }
 
@@ -231,13 +229,14 @@ public class AStar{
     private double findEuclideanDistance(Node a, Node b){
 
         int aX = a.getX();
-        int bX = a.getY();
+        int aY = a.getY();
+        int bX = b.getX();
+        int bY = b.getY();
 
-
-        int xDistance = this.x - endNode.getX();
-        int yDistance = this.y - endNode.getY();
+        int xDistance = aX - bX;
+        int yDistance = aY - bY;
         int distSquared = (xDistance*xDistance) + (yDistance*yDistance);
-        return sqrt(distSquared);
+        return sqrt(distSquared) + distanceBetweenFloors(a,b);
     }
 
 
