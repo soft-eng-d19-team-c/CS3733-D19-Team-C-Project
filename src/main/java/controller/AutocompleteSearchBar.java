@@ -19,14 +19,14 @@ public class AutocompleteSearchBar implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dt = new DataTable();
-        LinkedList<Node> nodes = dt.getProjectCNodesByFloor("L2");
+        LinkedList<Node> nodes = Node.getNodes();
         JFXAutoCompletePopup<String> acSuggestions = new JFXAutoCompletePopup<>();
         for (Node n : nodes) {
             acSuggestions.getSuggestions().add(n.getShortName());
         }
 
 //        acSuggestions.setSuggestionsCellFactory(//(Callback<ListView<String>, ListCell<String>>) param -> {
-////            return new JFXListCell<>();
+////  ///////          return new JFXListCell<>();
 ////            return new SimpleStringProperty();
 //            new PropertyValueFactory<Node, String>("toString");
 ////        });

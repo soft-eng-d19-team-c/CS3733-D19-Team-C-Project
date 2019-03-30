@@ -23,7 +23,7 @@ public final class Facade {
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
-        this.prevType = EnumScreenType.NODETABLE;
+        this.prevType = EnumScreenType.DASHBOARD;
     }
 
     public void setScreen(EnumScreenType type) {
