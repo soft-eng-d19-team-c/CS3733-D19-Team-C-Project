@@ -198,4 +198,52 @@ public class Node {
         }
         return nodes;
     }
+/*
+    public static LinkedList<Node> getNodesAndEdgesByFloor(String floor) {
+        Object[] result = new Object[2];
+//        HashMap<String, LinkedList<Edge>> adjacencyList;
+//        adjacencyList = new HashMap<>();
+        LinkedList<Edge> edges;
+        edges = new LinkedList<>();
+//        HashMap<String, Node> nodesList;
+//        nodesList = new HashMap<>();
+        LinkedList<Node> nodes;
+        nodes = new LinkedList<>();
+        String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE WHERE NODES.FLOOR = '"+floor+"'";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(getMeNodesAndEdges);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String nodeFloor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String type= rs.getString("NODETYPE");
+                nodes.add(new Node(nodeID, x, y, floor, building, type));
+                String edgeID = rs.getString("EDGEID");
+                String startNodeID = rs.getString("STARTNODE");
+                String endNodeID = rs.getString("ENDNODE");
+                edges.add(new Edge(edgeID, startNodeID, endNodeID));
+//                Edge newEdge;
+//                if (nodeID.equals(startNodeID))
+//                    newEdge = new Edge(edgeID, startNodeID, endNodeID);
+//                else
+//                    newEdge = new Edge(edgeID, endNodeID, startNodeID);
+//                if (adjacencyList.containsKey(nodeID)) {
+//                    adjacencyList.get(nodeID).add(newEdge);
+//                } else {
+//                    LinkedList<Edge> newEdgeList = new LinkedList<>();
+//                    newEdgeList.add(newEdge);
+//                    adjacencyList.put(nodeID, newEdgeList);
+//                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        result[0] = nodes;
+        result[1] = edges;
+        return result;
+    }
+ */
 }

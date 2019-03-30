@@ -7,7 +7,7 @@ public class Main {
     public static Database database;
     public static User user;
     public static void main(String[] args) {
-        database = new Database();
+        database = new Database(true);
         user = new User("username@example.com", "guest");
         MainFXML app = new MainFXML();
         app.main(args);
