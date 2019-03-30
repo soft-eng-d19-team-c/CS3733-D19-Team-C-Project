@@ -20,6 +20,7 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void directionButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.FINDPATH);
     }
 
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
@@ -27,7 +28,7 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void findRoomButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.SEARCH);
+        Main.screenController.setScreen(EnumScreenType.SELECTLOCATION);
     }
 
     public void employeeLoginButtonClick(ActionEvent actionEvent) {

@@ -8,6 +8,8 @@ public enum EnumScreenType {
     DASHBOARD("/views/dashboard.fxml"),
     SEARCH("/views/autocompleteSearchBar.fxml"),
     LOGIN("/views/login screen example.fxml"),
+    FINDPATH("/views/findpath.fxml"),
+    SELECTLOCATION("/views/selectlocation.fxml"),
     REQUESTSERVICE("/views/requestServiceView.fxml");
 
     protected String path;
