@@ -8,6 +8,9 @@ import static java.lang.Integer.parseInt;
 
 public final class Database {
     Connection connection;
+    public Database() {
+        this(false);
+    }
     public Database(boolean importData) {
         System.out.println("Attempting to connect to the embedded database...");
         try {
