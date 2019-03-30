@@ -31,5 +31,6 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void employeeLoginButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.LOGIN);
     }
 }

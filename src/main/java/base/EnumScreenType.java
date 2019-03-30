@@ -7,6 +7,7 @@ public enum EnumScreenType {
     DOWNLOADCSV("/views/downloadscreen.fxml"),
     DASHBOARD("/views/dashboard.fxml"),
     SEARCH("/views/autocompleteSearchBar.fxml"),
+    LOGIN("/views/login screen example.fxml"),
     REQUESTSERVICE("/views/requestServiceView.fxml");
 
     protected String path;
