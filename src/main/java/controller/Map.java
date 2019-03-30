@@ -26,7 +26,6 @@ import model.Edge;
 import model.Node;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -45,7 +44,7 @@ public class Map extends Controller implements Initializable {
 
     private LinkedList<Node> nodeList;
 
-    private HashMap<String, Edge> edgeList;
+    private LinkedList<Edge> edgeList;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -68,7 +67,7 @@ public class Map extends Controller implements Initializable {
             Color c = new Color(0,0,0,1.0);
             bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
             dancePartyBtn.setTextFill(new Color(1, 1, 1, 1.0));
-            for (Edge e : edgeList.values()){
+            for (Edge e : edgeList){
                 Node startNode = dt.getDataById(e.getStartNode());
                 Node endNode = dt.getDataById(e.getEndNode());
                 if (startNode != null && endNode != null && startNode.getFloor().equals(endNode.getFloor())){
@@ -123,7 +122,7 @@ public class Map extends Controller implements Initializable {
         Platform.runLater(() -> {
             dt = new DataTable();
             nodeList = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
-//            edgeList = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
+            edgeList = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
             dancePartyBtn.setSelected(false);
             drawNodes();
         });
@@ -148,7 +147,7 @@ public class Map extends Controller implements Initializable {
             imInPane.getChildren().add(circle);
         }
 
-        for (Edge e : edgeList.values()){
+        for (Edge e : edgeList){
             Node startNode = dt.getDataById(e.getStartNode());
             Node endNode = dt.getDataById(e.getEndNode());
 
