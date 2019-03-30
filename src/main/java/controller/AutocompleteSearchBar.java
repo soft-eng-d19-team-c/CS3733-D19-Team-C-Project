@@ -17,6 +17,12 @@ import java.util.ResourceBundle;
 public class AutocompleteSearchBar implements Initializable {
     @FXML
     private JFXTextField acTextInput;
+    @FXML
+    private JFXTextField nodeID;
+
+    public String getNodeID() {
+        return nodeID.getText();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,7 +49,7 @@ public class AutocompleteSearchBar implements Initializable {
                     public void updateItem(Node item, boolean empty) {
                         super.updateItem(item, empty);
                         if(item!=null && !empty){
-                            setGraphic(new Label(item.getShortName()));
+                            setGraphic(new Label(item.getLongName() + " - " + item.getBuilding()));
                         }
                     }
                 };
@@ -52,6 +58,7 @@ public class AutocompleteSearchBar implements Initializable {
         // when item is selected
         acSuggestions.setSelectionHandler(event -> {
             acTextInput.setText(event.getObject().getShortName());
+            nodeID.setText(event.getObject().getID());
         });
         // listen for changes to text field and filter results
         acTextInput.textProperty().addListener(observable -> {

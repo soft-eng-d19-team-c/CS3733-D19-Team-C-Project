@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 <AnchorPane fx:id="selectview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Selectlocation">
    <children>
+       <JFXButton onAction="#searchLocation" text="Button" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <ImageView fitHeight="81.0" fitWidth="73.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/icon.png" />
@@ -29,8 +27,7 @@
 <!--                  <Image url="@../img/searchicon.png" />-->
                </image>
             </ImageView>
-            <TextField prefHeight="25.0" prefWidth="374.0" />
-            <ChoiceBox fx:id="DROPDOWN" prefHeight="25.0" prefWidth="0.0" />
+            <fx:include fx:id="search" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
       <ImageView fitHeight="73.0" fitWidth="73.0" layoutX="81.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
