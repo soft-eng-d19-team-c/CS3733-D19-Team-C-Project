@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 public class Selectlocation extends Controller implements Initializable {
     @Override
     public void init(URL location, ResourceBundle resources) {
-
+        initialize(location, resources);
     }
 
     @Override
