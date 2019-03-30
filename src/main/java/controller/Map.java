@@ -9,10 +9,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -139,13 +141,71 @@ public class Map extends Controller implements Initializable {
         imInPane.getChildren().remove(1, imInPane.getChildren().size());
         double mapX = mapImg.getLayoutX();
         double mapY = mapImg.getLayoutY();
+
+
+        final double[] orgSceneX = new double[1];
+        final double[] orgSceneY = new double[1];
+
+        orgSceneX[0] = -1;
+        orgSceneY[0] = -1;
+
         for (Node n : nodeList){
             Circle circle = new Circle();
-            circle.setCenterX(mapX + n.getX()/4.0);
-            circle.setCenterY(mapY + n.getY()/4.0);
-            circle.setRadius(3.0);
+            double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+            circle.setCenterX(mapX + n.getX()/mapScale);
+            circle.setCenterY(mapY + n.getY()/mapScale);
+            circle.setRadius(7.0);
+            circle.setCursor(Cursor.HAND);
+            circle.getProperties().put("node", n);
+/*
+            circle.setOnMouseClicked((MouseEvent me) -> {
+                System.out.println("scene  x: " + me.getSceneX());
+                System.out.println("       x: " + me.getX());
+                System.out.println("screen x: " + me.getScreenX());
+                System.out.println("       z: " + me.getZ());
+                orgSceneX[0] = me.getSceneX();
+                orgSceneY[0] = me.getSceneY();
+                circle.toFront();
+            });
+
+ */
+            circle.setOnMouseDragged((MouseEvent me) -> {
+                if (orgSceneX[0] == -1) {
+                    orgSceneX[0] = me.getSceneX();
+                }
+                if (orgSceneY[0] == -1) {
+                    orgSceneY[0] = me.getSceneY();
+                }
+                circle.toFront();
+                double offsetX = me.getSceneX() - orgSceneX[0];
+                double offsetY = me.getSceneY() - orgSceneY[0];
+
+                circle.setCenterX(circle.getCenterX() + offsetX);
+                circle.setCenterY(circle.getCenterY() + offsetY);
+
+                orgSceneX[0] = me.getSceneX();
+                orgSceneY[0] = me.getSceneY();
+            });
             imInPane.getChildren().add(circle);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         for (Edge e : edgeList){
             Node startNode = dt.getDataById(e.getStartNode());
