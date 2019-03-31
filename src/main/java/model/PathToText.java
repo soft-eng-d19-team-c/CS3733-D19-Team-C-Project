@@ -39,14 +39,14 @@ public class PathToText {
         // Find your Account Sid and Auth Token at twilio.com/console
         String ACCOUNT_SID =
                 "ACc2d1c6c918a7391c72ce1bb4187e5228";
-        String AUTH_TOKEN = // Not posting this on github for now I get charged one cent every time a text is send. 
+        String AUTH_TOKEN = // Not posting this on github for now I get charged one cent every time a text is send.
                 "";
 
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
             Message message = Message
                     .creator(new PhoneNumber("+17746411640"), // to
-                            new PhoneNumber("+17742293016"), // from
+                            new PhoneNumber("+17742293016"), // from this is the phone number I bought
                             text)
                     .create();
 
