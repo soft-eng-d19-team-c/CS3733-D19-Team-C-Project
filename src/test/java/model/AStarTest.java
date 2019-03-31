@@ -17,6 +17,8 @@ public class AStarTest {
     Database db;
     HashMap<String, LinkedList<Edge>> adjacencyList; // <NodeID, [Edge1, Edge2, ...]>
     HashMap<String, Node> nodesList; // <NodeID, Node>
+    Node node1;
+    Node node2;
 
     @SuppressWarnings("Duplicates")
     @Before
@@ -58,17 +60,34 @@ public class AStarTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        node1 = nodesList.get("WHALL00602");
+        node2 = nodesList.get("EHALL03601");
     }
 
     @Test
     public void compareAStarAndDijkstra(){
         AStar pathFinder = new AStar(adjacencyList, nodesList);
 
-        LinkedList<Node> aStar =  pathFinder.findPath("WHALL00602", "EHALL03601");
-        LinkedList<Node> dijkstra =  pathFinder.dijkstra("WHALL00602", "EHALL03601");
+        LinkedList<Node> aStarSameBuildingDiffFloor =  pathFinder.findPath("WHALL00602", "EHALL03601");
+        LinkedList<Node> dijkstraSameBuildingDiffFloor =  pathFinder.dijkstra("WHALL00602", "EHALL03601");
 
-        assertEquals(aStar, dijkstra);
+        LinkedList<Node> aStarSameBuildingSameFloor =  pathFinder.findPath("DCONF00102", "DEXIT00102");
+        LinkedList<Node> dijkstraSameBuildingSameFloor =  pathFinder.dijkstra("DCONF00102", "DEXIT00102");
+
+        LinkedList<Node> aStarSameNode =  pathFinder.findPath("DEXIT00102", "DEXIT00102");
+        LinkedList<Node> dijkstraSameNode =  pathFinder.dijkstra("DEXIT00102", "DEXIT00102");
+
+        LinkedList<Node> aStarL1 =  pathFinder.findPath("CHALL014L1", "CREST002L1");
+        LinkedList<Node> dijkstraL1 =  pathFinder.dijkstra("CHALL014L1", "CREST002L1");
+
+        LinkedList<Node> aStarWithNodes =  pathFinder.findPath(node1, node2);
+        LinkedList<Node> dijkstraWithNodes =  pathFinder.dijkstra(node1, node2);
+
+        assertEquals(aStarSameBuildingDiffFloor, dijkstraSameBuildingDiffFloor);
+        assertEquals(aStarSameBuildingSameFloor, dijkstraSameBuildingSameFloor);
+        assertEquals(aStarSameNode, dijkstraSameNode);
+        assertEquals(aStarL1, dijkstraL1);
+        assertEquals(aStarWithNodes, dijkstraWithNodes);
     }
 
 }
