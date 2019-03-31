@@ -157,6 +157,7 @@ public class Node {
         return 0;
     }
 
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getNodesByFloor(String floor) {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES WHERE FLOOR = '" + floor + "'";
@@ -180,6 +181,7 @@ public class Node {
         return nodes;
     }
 
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getNodes() {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES";
