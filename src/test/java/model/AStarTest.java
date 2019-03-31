@@ -19,14 +19,17 @@ public class AStarTest {
     HashMap<String, Node> nodesList; // <NodeID, Node>
     Node node1;
     Node node2;
+    AStar astar;
 
     @SuppressWarnings("Duplicates")
     @Before
     public void setUp() throws Exception {
-        db = new Database(true);
+        db = new Database(false);
+
 
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
+        this.astar = new AStar(adjacencyList, nodesList);
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
         try {
             Statement stmt = db.getConnection().createStatement();
@@ -90,4 +93,20 @@ public class AStarTest {
         assertEquals(aStarWithNodes, dijkstraWithNodes);
     }
 
+    @Test
+    public void longPath(){
+        AStar pathFinder = new AStar(adjacencyList, nodesList);
+
+        LinkedList<Node> astar =  pathFinder.findPath("ADEPT00301", "DHALL00402");
+        LinkedList<Node> dijkstra=  pathFinder.dijkstra("ADEPT00301", "DHALL00402");
+
+        assertEquals(astar, dijkstra);
+
+
+        astar =  pathFinder.findPath("DELEV00A02", "ACONF00103");
+        dijkstra =  pathFinder.dijkstra("DELEV00A02", "ACONF00103");
+
+        assertEquals(astar, dijkstra);
+    }
+    
 }
