@@ -2,10 +2,8 @@ package model;
 
 import base.Main;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import static java.lang.Math.sqrt;
@@ -83,11 +81,26 @@ public class Node {
     }
 
     public void setFloor(String floor) {
-        this.floor = floor;
+        // error checks for user entering floor as lowercase l
+        if (floor.substring(0,1).equals("l")) {
+            floor = "L" + floor.substring(1,2);
+        }
+        String[] floors = {"L2", "L1", "1", "2", "3"};
+        if (Arrays.asList(floors).contains(floor)) {
+            this.floor = floor;
+        } else {
+            System.out.println("Error node.setFloor: did not enter a valid floor");
+        }
     }
 
     public void setBuilding(String building) {
-        this.building = building;
+        String[] buildings = {"15 Francis" ,"45 Francis", "BTM", "Shapiro", "Tower"};
+        if (Arrays.asList(buildings).contains(building)) {
+            this.building = building;
+        } else {
+            System.out.println("Error node.setBuilding: did not enter a valid floor");
+        }
+
     }
 
     public void setNodeType(String nodeType) {

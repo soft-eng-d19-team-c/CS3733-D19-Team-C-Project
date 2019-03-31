@@ -73,6 +73,13 @@ public class AStar {
         this(null, null, false);
     }
 
+    // ONLY USED FOR TESTING
+    // TESTS CANNOT USE MAIN SO IT IMPORTS THE DATABASE IN TEST
+    public AStar(HashMap<String, LinkedList<Edge>> adjacencyList, HashMap<String, Node> nodesList){
+        this.adjacencyList = adjacencyList;
+        this.nodesList = nodesList;
+    }
+
     @SuppressWarnings("Duplicates")
     public LinkedList<Node> dijkstra(Node startNode, Node endNode) {
         // keeps track of visited nodes in PathValue class
