@@ -1,6 +1,10 @@
 package base;
 
 import model.AStar;
+import model.Node;
+import model.PathToText;
+
+import java.util.LinkedList;
 
 /**
  * @author Ryan LaMarche.
@@ -12,11 +16,6 @@ public class Main {
         database = new Database(false);
         MainFXML app = new MainFXML();
         app.main(args);
-
-
-        // astar test
-        AStar astar = new AStar();
-        astar.findPath("AELEV00S02", "BHALL02302");
 
     }
 }

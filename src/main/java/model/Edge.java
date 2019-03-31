@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
-import static java.lang.Math.sqrt;
-
 public class Edge {
     private String edgeId;
     private String startNode;
