@@ -18,16 +18,16 @@ public class ServiceRequestController extends Controller implements Initializabl
     //private TextField type;
 
 
-    @FXML private String type;
-    @FXML private Node location;
-    @FXML private String description;
+    @FXML private String issueText;
+    @FXML private Node autoCompleteText;
+    @FXML private String descriptionText;
     @FXML private Date dateTimeSubmitted;
     @FXML private Date dateTimeResolved;
-    @FXML private boolean isComplete;
+    @FXML private boolean isComplete = false;
     @FXML private User completedBy;
     @FXML private User requestedBy;
 
-    ServiceRequest serviceRequest = new ServiceRequest(type, location,  description, dateTimeSubmitted, dateTimeResolved, isComplete,completedBy, requestedBy);
+    ServiceRequest serviceRequest = new ServiceRequest(issueText, autoCompleteText,  descriptionText, dateTimeSubmitted, dateTimeResolved, isComplete,completedBy, requestedBy);
 
 
 
