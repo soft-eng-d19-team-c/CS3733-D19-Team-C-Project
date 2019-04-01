@@ -53,12 +53,10 @@ public class Pathfinding extends Controller implements Initializable {
     @FXML private Window dialog2;
     @FXML private AutocompleteSearchBar searchController_destController;
 
-
     private DataTable dt;
 
-    private LinkedList<Node> nodeList;
-
-    private HashMap<String, Edge> edgeList;
+    private LinkedList<Node> node_onPath;
+    private HashMap<String, Edge> edge_onPath;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -67,12 +65,21 @@ public class Pathfinding extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*
-        String startNode = (String) Main.screenController.getData("startNode");
-        String endNode = (String) Main.screenController.getData("endNode");
-        star = new AStar(startNode, endNode);
-        astarResult = star.findPath();
 
-         */
+
+/*        String startNode = (String) Main.screenController.getData("startNode");
+        String endNode = (String) Main.screenController.getData("endNode");
+        Node s =
+        star = new AStar(startNode, endNode, true);
+        astarResult = star.findPath(startNode);
+*/
+
+    }
+
+    public void gobtnclick(ActionEvent actionEvent) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("orgi_nodeID", searchController_origController.getNodeID());
+        data.put("dest_nodeID", searchController_destController.getNodeID());
+        Main.screenController.setScreen(EnumScreenType.DASHBOARD, data);
     }
 }
