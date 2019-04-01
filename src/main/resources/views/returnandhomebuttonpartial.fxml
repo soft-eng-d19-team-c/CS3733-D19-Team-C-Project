@@ -21,12 +21,12 @@
          <children>
             <ImageView fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../img/HomeButton.png" />
+                  <Image url="@../img/ReturnButton.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="100.0" fitWidth="100.0" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../img/ReturnButton.png" />
+                  <Image url="@../img/HomeButton.png" />
                </image>
             </ImageView>
             <JFXButton fx:id="backButton" maxHeight="200.0" maxWidth="200.0" onAction="#backButtonClick" text=" " GridPane.halignment="CENTER" />
