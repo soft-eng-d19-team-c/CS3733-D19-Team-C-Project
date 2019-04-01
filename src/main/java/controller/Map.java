@@ -21,13 +21,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import model.DataTable;
 import model.Edge;
 import model.Node;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Map extends Controller implements Initializable {
@@ -39,12 +39,6 @@ public class Map extends Controller implements Initializable {
     private Pane imInPane;
     @FXML
     private ToggleButton dancePartyBtn;
-
-    private DataTable dt;
-
-    private HashMap<String, Node> nodeList;
-
-    private HashMap<String, LinkedList<Edge>> adjacencyList;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -129,7 +123,6 @@ public class Map extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
         Platform.runLater(() -> {
-            dt = new DataTable();
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
             edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
@@ -150,65 +143,77 @@ public class Map extends Controller implements Initializable {
         double mapX = mapImg.getLayoutX();
         double mapY = mapImg.getLayoutY();
 
-
         final double[] orgSceneX = new double[1];
         final double[] orgSceneY = new double[1];
 
         for (Node n : nodes){
+            generateNode(n, orgSceneX, orgSceneY, mapX, mapY);
+        }
+        for (Edge e : edges){
+            generateEdge(e);
+        }
+    }
+
+    private void generateEdge(Edge e) {
+        if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
+            return; // this edge is not on this floor so we do not draw it
+        }
+        Line line = new Line();
+
+        line.startXProperty().bind(nodeCircles.get(e.getStartNode()).centerXProperty());
+        line.startYProperty().bind(nodeCircles.get(e.getStartNode()).centerYProperty());
+        line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
+        line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
+
+        line.setStroke(new Color(0,0,0,1));
+
+        imInPane.getChildren().add(line);
+    }
+
+    private void generateNode(Node n) {
+        generateNode(n, new double[1], new double[1], mapImg.getLayoutX(), mapImg.getLayoutY());
+    }
+
+    private void generateNode(Node n, double[] orgSceneX, double[] orgSceneY, double mapX, double mapY) {
+        orgSceneX[0] = -1;
+        orgSceneY[0] = -1;
+        Circle circle = new Circle();
+        double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+        circle.setCenterX(mapX + n.getX()/mapScale);
+        circle.setCenterY(mapY + n.getY()/mapScale);
+        circle.setRadius(3.0);
+        circle.setCursor(Cursor.HAND);
+        circle.getProperties().put("node", n);
+
+        circle.setOnMouseDragged((MouseEvent me) -> {
+            if (orgSceneX[0] == -1) {
+                orgSceneX[0] = me.getSceneX();
+            }
+            if (orgSceneY[0] == -1) {
+                orgSceneY[0] = me.getSceneY();
+            }
+            circle.toFront();
+            double offsetX = me.getSceneX() - orgSceneX[0];
+            double offsetY = me.getSceneY() - orgSceneY[0];
+
+            circle.setCenterX(circle.getCenterX() + offsetX);
+            circle.setCenterY(circle.getCenterY() + offsetY);
+
+            orgSceneX[0] = me.getSceneX();
+            orgSceneY[0] = me.getSceneY();
+        });
+
+        circle.setOnMouseReleased((MouseEvent me) -> {
             orgSceneX[0] = -1;
             orgSceneY[0] = -1;
-            Circle circle = new Circle();
-            double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-            circle.setCenterX(mapX + n.getX()/mapScale);
-            circle.setCenterY(mapY + n.getY()/mapScale);
-            circle.setRadius(3.0);
-            circle.setCursor(Cursor.HAND);
-            circle.getProperties().put("node", n);
+        });
 
-            circle.setOnMouseDragged((MouseEvent me) -> {
-                if (orgSceneX[0] == -1) {
-                    orgSceneX[0] = me.getSceneX();
-                }
-                if (orgSceneY[0] == -1) {
-                    orgSceneY[0] = me.getSceneY();
-                }
-                circle.toFront();
-                double offsetX = me.getSceneX() - orgSceneX[0];
-                double offsetY = me.getSceneY() - orgSceneY[0];
-
-                circle.setCenterX(circle.getCenterX() + offsetX);
-                circle.setCenterY(circle.getCenterY() + offsetY);
-
-                orgSceneX[0] = me.getSceneX();
-                orgSceneY[0] = me.getSceneY();
-            });
-
-            circle.setOnMouseReleased((MouseEvent me) -> {
-                orgSceneX[0] = -1;
-                orgSceneY[0] = -1;
-            });
-
-            imInPane.getChildren().add(circle);
-            nodeCircles.put(n.getID(), circle);
-        }
-
-        for (Edge e : edges){
-                Line line = new Line();
-
-                line.startXProperty().bind(nodeCircles.get(e.getStartNode()).centerXProperty());
-                line.startYProperty().bind(nodeCircles.get(e.getStartNode()).centerYProperty());
-                line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
-                line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
-
-                line.setStroke(new Color(0,0,0,1));
-
-                imInPane.getChildren().add(line);
-            }
+        imInPane.getChildren().add(circle);
+        nodeCircles.put(n.getID(), circle);
     }
 
 
     public void addNodeButtonClick(ActionEvent e){
-        // Main.screenController.setScreen(EnumScreenType.); needs a view
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
         mapImg.addEventHandler(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
@@ -235,8 +240,10 @@ public class Map extends Controller implements Initializable {
     EventHandler addNodeHandler = new EventHandler<MouseEvent>(){
         public void handle(javafx.scene.input.MouseEvent me){
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                Circle circle = new Circle(me.getX(), me.getY(), 10, Color.BLUE);
-                imInPane.getChildren().add(circle);
+                double randID = new Random().nextDouble();
+                double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale));
+                generateNode(n);
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
             }
