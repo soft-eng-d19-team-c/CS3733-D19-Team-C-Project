@@ -18,8 +18,6 @@ public class Node {
     private String longName;
     private String shortName;
 
-    //private
-
 
     public String getID() {
         return ID;
