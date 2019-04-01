@@ -6,76 +6,61 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Dashboard">
    <children>
-      <ImageView fitHeight="1225.0" fitWidth="1930.0" layoutY="-168.0">
-         <image>
-            <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/New%20Dashboard%20Icons.png" />
-         </image>
-      </ImageView>
-      <VBox layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField alignment="CENTER" editable="false" focusColor="#ffffff00" labelFloat="true" scaleShape="false" text="How May We Assist You?" unFocusColor="#ffffff00" VBox.vgrow="ALWAYS">
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" labelFloat="true" text="How May We Assist You?" unFocusColor="#4d4d4d00">
                <font>
-                  <Font name="SansSerif Bold" size="96.0" />
+                  <Font size="100.0" />
                </font>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
             </JFXTextField>
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <GridPane alignment="CENTER" hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="50.0" VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=" " textAlignment="CENTER" HBox.hgrow="SOMETIMES">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="SOMETIMES">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../img/MapImage.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../img/employeeLoginImage.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../img/FindRoomImage.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../img/serviceRequestImage.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="mapButton" maxHeight="400.0" maxWidth="800.0" onAction="#mapButtonClick" text=" " GridPane.halignment="CENTER" />
+                  <JFXButton fx:id="findRoomButton" alignment="CENTER" maxHeight="400.0" maxWidth="800.0" onAction="#findRoomButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <JFXButton fx:id="serviceRequestButton" maxHeight="400.0" maxWidth="800.0" onAction="#serviceRequestButtonClick" text=" " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="employeeLoginButton" maxHeight="400.0" maxWidth="800.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                  </JFXButton>
-                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                  </JFXButton>
-               </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </HBox>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </GridPane>
          </children>
       </VBox>
-      <ImageView fitHeight="148.0" fitWidth="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/BWHealth%20Logo.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -8,6 +8,9 @@ import static java.lang.Integer.parseInt;
 
 public final class Database {
     Connection connection;
+    public Database() {
+        this(false);
+    }
     public Database(boolean importData) {
         System.out.println("Attempting to connect to the embedded database...");
         try {
@@ -44,7 +47,7 @@ public final class Database {
             String EmployeesTableUINDEX = "create unique index EMPLOYEES_USERNAME_uindex on EMPLOYEES (USERNAME)";
             String EmployeesTablePK = "alter table EMPLOYEES add constraint EMPLOYEES_pk primary key (USERNAME)";
             // create servicerequests table
-            String createServiceRequestsTable = "create table SERVICEREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint SERVICEREQUESTS_NODES_NODEID_fk references NODES (NODEID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(32) constraint SERVICEREQUESTS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
+            String createServiceRequestsTable = "create table SERVICEREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint SERVICEREQUESTS_NODES_NODEID_fk references NODES (NODEID) on update no action on delete cascade, DESCRIPTION varchar(2000), TYPE varchar(255), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(32) constraint SERVICEREQUESTS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String ServiceRequestsTableUINDEX = "create unique index SERVICEREQUESTS_ID_uindex on SERVICEREQUESTS (ID)";
             String ServiceRequestsTablePK = "alter table SERVICEREQUESTS add constraint SERVICEREQUESTS_pk primary key (ID)";
             // create bookings table
@@ -81,8 +84,8 @@ public final class Database {
             // read in data from CSVs to build the database
 
             // import nodes
-            System.out.println("Attempting to import nodes from /data/nodesv2.csv...");
-            URL csvFile = getClass().getResource("/data/nodesv2.csv");
+            System.out.println("Attempting to import nodes from /data/nodesv3.csv...");
+            URL csvFile = getClass().getResource("/data/nodesv3.csv");
             BufferedReader br = null;
             String line;
             String cvsSplitBy = ",";
@@ -152,8 +155,8 @@ public final class Database {
 
             // import edges
 
-            System.out.println("Attempting to import edges from /data/edgesv2.csv...");
-            csvFile = getClass().getResource("/data/edgesv2.csv");
+            System.out.println("Attempting to import edges from /data/edgesv3.csv...");
+            csvFile = getClass().getResource("/data/edgesv3.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
                 br.readLine(); // throw away header
