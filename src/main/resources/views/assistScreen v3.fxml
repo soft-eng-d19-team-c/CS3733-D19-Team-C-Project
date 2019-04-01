@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,30 +32,33 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView accessibleRole="CHECK_BOX" fitHeight="101.0" fitWidth="200.0" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/MapImage.png" />
+                        <Image url="@../img/MapImage.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <image>
+                        <Image url="@../img/FindRoomImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <image>
-                        <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/employeeLoginImage.png" />
+                        <Image url="@../img/serviceRequestImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <image>
-                        <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/FindRoomImage.png" />
+                        <Image url="@../img/employeeLoginImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <image>
-                        <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/serviceRequestImage.png" />
-                     </image>
-                  </ImageView>
+                  <JFXButton fx:id="employeeLoginButton" maxHeight="400.0" maxWidth="800.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <JFXButton fx:id="mapButton" maxHeight="400.0" maxWidth="800.0" onAction="#mapButtonClick" text=" " GridPane.halignment="CENTER" />
                   <JFXButton fx:id="findRoomButton" alignment="CENTER" maxHeight="400.0" maxWidth="800.0" onAction="#findRoomButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <JFXButton fx:id="serviceRequestButton" maxHeight="400.0" maxWidth="800.0" onAction="#serviceRequestButtonClick" text=" " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <JFXButton fx:id="employeeLoginButton" maxHeight="400.0" maxWidth="800.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets bottom="20.0" />

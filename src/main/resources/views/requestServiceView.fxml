@@ -18,12 +18,12 @@
                   <Insets bottom="20.0" left="210.0" />
                </VBox.margin>
                <font>
-                  <Font size="68.0" />
+                  <Font size="80.0" />
                </font>
             </JFXTextField>
             <JFXTextField fx:id="type" focusColor="#b82020" promptText="What Is The Issue? (only if its a Spill tho)">
                <VBox.margin>
-                  <Insets bottom="15.0" left="40.0" right="40.0" top="40.0" />
+                  <Insets bottom="15.0" left="40.0" right="40.0" />
                </VBox.margin>
                <font>
                   <Font size="45.0" />
