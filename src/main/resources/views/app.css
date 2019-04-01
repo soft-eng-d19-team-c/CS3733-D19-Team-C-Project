@@ -17,6 +17,11 @@
 .text-white {
     -fx-text-fill: -white;
 }
+.h2{
+    -fx-font-style: italic;
+    -fx-font-size: 3em;
+}
+
 .h1{
     -fx-font-size: 7em;
 }
