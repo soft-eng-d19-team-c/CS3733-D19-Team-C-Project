@@ -1,6 +1,8 @@
 package model;
 
 import base.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.Date;
@@ -19,7 +21,7 @@ public class ServiceRequest {
     private User requestedBy;
     private int ID;
 
-    public ServiceRequest(String type, String nodeID, String description) {
+    public ServiceRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeResolved, String nodeID) {
         this.type = type;
         this.nodeID = nodeID;
         this.description = description;
@@ -103,5 +105,34 @@ public class ServiceRequest {
         return executed;
 
     }
+
+
+    public static ObservableList<ServiceRequest> getAllServiceRequests() {
+
+        ObservableList<ServiceRequest> requests =  FXCollections.observableArrayList();
+
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            String str = "SELECT * FROM SERVICEREQUESTS";
+            ResultSet rs = stmt.executeQuery(str);
+
+            while(rs.next()) {
+                int ID = rs.getInt("ID");
+                String description = rs.getString("description");
+                String type = rs.getString("type");
+                Date dateTimeSubmitted = rs.getDate("submitted time");
+                Date dateTimeResolved = rs.getDate("resolved time");
+                String nodeID = rs.getString("nodeID");
+                ServiceRequest theServiceRequest = new ServiceRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
+                requests.add(theServiceRequest);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return requests;
+
+
+    }
+
 
 }
