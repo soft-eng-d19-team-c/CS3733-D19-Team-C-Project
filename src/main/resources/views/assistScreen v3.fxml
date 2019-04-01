@@ -3,9 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,35 +27,41 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView accessibleRole="CHECK_BOX" fitHeight="101.0" fitWidth="200.0" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/MapImage.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                     <image>
-                        <Image url="@../img/FindRoomImage.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../img/serviceRequestImage.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="101.0" fitWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../img/employeeLoginImage.png" />
-                     </image>
-                  </ImageView>
-                  <JFXButton fx:id="employeeLoginButton" maxHeight="400.0" maxWidth="800.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <JFXButton fx:id="mapButton" maxHeight="400.0" maxWidth="800.0" onAction="#mapButtonClick" text=" " GridPane.halignment="CENTER" />
-                  <JFXButton fx:id="findRoomButton" alignment="CENTER" maxHeight="400.0" maxWidth="800.0" onAction="#findRoomButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <JFXButton fx:id="serviceRequestButton" maxHeight="400.0" maxWidth="800.0" onAction="#serviceRequestButtonClick" text=" " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="employeeLoginButton" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#employeeLoginButtonClick" style="-fx-background-color: gray;" text="Employee Login" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="50.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="mapButton" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#mapButtonClick" style="-fx-background-color: gray;" text="Map" textFill="WHITE" GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="50.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="findRoomButton" alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#findRoomButtonClick" style="-fx-background-color: gray;" text=" Find a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="50.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="serviceRequestButton" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#serviceRequestButtonClick" style="-fx-background-color: gray;" text="Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="50.0" />
+                     </font></JFXButton>
+                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="View Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Book a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Edit Map" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </JFXButton>
                </children>
                <padding>
                   <Insets bottom="20.0" />
