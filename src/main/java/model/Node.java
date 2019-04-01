@@ -3,7 +3,10 @@ package model;
 import base.Main;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 
 public class Node {
     private String ID;
@@ -43,6 +46,16 @@ public class Node {
         this.nodeType = nodeType;
         this.longName = longName;
         this.shortName = shortName;
+    }
+    public Node(String ID, int x, int y, String floor, String building, String nodeType) {
+        this.ID = ID;
+        this.x = x;
+        this.y = y;
+        this.floor = floor;
+        this.building = building;
+        this.nodeType = nodeType;
+        this.longName = null;
+        this.shortName = null;
     }
 
     public String getFloor() {
@@ -118,7 +131,7 @@ public class Node {
     public int update() {
         try {
             //Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
+            String str = "UPDATE NODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
                     "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setInt(1, this.getX());
@@ -138,5 +151,51 @@ public class Node {
         }
 
         return 0;
+    }
+
+    public static LinkedList<Node> getNodesByFloor(String floor) {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM NODES WHERE FLOOR = '" + floor + "'";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String nodeFloor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, nodeFloor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
+    }
+
+    public static LinkedList<Node> getNodes() {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM NODES";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, floor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
     }
 }

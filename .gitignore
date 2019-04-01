@@ -10,6 +10,3 @@ derby.log
 *.jar
 *.lock
 *.iml
-TeamC/db.lck
-TeamC/dbex.lck
-TeamC/log/*
