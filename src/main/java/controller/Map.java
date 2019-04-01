@@ -4,6 +4,7 @@ import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
@@ -11,6 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -204,8 +206,11 @@ public class Map extends Controller implements Initializable {
             }
     }
 
+
     public void addNodeButtonClick(ActionEvent e){
         // Main.screenController.setScreen(EnumScreenType.); needs a view
+        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImg.addEventHandler(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
     public void addPathButtonClick(ActionEvent e){
@@ -226,6 +231,17 @@ public class Map extends Controller implements Initializable {
 
         System.out.println("path deleted");
     }
+
+    EventHandler addNodeHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = new Circle(me.getX(), me.getY(), 10, Color.BLUE);
+                imInPane.getChildren().add(circle);
+                imInPane.getScene().setCursor(Cursor.DEFAULT);
+                mapImg.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+            }
+        }
+    };
 
 
 
