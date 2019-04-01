@@ -12,13 +12,13 @@
             <String fx:value="btn-sm" />
             <String fx:value="btn-primary" />
          </styleClass></Button>
-      <Button id="32.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnButtonClick" prefHeight="38.0" prefWidth="82.0" text="Return">
+      <Button id="return" layoutY="37.0" mnemonicParsing="false" onAction="#returnButtonClick" prefHeight="38.0" prefWidth="82.0" text="Return">
          <styleClass>
             <String fx:value="btn" />
             <String fx:value="btn-primary" />
             <String fx:value="btn-sm" />
          </styleClass></Button>
-      <Button id="32.0" layoutY="74.0" mnemonicParsing="false" onAction="#logOutButtonClick" prefHeight="38.0" prefWidth="82.0" text="LogOut">
+      <Button id="logout" layoutY="74.0" mnemonicParsing="false" onAction="#logOutButtonClick" prefHeight="38.0" prefWidth="82.0" text="LogOut">
          <styleClass>
             <String fx:value="btn" />
             <String fx:value="btn-secondary" />
