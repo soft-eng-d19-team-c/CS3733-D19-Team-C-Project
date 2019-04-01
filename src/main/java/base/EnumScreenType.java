@@ -11,7 +11,7 @@ public enum EnumScreenType {
     FINDPATH("/views/findpath.fxml"),
     SELECTLOCATION("/views/selectlocation.fxml"),
     REQUESTSERVICE("/views/requestServiceView.fxml"),
-    VIEWSERVICES("/views/ServiceRequestTable/New.fxml"),
+    VIEWSERVICES("/views/ServiceRequestTableNew.fxml"),
     BOOKROOM("/views/.../.fxml");
     //DEVMAP("/views/../");
 
