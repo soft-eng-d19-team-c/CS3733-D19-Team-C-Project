@@ -1,23 +1,33 @@
 package controller;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import base.EnumScreenType;
 import base.Main;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import model.Node;
 import model.ServiceRequest;
-
+import model.User;
+import javafx.fxml.FXML;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ServiceRequestController extends Controller implements Initializable {
 
-    @FXML private JFXTextField type;
-    @FXML private JFXTextArea description;
+    //@FXML
+    //private TextField type;
 
-    @FXML private AutocompleteSearchBar autoCompleteTextController;
+
+    @FXML private String type;
+    @FXML private Node location;
+    @FXML private String description;
+    @FXML private Date dateTimeSubmitted;
+    @FXML private Date dateTimeResolved;
+    @FXML private boolean isComplete;
+    @FXML private User completedBy;
+    @FXML private User requestedBy;
+
+    ServiceRequest serviceRequest = new ServiceRequest(type, location,  description, dateTimeSubmitted, dateTimeResolved, isComplete,completedBy, requestedBy);
 
 
 
@@ -32,8 +42,7 @@ public class ServiceRequestController extends Controller implements Initializabl
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {
-        ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
-        serviceRequest.insert();
+        serviceRequest.update();
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
