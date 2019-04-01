@@ -41,19 +41,19 @@ public class ServiceRequest {
 
     }
 
+    //Update service request once complete
     public boolean update(){
 
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, ISCOMPLETE = ? where SERVICEREQUESTID = this.ID";
-        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where SERVICEREQUESTID = this.ID";
+        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setBoolean(3, isComplete);
-            ps.setDate(4, sqlSubmitDate);
+            ps.setDate(3, sqlCompleteDate);
             executed = ps.execute(); //returns a boolean
         }
 
