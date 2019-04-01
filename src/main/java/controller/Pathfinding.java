@@ -1,39 +1,22 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.StrokeTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.stage.Window;
-import javafx.util.Duration;
+import model.AStar;
 import model.DataTable;
 import model.Edge;
-import model.Node;
-import model.AStar;
 import model.Node;
 
 import java.net.URL;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -64,20 +47,19 @@ public class Pathfinding extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
-
-/*        String startNode = (String) Main.screenController.getData("startNode");
-        String endNode = (String) Main.screenController.getData("endNode");
-        Node s =
-        star = new AStar(startNode, endNode, true);
-        astarResult = star.findPath(startNode);
-*/
-
     }
 
     public void gobtnclick(ActionEvent actionEvent) {
+        /*
+
+        I think here instead of switching screens, we just want to create a new AStar object and findPath
+        then display the path on the map. This will all happen on one page.
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("orgi_nodeID", searchController_origController.getNodeID());
         data.put("dest_nodeID", searchController_destController.getNodeID());
         Main.screenController.setScreen(EnumScreenType.DASHBOARD, data);
+
+         */
     }
 }
