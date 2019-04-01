@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import model.Node;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,6 +47,7 @@ public class EditNodeData extends Controller implements Initializable {
     public void backButtonClick(ActionEvent e) {
         Main.screenController.setScreen(EnumScreenType.NODETABLE);
     }
+
 
     public void saveButtonClick(ActionEvent e) {
         try {
@@ -96,5 +98,6 @@ public class EditNodeData extends Controller implements Initializable {
 
         });
     }
+
 
 }

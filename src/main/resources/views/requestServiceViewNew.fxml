@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServiceRequestController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="980.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1710.0" AnchorPane.topAnchor="0.0" />
+      <VBox alignment="CENTER" layoutX="140.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <fx:include fx:id="Buttons" source="partialButtons.fxml" />
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" labelFloat="true" text="Please Complete The Form To Notify Staff" unFocusColor="#4d4d4d00">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="210.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="80.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="type" focusColor="#b82020" promptText="What Is The Issue? (only if its a Spill tho)">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="40.0" right="40.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </JFXTextField>
+            <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+            <JFXTextArea fx:id="description" focusColor="#b82020" promptText="Description of the Issue">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </JFXTextArea>
+            <JFXButton fx:id="submitButton" alignment="CENTER" buttonType="RAISED" onAction="#submitButtonClick" style="-fx-background-color: green;" text="Submit to Facilities" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

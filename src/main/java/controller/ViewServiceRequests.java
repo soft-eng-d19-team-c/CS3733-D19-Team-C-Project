@@ -2,15 +2,24 @@ package controller;
 
 import base.EnumScreenType;
 import base.Main;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import model.ServiceRequest;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ViewServiceRequests extends Controller implements Initializable {
     //@FXML
     //private TextField type;
+    @FXML
+    private JFXTextField type;
+    @FXML private JFXTextArea description;
+
+    @FXML private AutocompleteSearchBar autoCompleteTextController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -23,13 +32,16 @@ public class ViewServiceRequests extends Controller implements Initializable {
     }
 
 
-    public void viewServicesbuttonClick(ActionEvent event) {
-        //Main.screenController.setScreen(EnumScreenType.);
+    public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
+
+        ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
+        serviceRequest.update();
+        Main.screenController.setScreen(EnumScreenType.VIEWSERVICES);
     }
 
-    public void editServicesStatusbuttonClick(ActionEvent event) {
-        //Main.screenController.setScreen(EnumScreenType.);
+
+    public void editServiceButton(ActionEvent actionEvent) {
+        //nothing
+        //do we want this?
     }
-
-
 }

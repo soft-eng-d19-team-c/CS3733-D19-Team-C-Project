@@ -204,6 +204,30 @@ public class Map extends Controller implements Initializable {
             }
     }
 
+    public void addNodeButtonClick(ActionEvent e){
+        // Main.screenController.setScreen(EnumScreenType.); needs a view
+    }
+
+    public void addPathButtonClick(ActionEvent e){
+        System.out.println("path added");
+    }
+
+    public void editNodeButtonClick(ActionEvent e){
+
+        System.out.println("node edited");
+    }
+
+    public void deleteNodeButtonClick(ActionEvent e){
+
+        System.out.println("node deleted");
+    }
+
+    public void deletePathButtonClick(ActionEvent e){
+
+        System.out.println("path deleted");
+    }
+
+
 
 
 }

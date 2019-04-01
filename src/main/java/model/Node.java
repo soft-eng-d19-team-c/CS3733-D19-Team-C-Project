@@ -2,11 +2,11 @@ package model;
 
 import base.Main;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Arrays;
 import java.util.LinkedList;
+
+import static java.lang.Math.sqrt;
 
 public class Node {
     private String ID;
@@ -79,11 +79,26 @@ public class Node {
     }
 
     public void setFloor(String floor) {
-        this.floor = floor;
+        // error checks for user entering floor as lowercase l
+        if (floor.substring(0,1).equals("l")) {
+            floor = "L" + floor.substring(1,2);
+        }
+        String[] floors = {"L2", "L1", "1", "2", "3"};
+        if (Arrays.asList(floors).contains(floor)) {
+            this.floor = floor;
+        } else {
+            System.out.println("Error node.setFloor: did not enter a valid floor");
+        }
     }
 
     public void setBuilding(String building) {
-        this.building = building;
+        String[] buildings = {"15 Francis" ,"45 Francis", "BTM", "Shapiro", "Tower"};
+        if (Arrays.asList(buildings).contains(building)) {
+            this.building = building;
+        } else {
+            System.out.println("Error node.setBuilding: did not enter a valid floor");
+        }
+
     }
 
     public void setNodeType(String nodeType) {
@@ -153,6 +168,7 @@ public class Node {
         return 0;
     }
 
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getNodesByFloor(String floor) {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES WHERE FLOOR = '" + floor + "'";
@@ -176,6 +192,7 @@ public class Node {
         return nodes;
     }
 
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getNodes() {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES";
@@ -198,52 +215,26 @@ public class Node {
         }
         return nodes;
     }
-/*
-    public static LinkedList<Node> getNodesAndEdgesByFloor(String floor) {
-        Object[] result = new Object[2];
-//        HashMap<String, LinkedList<Edge>> adjacencyList;
-//        adjacencyList = new HashMap<>();
-        LinkedList<Edge> edges;
-        edges = new LinkedList<>();
-//        HashMap<String, Node> nodesList;
-//        nodesList = new HashMap<>();
-        LinkedList<Node> nodes;
-        nodes = new LinkedList<>();
-        String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE WHERE NODES.FLOOR = '"+floor+"'";
-        try {
-            Statement stmt = Main.database.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery(getMeNodesAndEdges);
-            while (rs.next()) {
-                String nodeID = rs.getString("NODEID");
-                int x = rs.getInt("XCOORD");
-                int y = rs.getInt("YCOORD");
-                String nodeFloor = rs.getString("FLOOR");
-                String building = rs.getString("BUILDING");
-                String type= rs.getString("NODETYPE");
-                nodes.add(new Node(nodeID, x, y, floor, building, type));
-                String edgeID = rs.getString("EDGEID");
-                String startNodeID = rs.getString("STARTNODE");
-                String endNodeID = rs.getString("ENDNODE");
-                edges.add(new Edge(edgeID, startNodeID, endNodeID));
-//                Edge newEdge;
-//                if (nodeID.equals(startNodeID))
-//                    newEdge = new Edge(edgeID, startNodeID, endNodeID);
-//                else
-//                    newEdge = new Edge(edgeID, endNodeID, startNodeID);
-//                if (adjacencyList.containsKey(nodeID)) {
-//                    adjacencyList.get(nodeID).add(newEdge);
-//                } else {
-//                    LinkedList<Edge> newEdgeList = new LinkedList<>();
-//                    newEdgeList.add(newEdge);
-//                    adjacencyList.put(nodeID, newEdgeList);
-//                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+
+
+    // Floor 3  4
+    // Floor 2  3
+    // Floor 1  2
+    // Floor L1 1
+    // Floor L2 0
+
+    public int getFloorNumber(){
+        switch (this.floor){
+            case "3": return 4;
+            case "2": return 3;
+            case "1": return 2;
+            case "L1": return 1;
+            case "L2": return 0;
+            default:
+                System.out.println("Error in node.getfloornumber");
+                return -1;
+
         }
-        result[0] = nodes;
-        result[1] = edges;
-        return result;
     }
- */
 }

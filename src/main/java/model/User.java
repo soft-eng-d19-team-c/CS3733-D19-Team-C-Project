@@ -11,4 +11,11 @@ public class User {
         this.permissions = permissions; //eg guest, employee, dev
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
 }

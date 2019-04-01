@@ -114,4 +114,5 @@ public class NodeTable extends Controller implements Initializable {
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
     }
+
 }

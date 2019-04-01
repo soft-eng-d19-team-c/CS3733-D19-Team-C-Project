@@ -19,7 +19,7 @@ public class Buttons extends Controller implements Initializable {
     }
 
     public void homeButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.NODETABLE);
+        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 
     public void logOutButtonClick(ActionEvent actionEvent) {
