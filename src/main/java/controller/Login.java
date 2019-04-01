@@ -1,5 +1,8 @@
 package controller;
 
+import base.EnumScreenType;
+import base.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -14,5 +17,10 @@ public class Login extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void loginButtonClick(ActionEvent actionEvent) {
+        Main.user.setPermissions("employee");
+        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
