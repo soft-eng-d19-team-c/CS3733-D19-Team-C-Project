@@ -46,7 +46,6 @@ public class Pathfinding extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
     }
 
     public void gobtnclick(ActionEvent actionEvent) {
@@ -61,5 +60,10 @@ public class Pathfinding extends Controller implements Initializable {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD, data);
 
          */
+        String orgi_nodeID = searchController_origController.getNodeID();
+        String dest_nodeID = searchController_destController.getNodeID();
+        star = new AStar();
+        node_onPath = star.findPath(orgi_nodeID, dest_nodeID);
+        System.out.println(node_onPath);
     }
 }
