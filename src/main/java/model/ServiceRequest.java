@@ -58,14 +58,18 @@ public class ServiceRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where SERVICEREQUESTID = this.ID";
+        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
         java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setDate(3, sqlCompleteDate);
+            ps.setString(3, type);
+            ps.setDate(4, sqlStartDate);
+            ps.setDate(5, sqlCompleteDate);
             executed = ps.execute(); //returns a boolean
         }
 
