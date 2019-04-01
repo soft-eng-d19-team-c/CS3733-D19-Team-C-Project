@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import model.Node;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
