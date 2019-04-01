@@ -59,8 +59,8 @@ public class Pathfinding extends Controller implements Initializable {
         Platform.runLater(() -> {
             dt = new DataTable();
             nodeCircles = new HashMap<>();
-            nodes = Node.getNodesByFloor((String) Main.screenController.getData("L1"));
-            edges = Edge.getEdgesByFloor((String) Main.screenController.getData("L1"));
+            nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
+            edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
  //           drawNodes();
         });
     }

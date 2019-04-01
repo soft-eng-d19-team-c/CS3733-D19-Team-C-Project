@@ -143,11 +143,8 @@ public class Map extends Controller implements Initializable {
         double mapX = mapImg.getLayoutX();
         double mapY = mapImg.getLayoutY();
 
-        final double[] orgSceneX = new double[1];
-        final double[] orgSceneY = new double[1];
-
         for (Node n : nodes){
-            generateNode(n, orgSceneX, orgSceneY, mapX, mapY);
+            generateNode(n, mapX, mapY);
         }
         for (Edge e : edges){
             generateEdge(e);
@@ -171,12 +168,10 @@ public class Map extends Controller implements Initializable {
     }
 
     private void generateNode(Node n) {
-        generateNode(n, new double[1], new double[1], mapImg.getLayoutX(), mapImg.getLayoutY());
+        generateNode(n, mapImg.getLayoutX(), mapImg.getLayoutY());
     }
 
-    private void generateNode(Node n, double[] orgSceneX, double[] orgSceneY, double mapX, double mapY) {
-        orgSceneX[0] = -1;
-        orgSceneY[0] = -1;
+    private void generateNode(Node n, double mapX, double mapY) {
         Circle circle = new Circle();
         double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
         circle.setCenterX(mapX + n.getX()/mapScale);
@@ -185,28 +180,9 @@ public class Map extends Controller implements Initializable {
         circle.setCursor(Cursor.HAND);
         circle.getProperties().put("node", n);
 
-        circle.setOnMouseDragged((MouseEvent me) -> {
-            if (orgSceneX[0] == -1) {
-                orgSceneX[0] = me.getSceneX();
-            }
-            if (orgSceneY[0] == -1) {
-                orgSceneY[0] = me.getSceneY();
-            }
-            circle.toFront();
-            double offsetX = me.getSceneX() - orgSceneX[0];
-            double offsetY = me.getSceneY() - orgSceneY[0];
+        circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
 
-            circle.setCenterX(circle.getCenterX() + offsetX);
-            circle.setCenterY(circle.getCenterY() + offsetY);
-
-            orgSceneX[0] = me.getSceneX();
-            orgSceneY[0] = me.getSceneY();
-        });
-
-        circle.setOnMouseReleased((MouseEvent me) -> {
-            orgSceneX[0] = -1;
-            orgSceneY[0] = -1;
-        });
+        circle.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
 
         imInPane.getChildren().add(circle);
         nodeCircles.put(n.getID(), circle);
@@ -215,12 +191,12 @@ public class Map extends Controller implements Initializable {
 
     public void addNodeButtonClick(ActionEvent e){
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
-        mapImg.addEventHandler(MouseEvent.MOUSE_PRESSED, addNodeHandler);
+        mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
     public void addPathButtonClick(ActionEvent e){
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
-        mapImg.addEventHandler(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
+        mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
     }
 
     public void editNodeButtonClick(ActionEvent e){
@@ -246,7 +222,7 @@ public class Map extends Controller implements Initializable {
                 Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale));
                 generateNode(n);
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
-                mapImg.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+                mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
         }
     };
@@ -260,8 +236,38 @@ public class Map extends Controller implements Initializable {
                 Edge e = new Edge("CUSTOMEDGE" + randID, "id", "id");
                 generateEdge(e);
 //                mapImg.addEventHandler();
-                mapImg.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+                mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
+        }
+    };
+
+    private double orgSceneX = -1;
+    private double orgSceneY = -1;
+
+    EventHandler dragNodeHandler = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent me) {
+            Circle circle = ((Circle) me.getSource());
+            if (orgSceneX == -1) {
+                orgSceneX = me.getSceneX();
+            }
+            if (orgSceneY == -1) {
+                orgSceneY = me.getSceneY();
+            }
+            circle.toFront();
+            double offsetX = me.getSceneX() - orgSceneX;
+            double offsetY = me.getSceneY() - orgSceneY;
+
+            circle.setCenterX(circle.getCenterX() + offsetX);
+            circle.setCenterY(circle.getCenterY() + offsetY);
+
+            orgSceneX = me.getSceneX();
+            orgSceneY = me.getSceneY();
+        }
+    };
+    EventHandler undragNodeHandler = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent event) {
+            orgSceneX = -1;
+            orgSceneY = -1;
         }
     };
 
