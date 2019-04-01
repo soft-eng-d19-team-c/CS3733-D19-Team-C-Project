@@ -18,7 +18,7 @@
          <children>
             <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" labelFloat="true" text="How May We Assist You?" unFocusColor="#4d4d4d00">
                <font>
-                  <Font size="96.0" />
+                  <Font size="100.0" />
                </font>
             </JFXTextField>
             <GridPane alignment="CENTER" hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="50.0" VBox.vgrow="ALWAYS">
@@ -31,30 +31,30 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="300.0" fitWidth="600.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
                         <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/MapImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="300.0" fitWidth="600.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
                         <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/employeeLoginImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="300.0" fitWidth="600.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
                         <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/FindRoomImage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="300.0" fitWidth="600.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ImageView fitHeight="400.0" fitWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
                         <Image url="@../../../../../../College/Junior%20Year/SoftEng/Assets/serviceRequestImage.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="mapButton" maxHeight="300.0" maxWidth="600.0" onAction="#mapButtonClick" text=" " GridPane.halignment="CENTER" />
-                  <JFXButton fx:id="findRoomButton" alignment="CENTER" maxHeight="300.0" maxWidth="600.0" onAction="#findRoomButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <JFXButton fx:id="serviceRequestButton" maxHeight="300.0" maxWidth="600.0" onAction="#serviceRequestButtonClick" text=" " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <JFXButton fx:id="employeeLoginButton" maxHeight="300.0" maxWidth="600.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="mapButton" maxHeight="400.0" maxWidth="800.0" onAction="#mapButtonClick" text=" " GridPane.halignment="CENTER" />
+                  <JFXButton fx:id="findRoomButton" alignment="CENTER" maxHeight="400.0" maxWidth="800.0" onAction="#findRoomButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <JFXButton fx:id="serviceRequestButton" maxHeight="400.0" maxWidth="800.0" onAction="#serviceRequestButtonClick" text=" " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="employeeLoginButton" maxHeight="400.0" maxWidth="800.0" onAction="#employeeLoginButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets bottom="20.0" />
