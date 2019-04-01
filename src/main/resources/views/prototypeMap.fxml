@@ -38,11 +38,17 @@
                      <VBox.margin>
                         <Insets bottom="20.0" top="100.0" />
                      </VBox.margin></Button>
+                  <Button fx:id="addPathButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" text="Add Path" />
                   <Button fx:id="editNodeButton" mnemonicParsing="false" text="Edit Details">
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="20.0" top="20.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="deleteNodeButton" mnemonicParsing="false" text="Delete Node" />
+                  <Button fx:id="deleteNodeButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Del Node" />
+                  <Button fx:id="deleteNodeButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Del Path">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
             <VBox HBox.hgrow="SOMETIMES">
