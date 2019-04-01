@@ -43,9 +43,9 @@ public class Pathfinding extends Controller implements Initializable {
     @FXML
     private Button findpathbtn;
     @FXML
-    private AutocompleteSearchBar search;
+    private AutocompleteSearchBar searchController_orig;
     @FXML
-    private AutocompleteSearchBar search_0;
+    private AutocompleteSearchBar searchController_dest;
 
     private DataTable dt;
 

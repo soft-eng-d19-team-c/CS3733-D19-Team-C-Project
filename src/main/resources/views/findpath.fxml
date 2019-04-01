@@ -37,10 +37,9 @@
 <!--                  <Image url="@../img/searchicon.png" />-->
                </image>
             </ImageView>
-            <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" />-->
-            <!--<TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />-->
-            <!--<ChoiceBox prefHeight="25.0" prefWidth="0.0" />-->
-             <fx:include fx:id="search_0" source="autocompleteSearchBar.fxml" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+            <TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />
+            <ChoiceBox prefHeight="25.0" prefWidth="0.0" />
          </children>
       </HBox>
       <Text layoutX="149.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are you? (Pick a location.)" wrappingWidth="302.0">
