@@ -19,6 +19,18 @@ public class ServiceRequest {
     private User requestedBy;
     private int ID;
 
+    public ServiceRequest(String type, String nodeID, String description) {
+        this.type = type;
+        this.nodeID = nodeID;
+        this.description = description;
+        this.dateTimeSubmitted = new Date();
+        this.dateTimeResolved = null;
+        this.isComplete = false;
+        this.completedBy = null;
+        this.requestedBy = null;
+        this.ID = -1;
+    }
+
     public ServiceRequest(String type, String nodeID, String description, Date dateTimeSubmitted, Date dateTimeResolved, boolean isComplete, User completedBy, User requestedBy, int ID) {
         this.type = type;
         this.nodeID = nodeID;
@@ -68,14 +80,15 @@ public class ServiceRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (NODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
+        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, TYPE, DATETIMESUBMITTED) values (?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setDate(3, sqlSubmitDate);
+            ps.setString(3, type);
+            ps.setDate(4, sqlSubmitDate);
             executed = ps.execute(); //returns a boolean
         }
 

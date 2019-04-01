@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class Booking {
-    private String nodeID; //Still need?
+    private String nodeID;
     private String description;
     private Date dateTimeStart;
     private Date dateTimeEnd;
