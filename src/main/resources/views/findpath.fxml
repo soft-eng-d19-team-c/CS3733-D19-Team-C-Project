@@ -16,7 +16,7 @@
          </image>
       </ImageView>
       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
-      <HBox layoutX="8.0" layoutY="121.0" prefHeight="66.0" prefWidth="543.0">
+      <HBox layoutX="8.0" layoutY="121.0" prefHeight="66.0" prefWidth="262.0">
          <children>
             <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>

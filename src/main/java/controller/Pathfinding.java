@@ -38,20 +38,18 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class Pathfinding extends Controller implements Initializable {
-    AStar star;
-    LinkedList<Node> astarResult;
-    @FXML
-    private AnchorPane findpathview;
-    @FXML
-    private TextField origin;
-    @FXML
-    private TextField destination;
-    @FXML
-    private Button findpathbtn;
+    @FXML private ImageView findpathmap;
+    @FXML private AnchorPane findpathview;
+    @FXML private TextField origin;
+    @FXML private TextField destination;
+    @FXML private Button findpathbtn;
     @FXML private Window dialog1;
     @FXML private AutocompleteSearchBar searchController_origController;
     @FXML private Window dialog2;
     @FXML private AutocompleteSearchBar searchController_destController;
+
+    AStar star;
+    LinkedList<Node> astarResult;
 
     private DataTable dt;
 
@@ -65,7 +63,7 @@ public class Pathfinding extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
 
 /*        String startNode = (String) Main.screenController.getData("startNode");
         String endNode = (String) Main.screenController.getData("endNode");
