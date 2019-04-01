@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,57 +8,52 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="findpathview" prefHeight="400.0" prefWidth="600.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
-    <children>
-        <fx:include fx:id="buttons" source="backandhomebuttonpartial.fxml" />
-        <ImageView fitHeight="400.0" fitWidth="588.0" layoutX="44.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../img/02_thesecondfloor.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="81.0" fitWidth="82.0" layoutX="35.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../img/icon.png" />
-            </image>
-        </ImageView>
-        <Text fill="#a7a6a6" layoutX="226.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
-        <HBox layoutX="119.0" layoutY="121.0" prefHeight="23.0" prefWidth="361.0">
-            <children>
-                <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../img/searchicon.png" />
-                    </image>
-                </ImageView>
-                <TextField fx:id="origin" prefHeight="28.0" prefWidth="335.0" />
-                <ChoiceBox prefHeight="25.0" prefWidth="0.0" />
-            </children>
-        </HBox>
-        <HBox layoutX="114.0" layoutY="200.0" prefHeight="28.0" prefWidth="371.0">
-            <children>
-                <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../img/searchicon.png" />
-                    </image>
-                </ImageView>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-                <TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />
-                <ChoiceBox prefHeight="25.0" prefWidth="0.0" />
-            </children>
-        </HBox>
-        <Text layoutX="149.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are you? (Pick a location.)" wrappingWidth="302.0">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Text>
-        <Text layoutX="149.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where do you want to go? (Select a destination.)">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Text>
-        <Button fx:id="findpathbtn" layoutX="251.0" layoutY="264.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@app.css" text="GO!">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Button>
-    </children>
+<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
+   <children>
+      <ImageView fitHeight="81.0" fitWidth="82.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/icon.png" />
+         </image>
+      </ImageView>
+      <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
+      <HBox layoutX="8.0" layoutY="121.0" prefHeight="66.0" prefWidth="262.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+<!--                  <Image url="@../img/searchicon.png" />-->
+               </image>
+            </ImageView>
+             <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
+         </children>
+      </HBox>
+      <HBox layoutX="-1.0" layoutY="201.0" prefHeight="28.0" prefWidth="371.0">
+         <children>
+            <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+<!--                  <Image url="@../img/searchicon.png" />-->
+               </image>
+            </ImageView>
+            <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" />-->
+            <!--<TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />-->
+            <!--<ChoiceBox prefHeight="25.0" prefWidth="0.0" />-->
+             <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
+         </children>
+      </HBox>
+      <Text layoutX="38.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are you? (Pick a location.)" wrappingWidth="302.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="38.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where do you want to go? (Select a destination.)" wrappingWidth="202.9423828125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="findpathbtn" layoutX="42.0" layoutY="303.0" mnemonicParsing="false" onAction="#gobtnclick" prefHeight="31.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@app.css" text="GO!">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="findpathmap" fitHeight="630.0" fitWidth="904.0" layoutX="267.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+   </children>
 </AnchorPane>
