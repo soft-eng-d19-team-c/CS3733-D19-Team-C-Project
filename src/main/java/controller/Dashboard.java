@@ -19,10 +19,6 @@ public class Dashboard extends Controller implements Initializable {
 
     }
 
-    public void directionButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.FINDPATH);
-    }
-
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.REQUESTSERVICE);
     }
@@ -33,5 +29,9 @@ public class Dashboard extends Controller implements Initializable {
 
     public void employeeLoginButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.LOGIN);
+    }
+
+    public void mapButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.FINDPATH);
     }
 }

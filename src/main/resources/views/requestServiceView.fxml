@@ -29,7 +29,7 @@
                   <Font size="45.0" />
                </font>
             </JFXTextField>
-            <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+            <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml"/>
             <JFXTextArea fx:id="description" focusColor="#b82020" promptText="Description of the Issue">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
