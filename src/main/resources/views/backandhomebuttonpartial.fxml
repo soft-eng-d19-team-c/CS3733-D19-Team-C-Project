@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -19,18 +19,18 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="backButton" maxHeight="200.0" maxWidth="200.0" onAction="#backButtonClick" text=" " GridPane.halignment="CENTER" />
-            <JFXButton fx:id="homeButton" maxHeight="200.0" maxWidth="200.0" onAction="#homeButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <ImageView fitHeight="200.0" fitWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <ImageView fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
                   <Image url="@../img/HomeButton.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="200.0" fitWidth="200.0" GridPane.halignment="CENTER">
+            <ImageView fitHeight="100.0" fitWidth="100.0" GridPane.halignment="CENTER">
                <image>
                   <Image url="@../img/ReturnButton.png" />
                </image>
             </ImageView>
+            <JFXButton fx:id="backButton" maxHeight="200.0" maxWidth="200.0" onAction="#backButtonClick" text=" " GridPane.halignment="CENTER" />
+            <JFXButton fx:id="homeButton" maxHeight="200.0" maxWidth="200.0" onAction="#homeButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>
