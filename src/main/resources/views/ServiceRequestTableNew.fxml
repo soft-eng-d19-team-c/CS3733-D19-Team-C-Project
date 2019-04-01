@@ -38,7 +38,7 @@
               <columns>
                 <TableColumn id="nodeID" fx:id="issue" minWidth="-1.0" prefWidth="75.0" text="Issue" />
                 <TableColumn id="xCoord" fx:id="location" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
-                  <TableColumn id="yCoord" fx:id="description" minWidth="-1.0" prefWidth="74.39031982421875" text="Description" />
+                  <TableColumn id="yCoord" fx:id="Description" minWidth="-1.0" prefWidth="74.39031982421875" text="Description" />
                   <TableColumn prefWidth="75.0" text="Completed?" />
               </columns>
                <columnResizePolicy>

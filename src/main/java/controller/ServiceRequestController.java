@@ -42,6 +42,7 @@ public class ServiceRequestController extends Controller implements Initializabl
     public void submitButtonClick(ActionEvent actionEvent) {
         ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
         serviceRequest.insert();
+
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
