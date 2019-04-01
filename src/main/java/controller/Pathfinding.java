@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import model.DataTable;
 import model.Edge;
@@ -47,10 +48,11 @@ public class Pathfinding extends Controller implements Initializable {
     private TextField destination;
     @FXML
     private Button findpathbtn;
-    @FXML
-    private AutocompleteSearchBar searchController_orig;
-    @FXML
-    private AutocompleteSearchBar searchController_dest;
+    @FXML private Window dialog1;
+    @FXML private AutocompleteSearchBar searchController_origController;
+    @FXML private Window dialog2;
+    @FXML private AutocompleteSearchBar searchController_destController;
+
 
     private DataTable dt;
 

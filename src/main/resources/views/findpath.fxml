@@ -27,7 +27,7 @@
 <!--                  <Image url="@../img/searchicon.png" />-->
                </image>
             </ImageView>
-             <fx:include fx:id="search" source="autocompleteSearchBar.fxml" />
+             <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
       <HBox layoutX="114.0" layoutY="200.0" prefHeight="28.0" prefWidth="371.0">
@@ -37,9 +37,10 @@
 <!--                  <Image url="@../img/searchicon.png" />-->
                </image>
             </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-            <TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />
-            <ChoiceBox prefHeight="25.0" prefWidth="0.0" />
+            <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" />-->
+            <!--<TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />-->
+            <!--<ChoiceBox prefHeight="25.0" prefWidth="0.0" />-->
+             <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
       <Text layoutX="149.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are you? (Pick a location.)" wrappingWidth="302.0">
