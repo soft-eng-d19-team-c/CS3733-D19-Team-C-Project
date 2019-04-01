@@ -219,7 +219,8 @@ public class Map extends Controller implements Initializable {
     }
 
     public void addPathButtonClick(ActionEvent e){
-        System.out.println("path added");
+        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImg.addEventHandler(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
     }
 
     public void editNodeButtonClick(ActionEvent e){
@@ -250,7 +251,18 @@ public class Map extends Controller implements Initializable {
         }
     };
 
-
-
+    EventHandler addEdgeHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                System.out.println(me.getTarget().getClass().getSimpleName());
+                double randID = new Random().nextDouble();
+                double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+                Edge e = new Edge("CUSTOMEDGE" + randID, "id", "id");
+                generateEdge(e);
+//                mapImg.addEventHandler();
+                mapImg.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+            }
+        }
+    };
 
 }
