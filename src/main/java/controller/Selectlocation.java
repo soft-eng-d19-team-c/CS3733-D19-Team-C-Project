@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 public class Selectlocation extends Controller implements Initializable {
     @FXML
-    private AutocompleteSearchBar searchController;
+    private AutocompleteSearchBar autoCompleteTextController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -27,7 +27,7 @@ public class Selectlocation extends Controller implements Initializable {
 
     public void searchLocation(ActionEvent actionEvent) {
         HashMap<String, Object> data = new HashMap<>();
-        data.put("nodeID", searchController.getNodeID());
+        data.put("nodeID", autoCompleteTextController.getNodeID());
         Main.screenController.setScreen(EnumScreenType.FINDPATH, data);
     }
 }

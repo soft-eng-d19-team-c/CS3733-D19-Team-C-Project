@@ -6,14 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import model.Booking;
 import model.BookingLocation;
 import model.DateTimeMaker;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -56,12 +58,17 @@ public class Book extends Controller implements Initializable {
         //needs to update some sort of schedule saying which rooms are booked for certain times
         String bookingLocation = locationBox.getValue().getID();
         LocalDate date = datePicker.getValue();
-        DateTimeMaker dtm = new DateTimeMaker(date);
-        Timestamp startDate;
-        Timestamp endDate;
-        startDate = dtm.addTime(startTimeBox.getValue());
-        endDate = dtm.addTime(endTimeBox.getValue());
-        Booking b = new Booking(bookingLocation, "", startDate, endDate, Main.user, 0);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), 0, 0);
+        Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
+        DateTimeMaker.addTime(startTimeBox.getValue(), tsStart); // modifies ts
+        Timestamp tsEnd = new Timestamp(cal.getTimeInMillis());
+        DateTimeMaker.addTime(endTimeBox.getValue(), tsEnd); // modifies ts
+
+
+
+        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user, 0);
         b.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
