@@ -5,13 +5,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -19,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.Window;
 import model.AStar;
 import model.DataTable;
 import model.Edge;
@@ -67,9 +64,41 @@ public class Pathfinding extends Controller implements Initializable {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
             edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
+//            generateNodes(nodes);
             black = new Color(0,0,0,1);
             drawNodes(nodes, edges, black);
         });
+    }
+
+    private void generateNodes(LinkedList<Node> nodes) {
+        String prev = null;
+        double mapX = findpathmap.getLayoutX();
+        double mapY = findpathmap.getLayoutY();
+        double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
+        for (Node n : nodes) {
+            Circle circle = new Circle();
+            circle.setCenterX(mapX + n.getX()/mapScale);
+            circle.setCenterY(mapY + n.getY()/mapScale);
+            circle.setRadius(3.0);
+            circle.getProperties().put("node", n);
+
+            if (prev != null) {
+                Line line = new Line();
+
+                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
+                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
+
+                line.endXProperty().bind(circle.centerXProperty());
+                line.endYProperty().bind(circle.centerYProperty());
+
+                line.setStroke(new Color(0, 0, 0, 1));
+                line.setStrokeWidth(3.0);
+                imInPane.getChildren().add(line);
+            }
+            imInPane.getChildren().add(circle);
+            nodeCircles.put(n.getID(), circle);
+            prev = n.getID();
+        }
     }
 
     private void drawNodes(LinkedList<Node> nodes_p, LinkedList<Edge> edges_p, Color c) {
@@ -166,7 +195,9 @@ public class Pathfinding extends Controller implements Initializable {
         star = new AStar();
         node_onPath = star.findPath(orgi_nodeID, dest_nodeID);
         somecolor = new Color(0,1,1,1);
-        drawNodes(node_onPath, somecolor);
+//        drawNodes(node_onPath, somecolor);
+        imInPane.getChildren().remove(1, imInPane.getChildren().size());
+        generateNodes(node_onPath);
     }
 }
 
