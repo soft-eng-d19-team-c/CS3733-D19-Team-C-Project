@@ -15,6 +15,7 @@
             <Image url="@../img/icon.png" />
          </image>
       </ImageView>
+       <fx:include fx:id="Buttons" source="partialButtons.fxml" />
       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
       <HBox layoutX="8.0" layoutY="121.0" prefHeight="66.0" prefWidth="262.0">
          <children>

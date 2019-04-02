@@ -133,13 +133,11 @@ public class Map extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
-
         ObservableList<String> differentFloors =
                 FXCollections.observableArrayList(
                         "Floor 1",
                         "Floor 2",
                         "Floor 3");
-        ComboBox<String> floorsMenu = new ComboBox(differentFloors);
 
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
