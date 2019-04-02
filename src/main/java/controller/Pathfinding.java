@@ -28,6 +28,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Pathfinding extends Controller implements Initializable {
+    @FXML private Button dancebtn;
     @FXML private ImageView findpathmap;
     @FXML private AnchorPane findpathview;
     @FXML private Pane imInPane;
@@ -63,6 +64,11 @@ public class Pathfinding extends Controller implements Initializable {
         findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + (String) Main.screenController.getData("floor") + "_NoIcons.png"))));
         findpathmap.fitWidthProperty().bind(imInPane.widthProperty());
         Platform.runLater(() -> {
+
+            String findLocationNode = (String)Main.screenController.getData("nodeID");
+            if (findLocationNode != null){
+                //MAKE THIS NOD COLORED AND BIGGER ON PAGE LOAD
+            }
             dt = new DataTable();
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
@@ -85,27 +91,43 @@ public class Pathfinding extends Controller implements Initializable {
             circle.setRadius(3.0);
             circle.getProperties().put("node", n);
             if (prev != null) {
-                drawDancingline(prev, n.getID());
-//                Color c1 = randomColorGenerator();
-//                Color c2 = randomColorGenerator();
-//                Line line = new Line();
-//                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
-//                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
-//                line.endXProperty().bind(circle.centerXProperty());
-//                line.endYProperty().bind(circle.centerYProperty());
-//                line.setStroke(c1);
-//                line.setStrokeWidth(3.0);
-//                StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
-//                ft.setCycleCount(Animation.INDEFINITE);
-//                ft.setAutoReverse(true);
-//                ft.play();
-//                imInPane.getChildren().add(line);
+//                drawDancingline(prev, n.getID());
+                Line line = new Line();
+                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
+                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
+                line.endXProperty().bind(circle.centerXProperty());
+                line.endYProperty().bind(circle.centerYProperty());
+                line.setStroke(black);
+                line.setStrokeWidth(3.0);
+                imInPane.getChildren().add(line);
             }
             imInPane.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
             prev = n.getID();
         }
     }
+
+    @SuppressWarnings("Duplicates")
+    private void dancePartyNode(LinkedList<Node> nodes) {
+        String prev = null;
+        double mapX = findpathmap.getLayoutX();
+        double mapY = findpathmap.getLayoutY();
+        double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
+        for (Node n : nodes) {
+            Circle circle = new Circle();
+            circle.setCenterX(mapX + n.getX()/mapScale);
+            circle.setCenterY(mapY + n.getY()/mapScale);
+            circle.setRadius(3.0);
+            circle.getProperties().put("node", n);
+            if (prev != null) {
+                drawDancingline(prev, n.getID());
+            }
+            imInPane.getChildren().add(circle);
+            nodeCircles.put(n.getID(), circle);
+            prev = n.getID();
+        }
+    }
+
     private void drawDancingline(String start, String end) {
         Color c1 = randomColorGenerator();
         Color c2 = randomColorGenerator();
@@ -216,6 +238,10 @@ public class Pathfinding extends Controller implements Initializable {
         ft.setCycleCount(Animation.INDEFINITE);
         ft.setAutoReverse(true);
         ft.play();
+    }
+
+    public void Dancebtnclick(ActionEvent actionEvent) {
+        dancePartyNode(node_onPath);
     }
 
 /*    public void danceParty() {
