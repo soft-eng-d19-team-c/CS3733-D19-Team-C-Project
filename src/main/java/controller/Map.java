@@ -129,8 +129,11 @@ public class Map extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
+        mapImg.fitWidthProperty().bind(imInPane.widthProperty());
         ObservableList<String> differentFloors =
                 FXCollections.observableArrayList(
+                        "L2",
+                        "L1",
                         "Floor 1",
                         "Floor 2",
                         "Floor 3");
