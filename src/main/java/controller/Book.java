@@ -7,13 +7,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import model.Booking;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class Book extends Controller implements Initializable {
@@ -25,7 +28,7 @@ public class Book extends Controller implements Initializable {
     @FXML
     private ComboBox<String> endTimeBox;
     @FXML
-    private Button bookRoomButton;
+    private DatePicker datePicker;
 
     //create booking object to be updated
 
@@ -56,6 +59,8 @@ public class Book extends Controller implements Initializable {
         locationBox.getItems().addAll(bookableLocations);
     }
 
+
+
     public void bookRoomButtonClick(ActionEvent actionEvent) {
         //needs to update some sort of schedule saying which rooms are booked for certain times
 
@@ -65,9 +70,14 @@ public class Book extends Controller implements Initializable {
                 so that we can get the ID and create the book object
 
          */
-
-//        Booking b = new Booking();
-
+        String bookingLocation = locationBox.getValue();
+        LocalDate date = datePicker.getValue();
+        Date startDate;
+        Date endDate;
+        startDate = Date.valueOf(date);
+        endDate = Date.valueOf(date);
+        Booking b = new Booking(bookingLocation, null, startDate, endDate, null, 0);
+        b.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
