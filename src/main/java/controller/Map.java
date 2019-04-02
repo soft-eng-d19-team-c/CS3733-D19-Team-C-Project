@@ -209,45 +209,18 @@ public class Map extends Controller implements Initializable {
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
-    Node firstNodeForAddEdge = null;
     public void addPathButtonClick(ActionEvent e){
         for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
+                // remove drag from nodes when adding path
                 node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
-                node.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent me) -> {
-                    /*
-                        Listen for 2 clicks on nodes and then remove this event handler
-                        re-add other event handlers
-                     */
-
-
-                    if (firstNodeForAddEdge != null) {
-                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
-                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
-                    }
-                });
+                // add event handler for mouse click on node
+                node.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
             }
         }
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
-        mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
     }
-
-    /*
-    public void start(Stage stage) {
-        Scene scene = new Scene(new Group(), 450, 250);
-
-        ComboBox<String> myComboBox = new ComboBox<String>();
-        myComboBox.getItems();
-        myComboBox.setEditable(true);
-
-        Group root = (Group) scene.getRoot();
-        root.getChildren().add(myComboBox);
-        stage.setScene(scene);
-        stage.show();
-
-    }*/
-
 
     public void editNodeButtonClick(ActionEvent e){
 
@@ -277,16 +250,35 @@ public class Map extends Controller implements Initializable {
         }
     };
 
+    private Node startNodeForAddEdge = null;
+    private Node endNodeForAddEdge = null;
     EventHandler addEdgeHandler = new EventHandler<MouseEvent>(){
         public void handle(javafx.scene.input.MouseEvent me){
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println(me.getTarget().getClass().getSimpleName());
-                double randID = new Random().nextDouble();
-                double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-                Edge e = new Edge("CUSTOMEDGE" + randID, "id", "id");
-                generateEdge(e);
-//                mapImg.addEventHandler();
-                mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                Circle circle = (Circle) me.getSource();
+                Node n = (Node) circle.getProperties().get("node");
+                if (startNodeForAddEdge == null) {
+                    startNodeForAddEdge = n;
+                } else {
+                    endNodeForAddEdge = n;
+                    double randID = new Random().nextDouble();
+                    double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+                    Edge e = new Edge("CUSTOMEDGE" + randID, startNodeForAddEdge.getID(), endNodeForAddEdge.getID());
+                    generateEdge(e);
+
+                    // remove this event handler, set everything to null, add drag event handlers again
+                    for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                        if (node.getProperties().containsKey("node")) {
+                            node.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
+
+                            node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                            node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                        }
+                    }
+                    startNodeForAddEdge = null;
+                    endNodeForAddEdge = null;
+                    imInPane.getScene().setCursor(Cursor.DEFAULT);
+                }
             }
         }
     };
