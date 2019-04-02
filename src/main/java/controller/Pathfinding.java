@@ -13,10 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -61,6 +58,7 @@ public class Pathfinding extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + (String) Main.screenController.getData("floor") + "_NoIcons.png"))));
+        findpathmap.fitWidthProperty().bind(imInPane.widthProperty());
         Platform.runLater(() -> {
             dt = new DataTable();
             nodeCircles = new HashMap<>();
