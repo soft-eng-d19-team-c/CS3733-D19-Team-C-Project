@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -18,24 +19,11 @@
       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
       <HBox layoutX="8.0" layoutY="121.0" prefHeight="66.0" prefWidth="262.0">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-<!--                  <Image url="@../img/searchicon.png" />-->
-               </image>
-            </ImageView>
              <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
-      <HBox layoutX="-1.0" layoutY="201.0" prefHeight="28.0" prefWidth="371.0">
+      <HBox layoutX="11.0" layoutY="201.0" prefHeight="28.0" prefWidth="371.0">
          <children>
-            <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-<!--                  <Image url="@../img/searchicon.png" />-->
-               </image>
-            </ImageView>
-            <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" />-->
-            <!--<TextField fx:id="destination" prefHeight="31.0" prefWidth="302.0" />-->
-            <!--<ChoiceBox prefHeight="25.0" prefWidth="0.0" />-->
              <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
@@ -54,6 +42,10 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <ImageView fx:id="findpathmap" fitHeight="630.0" fitWidth="904.0" layoutX="267.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+       <Pane fx:id="imInPane" layoutX="490.0" prefHeight="980.0" prefWidth="1380.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+           <children>
+                 <ImageView fx:id="findpathmap" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+           </children>
+       </Pane>
    </children>
 </AnchorPane>
