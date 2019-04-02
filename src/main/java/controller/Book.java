@@ -3,7 +3,6 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -18,15 +17,14 @@ public class Book extends Controller implements Initializable {
     //create booking object to be updated
 
 
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
         //needs to update some sort of schedule saying which rooms are booked for certain times
