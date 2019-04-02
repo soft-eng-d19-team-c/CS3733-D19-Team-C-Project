@@ -276,7 +276,7 @@ public class Map extends Controller implements Initializable {
                         String cursorEdgeEndNodeID = e.getEndNode();
                         if (cursorEdgeStartNodeID.equals(n.getID()) || cursorEdgeEndNodeID.equals(n.getID())) {
                             Platform.runLater(() -> imInPane.getChildren().remove(node));
-//                            TODO e.remove();
+                            e.remove();
                         }
                     }
                     node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
@@ -284,7 +284,7 @@ public class Map extends Controller implements Initializable {
                     node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 }
                 imInPane.getChildren().remove(me.getTarget());
-//               TODO n.remove();
+                n.remove();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }
