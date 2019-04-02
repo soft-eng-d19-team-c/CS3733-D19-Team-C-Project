@@ -389,7 +389,7 @@ public class Map extends Controller implements Initializable {
         }
     };
 
-    public void saveButtonClick(ActionEvent actionEvent) {
+    public void submitButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
