@@ -125,21 +125,23 @@ public final class Database {
                         ps.setString(8, shortName);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
-                            sqlCmd = "update NODES set XCOORD = ?, YCOORD = ?, FLOOR = ?, BUILDING = ?, NODETYPE = ?, LONGNAME = ?, SHORTNAME = ? where NODEID = ?";
-                            try {
-                                ps = this.getConnection().prepareStatement(sqlCmd);
-                                ps.setInt(1, xcoord);
-                                ps.setInt(2, ycoord);
-                                ps.setString(3, floor);
-                                ps.setString(4, building);
-                                ps.setString(5, nodeType);
-                                ps.setString(6, longName);
-                                ps.setString(7, shortName);
-                                ps.setString(8, nodeID);
-                                ps.executeUpdate();
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                            if (overwriteData) {
+                                sqlCmd = "update NODES set XCOORD = ?, YCOORD = ?, FLOOR = ?, BUILDING = ?, NODETYPE = ?, LONGNAME = ?, SHORTNAME = ? where NODEID = ?";
+                                try {
+                                    ps = this.getConnection().prepareStatement(sqlCmd);
+                                    ps.setInt(1, xcoord);
+                                    ps.setInt(2, ycoord);
+                                    ps.setString(3, floor);
+                                    ps.setString(4, building);
+                                    ps.setString(5, nodeType);
+                                    ps.setString(6, longName);
+                                    ps.setString(7, shortName);
+                                    ps.setString(8, nodeID);
+                                    ps.executeUpdate();
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
                             }
                         } else {
                             e.printStackTrace();
@@ -182,16 +184,18 @@ public final class Database {
                         ps.setString(3, endNode);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
-                            sqlCmd = "update EDGES set STARTNODE = ?, ENDNODE = ? where EDGEID = ?";
-                            try {
-                                ps = this.getConnection().prepareStatement(sqlCmd);
-                                ps.setString(1, startNode);
-                                ps.setString(2, endNode);
-                                ps.setString(3, edgeID);
-                                ps.executeUpdate();
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                            if (overwriteData) {
+                                sqlCmd = "update EDGES set STARTNODE = ?, ENDNODE = ? where EDGEID = ?";
+                                try {
+                                    ps = this.getConnection().prepareStatement(sqlCmd);
+                                    ps.setString(1, startNode);
+                                    ps.setString(2, endNode);
+                                    ps.setString(3, edgeID);
+                                    ps.executeUpdate();
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
                             }
                         } else {
                             e.printStackTrace();
@@ -234,16 +238,18 @@ public final class Database {
                         ps.setString(3, title);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
-                            sqlCmd = "update BOOKINGLOCATIONS set TYPE = ?, TITLE = ? where ID = ?";
-                            try {
-                                ps = this.getConnection().prepareStatement(sqlCmd);
-                                ps.setString(1, type);
-                                ps.setString(2, title);
-                                ps.setString(3, bookingLocationID);
-                                ps.executeUpdate();
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                            if (overwriteData) {
+                                sqlCmd = "update BOOKINGLOCATIONS set TYPE = ?, TITLE = ? where ID = ?";
+                                try {
+                                    ps = this.getConnection().prepareStatement(sqlCmd);
+                                    ps.setString(1, type);
+                                    ps.setString(2, title);
+                                    ps.setString(3, bookingLocationID);
+                                    ps.executeUpdate();
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
                             }
                         } else {
                             e.printStackTrace();
@@ -272,16 +278,18 @@ public final class Database {
                 ps.setString(3, "developer");
                 ps.execute();
             } catch (SQLException e) {
-                if (e.getSQLState().equals("23505") && overwriteData) {
-                    sqlCmd = "update EMPLOYEES set PASSWORD = ?, PERMISSIONS = ? where USERNAME = ?";
-                    try {
-                        PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
-                        ps.setString(1, "username@example.com");
-                        ps.setString(2, null);
-                        ps.setString(3, "developer");
-                        ps.executeUpdate();
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
+                if (e.getSQLState().equals("23505")) {
+                    if (overwriteData) {
+                        sqlCmd = "update EMPLOYEES set PASSWORD = ?, PERMISSIONS = ? where USERNAME = ?";
+                        try {
+                            PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
+                            ps.setString(1, "username@example.com");
+                            ps.setString(2, null);
+                            ps.setString(3, "developer");
+                            ps.executeUpdate();
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
             }

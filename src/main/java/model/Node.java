@@ -252,4 +252,17 @@ public class Node {
         }
         return false;
     }
+
+    public boolean remove() {
+        String str = "DELETE FROM NODES WHERE NODEID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getID());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

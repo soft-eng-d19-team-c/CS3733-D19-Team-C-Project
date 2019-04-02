@@ -129,8 +129,11 @@ public class Map extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
+        mapImg.fitWidthProperty().bind(imInPane.widthProperty());
         ObservableList<String> differentFloors =
                 FXCollections.observableArrayList(
+                        "L2",
+                        "L1",
                         "Floor 1",
                         "Floor 2",
                         "Floor 3");
@@ -273,7 +276,7 @@ public class Map extends Controller implements Initializable {
                         String cursorEdgeEndNodeID = e.getEndNode();
                         if (cursorEdgeStartNodeID.equals(n.getID()) || cursorEdgeEndNodeID.equals(n.getID())) {
                             Platform.runLater(() -> imInPane.getChildren().remove(node));
-//                            TODO e.remove();
+                            e.remove();
                         }
                     }
                     node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
@@ -281,7 +284,7 @@ public class Map extends Controller implements Initializable {
                     node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 }
                 imInPane.getChildren().remove(me.getTarget());
-//               TODO n.remove();
+                n.remove();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }

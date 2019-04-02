@@ -101,4 +101,18 @@ public class Edge {
         }
         return false;
     }
+
+    public boolean remove() {
+        String str = "DELETE FROM EDGES WHERE EDGEID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getEdgeId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
