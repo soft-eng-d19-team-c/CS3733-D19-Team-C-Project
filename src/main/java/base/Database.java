@@ -9,9 +9,9 @@ import static java.lang.Integer.parseInt;
 public final class Database {
     Connection connection;
     public Database() {
-        this(false);
+        this(false, false);
     }
-    public Database(boolean importData) {
+    public Database(boolean importData, boolean overwriteData) {
         System.out.println("Attempting to connect to the embedded database...");
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -125,7 +125,7 @@ public final class Database {
                         ps.setString(8, shortName);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
                             sqlCmd = "update NODES set XCOORD = ?, YCOORD = ?, FLOOR = ?, BUILDING = ?, NODETYPE = ?, LONGNAME = ?, SHORTNAME = ? where NODEID = ?";
                             try {
                                 ps = this.getConnection().prepareStatement(sqlCmd);
@@ -182,7 +182,7 @@ public final class Database {
                         ps.setString(3, endNode);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
                             sqlCmd = "update EDGES set STARTNODE = ?, ENDNODE = ? where EDGEID = ?";
                             try {
                                 ps = this.getConnection().prepareStatement(sqlCmd);
@@ -234,7 +234,7 @@ public final class Database {
                         ps.setString(3, title);
                         ps.execute();
                     } catch (SQLException e) {
-                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        if (e.getSQLState().equals("23505") && overwriteData) { // duplicate key, update instead of insert
                             sqlCmd = "update BOOKINGLOCATIONS set TYPE = ?, TITLE = ? where ID = ?";
                             try {
                                 ps = this.getConnection().prepareStatement(sqlCmd);
@@ -264,7 +264,29 @@ public final class Database {
                 }
             }
 
-        }
+            String sqlCmd = "insert into EMPLOYEES (USERNAME, PASSWORD, PERMISSIONS) values (?, ?, ?)";
+            try {
+                PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
+                ps.setString(1, "username@example.com");
+                ps.setString(2, null);
+                ps.setString(3, "developer");
+                ps.execute();
+            } catch (SQLException e) {
+                if (e.getSQLState().equals("23505") && overwriteData) {
+                    sqlCmd = "update EMPLOYEES set PASSWORD = ?, PERMISSIONS = ? where USERNAME = ?";
+                    try {
+                        PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
+                        ps.setString(1, "username@example.com");
+                        ps.setString(2, null);
+                        ps.setString(3, "developer");
+                        ps.executeUpdate();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+
+        } // end if importData
     } // end constructor
 
     public Connection getConnection() {

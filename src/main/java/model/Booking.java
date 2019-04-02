@@ -21,7 +21,7 @@ public class Booking {
         this.dateTimeEnd = dateTimeEnd;
         this.completedBy = completedBy;
         this.ID = ID;
-        this.bookingLocation = bookingLocation;
+        this.bookingLocation = bookingLocationID;
     }
 
     //Determines duration of booking
@@ -60,9 +60,7 @@ public class Booking {
     }
 
     public boolean insert(){
-
         boolean executed = false;
-
         String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlEndDate = new java.sql.Date(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
@@ -74,7 +72,6 @@ public class Booking {
             ps.setDate(3, sqlStartDate);
             ps.setDate(4,sqlEndDate);
             ps.setString(5, completedBy.getUsername());
-
             executed = ps.execute(); //returns a boolean
         }
 
