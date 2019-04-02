@@ -7,13 +7,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
+<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
     <children>
-        <ImageView fitHeight="138.0" fitWidth="141.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../img/icon.png" />
-            </image>
-        </ImageView>
         <Text layoutX="37.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are you? (Pick a location.)" wrappingWidth="195.333251953125">
             <font>
                 <Font size="23.0" />
@@ -38,5 +33,8 @@
             <Font size="95.0" />
          </font>
       </Text>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="969.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1838.0" AnchorPane.topAnchor="0.0" >
+        <fx:include fx:id="Buttons" source="partialButtons.fxml" />
+        <AnchorPane/>
     </children>
 </AnchorPane>
