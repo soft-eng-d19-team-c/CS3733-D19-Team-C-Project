@@ -244,6 +244,8 @@ public class Map extends Controller implements Initializable {
                 double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
                 Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale));
                 generateNode(n);
+                n.setFloor((String) Main.screenController.getData("floor"));
+                n.insert();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
@@ -265,7 +267,7 @@ public class Map extends Controller implements Initializable {
                     double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
                     Edge e = new Edge("CUSTOMEDGE" + randID, startNodeForAddEdge.getID(), endNodeForAddEdge.getID());
                     generateEdge(e);
-
+                    e.insert();
                     // remove this event handler, set everything to null, add drag event handlers again
                     for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
                         if (node.getProperties().containsKey("node")) {
