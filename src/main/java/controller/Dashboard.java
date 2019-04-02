@@ -47,6 +47,8 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void editMapButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.MAP);
+        HashMap<String,Object> hm = new HashMap<>();
+        hm.put("floor", "L1");
+        Main.screenController.setScreen(EnumScreenType.MAP, hm);
     }
 }

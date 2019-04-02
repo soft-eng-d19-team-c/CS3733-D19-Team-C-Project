@@ -21,7 +21,7 @@ public class MainFXML extends Application {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.DASHBOARD.getPath())));
             s.setScene(scene);
             Main.screenController = new Facade(s.getScene());
-            IdleMonitor idleMonitor = new IdleMonitor(Duration.minutes(5),
+            IdleMonitor idleMonitor = new IdleMonitor(Duration. minutes(5),
                     () -> Main.screenController.setScreen(EnumScreenType.DASHBOARD), true);
             idleMonitor.register(scene, Event.ANY);
             s.getIcons().add(new Image("img/icon.png"));
