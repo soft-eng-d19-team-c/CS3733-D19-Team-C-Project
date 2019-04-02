@@ -25,24 +25,28 @@ public class ServiceRequest {
         this.type = type;
         this.nodeID = nodeID;
         this.description = description;
-        this.dateTimeSubmitted = new Date();
-        this.dateTimeResolved = null;
+        this.dateTimeSubmitted = dateTimeSubmitted;
+        this.dateTimeResolved = dateTimeResolved;
         this.isComplete = false;
         this.completedBy = null;
         this.requestedBy = null;
-        this.ID = -1;
+        this.ID = ID;
     }
 
-    public ServiceRequest(String type, String nodeID, String description, Date dateTimeSubmitted, Date dateTimeResolved, boolean isComplete, User completedBy, User requestedBy, int ID) {
-        this.type = type;
-        this.nodeID = nodeID;
-        this.description = description;
-        this.dateTimeSubmitted = dateTimeSubmitted;
-        this.dateTimeResolved = dateTimeResolved;
-        this.isComplete = isComplete;
-        this.completedBy = completedBy;
-        this.requestedBy = requestedBy;
-        this.ID = ID;
+    public String getType() {
+        return type;
+    }
+
+    public String getNodeID() {
+        return nodeID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ServiceRequest(String type, String location, String description) {
+        this(-1, description, type, new Date(), null, location);
     }
 
     //Determines amount of time task was completed in
@@ -120,8 +124,8 @@ public class ServiceRequest {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
                 String type = rs.getString("type");
-                Date dateTimeSubmitted = rs.getDate("submitted time");
-                Date dateTimeResolved = rs.getDate("resolved time");
+                Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
+                Date dateTimeResolved = rs.getDate("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
                 ServiceRequest theServiceRequest = new ServiceRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
                 requests.add(theServiceRequest);

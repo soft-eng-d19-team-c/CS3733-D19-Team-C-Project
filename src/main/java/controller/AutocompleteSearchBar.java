@@ -36,7 +36,7 @@ public class AutocompleteSearchBar implements Initializable {
              When the item is selcted, we have an event listener for this so we can do whatever
              we want with the selcted Node (like get its ID and such).
          */
-        LinkedList<Node> nodes = Node.getNodes();
+        LinkedList<Node> nodes = Node.getNodesByFloor("L1");
         JFXAutoCompletePopup<Node> acSuggestions = new JFXAutoCompletePopup<>();
         for (Node n : nodes) {
             acSuggestions.getSuggestions().add(n);

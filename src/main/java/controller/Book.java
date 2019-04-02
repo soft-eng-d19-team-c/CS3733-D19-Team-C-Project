@@ -5,7 +5,6 @@ import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -59,6 +58,17 @@ public class Book extends Controller implements Initializable {
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
         //needs to update some sort of schedule saying which rooms are booked for certain times
+
+        /*
+                TODO
+                We need to make this a list of possible bookable location objects instead of strings
+                so that we can get the ID and create the book object
+
+         */
+
+//        Booking b = new Booking();
+
+
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 

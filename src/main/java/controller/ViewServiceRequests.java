@@ -4,9 +4,13 @@ import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.ServiceRequest;
 
 import java.net.URL;
@@ -19,7 +23,16 @@ public class ViewServiceRequests extends Controller implements Initializable {
     private JFXTextField type;
     @FXML private JFXTextArea description;
 
+    @FXML
+    private TableView dataTable;
+
+    @FXML private TableColumn issue;
+    @FXML private TableColumn locationCol;
+    @FXML private TableColumn Description;
+
     @FXML private AutocompleteSearchBar autoCompleteTextController;
+
+    private ObservableList<ServiceRequest> data;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -30,6 +43,16 @@ public class ViewServiceRequests extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
+
+        issue.setCellValueFactory(new PropertyValueFactory("Type"));
+        locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
+        Description.setCellValueFactory(new PropertyValueFactory("Description"));
+
+        data = ServiceRequest.getAllServiceRequests();
+
+        dataTable.setItems(data);
+        dataTable.refresh();
+
 
     }
 
