@@ -194,7 +194,26 @@ public class Map extends Controller implements Initializable {
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
+    Node firstNodeForAddEdge = null;
     public void addPathButtonClick(ActionEvent e){
+        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+            if (node.getProperties().containsKey("node")) {
+                node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                node.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent me) -> {
+                    /*
+                        Listen for 2 clicks on nodes and then remove this event handler
+                        re-add other event handlers
+                     */
+
+
+                    if (firstNodeForAddEdge != null) {
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    }
+                });
+            }
+        }
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
     }
