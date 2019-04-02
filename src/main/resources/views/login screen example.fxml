@@ -15,6 +15,7 @@
    <children>
       <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <fx:include fx:id="Buttons" source="partialButtons.fxml" />
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <!--<Image url="@../Assets/BWHealth%20Logo.png" />-->

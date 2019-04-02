@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Dashboard extends Controller implements Initializable {
@@ -32,6 +33,22 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void mapButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.FINDPATH);
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("floor", "L1");
+        Main.screenController.setScreen(EnumScreenType.FINDPATH, hm);
+    }
+
+    public void viewServicesButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.VIEWSERVICES);
+    }
+
+    public void bookRoomButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.BOOKROOM);
+    }
+
+    public void editMapButtonClick(ActionEvent actionEvent) {
+        HashMap<String,Object> hm = new HashMap<>();
+        hm.put("floor", "L1");
+        Main.screenController.setScreen(EnumScreenType.MAP, hm);
     }
 }

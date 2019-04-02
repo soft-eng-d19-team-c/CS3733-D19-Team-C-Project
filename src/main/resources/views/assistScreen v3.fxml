@@ -47,17 +47,17 @@
                      <font>
                         <Font size="50.0" />
                      </font></JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="View Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <JFXButton fx:id="ViewServiceRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#viewServicesButtonClick" style="-fx-background-color: gray;" text="View Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="50.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Book a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <JFXButton fx:id="BookARoom" alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#bookRoomButtonClick" style="-fx-background-color: gray;" text="Book a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="50.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Edit Map" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <JFXButton fx:id="EditMap" alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#editMapButtonClick" style="-fx-background-color: gray;" text="Edit Map" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="50.0" />
                      </font>

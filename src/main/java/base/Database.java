@@ -50,8 +50,12 @@ public final class Database {
             String createServiceRequestsTable = "create table SERVICEREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint SERVICEREQUESTS_NODES_NODEID_fk references NODES (NODEID) on update no action on delete cascade, DESCRIPTION varchar(2000), TYPE varchar(255), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(32) constraint SERVICEREQUESTS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String ServiceRequestsTableUINDEX = "create unique index SERVICEREQUESTS_ID_uindex on SERVICEREQUESTS (ID)";
             String ServiceRequestsTablePK = "alter table SERVICEREQUESTS add constraint SERVICEREQUESTS_pk primary key (ID)";
+            // create table of possible locations to book
+            String createBookingLocationsTable = "create table BOOKINGLOCATIONS(ID varchar(255) not null, TYPE varchar(255), TITLE varchar(255))";
+            String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
+            String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
             // create bookings table
-            String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
+            String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
             try {
@@ -68,13 +72,16 @@ public final class Database {
                 tableStmt.executeUpdate(createServiceRequestsTable);
                 tableStmt.executeUpdate(ServiceRequestsTableUINDEX);
                 tableStmt.executeUpdate(ServiceRequestsTablePK);
+                tableStmt.executeUpdate(createBookingLocationsTable);
+                tableStmt.executeUpdate(BookingLocationsTableUINDEX);
+                tableStmt.executeUpdate(BookingLocationsTablePK);
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists
-                    System.out.println("table exists");
+                    System.out.println("Database schema already exists.");
                 } else {
                     e.printStackTrace();
                 }
@@ -84,8 +91,8 @@ public final class Database {
             // read in data from CSVs to build the database
 
             // import nodes
-            System.out.println("Attempting to import nodes from /data/nodesv3.csv...");
-            URL csvFile = getClass().getResource("/data/nodesv3.csv");
+            System.out.println("Attempting to import nodes from /data/nodes.csv...");
+            URL csvFile = getClass().getResource("/data/nodes.csv");
             BufferedReader br = null;
             String line;
             String cvsSplitBy = ",";
@@ -154,9 +161,8 @@ public final class Database {
             }
 
             // import edges
-
-            System.out.println("Attempting to import edges from /data/edgesv3.csv...");
-            csvFile = getClass().getResource("/data/edgesv3.csv");
+            System.out.println("Attempting to import edges from /data/edges.csv...");
+            csvFile = getClass().getResource("/data/edges.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
                 br.readLine(); // throw away header
@@ -205,6 +211,59 @@ public final class Database {
                     }
                 }
             }
+
+            // import bookingLocations
+            System.out.println("Attempting to import booking locations from /data/booking_locations.csv...");
+            csvFile = getClass().getResource("/data/booking_locations.csv");
+            try {
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                br.readLine(); // throw away header
+                while ((line = br.readLine()) != null) {
+                    String[] bookingLocationData = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String bookingLocationID = bookingLocationData[0];
+                    String type = bookingLocationData[1];
+                    String title = bookingLocationData[2];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "insert into BOOKINGLOCATIONS (ID, TYPE, TITLE) values (?, ?, ?)";
+                    try {
+                        ps = this.getConnection().prepareStatement(sqlCmd);
+                        ps.setString(1, bookingLocationID);
+                        ps.setString(2, type);
+                        ps.setString(3, title);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                            sqlCmd = "update BOOKINGLOCATIONS set TYPE = ?, TITLE = ? where ID = ?";
+                            try {
+                                ps = this.getConnection().prepareStatement(sqlCmd);
+                                ps.setString(1, type);
+                                ps.setString(2, title);
+                                ps.setString(3, bookingLocationID);
+                                ps.executeUpdate();
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
         }
     } // end constructor
 

@@ -75,6 +75,10 @@ public final class Facade {
     }
 
     public Object getData(String key) {
+        if (this.data == null) {
+            System.err.println("There is no data set in the Facade.");
+            return null;
+        }
         if (this.data.containsKey(key)) {
             return this.data.get(key);
         } else {
