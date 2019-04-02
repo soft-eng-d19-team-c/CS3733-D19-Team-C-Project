@@ -7,21 +7,21 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class Booking {
-    private String nodeID;
+    private String bookingLocation;
     private String description;
     private Date dateTimeStart;
     private Date dateTimeEnd;
     private User completedBy; //Type User or String? ???
     private int ID;
 
-    public Booking(String nodeID, String description, Date dateTimeStart, Date dateTimeEnd, User completedBy, int ID) {
+    public Booking(String bookingLocationID, String description, Date dateTimeStart, Date dateTimeEnd, User completedBy, int ID) {
 
-        this.nodeID = nodeID;
         this.description = description;
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
         this.completedBy = completedBy;
         this.ID = ID;
+        this.bookingLocation = bookingLocation;
     }
 
     //Determines duration of booking
@@ -38,14 +38,17 @@ public class Booking {
 
         boolean executed = false;
 
-        String sqlCmd = "update BOOKINGS set NODEID = ?, LOCATION = ?, DESCRIPTION = ?, DATETIMESTART = ?, DATETIMEEND = ?, USERCOMPLETEDBY = ? where ID = this.ID";
+        String sqlCmd = "update BOOKINGS set LOCATION = ?, DESCRIPTION = ?, DATETIMESTART = ?, DATETIMEEND = ?, USERCOMPLETEDBY = ? where ID = ?";
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlEndDate = new java.sql.Date(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
+            ps.setString(1, bookingLocation);
             ps.setString(2, description);
             ps.setDate(3, sqlStartDate);
+            ps.setDate(4,sqlEndDate);
+            ps.setString(5, completedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
 
@@ -60,14 +63,18 @@ public class Booking {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into BOOKINGS (NODEID, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
+        String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlEndDate = new java.sql.Date(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
+            ps.setString(1, bookingLocation);
             ps.setString(2, description);
             ps.setDate(3, sqlStartDate);
+            ps.setDate(4,sqlEndDate);
+            ps.setString(5, completedBy.getUsername());
+
             executed = ps.execute(); //returns a boolean
         }
 
