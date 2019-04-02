@@ -5,7 +5,6 @@ import base.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -25,15 +24,14 @@ public class Book extends Controller implements Initializable {
     //create booking object to be updated
 
 
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
