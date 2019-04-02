@@ -20,7 +20,6 @@
             <String fx:value="btn-sm" />
          </styleClass></Button>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
-          <fx:include fx:id="Buttons" source="partialButtons.fxml" />s
          <children>
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="View All Service Requests">
                <font>
@@ -44,4 +43,5 @@
          </children>
       </VBox>
    </children>
+    <fx:include fx:id="Buttons" source="partialButtons.fxml" />
 </AnchorPane>

@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,9 +29,7 @@ public class EditNodeData extends Controller implements Initializable {
     @FXML
     private TextField shortName;
 
-
     private Node nodeData;
-
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -44,7 +41,7 @@ public class EditNodeData extends Controller implements Initializable {
     }
 
     public void backButtonClick(ActionEvent e) {
-        Main.screenController.setScreen(EnumScreenType.NODETABLE);
+        Main.screenController.goBack();
     }
 
 
