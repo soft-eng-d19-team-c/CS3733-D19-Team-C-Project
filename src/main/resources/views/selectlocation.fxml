@@ -11,15 +11,13 @@
 <AnchorPane fx:id="selectview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Selectlocation">
     <children>
         <ImageView fitHeight="81.0" fitWidth="73.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../img/icon.png" />
-            </image>
         </ImageView>
         <Text fill="#00000076" layoutX="179.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass=".h2" text="Select Location" wrappingWidth="288.5181884765625">
             <font>
                 <Font name="System Italic" size="40.0" />
             </font>
         </Text>
+        <fx:include fx:id="Buttons" source="partialButtons.fxml" />
         <HBox layoutX="109.0" layoutY="108.0" prefHeight="25.0" prefWidth="382.0">
             <children>
                 <ImageView fitHeight="25.0" fitWidth="25.0" opacity="0.35" pickOnBounds="true" preserveRatio="true" styleClass="btn-primary">

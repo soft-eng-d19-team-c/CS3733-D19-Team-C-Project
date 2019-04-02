@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Dashboard">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" labelFloat="true" text="How May We Assist You?" unFocusColor="#4d4d4d00">
+             <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" labelFloat="true" text="How May We Assist You?" unFocusColor="#4d4d4d00">
                <font>
                   <Font size="100.0" />
                </font>
@@ -47,17 +47,17 @@
                      <font>
                         <Font size="50.0" />
                      </font></JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="View Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <JFXButton fx:id="ViewServiceRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#viewServicesButtonClick" style="-fx-background-color: gray;" text="View Service Request" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="50.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Book a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <JFXButton fx:id="BookARoom" alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#bookRoomButtonClick" style="-fx-background-color: gray;" text="Book a Room" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="50.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" text="Edit Map" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <JFXButton fx:id="EditMap" alignment="CENTER" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#editMapButtonClick" style="-fx-background-color: gray;" text="Edit Map" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="50.0" />
                      </font>
