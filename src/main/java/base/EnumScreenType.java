@@ -12,9 +12,9 @@ public enum EnumScreenType {
     SELECTLOCATION("/views/selectlocation.fxml"),
     REQUESTSERVICE("/views/requestServiceView.fxml"),
     VIEWSERVICES("/views/ServiceRequestTableNew.fxml"),
-    BOOKROOM("/views/bookLocationScreen.fxml");
+    BOOKROOM("/views/bookLocationScreen.fxml"),
+    BOOKEDLOCATIONS("/views/bookedLocationsTable.fxml");
     //DEVMAP("/views/../");
-
 
 
     protected String path;

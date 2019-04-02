@@ -1,9 +1,13 @@
 package model;
 
 import base.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Booking {
@@ -22,6 +26,35 @@ public class Booking {
         this.completedBy = completedBy;
         this.ID = ID;
         this.bookingLocation = bookingLocationID;
+    }
+
+    public String getLocation() {
+        return this.bookingLocation;
+    }
+    public String getDateFrom() {
+        return this.dateTimeStart.toString();
+    }
+    public String getDateTo() {
+        return this.dateTimeEnd.toString();
+    }
+    public String getUsername() {
+        return this.completedBy.getUsername();
+    }
+
+    public static ObservableList<Booking> getCurrentBookings() {
+        // TODO eventually this method should only fetch bookings that have not ended but like YOLO.
+        ObservableList<Booking> result = FXCollections.observableArrayList();
+        String str = "SELECT * FROM BOOKINGS LEFT JOIN EMPLOYEES AS E ON BOOKINGS.USERCOMPLETEDBY = E.USERNAME";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(str);
+            while (rs.next()) {
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getDate("DATETIMESTART"), rs.getDate("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     //Determines duration of booking

@@ -51,4 +51,8 @@ public class Dashboard extends Controller implements Initializable {
         hm.put("floor", "L1");
         Main.screenController.setScreen(EnumScreenType.MAP, hm);
     }
+
+    public void bookedLocationsButtonClick(ActionEvent e) {
+        Main.screenController.setScreen(EnumScreenType.BOOKEDLOCATIONS);
+    }
 }
