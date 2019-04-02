@@ -4,6 +4,9 @@ import base.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
+import javafx.animation.Animation;
+import javafx.animation.FillTransition;
+import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,11 +20,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 import model.*;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Pathfinding extends Controller implements Initializable {
@@ -140,32 +145,36 @@ public class Pathfinding extends Controller implements Initializable {
                 generateNode(n, orgSceneX, orgSceneY, mapX, mapY, c);
             } else {
                 generateNode(n, orgSceneX, orgSceneY, mapX, mapY, c);
+                Color c1 = randomColorGenerator();
+                Color c2 = randomColorGenerator();
                 Line line = new Line();
                 line.startXProperty().bind(nodeCircles.get(prevNode).centerXProperty());
                 line.startYProperty().bind(nodeCircles.get(prevNode).centerYProperty());
                 line.endXProperty().bind(nodeCircles.get(n).centerXProperty());
                 line.endYProperty().bind(nodeCircles.get(n).centerYProperty());
-                line.setStroke(c);
+                line.setStroke(c1);
+                StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
+                ft.setCycleCount(Animation.INDEFINITE);
+                ft.setAutoReverse(true);
+                ft.play();
                 imInPane.getChildren().add(line);
                 prevNode = n;
             }
         }
     }
 
-    private void generateEdge(Edge e, Color r) {
+    private Line generateEdge(Edge e, Color r) {
         if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
-            return; // this edge is not on this floor so we do not draw it
+            return null; // this edge is not on this floor so we do not draw it
         }
         Line line = new Line();
-
         line.startXProperty().bind(nodeCircles.get(e.getStartNode()).centerXProperty());
         line.startYProperty().bind(nodeCircles.get(e.getStartNode()).centerYProperty());
         line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
         line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
-
         line.setStroke(r);
-
         imInPane.getChildren().add(line);
+        return line;
     }
 
 
@@ -208,6 +217,76 @@ public class Pathfinding extends Controller implements Initializable {
         pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
 
     }
+
+    private Color randomColorGenerator(){
+        Random rand = new Random();
+        double r = rand.nextDouble();
+        double g = rand.nextDouble();
+        double b = rand.nextDouble();
+        Color color = new Color(r, g, b, 1);
+        return color;
+    }
+
+    private void generateDancePartyEdge(Edge e) {
+        Color c1 = randomColorGenerator();
+        Line line = generateEdge(e, randomColorGenerator());
+        Color c2 = randomColorGenerator();
+        StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
+        ft.setCycleCount(Animation.INDEFINITE);
+        ft.setAutoReverse(true);
+        ft.play();
+    }
+
+/*    public void danceParty() {
+        imInPane.getChildren().remove(1, imInPane.getChildren().size());
+            Random rand = new Random();
+            double mapX = findpathmap.getLayoutX();
+            double mapY = findpathmap.getLayoutY();
+            ColorAdjust blackout = new ColorAdjust();
+            blackout.setBrightness(-0.4);
+            findpathmap.setEffect(blackout);
+            Color c = new Color(0, 0, 0, 1.0);
+            bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
+            for (Edge e : adjacencyList) {
+                Node startNode = dt.getDataById(e.getStartNode());
+                Node endNode = dt.getDataById(e.getEndNode());
+                if (startNode != null && endNode != null && startNode.getFloor().equals(endNode.getFloor())) {
+                    double r = rand.nextDouble();
+                    double g = rand.nextDouble();
+                    double b = rand.nextDouble();
+                    Color color = new Color(r, g, b, 1);
+                    line.setStroke(color);
+                    imInPane.getChildren().add(line);
+                    r = rand.nextDouble();
+                    g = rand.nextDouble();
+                    b = rand.nextDouble();
+                    Color color2 = new Color(r, g, b, 1.0);
+                    StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, color, color2);
+                    ft.setCycleCount(Animation.INDEFINITE);
+                    ft.setAutoReverse(true);
+                    ft.play();
+                }
+            }
+            for (Node n : nodeList) {
+                Circle circle = new Circle();
+                circle.setCenterX(mapX + n.getX() / 4.0);
+                circle.setCenterY(mapY + n.getY() / 4.0);
+                circle.setRadius(1.0 + (rand.nextDouble() * 5.0));
+                double r = rand.nextDouble();
+                double g = rand.nextDouble();
+                double b = rand.nextDouble();
+                Color color = new Color(r, g, b, 1.0);
+                imInPane.getChildren().add(circle);
+                r = rand.nextDouble();
+                g = rand.nextDouble();
+                b = rand.nextDouble();
+                Color color2 = new Color(r, g, b, 1.0);
+                FillTransition ft = new FillTransition(Duration.millis(250), circle, color, color2);
+                ft.setCycleCount(Animation.INDEFINITE);
+                ft.setAutoReverse(true);
+                ft.play();
+            }
+    }*/
 }
 
 
