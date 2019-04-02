@@ -268,19 +268,21 @@ public class Map extends Controller implements Initializable {
                 Node n = (Node) circle.getProperties().get("node");
                 for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
                     if (node.getProperties().containsKey("edge")) {
-                        String cursorEdgeStartNodeID = ((Edge) node.getProperties().get("edge")).getStartNode();
-                        String cursorEdgeEndNodeID = ((Edge) node.getProperties().get("edge")).getEndNode();
+                        Edge e = (Edge) node.getProperties().get("edge");
+                        String cursorEdgeStartNodeID = e.getStartNode();
+                        String cursorEdgeEndNodeID = e.getEndNode();
                         if (cursorEdgeStartNodeID.equals(n.getID()) || cursorEdgeEndNodeID.equals(n.getID())) {
-                            Platform.runLater(() -> {
-                                imInPane.getChildren().remove(node);
-                            });
+                            Platform.runLater(() -> imInPane.getChildren().remove(node));
+//                            TODO e.remove();
                         }
                     }
+                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                    node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                    node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 }
                 imInPane.getChildren().remove(me.getTarget());
 //               TODO n.remove();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
-                mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
         }
     };
