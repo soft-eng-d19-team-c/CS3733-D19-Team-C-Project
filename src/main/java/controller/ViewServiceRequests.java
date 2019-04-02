@@ -1,7 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
-import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
@@ -29,6 +27,7 @@ public class ViewServiceRequests extends Controller implements Initializable {
     @FXML private TableColumn issue;
     @FXML private TableColumn locationCol;
     @FXML private TableColumn Description;
+    @FXML private TableColumn isCompleted;
 
     @FXML private AutocompleteSearchBar autoCompleteTextController;
 
@@ -47,26 +46,29 @@ public class ViewServiceRequests extends Controller implements Initializable {
         issue.setCellValueFactory(new PropertyValueFactory("Type"));
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
+        isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
 
-        data = ServiceRequest.getAllServiceRequests();
-
-        dataTable.setItems(data);
-        dataTable.refresh();
-
+        updateTable();
 
     }
 
 
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
-
-        ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
-        serviceRequest.update();
-        Main.screenController.setScreen(EnumScreenType.VIEWSERVICES);
+        ServiceRequest sr = (ServiceRequest) dataTable.getSelectionModel().getSelectedItem();
+        sr.resolve();
+        updateTable();
     }
 
 
     public void editServiceButton(ActionEvent actionEvent) {
         //nothing
         //do we want this?
+    }
+
+    private void updateTable() {
+        data = ServiceRequest.getAllServiceRequests();
+
+        dataTable.setItems(data);
+        dataTable.refresh();
     }
 }

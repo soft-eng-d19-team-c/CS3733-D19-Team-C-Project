@@ -27,7 +27,7 @@ public class ServiceRequest {
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeResolved = dateTimeResolved;
-        this.isComplete = false;
+        this.isComplete = dateTimeResolved != null;
         this.completedBy = null;
         this.requestedBy = null;
         this.ID = ID;
@@ -43,6 +43,10 @@ public class ServiceRequest {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean getIsComplete() {
+        return this.isComplete;
     }
 
     public ServiceRequest(String type, String location, String description) {
@@ -136,6 +140,26 @@ public class ServiceRequest {
         return requests;
 
 
+    }
+
+
+    public int getID() {
+        return ID;
+    }
+
+    public boolean resolve() {
+        String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            ps.setTimestamp(1, ts);
+            ps.setInt(2, this.getID());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
