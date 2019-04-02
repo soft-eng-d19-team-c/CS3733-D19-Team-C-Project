@@ -10,9 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
@@ -27,7 +24,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import model.Edge;
 import model.Node;
 
@@ -65,7 +61,7 @@ public class Map extends Controller implements Initializable {
         Main.screenController.setScreen(EnumScreenType.NODETABLE);
     }
 
-    public void danceParty(ActionEvent e) {}
+    public void danceParty(ActionEvent e){}
 
     /*
     public void danceParty(ActionEvent event) {
@@ -77,13 +73,13 @@ public class Map extends Controller implements Initializable {
             ColorAdjust blackout = new ColorAdjust();
             blackout.setBrightness(-0.4);
             mapImg.setEffect(blackout);
-            Color c = new Color(0,0,0,1.0);
+            Color c = new Color(0, 0, 0, 1.0);
             bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
             dancePartyBtn.setTextFill(new Color(1, 1, 1, 1.0));
-            for (Edge e : adjacencyList){
+            for (Edge e : adjacencyList) {
                 Node startNode = dt.getDataById(e.getStartNode());
                 Node endNode = dt.getDataById(e.getEndNode());
-                if (startNode != null && endNode != null && startNode.getFloor().equals(endNode.getFloor())){
+                if (startNode != null && endNode != null && startNode.getFloor().equals(endNode.getFloor())) {
                     Line line = new Line();
                     line.setStartX(mapX + (startNode.getX() / 4));
                     line.setStartY(mapY + (startNode.getY()) / 4);
@@ -92,7 +88,7 @@ public class Map extends Controller implements Initializable {
                     double r = rand.nextDouble();
                     double g = rand.nextDouble();
                     double b = rand.nextDouble();
-                    Color color = new Color(r,g,b,1);
+                    Color color = new Color(r, g, b, 1);
                     line.setStroke(color);
                     imInPane.getChildren().add(line);
                     r = rand.nextDouble();
@@ -128,7 +124,7 @@ public class Map extends Controller implements Initializable {
             drawNodes();
         }
     }
-     */
+    */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
