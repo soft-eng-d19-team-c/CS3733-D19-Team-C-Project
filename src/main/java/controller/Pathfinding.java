@@ -1,11 +1,9 @@
 package controller;
 
 import base.Main;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
 import javafx.animation.Animation;
-import javafx.animation.FillTransition;
 import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -86,24 +84,43 @@ public class Pathfinding extends Controller implements Initializable {
             circle.setCenterY(mapY + n.getY()/mapScale);
             circle.setRadius(3.0);
             circle.getProperties().put("node", n);
-
             if (prev != null) {
-                Line line = new Line();
-
-                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
-                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
-
-                line.endXProperty().bind(circle.centerXProperty());
-                line.endYProperty().bind(circle.centerYProperty());
-
-                line.setStroke(new Color(0, 0, 0, 1));
-                line.setStrokeWidth(3.0);
-                imInPane.getChildren().add(line);
+                drawDancingline(prev, n.getID());
+//                Color c1 = randomColorGenerator();
+//                Color c2 = randomColorGenerator();
+//                Line line = new Line();
+//                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
+//                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
+//                line.endXProperty().bind(circle.centerXProperty());
+//                line.endYProperty().bind(circle.centerYProperty());
+//                line.setStroke(c1);
+//                line.setStrokeWidth(3.0);
+//                StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
+//                ft.setCycleCount(Animation.INDEFINITE);
+//                ft.setAutoReverse(true);
+//                ft.play();
+//                imInPane.getChildren().add(line);
             }
             imInPane.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
             prev = n.getID();
         }
+    }
+    private void drawDancingline(String start, String end) {
+        Color c1 = randomColorGenerator();
+        Color c2 = randomColorGenerator();
+        Line line = new Line();
+        line.startXProperty().bind(nodeCircles.get(start).centerXProperty());
+        line.startYProperty().bind(nodeCircles.get(start).centerYProperty());
+        line.endXProperty().bind(nodeCircles.get(end).centerXProperty());
+        line.endYProperty().bind(nodeCircles.get(end).centerYProperty());
+        line.setStroke(c1);
+        line.setStrokeWidth(3.0);
+        StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
+        ft.setCycleCount(Animation.INDEFINITE);
+        ft.setAutoReverse(true);
+        ft.play();
+        imInPane.getChildren().add(line);
     }
 
     private void drawNodes(LinkedList<Node> nodes_p, LinkedList<Edge> edges_p, Color c) {
@@ -124,42 +141,6 @@ public class Pathfinding extends Controller implements Initializable {
         }
         for (Edge e : edges_p){
             generateEdge(e, c);
-        }
-    }
-    private void drawNodes(LinkedList<Node> nodes_p, Color c) {
-        Color w = new Color(1,1,1,1);
-        findpathview.setBackground(new Background(new BackgroundFill(w, null, null)));
-        ColorAdjust reset = new ColorAdjust();
-        reset.setBrightness(0);
-        findpathmap.setEffect(reset);
-        imInPane.getChildren().remove(1, imInPane.getChildren().size());
-        double mapX = findpathmap.getLayoutX();
-        double mapY = findpathmap.getLayoutY();
-
-        final double[] orgSceneX = new double[1];
-        final double[] orgSceneY = new double[1];
-        Node prevNode = null;
-        for (Node n : nodes_p) {
-            if (prevNode == null) {
-                prevNode = n;
-                generateNode(n, orgSceneX, orgSceneY, mapX, mapY, c);
-            } else {
-                generateNode(n, orgSceneX, orgSceneY, mapX, mapY, c);
-                Color c1 = randomColorGenerator();
-                Color c2 = randomColorGenerator();
-                Line line = new Line();
-                line.startXProperty().bind(nodeCircles.get(prevNode).centerXProperty());
-                line.startYProperty().bind(nodeCircles.get(prevNode).centerYProperty());
-                line.endXProperty().bind(nodeCircles.get(n).centerXProperty());
-                line.endYProperty().bind(nodeCircles.get(n).centerYProperty());
-                line.setStroke(c1);
-                StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, c1, c2);
-                ft.setCycleCount(Animation.INDEFINITE);
-                ft.setAutoReverse(true);
-                ft.play();
-                imInPane.getChildren().add(line);
-                prevNode = n;
-            }
         }
     }
 
