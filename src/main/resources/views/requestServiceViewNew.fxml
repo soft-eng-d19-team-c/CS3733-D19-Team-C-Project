@@ -14,7 +14,6 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="980.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1710.0" AnchorPane.topAnchor="0.0" />
       <VBox alignment="CENTER" layoutX="140.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <fx:include fx:id="Buttons" source="partialButtons.fxml" />
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Please Complete the Form to Notify Staff">
                <font>
                   <Font size="80.0" />
@@ -48,4 +47,5 @@
          </children>
       </VBox>
    </children>
+   <fx:include fx:id="Buttons" source="partialButtons.fxml" />
 </AnchorPane>
