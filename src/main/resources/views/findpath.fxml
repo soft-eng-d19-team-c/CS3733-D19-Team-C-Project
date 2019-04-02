@@ -60,7 +60,7 @@
          </font>
       </Button>
       <JFXTextArea fx:id="phoneNumberInput" layoutX="14.0" layoutY="396.0" prefHeight="0.0" prefWidth="183.0" promptText="Phone number" />
-      <Button fx:id="dancebtn" layoutX="36.0" layoutY="1010.0" mnemonicParsing="false" onAction="#Dancebtnclick" prefHeight="41.0" prefWidth="117.0" styleClass="btn-primary" stylesheets="@app.css" text="DANCE?">
+      <Button fx:id="dancebtn" layoutX="36.0" layoutY="1010.0" mnemonicParsing="false" onAction="#Dancebtnclick" prefHeight="41.0" prefWidth="117.0" styleClass="btn-primary" stylesheets="@app.css" text="DANCE?" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="1700.0" AnchorPane.topAnchor="950.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

@@ -65,10 +65,10 @@ public class Pathfinding extends Controller implements Initializable {
         findpathmap.fitWidthProperty().bind(imInPane.widthProperty());
         Platform.runLater(() -> {
 
-            String findLocationNode = (String)Main.screenController.getData("nodeID");
-            if (findLocationNode != null){
+//            String findLocationNode = (String)Main.screenController.getData("nodeID");
+//            if (findLocationNode != null){
                 //MAKE THIS NOD COLORED AND BIGGER ON PAGE LOAD
-            }
+//            }
             dt = new DataTable();
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));

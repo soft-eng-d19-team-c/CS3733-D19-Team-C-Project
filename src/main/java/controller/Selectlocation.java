@@ -29,6 +29,8 @@ public class Selectlocation extends Controller implements Initializable {
 
     public void searchLocation(ActionEvent actionEvent) {
         HashMap<String, Object> data = new HashMap<>();
+        System.out.println(autoCompleteTextController);
+        System.out.println(autoCompleteTextController.getNodeID());
         data.put("nodeID", autoCompleteTextController.getNodeID());
         Main.screenController.setScreen(EnumScreenType.FINDPATH, data);
     }
