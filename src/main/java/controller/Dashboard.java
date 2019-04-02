@@ -43,7 +43,7 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
-       // Main.screenController.setScreen(EnumScreenType.BOOKROOM);
+        Main.screenController.setScreen(EnumScreenType.BOOKROOM);
     }
 
     public void editMapButtonClick(ActionEvent actionEvent) {

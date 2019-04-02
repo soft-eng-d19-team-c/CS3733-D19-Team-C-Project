@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane fx:id="bigPane" prefHeight="850.0" prefWidth="1250.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Map">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,11 +30,11 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXToggleButton fx:id="dancePartyBtn" onAction="#danceParty" text="Dance party?">
+                  <JFXToggleButton fx:id="dancePartyBtn" onAction="#danceParty" text="Dance party?" visible="false">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin></JFXToggleButton>
-                  <ChoiceBox fx:id="floorDropDown" prefWidth="150.0" />
+                  <ComboBox fx:id="floorsMenu" prefWidth="150.0" />
                   <Button fx:id="addNodeButton" onAction="#addNodeButtonClick" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="Add Node">
                      <VBox.margin>
                         <Insets bottom="20.0" top="100.0" />

@@ -3,11 +3,17 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -21,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 import model.Edge;
 import model.Node;
 
@@ -31,6 +38,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Map extends Controller implements Initializable {
+
     @FXML
     private AnchorPane bigPane;
     @FXML
@@ -39,6 +47,9 @@ public class Map extends Controller implements Initializable {
     private Pane imInPane;
     @FXML
     private ToggleButton dancePartyBtn;
+
+    @FXML
+    private ComboBox<String> floorsMenu;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -122,12 +133,22 @@ public class Map extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
+
+        ObservableList<String> differentFloors =
+                FXCollections.observableArrayList(
+                        "Floor 1",
+                        "Floor 2",
+                        "Floor 3");
+        ComboBox<String> floorsMenu = new ComboBox(differentFloors);
+
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
             edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
             dancePartyBtn.setSelected(false);
             drawNodes();
+
+            floorsMenu.setItems(differentFloors);
         });
     }
 
@@ -198,6 +219,22 @@ public class Map extends Controller implements Initializable {
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
     }
+
+    /*
+    public void start(Stage stage) {
+        Scene scene = new Scene(new Group(), 450, 250);
+
+        ComboBox<String> myComboBox = new ComboBox<String>();
+        myComboBox.getItems();
+        myComboBox.setEditable(true);
+
+        Group root = (Group) scene.getRoot();
+        root.getChildren().add(myComboBox);
+        stage.setScene(scene);
+        stage.show();
+
+    }*/
+
 
     public void editNodeButtonClick(ActionEvent e){
 

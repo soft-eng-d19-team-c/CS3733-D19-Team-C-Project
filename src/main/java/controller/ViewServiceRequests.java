@@ -28,6 +28,8 @@ public class ViewServiceRequests extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //serviceRequests.getAll(serviceRequests);
+        //like initialize fcn in nodeTable
 
     }
 

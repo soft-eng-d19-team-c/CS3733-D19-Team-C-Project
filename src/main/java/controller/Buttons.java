@@ -23,8 +23,8 @@ public class Buttons extends Controller implements Initializable {
     }
 
     public void logOutButtonClick(ActionEvent actionEvent) {
-        System.out.println("logged out");
-        // Main.screenController.setScreen(EnumScreenType.LOGIN);
+        //System.out.println("logged out");
+         Main.screenController.setScreen(EnumScreenType.LOGIN);
     }
 
     public void returnButtonClick(ActionEvent actionEvent) {
