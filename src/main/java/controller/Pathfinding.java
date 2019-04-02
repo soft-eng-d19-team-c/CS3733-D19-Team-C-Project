@@ -1,6 +1,9 @@
 package controller;
 
 import base.Main;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
+import com.twilio.type.PhoneNumber;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import model.AStar;
-import model.DataTable;
-import model.Edge;
-import model.Node;
+import model.*;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -36,6 +36,8 @@ public class Pathfinding extends Controller implements Initializable {
     @FXML private Button findpathbtn;
     @FXML private AutocompleteSearchBar searchController_origController;
     @FXML private AutocompleteSearchBar searchController_destController;
+    @FXML private JFXTextArea phoneNumberInput;
+    @FXML private Button phoneNumberBtn;
 
     AStar star;
     LinkedList<Node> astarResult;
@@ -198,6 +200,15 @@ public class Pathfinding extends Controller implements Initializable {
 //        drawNodes(node_onPath, somecolor);
         imInPane.getChildren().remove(1, imInPane.getChildren().size());
         generateNodes(node_onPath);
+        phoneNumberBtn.setDisable(false);
+    }
+
+    public void sendTextClick(ActionEvent actionEvent){
+        String phoneNumber = phoneNumberInput.getText();
+        PathToText pathToText = new PathToText(node_onPath);
+        String path = pathToText.getDetailedPath();
+        pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
+
     }
 }
 

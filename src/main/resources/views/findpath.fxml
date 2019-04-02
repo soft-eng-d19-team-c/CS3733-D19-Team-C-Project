@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
+<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Pathfinding">
    <children>
       <ImageView fitHeight="81.0" fitWidth="82.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -48,5 +49,16 @@
                  <ImageView fx:id="findpathmap" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
            </children>
        </Pane>
+      <Text layoutX="14.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter phone number to be texted path." wrappingWidth="202.9423828125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="phoneNumberBtn" disable="true" layoutX="39.0" layoutY="447.0" mnemonicParsing="false" onAction="#sendTextClick" prefHeight="39.0" prefWidth="133.0" styleClass="btn-primary" stylesheets="@app.css" text="Send text">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <JFXTextArea fx:id="phoneNumberInput" layoutX="14.0" layoutY="396.0" prefHeight="0.0" prefWidth="183.0" promptText="Phone number" />
    </children>
 </AnchorPane>
