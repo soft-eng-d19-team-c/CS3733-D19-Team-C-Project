@@ -242,9 +242,8 @@ public class Map extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 double randID = new Random().nextDouble();
                 double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale));
+                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), (String) Main.screenController.getData("floor"), "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
-                n.setFloor((String) Main.screenController.getData("floor"));
                 n.insert();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
@@ -309,7 +308,13 @@ public class Map extends Controller implements Initializable {
         }
     };
     EventHandler undragNodeHandler = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
+        public void handle(MouseEvent me) {
+            Circle circle = (Circle) me.getTarget();
+            Node n = (Node) circle.getProperties().get("node");
+            double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+            n.setX((int) (me.getX() * mapScale));
+            n.setY((int) (me.getY() * mapScale));
+            n.update();
             orgSceneX = -1;
             orgSceneY = -1;
         }

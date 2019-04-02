@@ -159,7 +159,6 @@ public class Node {
             ps.setString(7, this.getShortName());
             ps.setString(8, this.getID());
             int result = ps.executeUpdate();
-            System.out.println(result);
             return result;
 
         } catch (SQLException e) {

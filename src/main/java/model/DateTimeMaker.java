@@ -24,8 +24,8 @@ public class DateTimeMaker {
             minutes = 30;
         }
         numToAdd = minutesToMilliseconds(hrs*60) + minutesToMilliseconds(minutes) + minutesToMilliseconds(ampm * 12 * 60);
-        Timestamp dateTime = new Timestamp();
-
+        Timestamp dateTime = new Timestamp(0);
+        return dateTime;
     }
 
     private static int minutesToMilliseconds(int num){
