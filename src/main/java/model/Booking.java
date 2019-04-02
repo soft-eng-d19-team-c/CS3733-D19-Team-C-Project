@@ -4,21 +4,18 @@ import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 
 public class Booking {
     private String bookingLocation;
     private String description;
-    private Date dateTimeStart;
-    private Date dateTimeEnd;
+    private Timestamp dateTimeStart;
+    private Timestamp dateTimeEnd;
     private User completedBy; //Type User or String? ???
     private int ID;
 
-    public Booking(String bookingLocationID, String description, Date dateTimeStart, Date dateTimeEnd, User completedBy, int ID) {
+    public Booking(String bookingLocationID, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, User completedBy, int ID) {
 
         this.description = description;
         this.dateTimeStart = dateTimeStart;
@@ -49,7 +46,7 @@ public class Booking {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
-                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getDate("DATETIMESTART"), rs.getDate("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,15 +69,15 @@ public class Booking {
         boolean executed = false;
 
         String sqlCmd = "update BOOKINGS set LOCATION = ?, DESCRIPTION = ?, DATETIMESTART = ?, DATETIMEEND = ?, USERCOMPLETEDBY = ? where ID = ?";
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlEndDate = new java.sql.Date(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, bookingLocation);
             ps.setString(2, description);
-            ps.setDate(3, sqlStartDate);
-            ps.setDate(4,sqlEndDate);
+            ps.setTimestamp(3, sqlStartDate);
+            ps.setTimestamp(4,sqlEndDate);
             ps.setString(5, completedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
@@ -95,15 +92,15 @@ public class Booking {
     public boolean insert(){
         boolean executed = false;
         String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlEndDate = new java.sql.Date(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, bookingLocation);
             ps.setString(2, description);
-            ps.setDate(3, sqlStartDate);
-            ps.setDate(4,sqlEndDate);
+            ps.setTimestamp(3, sqlStartDate);
+            ps.setTimestamp(4,sqlEndDate);
             ps.setString(5, completedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
