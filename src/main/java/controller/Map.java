@@ -177,6 +177,8 @@ public class Map extends Controller implements Initializable {
         line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
         line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
 
+        line.getProperties().put("edge", e);
+
         line.setStroke(new Color(0,0,0,1));
 
         imInPane.getChildren().add(line);
@@ -203,7 +205,6 @@ public class Map extends Controller implements Initializable {
         nodeCircles.put(n.getID(), circle);
     }
 
-
     public void addNodeButtonClick(ActionEvent e){
         imInPane.getScene().setCursor(Cursor.CROSSHAIR);
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
@@ -228,8 +229,17 @@ public class Map extends Controller implements Initializable {
     }
 
     public void deleteNodeButtonClick(ActionEvent e){
-
-        System.out.println("node deleted");
+        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+            if (node.getProperties().containsKey("node")) {
+                // remove drag from nodes when adding path
+                node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
+                // add event handler for mouse click on node
+                node.addEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
+            }
+        }
+        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
     public void deletePathButtonClick(ActionEvent e){
@@ -242,10 +252,37 @@ public class Map extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 double randID = new Random().nextDouble();
                 double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale));
+                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), (String) Main.screenController.getData("floor"), "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
+                n.insert();
                 imInPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+            }
+        }
+    };
+
+    EventHandler removeNodeHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = (Circle) me.getTarget();
+                Node n = (Node) circle.getProperties().get("node");
+                for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                    if (node.getProperties().containsKey("edge")) {
+                        Edge e = (Edge) node.getProperties().get("edge");
+                        String cursorEdgeStartNodeID = e.getStartNode();
+                        String cursorEdgeEndNodeID = e.getEndNode();
+                        if (cursorEdgeStartNodeID.equals(n.getID()) || cursorEdgeEndNodeID.equals(n.getID())) {
+                            Platform.runLater(() -> imInPane.getChildren().remove(node));
+//                            TODO e.remove();
+                        }
+                    }
+                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                    node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                    node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                }
+                imInPane.getChildren().remove(me.getTarget());
+//               TODO n.remove();
+                imInPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }
     };
@@ -265,7 +302,40 @@ public class Map extends Controller implements Initializable {
                     double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
                     Edge e = new Edge("CUSTOMEDGE" + randID, startNodeForAddEdge.getID(), endNodeForAddEdge.getID());
                     generateEdge(e);
+                    e.insert();
+                    // remove this event handler, set everything to null, add drag event handlers again
+                    for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                        if (node.getProperties().containsKey("node")) {
+                            node.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
 
+                            node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                            node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                        }
+                    }
+                    startNodeForAddEdge = null;
+                    endNodeForAddEdge = null;
+                    imInPane.getScene().setCursor(Cursor.DEFAULT);
+                }
+            }
+        }
+    };
+
+    private Node startNodeForRemoveEdge = null;
+    private Node endNodeForRemoveEdge = null;
+    EventHandler removeEdgeHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = (Circle) me.getSource();
+                Node n = (Node) circle.getProperties().get("node");
+                if (startNodeForAddEdge == null) {
+                    startNodeForAddEdge = n;
+                } else {
+                    endNodeForAddEdge = n;
+                    double randID = new Random().nextDouble();
+                    double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+                    Edge e = new Edge("CUSTOMEDGE" + randID, startNodeForAddEdge.getID(), endNodeForAddEdge.getID());
+                    generateEdge(e);
+                    e.insert();
                     // remove this event handler, set everything to null, add drag event handlers again
                     for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
                         if (node.getProperties().containsKey("node")) {
@@ -307,7 +377,13 @@ public class Map extends Controller implements Initializable {
         }
     };
     EventHandler undragNodeHandler = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
+        public void handle(MouseEvent me) {
+            Circle circle = (Circle) me.getTarget();
+            Node n = (Node) circle.getProperties().get("node");
+            double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
+            n.setX((int) (me.getX() * mapScale));
+            n.setY((int) (me.getY() * mapScale));
+            n.update();
             orgSceneX = -1;
             orgSceneY = -1;
         }

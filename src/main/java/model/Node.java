@@ -2,11 +2,12 @@ package model;
 
 import base.Main;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.LinkedList;
-
-import static java.lang.Math.sqrt;
 
 public class Node {
     private String ID;
@@ -158,7 +159,6 @@ public class Node {
             ps.setString(7, this.getShortName());
             ps.setString(8, this.getID());
             int result = ps.executeUpdate();
-            System.out.println(result);
             return result;
 
         } catch (SQLException e) {
@@ -236,5 +236,20 @@ public class Node {
                 return -1;
 
         }
+    }
+
+    public boolean insert() {
+        String str = "INSERT INTO NODES (NODEID, XCOORD, YCOORD, FLOOR) VALUES(?,?,?,?)";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getID());
+            ps.setInt(2, this.getX());
+            ps.setInt(3, this.getY());
+            ps.setString(4, this.getFloor());
+            return ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

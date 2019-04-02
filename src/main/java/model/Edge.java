@@ -2,6 +2,7 @@ package model;
 
 import base.Main;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -85,5 +86,19 @@ public class Edge {
             e.printStackTrace();
         }
         return edges;
+    }
+
+    public boolean insert() {
+        String str = "INSERT INTO EDGES (EDGEID, STARTNODE, ENDNODE) VALUES(?,?,?)";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getEdgeId());
+            ps.setString(2, this.getStartNode());
+            ps.setString(3, this.getEndNode());
+            return ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
