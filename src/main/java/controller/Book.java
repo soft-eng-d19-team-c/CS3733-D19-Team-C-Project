@@ -18,6 +18,7 @@ import model.DateTimeMaker;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class Book extends Controller implements Initializable {
@@ -57,15 +58,17 @@ public class Book extends Controller implements Initializable {
         //needs to update some sort of schedule saying which rooms are booked for certain times
         String bookingLocation = locationBox.getValue().getID();
         LocalDate date = datePicker.getValue();
-        System.out.println(date);
-        DateTimeMaker dtm = new DateTimeMaker(date);
-        Timestamp startDate;
-        Timestamp endDate;
-        startDate = dtm.addTime(startTimeBox.getValue());
-        endDate = dtm.addTime(endTimeBox.getValue());
-        System.out.println(startDate);
-        System.out.println(endDate);
-        Booking b = new Booking(bookingLocation, "", startDate, endDate, Main.user, 0);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), 0, 0);
+        Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
+        DateTimeMaker.addTime(startTimeBox.getValue(), tsStart); // modifies ts
+        Timestamp tsEnd = new Timestamp(cal.getTimeInMillis());
+        DateTimeMaker.addTime(endTimeBox.getValue(), tsEnd); // modifies ts
+
+
+
+        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user, 0);
         b.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
