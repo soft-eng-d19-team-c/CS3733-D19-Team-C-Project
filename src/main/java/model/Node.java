@@ -3,7 +3,11 @@ package model;
 import base.Main;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Node {
     private String ID;
@@ -44,6 +48,16 @@ public class Node {
         this.longName = longName;
         this.shortName = shortName;
     }
+    public Node(String ID, int x, int y, String floor, String building, String nodeType) {
+        this.ID = ID;
+        this.x = x;
+        this.y = y;
+        this.floor = floor;
+        this.building = building;
+        this.nodeType = nodeType;
+        this.longName = null;
+        this.shortName = null;
+    }
 
     public String getFloor() {
         return floor;
@@ -66,11 +80,26 @@ public class Node {
     }
 
     public void setFloor(String floor) {
-        this.floor = floor;
+        // error checks for user entering floor as lowercase l
+        if (floor.substring(0,1).equals("l")) {
+            floor = "L" + floor.substring(1,2);
+        }
+        String[] floors = {"L2", "L1", "1", "2", "3"};
+        if (Arrays.asList(floors).contains(floor)) {
+            this.floor = floor;
+        } else {
+            System.out.println("Error node.setFloor: did not enter a valid floor");
+        }
     }
 
     public void setBuilding(String building) {
-        this.building = building;
+        String[] buildings = {"15 Francis" ,"45 Francis", "BTM", "Shapiro", "Tower"};
+        if (Arrays.asList(buildings).contains(building)) {
+            this.building = building;
+        } else {
+            System.out.println("Error node.setBuilding: did not enter a valid floor");
+        }
+
     }
 
     public void setNodeType(String nodeType) {
@@ -118,7 +147,7 @@ public class Node {
     public int update() {
         try {
             //Statement stmt = connection.createStatement();
-            String str = "UPDATE PROTOTYPENODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
+            String str = "UPDATE NODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
                     "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             ps.setInt(1, this.getX());
@@ -130,7 +159,6 @@ public class Node {
             ps.setString(7, this.getShortName());
             ps.setString(8, this.getID());
             int result = ps.executeUpdate();
-            System.out.println(result);
             return result;
 
         } catch (SQLException e) {
@@ -138,5 +166,103 @@ public class Node {
         }
 
         return 0;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public static LinkedList<Node> getNodesByFloor(String floor) {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM NODES WHERE FLOOR = '" + floor + "'";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String nodeFloor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, nodeFloor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public static LinkedList<Node> getNodes() {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM NODES";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, floor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
+    }
+
+
+
+    // Floor 3  4
+    // Floor 2  3
+    // Floor 1  2
+    // Floor L1 1
+    // Floor L2 0
+
+    public int getFloorNumber(){
+        switch (this.floor){
+            case "3": return 4;
+            case "2": return 3;
+            case "1": return 2;
+            case "L1": return 1;
+            case "L2": return 0;
+            default:
+                System.out.println("Error in node.getfloornumber");
+                return -1;
+
+        }
+    }
+
+    public boolean insert() {
+        String str = "INSERT INTO NODES (NODEID, XCOORD, YCOORD, FLOOR) VALUES(?,?,?,?)";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getID());
+            ps.setInt(2, this.getX());
+            ps.setInt(3, this.getY());
+            ps.setString(4, this.getFloor());
+            return ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean remove() {
+        String str = "DELETE FROM NODES WHERE NODEID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1, this.getID());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

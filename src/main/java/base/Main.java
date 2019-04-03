@@ -1,18 +1,15 @@
 package base;
 
-import controller.Facade;
+import model.User;
 
-/**
- * @author Ryan LaMarche.
- */
 public class Main {
     public static Facade screenController;
     public static Database database;
+    public static User user;
     public static void main(String[] args) {
-        database = new Database();
-        // creates new base.MainFXML object that loads main.fxml on a new thread, starting at its main method.
+        database = new Database(true, false);
+        user = new User("username@example.com", "developer");
         MainFXML app = new MainFXML();
         app.main(args);
-
     }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import model.Node;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class EditNodeData extends Controller implements Initializable {
@@ -29,9 +31,7 @@ public class EditNodeData extends Controller implements Initializable {
     @FXML
     private TextField shortName;
 
-
     private Node nodeData;
-
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -43,8 +43,9 @@ public class EditNodeData extends Controller implements Initializable {
     }
 
     public void backButtonClick(ActionEvent e) {
-        Main.screenController.setScreen(EnumScreenType.NODETABLE);
+        Main.screenController.goBack();
     }
+
 
     public void saveButtonClick(ActionEvent e) {
         try {
@@ -75,7 +76,9 @@ public class EditNodeData extends Controller implements Initializable {
         int updateflag;
         updateflag = nodeData.update();
         if (updateflag > 0) {
-            backButtonClick(e);
+            HashMap<String, Object> hm = new HashMap<>();
+            hm.put("floor", "L1");
+            Main.screenController.setScreen(EnumScreenType.MAP, hm);
         }
     }
 
@@ -95,5 +98,6 @@ public class EditNodeData extends Controller implements Initializable {
 
         });
     }
+
 
 }
