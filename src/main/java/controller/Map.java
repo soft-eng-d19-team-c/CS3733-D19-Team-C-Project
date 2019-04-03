@@ -57,10 +57,6 @@ public class Map extends Controller implements Initializable {
         initialize(location, resources);
     }
 
-    public void backBtnClick(ActionEvent e) {
-        Main.screenController.setScreen(EnumScreenType.NODETABLE);
-    }
-
     public void danceParty(ActionEvent e){}
 
     /*
@@ -377,9 +373,9 @@ public class Map extends Controller implements Initializable {
             }
         }
     };
-    @SuppressWarnings("Duplicates")
     private Node startNodeForAddEdge = null;
     private Node endNodeForAddEdge = null;
+    @SuppressWarnings("Duplicates")
     EventHandler addEdgeHandler = new EventHandler<MouseEvent>(){
         public void handle(javafx.scene.input.MouseEvent me){
             if (me.getButton().equals(MouseButton.PRIMARY)) {

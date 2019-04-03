@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import model.Node;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class EditNodeData extends Controller implements Initializable {
@@ -74,7 +76,9 @@ public class EditNodeData extends Controller implements Initializable {
         int updateflag;
         updateflag = nodeData.update();
         if (updateflag > 0) {
-            backButtonClick(e);
+            HashMap<String, Object> hm = new HashMap<>();
+            hm.put("floor", "L1");
+            Main.screenController.setScreen(EnumScreenType.MAP, hm);
         }
     }
 

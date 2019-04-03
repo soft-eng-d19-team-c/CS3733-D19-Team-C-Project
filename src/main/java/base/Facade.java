@@ -2,6 +2,7 @@ package base;
 
 import controller.Controller;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -42,6 +43,7 @@ public final class Facade {
     }
 
     public void setScreen(EnumScreenType type, HashMap<String, Object> data, boolean addToHistory) {
+        this.primaryScene.setCursor(Cursor.DEFAULT);
         this.data = data;
         if (addToHistory) {
             this.history.push(prevType);
