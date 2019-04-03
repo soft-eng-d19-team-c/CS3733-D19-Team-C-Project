@@ -70,6 +70,9 @@ public class Pathfinding extends Controller implements Initializable {
         findpathmap.fitWidthProperty().bind(imInPane.widthProperty());
         Platform.runLater(() -> {
 
+            searchController_destController.refresh();
+            searchController_origController.refresh();
+
             findLocationNodeID = (String)Main.screenController.getData("nodeID");
 
             dt = new DataTable();
