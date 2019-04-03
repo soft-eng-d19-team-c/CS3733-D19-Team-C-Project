@@ -462,8 +462,8 @@ public class Map extends Controller implements Initializable {
         }
     };
 
+
     public void submitButtonClick(ActionEvent actionEvent) {
-        imInPane.getScene().setCursor(Cursor.DEFAULT);
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
