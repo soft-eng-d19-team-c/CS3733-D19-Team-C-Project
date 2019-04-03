@@ -27,13 +27,19 @@ public final class Facade {
     }
 
     public void setScreen(EnumScreenType type) {
-        setScreen(type, null);
+        setScreen(type, null, true);
     }
 
     public void setScreen(EnumScreenType type, HashMap<String, Object> data) {
+        setScreen(type, data, true);
+    }
+
+    public void setScreen(EnumScreenType type, HashMap<String, Object> data, boolean addToHistory) {
         this.data = data;
-        this.history.push(prevType);
-        this.prevType = type;
+        if (addToHistory) {
+            this.history.push(prevType);
+            this.prevType = type;
+        }
         if (this.screens.containsKey(type)) {
             loadCachedScreen(type);
         } else {
@@ -67,7 +73,7 @@ public final class Facade {
     }
 
     public void goBack(HashMap<String, Object> data) {
-        setScreen(this.history.pop(), data);
+        setScreen(this.history.pop(), data, false);
     }
 
     private void clearHistory() {

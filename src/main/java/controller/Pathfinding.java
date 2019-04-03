@@ -4,6 +4,7 @@ import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
 import javafx.animation.Animation;
+import javafx.animation.ScaleTransition;
 import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -54,6 +55,8 @@ public class Pathfinding extends Controller implements Initializable {
     private Color black;
     private Color somecolor;
 
+    private String findLocationNodeID;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -65,17 +68,30 @@ public class Pathfinding extends Controller implements Initializable {
         findpathmap.fitWidthProperty().bind(imInPane.widthProperty());
         Platform.runLater(() -> {
 
-//            String findLocationNode = (String)Main.screenController.getData("nodeID");
-//            if (findLocationNode != null){
-                //MAKE THIS NOD COLORED AND BIGGER ON PAGE LOAD
-//            }
+            findLocationNodeID = (String)Main.screenController.getData("nodeID");
+
             dt = new DataTable();
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
             edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
-//            generateNodes(nodes);
             black = new Color(0,0,0,1);
             drawNodes(nodes, edges, black);
+
+            if (findLocationNodeID != null) {
+                Circle foundNode = nodeCircles.get(findLocationNodeID);
+
+                foundNode.setRadius(6.0);
+                foundNode.setFill(Color.ORANGERED);
+                foundNode.toFront();
+
+                ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
+                st.setByX(1.2);
+                st.setByY(1.2);
+                st.setCycleCount(Animation.INDEFINITE);
+                st.setAutoReverse(true);
+                st.play();
+            }
+
         });
     }
 
