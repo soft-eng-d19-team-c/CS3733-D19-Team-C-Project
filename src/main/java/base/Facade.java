@@ -45,8 +45,8 @@ public final class Facade {
         this.data = data;
         if (addToHistory) {
             this.history.push(prevType);
-            this.prevType = type;
         }
+        this.prevType = type;
         if (this.screens.containsKey(type)) {
             loadCachedScreen(type);
         } else {
@@ -85,6 +85,7 @@ public final class Facade {
 
     private void clearHistory() {
         this.history.clear();
+        this.history.push(EnumScreenType.DASHBOARD);
     }
 
     public Object getData(String key) {

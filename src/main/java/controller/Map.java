@@ -327,8 +327,10 @@ public class Map extends Controller implements Initializable {
                         }
                     }
                     node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                    node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
-                    node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    if (node.getProperties().containsKey("node")) {
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    }
                 }
                 imInPane.getChildren().remove(me.getTarget());
                 n.remove();
@@ -460,7 +462,7 @@ public class Map extends Controller implements Initializable {
         }
     };
 
-    public void saveButtonClick(ActionEvent actionEvent) {
+    public void submitButtonClick(ActionEvent actionEvent) {
         imInPane.getScene().setCursor(Cursor.DEFAULT);
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
