@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
 
+
+/*
+        TODO
+
+        on logout remember to clear the history stack
+ */
+
 public final class Facade {
     private HashMap<EnumScreenType, Parent> screens;
     private HashMap<EnumScreenType, Controller> controllers;

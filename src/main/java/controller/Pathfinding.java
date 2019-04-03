@@ -4,6 +4,7 @@ import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
 import javafx.animation.Animation;
+import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +31,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Pathfinding extends Controller implements Initializable {
-    @FXML private Button dancebtn;
+    @FXML private ToggleButton dancebtn;
     @FXML private ImageView findpathmap;
     @FXML private AnchorPane findpathview;
     @FXML private Pane imInPane;
@@ -125,22 +127,36 @@ public class Pathfinding extends Controller implements Initializable {
 
     @SuppressWarnings("Duplicates")
     private void dancePartyNode(LinkedList<Node> nodes) {
-        String prev = null;
-        double mapX = findpathmap.getLayoutX();
-        double mapY = findpathmap.getLayoutY();
-        double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
-        for (Node n : nodes) {
-            Circle circle = new Circle();
-            circle.setCenterX(mapX + n.getX()/mapScale);
-            circle.setCenterY(mapY + n.getY()/mapScale);
-            circle.setRadius(3.0);
-            circle.getProperties().put("node", n);
-            if (prev != null) {
-                drawDancingline(prev, n.getID());
+        imInPane.getChildren().remove(1, imInPane.getChildren().size());
+        if (dancebtn.isSelected()) {
+            String prev = null;
+            double mapX = findpathmap.getLayoutX();
+            double mapY = findpathmap.getLayoutY();
+            double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
+            for (Node n : nodes) {
+                Circle circle = new Circle();
+                circle.setCenterX(mapX + n.getX() / mapScale);
+                circle.setCenterY(mapY + n.getY() / mapScale);
+                circle.setRadius(3.0 + (new Random().nextDouble() * 3.0));
+                circle.getProperties().put("node", n);
+                Color c1 = randomColorGenerator();
+                Color c2 = randomColorGenerator();
+                FillTransition ft = new FillTransition(Duration.millis(517), circle, c1, c2);
+                ft.setAutoReverse(true);
+                ft.setCycleCount(Animation.INDEFINITE);
+                ft.play();
+                if (prev != null) {
+                    drawDancingline(prev, n.getID());
+                }
+                imInPane.getChildren().add(circle);
+                nodeCircles.put(n.getID(), circle);
+                prev = n.getID();
             }
-            imInPane.getChildren().add(circle);
-            nodeCircles.put(n.getID(), circle);
-            prev = n.getID();
+            for (Circle c : nodeCircles.values()) {
+                c.toFront();
+            }
+        } else {
+            generateNodes(nodes);
         }
     }
 
@@ -227,6 +243,7 @@ public class Pathfinding extends Controller implements Initializable {
         imInPane.getChildren().remove(1, imInPane.getChildren().size());
         generateNodes(node_onPath);
         phoneNumberBtn.setDisable(false);
+        dancebtn.setVisible(true);
     }
 
     public void sendTextClick(ActionEvent actionEvent){
