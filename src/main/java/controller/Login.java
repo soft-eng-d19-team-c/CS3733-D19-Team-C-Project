@@ -19,6 +19,7 @@ public class Login extends Controller implements Initializable {
 
     }
 
+    //does not currently actually log you in
     public void loginButtonClick(ActionEvent actionEvent) {
         Main.user.setPermissions("employee");
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);

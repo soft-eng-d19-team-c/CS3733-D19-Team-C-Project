@@ -126,7 +126,7 @@ public class Map extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
 //        mapImg.fitWidthProperty().bind(imInPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
-        ObservableList<String> differentFloors =
+        ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
                         "L1",
@@ -458,7 +458,7 @@ public class Map extends Controller implements Initializable {
         }
     };
 
-
+//a "fake submit" button, to bring you back to the dashboard, appear as if you are saving the page
     public void submitButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }

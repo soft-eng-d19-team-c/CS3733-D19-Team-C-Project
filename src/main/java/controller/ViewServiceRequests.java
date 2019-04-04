@@ -38,6 +38,7 @@ public class ViewServiceRequests extends Controller implements Initializable {
         initialize(location, resources);
     }
 
+    //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //serviceRequests.getAll(serviceRequests);

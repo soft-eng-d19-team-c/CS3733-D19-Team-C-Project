@@ -8,5 +8,6 @@ import java.util.ResourceBundle;
 public abstract class Controller {
     public abstract void init(URL location, ResourceBundle resources);
 
+    //to include the partials
     @FXML private Buttons buttonsController;
 }
