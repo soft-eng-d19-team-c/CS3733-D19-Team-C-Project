@@ -41,7 +41,7 @@ public class Edge {
                 '}';
     }
 
-
+    //when given a nodeID, finds the other node that the edge is connected to
     public String findOtherNode(String ID){
         if(ID.equals(this.startNode)){
             return this.endNode;
