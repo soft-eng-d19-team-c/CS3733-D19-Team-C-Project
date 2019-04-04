@@ -54,7 +54,6 @@ public class ServiceRequest {
     }
 
     //Determines amount of time task was completed in
-
     public Date computeTimeDiff(){
 
         long end = dateTimeResolved.getTime();
@@ -63,7 +62,7 @@ public class ServiceRequest {
 
     }
 
-    //Update service request once complete
+    //Update the information in a ServiceRequest
     public boolean update(){
 
         boolean executed = false;
@@ -90,6 +89,7 @@ public class ServiceRequest {
         return executed;
     }
 
+    //Insert a new ServiceRequest into the database
     public boolean insert(){
 
         boolean executed = false;
@@ -114,7 +114,7 @@ public class ServiceRequest {
 
     }
 
-
+    //Returns an observable list of all ServiceRequests for JavaFX's sake
     public static ObservableList<ServiceRequest> getAllServiceRequests() {
 
         ObservableList<ServiceRequest> requests =  FXCollections.observableArrayList();
@@ -147,6 +147,7 @@ public class ServiceRequest {
         return ID;
     }
 
+    //Mark a ServiceRequest complete
     public boolean resolve() {
         String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {

@@ -7,12 +7,13 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.Date;
 
+// This class is for booking rooms in the scheduling system
 public class Booking {
     private String bookingLocation;
     private String description;
     private Timestamp dateTimeStart;
     private Timestamp dateTimeEnd;
-    private User completedBy; //Type User or String? ???
+    private User completedBy;
     private int ID;
 
     public Booking(String bookingLocationID, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, User completedBy, int ID) {
@@ -55,7 +56,6 @@ public class Booking {
     }
 
     //Determines duration of booking
-
     public Date computeTimeDiff(){
 
         long end = dateTimeEnd.getTime();
@@ -64,6 +64,7 @@ public class Booking {
 
     }
 
+    //Update a booking request with new information
     public boolean update(){
 
         boolean executed = false;
@@ -89,6 +90,7 @@ public class Booking {
         return executed;
     }
 
+    //Insert a new booking into the database
     public boolean insert(){
         boolean executed = false;
         String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
