@@ -2,6 +2,11 @@ package base;
 
 import model.User;
 
+/**
+ * The Main class of the application that stores the User, Facade, and Database objects.
+ * This class also spawns the FXML application.
+ * @author Ryan LaMarche
+ */
 public class Main {
     public static Facade screenController;
     public static Database database;

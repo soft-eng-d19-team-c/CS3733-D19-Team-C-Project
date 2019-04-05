@@ -1,5 +1,9 @@
 package base;
 
+/**
+ * This Enum is to store all of the screens that our app can switch to in the Facade design pattern.
+ * @author Ryan LaMarche
+ */
 public enum EnumScreenType {
     NODETABLE("/views/prototypeNodeTable.fxml"),
     MAP("/views/prototypeMap.fxml"),
