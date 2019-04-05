@@ -223,7 +223,7 @@ public class Node {
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStmt);
             ps.setString(1,nodeID);
-            ResultSet rs = ps.executeQuery(sqlStmt);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String newNodeID = rs.getString("NODEID");
                 int x = rs.getInt("XCOORD");
