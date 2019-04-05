@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.ServiceRequest;
+import model.SanitationRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,8 +33,8 @@ public class ServiceRequestController extends Controller implements Initializabl
     //save the service request to the database, to late view
     //set screen back to the dashboard
     public void submitButtonClick(ActionEvent actionEvent) {
-        ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
-        serviceRequest.insert();
+        SanitationRequest sanitationRequest = new SanitationRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
+        sanitationRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }

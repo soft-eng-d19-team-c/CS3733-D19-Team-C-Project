@@ -9,7 +9,7 @@ import java.util.Date;
 
 //Create service request, get service request, and have it talk to database
 
-public class ServiceRequest {
+public class SanitationRequest {
 
     private String type;
     private String nodeID;
@@ -21,7 +21,7 @@ public class ServiceRequest {
     private User userRequestedBy;
     private int ID;
 
-    public ServiceRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
+    public SanitationRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
         this.type = type;
         this.nodeID = nodeID;
         this.description = description;
@@ -49,7 +49,7 @@ public class ServiceRequest {
         return this.isComplete;
     }
 
-    public ServiceRequest(String type, String location, String description) {
+    public SanitationRequest(String type, String location, String description) {
         this(-1, description, type, new Date(), null, location);
     }
 
@@ -62,7 +62,7 @@ public class ServiceRequest {
 
     }
 
-    //Update the information in a ServiceRequest
+    //Update the information in a SanitationRequest
     public boolean update(){
 
         boolean executed = false;
@@ -89,7 +89,7 @@ public class ServiceRequest {
         return executed;
     }
 
-    //Insert a new ServiceRequest into the database
+    //Insert a new SanitationRequest into the database
     public boolean insert(){
 
         boolean executed = false;
@@ -117,9 +117,9 @@ public class ServiceRequest {
     // TODO we probably want a getActiveServiceRequests()
 
     //Returns an observable list of all ServiceRequests for JavaFX's sake
-    public static ObservableList<ServiceRequest> getAllServiceRequests() {
+    public static ObservableList<SanitationRequest> getAllServiceRequests() {
 
-        ObservableList<ServiceRequest> requests =  FXCollections.observableArrayList();
+        ObservableList<SanitationRequest> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
@@ -133,8 +133,8 @@ public class ServiceRequest {
                 Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
                 Date dateTimeResolved = rs.getDate("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                ServiceRequest theServiceRequest = new ServiceRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
-                requests.add(theServiceRequest);
+                SanitationRequest theSanitationRequest = new SanitationRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
+                requests.add(theSanitationRequest);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +149,7 @@ public class ServiceRequest {
         return ID;
     }
 
-    //Mark a ServiceRequest complete
+    //Mark a SanitationRequest complete
     public boolean resolve() {
         String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
