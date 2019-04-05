@@ -31,7 +31,6 @@ public class Edge {
         return endNode;
     }
 
-
     @Override
     public String toString() {
         return "Edge{" +
@@ -52,6 +51,7 @@ public class Edge {
         else return "";
     }
 
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Edge> getEdgesByFloor(String floor) {
         LinkedList<Edge> edges = new LinkedList<>();
         String sqlStmt = "SELECT DISTINCT EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM EDGES INNER JOIN NODES ON EDGES.STARTNODE = NODES.NODEID WHERE NODES.FLOOR='"+floor+"'";
@@ -69,7 +69,8 @@ public class Edge {
         }
         return edges;
     }
-
+        
+    @SuppressWarnings("Duplicates")
     public static LinkedList<Edge> getEdges() {
         LinkedList<Edge> edges = new LinkedList<>();
         String sqlStmt = "SELECT * FROM EDGES";

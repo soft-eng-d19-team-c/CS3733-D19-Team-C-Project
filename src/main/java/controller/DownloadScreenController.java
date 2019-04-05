@@ -4,14 +4,14 @@ import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import model.DataTable;
+import model.NodeDataTable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DownloadScreen extends Controller implements Initializable {
+public class DownloadScreenController extends Controller implements Initializable {
 
-    private DataTable dataTable;
+    private NodeDataTable dataTable;
 
 
     @Override
@@ -21,7 +21,7 @@ public class DownloadScreen extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.dataTable = (DataTable) Main.screenController.getData("table");
+        this.dataTable = (NodeDataTable) Main.screenController.getData("table");
     }
 
     public void downloadButtonClick(ActionEvent actionEvent) {

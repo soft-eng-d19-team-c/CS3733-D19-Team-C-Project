@@ -9,25 +9,24 @@ import java.util.Date;
 
 // This class is for booking rooms in the scheduling system
 public class Booking {
-    private String bookingLocation;
+    private String location;
     private String description;
     private Timestamp dateTimeStart;
     private Timestamp dateTimeEnd;
-    private User completedBy;
+    private User userCompletedBy;
     private int ID;
 
-    public Booking(String bookingLocationID, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, User completedBy, int ID) {
-
+    public Booking(String location, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, User userCompletedBy, int ID) {
         this.description = description;
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
-        this.completedBy = completedBy;
+        this.userCompletedBy = userCompletedBy;
         this.ID = ID;
-        this.bookingLocation = bookingLocationID;
+        this.location = location;
     }
 
     public String getLocation() {
-        return this.bookingLocation;
+        return this.location;
     }
     public String getDateFrom() {
         return this.dateTimeStart.toString();
@@ -36,7 +35,7 @@ public class Booking {
         return this.dateTimeEnd.toString();
     }
     public String getUsername() {
-        return this.completedBy.getUsername();
+        return this.userCompletedBy.getUsername();
     }
 
     public static ObservableList<Booking> getCurrentBookings() {
@@ -66,7 +65,6 @@ public class Booking {
 
     //Update a booking request with new information
     public boolean update(){
-
         boolean executed = false;
 
         String sqlCmd = "update BOOKINGS set LOCATION = ?, DESCRIPTION = ?, DATETIMESTART = ?, DATETIMEEND = ?, USERCOMPLETEDBY = ? where ID = ?";
@@ -75,11 +73,11 @@ public class Booking {
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, bookingLocation);
+            ps.setString(1, location);
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4,sqlEndDate);
-            ps.setString(5, completedBy.getUsername());
+            ps.setString(5, userCompletedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
 
@@ -99,11 +97,11 @@ public class Booking {
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, bookingLocation);
+            ps.setString(1, location);
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4,sqlEndDate);
-            ps.setString(5, completedBy.getUsername());
+            ps.setString(5, userCompletedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
 

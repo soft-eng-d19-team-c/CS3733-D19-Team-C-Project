@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="bigPane" prefHeight="850.0" prefWidth="1250.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Map">
+<AnchorPane fx:id="bigPane" prefHeight="850.0" prefWidth="1250.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditMapController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -57,7 +57,7 @@
             </VBox>
             <VBox HBox.hgrow="SOMETIMES">
                <children>
-                  <Pane fx:id="imInPane" prefHeight="850.0" prefWidth="1250.0">
+                  <Pane fx:id="mapImgPane" prefHeight="850.0" prefWidth="1250.0">
                      <children>
                         <ImageView fx:id="mapImg" fitHeight="850.0" fitWidth="1250.0" pickOnBounds="true" preserveRatio="true" />
                      </children>

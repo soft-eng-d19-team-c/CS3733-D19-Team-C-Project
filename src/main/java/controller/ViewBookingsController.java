@@ -11,7 +11,7 @@ import model.Booking;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewBookedLocations extends Controller implements Initializable {
+public class ViewBookingsController extends Controller implements Initializable {
     @FXML
     private TableView dataTable;
     @FXML private TableColumn locationColumn;

@@ -7,25 +7,16 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.Node;
 import model.ServiceRequest;
-import model.User;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ServiceRequestController extends Controller implements Initializable {
-
-
-    //@FXML
-    //private TextField type;
-
-
     @FXML private JFXTextField type;
     @FXML private JFXTextArea description;
 
-    @FXML private AutocompleteSearchBar autoCompleteTextController;
+    @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
 
 

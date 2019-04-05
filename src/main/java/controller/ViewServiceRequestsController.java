@@ -1,9 +1,6 @@
 package controller;
 
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -14,13 +11,7 @@ import model.ServiceRequest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewServiceRequests extends Controller implements Initializable {
-    //@FXML
-    //private TextField type;
-    @FXML
-    private JFXTextField type;
-    @FXML private JFXTextArea description;
-
+public class ViewServiceRequestsController extends Controller implements Initializable {
     @FXML
     private TableView dataTable;
 
@@ -29,7 +20,7 @@ public class ViewServiceRequests extends Controller implements Initializable {
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
 
-    @FXML private AutocompleteSearchBar autoCompleteTextController;
+    @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
     private ObservableList<ServiceRequest> data;
 
@@ -53,17 +44,10 @@ public class ViewServiceRequests extends Controller implements Initializable {
 
     }
 
-
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
         ServiceRequest sr = (ServiceRequest) dataTable.getSelectionModel().getSelectedItem();
         sr.resolve();
         updateTable();
-    }
-
-
-    public void editServiceButton(ActionEvent actionEvent) {
-        //nothing
-        //do we want this?
     }
 
     private void updateTable() {

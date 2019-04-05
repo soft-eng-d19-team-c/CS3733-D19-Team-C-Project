@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class EditNodeData extends Controller implements Initializable {
+public class EditNodeDataController extends Controller implements Initializable {
     @FXML
     private TextField nodeID;
     @FXML
@@ -78,7 +78,7 @@ public class EditNodeData extends Controller implements Initializable {
         if (updateflag > 0) {
             HashMap<String, Object> hm = new HashMap<>();
             hm.put("floor", "L1");
-            Main.screenController.setScreen(EnumScreenType.MAP, hm);
+            Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
         }
     }
 

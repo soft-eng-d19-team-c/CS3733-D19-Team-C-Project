@@ -11,15 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -33,16 +29,14 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class Map extends Controller implements Initializable {
+public class EditMapController extends Controller implements Initializable {
 
     @FXML
     private AnchorPane bigPane;
     @FXML
     private ImageView mapImg;
     @FXML
-    private Pane imInPane;
-    @FXML
-    private ToggleButton dancePartyBtn;
+    private Pane mapImgPane;
 
     @FXML
     private ComboBox<String> floorsMenu;
@@ -59,73 +53,10 @@ public class Map extends Controller implements Initializable {
 
     public void danceParty(ActionEvent e){}
 
-    /*
-    public void danceParty(ActionEvent event) {
-        imInPane.getChildren().remove(1, imInPane.getChildren().size());
-        if (dancePartyBtn.isSelected()) {
-            Random rand = new Random();
-            double mapX = mapImg.getLayoutX();
-            double mapY = mapImg.getLayoutY();
-            ColorAdjust blackout = new ColorAdjust();
-            blackout.setBrightness(-0.4);
-            mapImg.setEffect(blackout);
-            Color c = new Color(0, 0, 0, 1.0);
-            bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
-            dancePartyBtn.setTextFill(new Color(1, 1, 1, 1.0));
-            for (Edge e : adjacencyList) {
-                Node startNode = dt.getDataById(e.getStartNode());
-                Node endNode = dt.getDataById(e.getEndNode());
-                if (startNode != null && endNode != null && startNode.getFloor().equals(endNode.getFloor())) {
-                    Line line = new Line();
-                    line.setStartX(mapX + (startNode.getX() / 4));
-                    line.setStartY(mapY + (startNode.getY()) / 4);
-                    line.setEndX(mapX + (endNode.getX()) / 4);
-                    line.setEndY(mapY + (endNode.getY()) / 4);
-                    double r = rand.nextDouble();
-                    double g = rand.nextDouble();
-                    double b = rand.nextDouble();
-                    Color color = new Color(r, g, b, 1);
-                    line.setStroke(color);
-                    imInPane.getChildren().add(line);
-                    r = rand.nextDouble();
-                    g = rand.nextDouble();
-                    b = rand.nextDouble();
-                    Color color2 = new Color(r, g, b, 1.0);
-                    StrokeTransition ft = new StrokeTransition(Duration.millis(400), line, color, color2);
-                    ft.setCycleCount(Animation.INDEFINITE);
-                    ft.setAutoReverse(true);
-                    ft.play();
-                }
-            }
-            for (Node n : nodeList) {
-                Circle circle = new Circle();
-                circle.setCenterX(mapX + n.getX() / 4.0);
-                circle.setCenterY(mapY + n.getY() / 4.0);
-                circle.setRadius(1.0 + (rand.nextDouble() * 5.0));
-                double r = rand.nextDouble();
-                double g = rand.nextDouble();
-                double b = rand.nextDouble();
-                Color color = new Color(r, g, b, 1.0);
-                imInPane.getChildren().add(circle);
-                r = rand.nextDouble();
-                g = rand.nextDouble();
-                b = rand.nextDouble();
-                Color color2 = new Color(r, g, b, 1.0);
-                FillTransition ft = new FillTransition(Duration.millis(250), circle, color, color2);
-                ft.setCycleCount(Animation.INDEFINITE);
-                ft.setAutoReverse(true);
-                ft.play();
-            }
-        } else {
-            drawNodes();
-        }
-    }
-    */
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
-//        mapImg.fitWidthProperty().bind(imInPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
+//        mapImg.fitWidthProperty().bind(mapImgPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
@@ -138,7 +69,6 @@ public class Map extends Controller implements Initializable {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
             edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
-            dancePartyBtn.setSelected(false);
             drawNodes();
 
             floorsMenu.setItems(differentFloors);
@@ -147,14 +77,7 @@ public class Map extends Controller implements Initializable {
     }
 
     private void drawNodes() {
-        Color c = new Color(1,1,1,1.0);
-        bigPane.setBackground(new Background(new BackgroundFill(c, null, null)));
-        dancePartyBtn.setTextFill(new Color(0, 0, 0, 1.0));
-
-        ColorAdjust reset = new ColorAdjust();
-        reset.setBrightness(0);
-        mapImg.setEffect(reset);
-        imInPane.getChildren().remove(1, imInPane.getChildren().size());
+        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         double mapX = mapImg.getLayoutX();
         double mapY = mapImg.getLayoutY();
 
@@ -183,7 +106,7 @@ public class Map extends Controller implements Initializable {
 
         line.setStrokeWidth(3.0);
 
-        imInPane.getChildren().add(line);
+        mapImgPane.getChildren().add(line);
     }
 
     private void generateNode(Node n) {
@@ -203,7 +126,7 @@ public class Map extends Controller implements Initializable {
 
         circle.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
 
-        imInPane.getChildren().add(circle);
+        mapImgPane.getChildren().add(circle);
         nodeCircles.put(n.getID(), circle);
     }
 
@@ -218,12 +141,12 @@ public class Map extends Controller implements Initializable {
      */
 
     public void addNodeButtonClick(ActionEvent e){
-        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
     public void addPathButtonClick(ActionEvent e){
-        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+        for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
                 // remove drag from nodes when adding path
                 node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
@@ -234,11 +157,11 @@ public class Map extends Controller implements Initializable {
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
             }
         }
-        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
     public void editNodeButtonClick(ActionEvent e){
-        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+        for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
                 // remove drag from nodes when adding path
                 node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
@@ -250,11 +173,11 @@ public class Map extends Controller implements Initializable {
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, editNodeHandler);
             }
         }
-        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
     @SuppressWarnings("Duplicates")
     public void deleteNodeButtonClick(ActionEvent e){
-        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+        for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
                 // remove drag from nodes when adding path
                 node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
@@ -265,12 +188,12 @@ public class Map extends Controller implements Initializable {
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
             }
         }
-        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
     @SuppressWarnings("Duplicates")
     public void deletePathButtonClick(ActionEvent e){
-        for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+        for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
                 // remove drag from nodes when adding path
                 node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
@@ -281,7 +204,7 @@ public class Map extends Controller implements Initializable {
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
             }
         }
-        imInPane.getScene().setCursor(Cursor.CROSSHAIR);
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
     /*
@@ -301,7 +224,7 @@ public class Map extends Controller implements Initializable {
                 Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), (String) Main.screenController.getData("floor"), "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
                 n.insert();
-                imInPane.getScene().setCursor(Cursor.DEFAULT);
+                mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
         }
@@ -312,13 +235,13 @@ public class Map extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                     if (node.getProperties().containsKey("edge")) {
                         Edge e = (Edge) node.getProperties().get("edge");
                         String cursorEdgeStartNodeID = e.getStartNode();
                         String cursorEdgeEndNodeID = e.getEndNode();
                         if (cursorEdgeStartNodeID.equals(n.getID()) || cursorEdgeEndNodeID.equals(n.getID())) {
-                            Platform.runLater(() -> imInPane.getChildren().remove(node));
+                            Platform.runLater(() -> mapImgPane.getChildren().remove(node));
                             e.remove();
                         }
                     }
@@ -328,9 +251,9 @@ public class Map extends Controller implements Initializable {
                         node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                     }
                 }
-                imInPane.getChildren().remove(me.getTarget());
+                mapImgPane.getChildren().remove(me.getTarget());
                 n.remove();
-                imInPane.getScene().setCursor(Cursor.DEFAULT);
+                mapImgPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }
     };
@@ -347,18 +270,18 @@ public class Map extends Controller implements Initializable {
                     startNodeForRemoveEdge = n;
                 } else {
                     endNodeForRemoveEdge = n;
-                    for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                    for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                         if (node.getProperties().containsKey("edge")) {
                             Edge cursor = (Edge) node.getProperties().get("edge");
                             if ((cursor.getStartNode().equals(startNodeForRemoveEdge.getID()) && cursor.getEndNode().equals(endNodeForRemoveEdge.getID()))
                                 || (cursor.getEndNode().equals(startNodeForRemoveEdge.getID()) && cursor.getStartNode().equals(endNodeForRemoveEdge.getID()))) {
                                 cursor.remove();
-                                Platform.runLater(() -> imInPane.getChildren().remove(node));
+                                Platform.runLater(() -> mapImgPane.getChildren().remove(node));
                             }
                         }
                     }
                     // remove this event handler, set everything to null, add drag event handlers again
-                    for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                    for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                         if (node.getProperties().containsKey("node")) {
                             node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
 
@@ -368,7 +291,7 @@ public class Map extends Controller implements Initializable {
                     }
                     startNodeForRemoveEdge = null;
                     endNodeForRemoveEdge = null;
-                    imInPane.getScene().setCursor(Cursor.DEFAULT);
+                    mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 }
             }
         }
@@ -391,7 +314,7 @@ public class Map extends Controller implements Initializable {
                     generateEdge(e);
                     e.insert();
                     // remove this event handler, set everything to null, add drag event handlers again
-                    for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                    for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                         if (node.getProperties().containsKey("node")) {
                             node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
 
@@ -401,7 +324,7 @@ public class Map extends Controller implements Initializable {
                     }
                     startNodeForAddEdge = null;
                     endNodeForAddEdge = null;
-                    imInPane.getScene().setCursor(Cursor.DEFAULT);
+                    mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 }
             }
         }
@@ -446,7 +369,7 @@ public class Map extends Controller implements Initializable {
     EventHandler editNodeHandler = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent me) {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : imInPane.getChildren().subList(1, imInPane.getChildren().size())) {
+                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                     node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
                 }
                 Circle circle = (Circle) me.getTarget();

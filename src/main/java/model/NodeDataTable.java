@@ -12,10 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataTable {
+public class NodeDataTable {
     private ObservableList<Node> nodeData;
 
-    public DataTable() {
+    public NodeDataTable() {
         this.nodeData = FXCollections.observableArrayList();
     }
 

@@ -5,16 +5,14 @@ import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Selectlocation extends Controller implements Initializable {
-    @FXML private Button searchLocationbtn;
+public class SearchLocationController extends Controller implements Initializable {
     @FXML
-    private AutocompleteSearchBar acTextInputController;
+    private AutocompleteSearchBarController acTextInputController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -32,6 +30,6 @@ public class Selectlocation extends Controller implements Initializable {
         data.put("nodeID", acTextInputController.getNodeID());
 //  TODO      data.put("floor", acTextInputController.getNodeFloor());
         data.put("floor", "L1");
-        Main.screenController.setScreen(EnumScreenType.FINDPATH, data);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING, data);
     }
 }

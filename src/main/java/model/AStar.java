@@ -5,7 +5,10 @@ import base.Main;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import static java.lang.Math.sqrt;
 
@@ -14,19 +17,9 @@ public class AStar {
     private Node destNode;
     private boolean isHandicap;
     private HashMap<String, Node> cache;
-    private HashMap<String, Edge> currentPath;
 
     private HashMap<String, LinkedList<Edge>> adjacencyList; // <NodeID, [Edge1, Edge2, ...]>
     private HashMap<String, Node> nodesList; // <NodeID, Node>
-
-
-
-    /*
-        Warning!!!
-        If there are changes made to the nodes you need to make a new Astar object
-        This class will retrieve all of the nodes from the database in its constructor
-     */
-
 
     public AStar(Node originNode, Node destNode, boolean isHandicap) {
         this.originNode = originNode;
@@ -34,12 +27,18 @@ public class AStar {
         this.isHandicap = isHandicap;
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
+        this.refresh();
+    }
+
+    @SuppressWarnings("Duplicates")
+    private void refresh() {
         /*
         This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
         using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These
         are used in the A* algorithm and are saved in this class as nodesList and adjacencyList,
         respectively.
          */
+        this.adjacencyList.clear();
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
         try {
             Statement stmt = Main.database.getConnection().createStatement();
@@ -106,8 +105,6 @@ public class AStar {
             if (!currentPathValue.visited()) { // makes sure the current node has not be
                 currentPathValue.setVisited(true);
                 count++;
-
-                //System.out.println(currentNode);
 
                 if (currentNode.equals(endNode)) { //the path has been found
 

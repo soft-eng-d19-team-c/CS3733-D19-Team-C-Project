@@ -1,5 +1,6 @@
 package controller;
 
+import base.Main;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class AutocompleteSearchBar extends Controller implements Initializable {
+public class AutocompleteSearchBarController extends Controller implements Initializable {
     @FXML
     private JFXTextField acTextInput;
     @FXML
@@ -77,7 +78,12 @@ public class AutocompleteSearchBar extends Controller implements Initializable {
     }
 
     public void refresh() {
-        nodes = Node.getNodesByFloor("L1");
+        String floor = (String) Main.screenController.getData("autocompleteFloor");
+        if (floor != null) {
+            nodes = Node.getNodesByFloor("L1");
+        } else {
+            nodes = Node.getNodes();
+        }
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);

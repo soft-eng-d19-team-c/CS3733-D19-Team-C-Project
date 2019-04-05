@@ -8,13 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BookingLocation {
+public class BookableLocation {
 
     private String ID;
     private String type;
     private String title;
 
-    public BookingLocation(String ID, String type, String title) {
+    public BookableLocation(String ID, String type, String title) {
         this.ID = ID;
         this.type = type;
         this.title = title;
@@ -45,14 +45,14 @@ public class BookingLocation {
     }
 
 
-    public static ObservableList<BookingLocation> getAllBookingLocations() {
-        ObservableList<BookingLocation> result = FXCollections.observableArrayList();
+    public static ObservableList<BookableLocation> getAllBookingLocations() {
+        ObservableList<BookableLocation> result = FXCollections.observableArrayList();
         String str = "SELECT * FROM BOOKINGLOCATIONS";
         try {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
-                result.add(new BookingLocation(rs.getString("ID"), rs.getString("type"), rs.getString("title")));
+                result.add(new BookableLocation(rs.getString("ID"), rs.getString("type"), rs.getString("title")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

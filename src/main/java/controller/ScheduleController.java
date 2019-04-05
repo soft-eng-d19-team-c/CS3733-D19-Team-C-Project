@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Schedule extends Controller implements Initializable {
+public class ScheduleController extends Controller implements Initializable {
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);

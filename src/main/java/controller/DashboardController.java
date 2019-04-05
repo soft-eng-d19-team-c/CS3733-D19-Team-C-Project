@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Dashboard extends Controller implements Initializable {
+public class DashboardController extends Controller implements Initializable {
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -25,7 +25,7 @@ public class Dashboard extends Controller implements Initializable {
     }
 
     public void findRoomButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.SELECTLOCATION);
+        Main.screenController.setScreen(EnumScreenType.SEARCHLOCATION);
     }
 
     public void employeeLoginButtonClick(ActionEvent actionEvent) {
@@ -35,24 +35,24 @@ public class Dashboard extends Controller implements Initializable {
     public void mapButtonClick(ActionEvent actionEvent) {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("floor", "L1");
-        Main.screenController.setScreen(EnumScreenType.FINDPATH, hm);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING, hm);
     }
 
     public void viewServicesButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.VIEWSERVICES);
+        Main.screenController.setScreen(EnumScreenType.VIEWSERVICEREQUESTS);
     }
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.BOOKROOM);
+        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONS);
     }
 
     public void editMapButtonClick(ActionEvent actionEvent) {
         HashMap<String,Object> hm = new HashMap<>();
         hm.put("floor", "L1");
-        Main.screenController.setScreen(EnumScreenType.MAP, hm);
+        Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
     }
 
     public void bookedLocationsButtonClick(ActionEvent e) {
-        Main.screenController.setScreen(EnumScreenType.BOOKEDLOCATIONS);
+        Main.screenController.setScreen(EnumScreenType.VIEWBOOKINGS);
     }
 }

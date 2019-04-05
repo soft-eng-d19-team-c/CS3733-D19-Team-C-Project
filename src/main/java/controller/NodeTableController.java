@@ -10,14 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.DataTable;
+import model.NodeDataTable;
 import model.Node;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class NodeTable extends Controller implements Initializable {
+public class NodeTableController extends Controller implements Initializable {
     // get table
     @FXML
     private TableView<Node> dataTable;
@@ -39,7 +39,7 @@ public class NodeTable extends Controller implements Initializable {
     @FXML
     private TableColumn shortName;
     // data to put in the table, consists of model.Node class members
-    DataTable dt;
+    NodeDataTable dt;
     private ObservableList<Node> data;
 
     private Node dataCursor;
@@ -75,13 +75,13 @@ public class NodeTable extends Controller implements Initializable {
     public void mapBtnL1Click(ActionEvent e) {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("floor", "L1");
-        Main.screenController.setScreen(EnumScreenType.MAP, hm);
+        Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
     }
 
     public void mapBtnL2Click(ActionEvent e) {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("floor", "L2");
-        Main.screenController.setScreen(EnumScreenType.MAP, hm);
+        Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
     }
 
     /**
@@ -102,7 +102,7 @@ public class NodeTable extends Controller implements Initializable {
             longName.setCellValueFactory(new PropertyValueFactory("LongName"));
             shortName.setCellValueFactory(new PropertyValueFactory("ShortName"));
 
-            dt = new DataTable();
+            dt = new NodeDataTable();
             this.data = dt.getAllNodeData();
             // create edit buttons for each row in the table and append
             dataTable.setItems(this.data);

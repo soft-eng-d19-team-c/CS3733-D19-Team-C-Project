@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Buttons extends Controller implements Initializable {
+public class ButtonsController extends Controller implements Initializable {
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -17,14 +17,14 @@ public class Buttons extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-//partial for home button (takes you to the dashboard)
+
+    //partial for home button (takes you to the dashboard)
     public void homeButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 
     //partial for logout button (takes to back ot the login screen)
     public void logOutButtonClick(ActionEvent actionEvent) {
-        //System.out.println("logged out");
          Main.screenController.setScreen(EnumScreenType.LOGIN);
     }
 
