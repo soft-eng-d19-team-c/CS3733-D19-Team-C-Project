@@ -16,7 +16,7 @@ import javafx.util.Duration;
  * This is useful for session timeouts.
  * @author Ryan LaMarche
  */
-public class IdleMonitor {
+public final class IdleMonitor {
     private final Timeline idleTimeline;
     private final EventHandler<Event> userEventHandler;
 

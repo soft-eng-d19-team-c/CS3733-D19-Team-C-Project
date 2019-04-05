@@ -17,7 +17,7 @@
     <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-             <fx:include fx:id="Buttons" source="partialButtons.fxml" />
+             <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Search For a Room" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="90.0" />

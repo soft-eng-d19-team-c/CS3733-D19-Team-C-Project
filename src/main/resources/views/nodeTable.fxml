@@ -52,4 +52,5 @@
          </styleClass>
       </JFXButton>
    </children>
+    <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>

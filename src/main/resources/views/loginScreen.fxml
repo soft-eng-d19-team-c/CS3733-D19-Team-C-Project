@@ -49,5 +49,5 @@
       </VBox>
       <VBox alignment="CENTER" prefHeight="103.0" prefWidth="506.0" />
    </children>
-   <fx:include fx:id="Buttons" source="partialButtons.fxml" />
+   <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>

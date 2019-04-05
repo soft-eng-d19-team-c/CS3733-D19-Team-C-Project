@@ -11,9 +11,11 @@ public class Main {
     public static Facade screenController;
     public static Database database;
     public static User user;
+    public static ApplicationInformation info;
     public static void main(String[] args) {
         database = new Database(false, false);
         user = new User("username@example.com", "developer");
+        info = new ApplicationInformation(EnumAlgorithm.ASTAR, "CHALL007L1");
         MainFXML app = new MainFXML();
         app.main(args);
     }

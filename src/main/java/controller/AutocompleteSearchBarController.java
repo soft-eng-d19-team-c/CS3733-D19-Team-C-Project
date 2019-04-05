@@ -29,6 +29,11 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         return nodeID.getText();
     }
 
+    public void setLocation(String nodeID) {
+        this.nodeID.setText(nodeID);
+        this.acTextInput.setText("Current Location");
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         /*
@@ -80,7 +85,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     public void refresh() {
         String floor = (String) Main.screenController.getData("autocompleteFloor");
         if (floor != null) {
-            nodes = Node.getNodesByFloor("L1");
+            nodes = Node.getNodesByFloor(floor);
         } else {
             nodes = Node.getNodes();
         }
@@ -88,6 +93,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);
         }
-        acTextInput.setText("");
+        this.setLocation(Main.info.getKioskLocation().getID());
     }
 }
