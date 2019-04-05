@@ -223,7 +223,7 @@ public class Node {
     // Floor 1  2
     // Floor L1 1
     // Floor L2 0
-
+    //used when determining the distance between floors
     public int getFloorNumber(){
         switch (this.floor){
             case "3": return 4;

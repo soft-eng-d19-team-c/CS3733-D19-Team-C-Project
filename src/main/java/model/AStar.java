@@ -5,7 +5,10 @@ import base.Main;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import static java.lang.Math.sqrt;
 
@@ -14,19 +17,9 @@ public class AStar {
     private Node destNode;
     private boolean isHandicap;
     private HashMap<String, Node> cache;
-    private HashMap<String, Edge> currentPath;
 
     private HashMap<String, LinkedList<Edge>> adjacencyList; // <NodeID, [Edge1, Edge2, ...]>
     private HashMap<String, Node> nodesList; // <NodeID, Node>
-
-
-
-    /*
-        Warning!!!
-        If there are changes made to the nodes you need to make a new Astar object
-        This class will retrieve all of the nodes from the database in its constructor
-     */
-
 
     public AStar(Node originNode, Node destNode, boolean isHandicap) {
         this.originNode = originNode;
@@ -34,6 +27,18 @@ public class AStar {
         this.isHandicap = isHandicap;
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
+        this.refresh();
+    }
+
+    @SuppressWarnings("Duplicates")
+    private void refresh() {
+        /*
+        This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
+        using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These
+        are used in the A* algorithm and are saved in this class as nodesList and adjacencyList,
+        respectively.
+         */
+        this.adjacencyList.clear();
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
         try {
             Statement stmt = Main.database.getConnection().createStatement();
@@ -101,9 +106,7 @@ public class AStar {
                 currentPathValue.setVisited(true);
                 count++;
 
-                //System.out.println(currentNode);
-
-                if (currentNode.equals(endNode)) {
+                if (currentNode.equals(endNode)) { //the path has been found
 
                     System.out.println("Number of nodes visited dijkstra:" + count);
                     return createPath(currentNode, startNode, pathValues);
@@ -152,7 +155,7 @@ public class AStar {
 
 
 //
-    // This is a star
+    // This is a star. It functions the same way as dijkstra, excluding the predictedCostToEnd.
     @SuppressWarnings("Duplicates")
     public LinkedList<Node> findPath(Node startNode, Node endNode) {
         // keeps track of visited nodes in PathValue class
@@ -175,27 +178,29 @@ public class AStar {
 
                 //System.out.println(currentNode);
 
-                if (currentNode.equals(endNode)) {
+                if (currentNode.equals(endNode)) { //path has been found
 
                     System.out.println("Number of nodes visited A Star: " + count);
                     return createPath(currentNode, startNode, pathValues);
                 }
 
+                //obtain the edges connected to the node
                 LinkedList<Edge> adjacentEdges = adjacencyList.get(currentNode.getID());
                 LinkedList<Node> adjacentNodes = new LinkedList<>();
 
+                //add the nodes connected by the edges to the current node to adjacentNodes
                 for (Edge e : adjacentEdges) {
                     String nodeID = e.findOtherNode(currentNode.getID());
                     adjacentNodes.add(nodesList.get(nodeID));
                 }
 
-                for (Node n : adjacentNodes) {
+                for (Node n : adjacentNodes) { //add the nodes to the priority queue, if necessary
                     if (!pathValues.containsKey(n)) {
                         pathValues.put(n, new PathValue(n, currentNode));
                     }
 
                     PathValue path = pathValues.get(n);
-                    if (!path.visited()) {
+                    if (!path.visited()) { //we do not need to add nodes that have already been visited
                         double costOfPrevToStart;
                         double costFromPrev;
                         double predictedCostToEnd;
@@ -225,6 +230,7 @@ public class AStar {
         return findPath(originNode, destNode);
     }
 
+    //implements A star using nodeIDs rather than nodes
     public LinkedList<Node> findPath(String startNode, String endNode) {
         return findPath(nodesList.get(startNode), nodesList.get(endNode));
     }
@@ -233,7 +239,7 @@ public class AStar {
         return dijkstra(nodesList.get(startNode), nodesList.get(endNode));
     }
 
-
+    //this creates the path found by dijkstra or a star as a Linked List of Nodes using the PathValue objects
     private LinkedList<Node> createPath(Node goalNode, Node endNode, HashMap<Node, PathValue> pathValues) {
         LinkedList<Node> path = new LinkedList<>();
         Node temp = goalNode;
@@ -246,12 +252,15 @@ public class AStar {
         return path;
     }
 
+    //finds the number of floors apart two nodes are
+    //used to find the predicted cost to end
     private int distanceBetweenFloors(Node a, Node b) {
         int aFloor = a.getFloorNumber();
         int bFloor = b.getFloorNumber();
         return (aFloor - bFloor) * 20;
     }
 
+    //also used to find the predicted cost to the end
     private double findEuclideanDistance(Node a, Node b) {
 
         int aX = a.getX();
@@ -265,6 +274,4 @@ public class AStar {
         int distSquared = (xDistance * xDistance) + (yDistance * yDistance) + (zDistance * zDistance);
         return sqrt(distSquared);
     }
-
-
 }

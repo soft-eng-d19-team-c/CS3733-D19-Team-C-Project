@@ -2,11 +2,11 @@ package model;
 
 public class PathValue{
     private Node node; // the node the path value is attached to
-    private Node previousNode;
-    private double totalCostFromStart;
-    private double predictedCostToEnd;
-    private double totalCost;
-    private boolean visited; // true if visited
+    private Node previousNode; //the node from which the path is heading from
+    private double totalCostFromStart; //cost from the start node to node
+    private double predictedCostToEnd; //predicted cost from node to the end node
+    private double totalCost; //totalCostFromStart + predictedCostToEnd
+    private boolean visited; //true if visited
 
     public PathValue(Node node) {
         this.node = node;

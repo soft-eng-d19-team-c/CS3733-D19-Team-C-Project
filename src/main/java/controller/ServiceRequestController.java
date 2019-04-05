@@ -7,25 +7,16 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.Node;
 import model.ServiceRequest;
-import model.User;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ServiceRequestController extends Controller implements Initializable {
-
-
-    //@FXML
-    //private TextField type;
-
-
     @FXML private JFXTextField type;
     @FXML private JFXTextArea description;
 
-    @FXML private AutocompleteSearchBar autoCompleteTextController;
+    @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
 
 
@@ -39,6 +30,8 @@ public class ServiceRequestController extends Controller implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    //save the service request to the database, to late view
+    //set screen back to the dashboard
     public void submitButtonClick(ActionEvent actionEvent) {
         ServiceRequest serviceRequest = new ServiceRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
         serviceRequest.insert();

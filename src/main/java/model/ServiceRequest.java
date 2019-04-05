@@ -15,21 +15,21 @@ public class ServiceRequest {
     private String nodeID;
     private String description;
     private Date dateTimeSubmitted;
-    private Date dateTimeResolved;
+    private Date dateTimeCompleted;
     private boolean isComplete;
-    private User completedBy;
-    private User requestedBy;
+    private User userCompletedBy;
+    private User userRequestedBy;
     private int ID;
 
-    public ServiceRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeResolved, String nodeID) {
+    public ServiceRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
         this.type = type;
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
-        this.dateTimeResolved = dateTimeResolved;
-        this.isComplete = dateTimeResolved != null;
-        this.completedBy = null;
-        this.requestedBy = null;
+        this.dateTimeCompleted = dateTimeCompleted;
+        this.isComplete = dateTimeCompleted != null;
+        this.userCompletedBy = null;
+        this.userRequestedBy = null;
         this.ID = ID;
     }
 
@@ -54,22 +54,21 @@ public class ServiceRequest {
     }
 
     //Determines amount of time task was completed in
-
     public Date computeTimeDiff(){
 
-        long end = dateTimeResolved.getTime();
+        long end = dateTimeCompleted.getTime();
         long start = dateTimeSubmitted.getTime();
         return new Date(end - start);
 
     }
 
-    //Update service request once complete
+    //Update the information in a ServiceRequest
     public boolean update(){
 
         boolean executed = false;
 
         String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
 
@@ -90,6 +89,7 @@ public class ServiceRequest {
         return executed;
     }
 
+    //Insert a new ServiceRequest into the database
     public boolean insert(){
 
         boolean executed = false;
@@ -114,7 +114,9 @@ public class ServiceRequest {
 
     }
 
+    // TODO we probably want a getActiveServiceRequests()
 
+    //Returns an observable list of all ServiceRequests for JavaFX's sake
     public static ObservableList<ServiceRequest> getAllServiceRequests() {
 
         ObservableList<ServiceRequest> requests =  FXCollections.observableArrayList();
@@ -147,6 +149,7 @@ public class ServiceRequest {
         return ID;
     }
 
+    //Mark a ServiceRequest complete
     public boolean resolve() {
         String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
