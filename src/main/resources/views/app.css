@@ -6,6 +6,10 @@
     -secondary-dark:#C7C7C7;
     -white:#ffffff;
     -black:#000000;
+    -danger:#dc3545;
+    -danger-dark: #c03141;
+    -success:#28a745;
+    -success-dark: #279742;
 }
 /* utilities */
 .bg-primary {
@@ -52,4 +56,20 @@
 }
 .btn-secondary:hover,.btn-secondary:pressed {
     -fx-background-color: -secondary-dark;
+}
+.btn-danger {
+    -fx-background-color: -danger;
+    -fx-text-fill: -white;
+    -jfx-button-type: RAISED;
+}
+.btn-danger:hover,.btn-danger:pressed {
+    -fx-background-color: -danger-dark;
+}
+.btn-success {
+    -fx-background-color: -success;
+    -fx-text-fill: -white;
+    -jfx-button-type: RAISED;
+}
+.btn-success:hover,.btn-success:pressed {
+    -fx-background-color: -success-dark;
 }
