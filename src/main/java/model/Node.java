@@ -215,6 +215,31 @@ public class Node {
         }
         return nodes;
     }
+    
+    @SuppressWarnings("Duplicates")
+    public static Node getNodeByID(String nodeID) {
+        Node result = null;
+        String sqlStmt = "SELECT * FROM NODES WHERE NODEID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStmt);
+            ps.setString(1,nodeID);
+            ResultSet rs = ps.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String newNodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                result = new Node(newNodeID, x, y, floor, building, nodeType, longName, shortName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
 

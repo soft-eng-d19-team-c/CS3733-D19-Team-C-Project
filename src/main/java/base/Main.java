@@ -1,5 +1,6 @@
 package base;
 
+import model.Node;
 import model.User;
 
 /**
@@ -15,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         database = new Database(false, false);
         user = new User("username@example.com", "developer");
-        info = new ApplicationInformation();
+        info = new ApplicationInformation(EnumAlgorithm.ASTAR, "AHALL00401");
         MainFXML app = new MainFXML();
         app.main(args);
     }
