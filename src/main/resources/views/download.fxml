@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DownloadScreenController">
    <children>
-      <fx:include fx:id="partialButtonsInclude" source="partialButtons.fxml"/>
+      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <JFXButton fx:id="downloadButton" blendMode="COLOR_BURN" buttonType="RAISED" onAction="#downloadButtonClick" style="-fx-background-color: Green;" text="DOWNLOAD" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="150.0">
          <font>
             <Font name="System Bold" size="76.0" />
