@@ -18,6 +18,7 @@ public class PathToText {
     }
 
     public String getDetailedPath(LinkedList<Node> listOfNodes){
+        /*
         StringBuilder textPath = new StringBuilder();
         //get start
         System.out.println(listOfNodes);
@@ -33,6 +34,34 @@ public class PathToText {
 
 
         return textPath.toString();
+        */
+
+        StringBuilder textPath = new StringBuilder();
+        Node[] nodesArray = (Node[]) listOfNodes.toArray();
+        Node prev = null;
+        Node next = null;
+        for (int i = 1; i < nodesArray.length - 1; i++) {
+            if (prev == null)
+                prev = nodesArray[i - 1];
+            if (next == null)
+                next = nodesArray[i + 1];
+
+            // math time
+            /*
+                Let's calculate the angle between the next and previous node positions,
+                relative to the current node in spherical coordinates
+             */
+
+            double theta = Math.acos();
+
+
+
+        }
+
+        return textPath.toString();
+
+
+
     }
 
     public void SmsSender (String text, PhoneNumber phoneNumber) {
