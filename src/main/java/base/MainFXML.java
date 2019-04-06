@@ -10,9 +10,15 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * The Main class for the JavaFX application. This class spawns the JavaFX application and creates
+ * the Facade and IdleMonitor, as well as starting up the home screen of the application.
+ * @author Ryan LaMarche
+ */
 public class MainFXML extends Application {
     /**
      * Starting routine for base.MainFXML view.
+     * @author Ryan LaMarche
      * @param s the Stage to start on.
      */
     @Override
@@ -35,6 +41,7 @@ public class MainFXML extends Application {
 
     /**
      * The main method / entry point for launching the base.MainFXML instance.
+     * @author Ryan LaMarche
      * @param args arguments provided to main method.
      */
     public static void main(String[] args) {

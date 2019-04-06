@@ -6,6 +6,11 @@ import java.sql.*;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * This class is to store the database connection as well as
+ * build the database the first time the application is run.
+ * @author Ryan LaMarche
+ */
 public final class Database {
     Connection connection;
     public Database() {
