@@ -13,10 +13,20 @@ public enum EnumScreenType {
     LOGIN("/views/loginScreen.fxml"),
     PATHFINDING("/views/pathfinding.fxml"),
     SEARCHLOCATION("/views/searchLocation.fxml"),
-    REQUESTSERVICE("/views/requestService.fxml"),
-    VIEWSERVICEREQUESTS("/views/serviceRequestTable.fxml"),
     BOOKLOCATIONS("/views/bookLocation.fxml"),
-    VIEWBOOKINGS("/views/bookedLocationsTable.fxml");
+    VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
+    SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
+    VIEWSERVICEREQUESTS("/views/serviceRequestTable.fxml"),
+    SANITATIONSERVICE("/views/sanitationService.fxml"),
+    INTERPRETERSERVICE("/views/servicesDashboard.fxml"),
+    INTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    EXTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    SECURITYSERVICE("/views/servicesDashboard.fxml"),
+    PRESCRIPTIONSERVICE("/views/servicesDashboard.fxml"),
+    ITSERVICE("/views/servicesDashboard.fxml"),
+    GIFTSTORESERVICE("/views/servicesDashboard.fxml"),
+    RELIGIOUSSERVICE("/views/servicesDashboard.fxml"),
+    FLORISTSERVICE("/views/servicesDashboard.fxml");
 
 
     protected String path;
