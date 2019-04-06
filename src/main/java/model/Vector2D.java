@@ -28,7 +28,7 @@ public class Vector2D {
 
         if (Math.abs(angle) >= Math.PI  - Math.PI / 12) {
             return EnumDirectionType.STRAIGHT;
-        } else if (angle > 0) {
+        } else if (angle < 0) {
             return EnumDirectionType.RIGHT;
         } else {
             return EnumDirectionType.LEFT;

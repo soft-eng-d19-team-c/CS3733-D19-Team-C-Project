@@ -4,6 +4,8 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class PathToText {
@@ -34,8 +36,9 @@ public class PathToText {
         return textPath.toString();
         */
 
-        StringBuilder textPath = new StringBuilder();
+        StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
+        Collections.reverse(Arrays.asList(nodesArray));
         Node prev, curr, next;
         for (int i = 1; i < nodesArray.length - 1; i++) {
             prev = nodesArray[i - 1];
@@ -49,18 +52,22 @@ public class PathToText {
 
             switch (dir) {
                 case LEFT:
-                    System.out.println("left");
+                    textPath.append("Take a left at " + curr.getLongName() + "\n");
                     break;
                 case RIGHT:
-                    System.out.println("right");
+                    textPath.append("Take a right at " + curr.getLongName() + "\n");
                     break;
                 case STRAIGHT:
-                    System.out.println("straight");
+                    textPath.append("Continue straight past " + curr.getLongName() + "\n");
                     break;
                 default:
                     System.err.println("Default case in direction switch");
             }
         }
+
+        textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+
+//        System.out.println(textPath.toString());
 
         return textPath.toString();
 
