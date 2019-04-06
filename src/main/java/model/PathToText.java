@@ -35,25 +35,31 @@ public class PathToText {
         */
 
         StringBuilder textPath = new StringBuilder();
-        Node[] nodesArray = (Node[]) listOfNodes.toArray();
-        Node prev = null;
-        Node next = null;
+        Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
+        Node prev, curr, next;
         for (int i = 1; i < nodesArray.length - 1; i++) {
-            if (prev == null)
-                prev = nodesArray[i - 1];
-            if (next == null)
-                next = nodesArray[i + 1];
+            prev = nodesArray[i - 1];
+            curr = nodesArray[i];
+            next = nodesArray[i + 1];
 
-            // math time
-            /*
-                Let's calculate the angle between the next and previous node positions,
-                relative to the current node in spherical coordinates
-             */
+            Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
+            Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
 
+            EnumDirectionType dir = v_prev.getDirection(v_next);
 
-
-
-
+            switch (dir) {
+                case LEFT:
+                    System.out.println("left");
+                    break;
+                case RIGHT:
+                    System.out.println("right");
+                    break;
+                case STRAIGHT:
+                    System.out.println("straight");
+                    break;
+                default:
+                    System.err.println("Default case in direction switch");
+            }
         }
 
         return textPath.toString();

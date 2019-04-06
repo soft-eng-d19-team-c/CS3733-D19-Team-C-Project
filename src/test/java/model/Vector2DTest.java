@@ -17,6 +17,12 @@ public class Vector2DTest {
         Vector2D v2 = new Vector2D(0,0,0,1);
         assertEquals(EnumDirectionType.RIGHT, v2.getDirection(v1));
     }
+    @Test
+    public void testVectorThingRight3() {
+        Vector2D v1 = new Vector2D(157,8117,1581,0);
+        Vector2D v2 = new Vector2D(157,8117,0,1600);
+        assertEquals(EnumDirectionType.RIGHT, v2.getDirection(v1));
+    }
 
 
     @Test
