@@ -19,7 +19,8 @@ public class AStarTest {
     HashMap<String, Node> nodesList; // <NodeID, Node>
     Node node1;
     Node node2;
-    PathFindingContext pathFindingContext;
+    PathFindingContext dijkstraFinder;
+    PathFindingContext aStarFinder;
     AStar aStar;
     Dijkstra dijkstra;
 
@@ -31,7 +32,6 @@ public class AStarTest {
 
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
-        this.pathFindingContext = new PathFindingContext(adjacencyList, nodesList);
         this.aStar = new AStar();
         this.dijkstra = new Dijkstra();
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
@@ -69,13 +69,12 @@ public class AStarTest {
         }
         node1 = nodesList.get("WHALL00602");
         node2 = nodesList.get("EHALL03601");
+        this.dijkstraFinder = new PathFindingContext(dijkstra, adjacencyList, nodesList);
+        this.aStarFinder = new PathFindingContext(aStar, adjacencyList, nodesList);
     }
 
     @Test
     public void compareAStarAndDijkstra(){
-        PathFindingContext dijkstraFinder = new PathFindingContext(this.dijkstra);
-        PathFindingContext aStarFinder = new PathFindingContext(this.aStar);
-
         LinkedList<Node> aStarSameBuildingDiffFloor =  aStarFinder.findPath("WHALL00602", "EHALL03601");
         LinkedList<Node> dijkstraSameBuildingDiffFloor =  dijkstraFinder.findPath("WHALL00602", "EHALL03601");
 
@@ -100,9 +99,6 @@ public class AStarTest {
 
     @Test
     public void longPath(){
-        PathFindingContext dijkstraFinder = new PathFindingContext(this.dijkstra);
-        PathFindingContext aStarFinder = new PathFindingContext(this.aStar);
-
         LinkedList<Node> astar =  aStarFinder.findPath("ADEPT00301", "DHALL00402");
         LinkedList<Node> dijkstra=  dijkstraFinder.findPath("ADEPT00301", "DHALL00402");
 

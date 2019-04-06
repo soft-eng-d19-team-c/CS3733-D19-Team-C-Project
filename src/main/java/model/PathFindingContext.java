@@ -39,7 +39,8 @@ public class PathFindingContext {
 
     // ONLY USED FOR TESTING
     // TESTS CANNOT USE MAIN SO IT IMPORTS THE DATABASE IN TEST
-    public PathFindingContext(HashMap<String, LinkedList<Edge>> adjacencyList, HashMap<String, Node> nodesList){
+    public PathFindingContext(IPathFind algorithm, HashMap<String, LinkedList<Edge>> adjacencyList, HashMap<String, Node> nodesList){
+        this.isHandicap = false;
         this.adjacencyList = adjacencyList;
         this.nodesList = nodesList;
     }
@@ -89,22 +90,22 @@ public class PathFindingContext {
     }
 
     public LinkedList<Node> findPath(){
-        HashMap<Node, PathValue> pathValues = algorithm.findPath(this.originNode, this.destNode, this.isHandicap, this.nodesList, this.adjacencyList);
+        HashMap<Node, PathValue> pathValues = this.algorithm.findPath(this.originNode, this.destNode, this.isHandicap, this.nodesList, this.adjacencyList);
         Node sNode = nodesList.get(this.originNode);
         Node eNode = nodesList.get(this.destNode);
-        return createPath(sNode, eNode, pathValues);
+        return createPath(eNode, sNode, pathValues);
     }
 
     public LinkedList<Node> findPath(Node startNode, Node endNode){
-        HashMap<Node, PathValue> pathValues = algorithm.findPath(startNode, endNode, this.isHandicap, this.nodesList, this.adjacencyList);
-        return createPath(startNode, endNode, pathValues);
+        HashMap<Node, PathValue> pathValues = this.algorithm.findPath(startNode, endNode, this.isHandicap, this.nodesList, this.adjacencyList);
+        return createPath(endNode, startNode, pathValues);
     }
 
     public LinkedList<Node> findPath(String startNode, String endNode){
-        HashMap<Node, PathValue> pathValues = algorithm.findPath(startNode, endNode, this.isHandicap, this.nodesList, this.adjacencyList);
+        HashMap<Node, PathValue> pathValues = this.algorithm.findPath(startNode, endNode, this.isHandicap, this.nodesList, this.adjacencyList);
         Node sNode = nodesList.get(startNode);
         Node eNode = nodesList.get(endNode);
-        return createPath(sNode, eNode, pathValues);
+        return createPath(eNode, sNode, pathValues);
     }
 
     //this creates the path found by dijkstra or a star as a Linked List of Nodes using the PathValue objects
