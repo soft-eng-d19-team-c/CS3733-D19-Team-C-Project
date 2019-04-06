@@ -42,9 +42,6 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private Button phoneNumberBtn;
 
-    PathFindingContext star;
-    AStar aStar;
-
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> node_onPath;
@@ -226,9 +223,7 @@ public class PathfindingController extends Controller implements Initializable {
     public void gobtnclick(ActionEvent actionEvent) {
         String orgi_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
-        aStar = new AStar();
-        star = new PathFindingContext(aStar);
-        node_onPath = star.findPath(orgi_nodeID, dest_nodeID);
+        node_onPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
         somecolor = new Color(0,1,1,1);
 //        drawNodes(node_onPath, somecolor);
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());

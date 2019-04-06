@@ -23,6 +23,7 @@ import javafx.scene.shape.Line;
 import model.Edge;
 import model.Node;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,6 +41,9 @@ public class EditMapController extends Controller implements Initializable {
 
     @FXML
     private ComboBox<String> floorsMenu;
+
+    @FXML
+    private ComboBox<String> algosMenu;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -64,7 +68,9 @@ public class EditMapController extends Controller implements Initializable {
                         "Floor 1",
                         "Floor 2",
                         "Floor 3");
-
+        ObservableList<String> differentAlgorithms = //set the dropdown in the fxml
+                FXCollections.observableArrayList(
+                        "A Star", "Dijkstra's", "Breadth First Search", "Depth First Search");
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
@@ -73,6 +79,7 @@ public class EditMapController extends Controller implements Initializable {
 
             floorsMenu.setItems(differentFloors);
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
+            algosMenu.setItems(differentAlgorithms);
         });
     }
 
@@ -205,6 +212,23 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void changeAlgorithm(ActionEvent e){
+        switch (algosMenu.getValue()){
+            case "A Star":
+                Main.info.setAlgorithm(Main.info.ASTAR);
+                break;
+            case "Dijkstra's":
+                Main.info.setAlgorithm(Main.info.DIJKSTRA);
+                break;
+            case "Breadth First Search":
+                Main.info.setAlgorithm(Main.info.ASTAR);
+                break;
+            case "Depth First Search":
+                Main.info.setAlgorithm(Main.info.ASTAR);
+                break;
+        }
     }
 
     /*

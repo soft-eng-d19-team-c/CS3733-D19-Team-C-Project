@@ -37,7 +37,7 @@ public class Dijkstra implements IPathFind{
 
                 if (currentNode.equals(endNode)) { //the path has been found
 
-                    System.out.println("Number of nodes visited:" + count);
+                    System.out.println("Number of nodes visited Dijkstra:" + count);
                     return pathValues;
                 }
 
