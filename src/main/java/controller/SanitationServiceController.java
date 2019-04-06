@@ -12,7 +12,7 @@ import model.SanitationRequest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ServiceRequestController extends Controller implements Initializable {
+public class SanitationServiceController extends Controller implements Initializable {
     @FXML private JFXTextField type;
     @FXML private JFXTextArea description;
 
