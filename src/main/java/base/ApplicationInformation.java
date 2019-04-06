@@ -1,6 +1,6 @@
 package base;
 
-import model.Node;
+import model.*;
 
 /**
  * This is a class that will be used to store volatile information
@@ -9,11 +9,15 @@ import model.Node;
  * @author Ryan LaMarche
  */
 public final class ApplicationInformation {
-    EnumAlgorithm algorithm;
     Node kioskLocation;
+    PathFindingContext pathfinding;
+    public static AStar ASTAR = new AStar();
+    public static Dijkstra DIJKSTRA = new Dijkstra();
+//    public static BFS BFS= new BFS();
+//    public static DFS DFS = new DFS();
 
-    public ApplicationInformation(EnumAlgorithm algorithm, String kioskLocation) {
-        this.algorithm = algorithm;
+    public ApplicationInformation(String kioskLocation) {
+        this.pathfinding = new PathFindingContext(ASTAR);
         this.kioskLocation = Node.getNodeByID(kioskLocation);
     }
 
@@ -21,8 +25,8 @@ public final class ApplicationInformation {
      * @author Ryan LaMarche.
      * @return EnumAlgorithm the current algorithm.
      */
-    public EnumAlgorithm getAlgorithm() {
-        return this.algorithm;
+    public PathFindingContext getAlgorithm() {
+        return this.pathfinding;
     }
 
     /**
@@ -33,4 +37,11 @@ public final class ApplicationInformation {
         return this.kioskLocation;
     }
 
+    /**
+     *
+     * @param algorithm One of ApplicationInformation.ASTAR, ApplicationInformation.DIJKSTRAS, ...
+     */
+    public void setAlgorithm(IPathFind algorithm) {
+        this.pathfinding.setAlgorithm(algorithm);
+    }
 }
