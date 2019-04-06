@@ -69,8 +69,8 @@ public class AStarTest {
         }
         node1 = nodesList.get("WHALL00602");
         node2 = nodesList.get("EHALL03601");
-        this.dijkstraFinder = new PathFindingContext(dijkstra, adjacencyList, nodesList);
-        this.aStarFinder = new PathFindingContext(aStar, adjacencyList, nodesList);
+        this.dijkstraFinder = new PathFindingContext(this.dijkstra, adjacencyList, nodesList);
+        this.aStarFinder = new PathFindingContext(this.aStar, adjacencyList, nodesList);
     }
 
     @Test

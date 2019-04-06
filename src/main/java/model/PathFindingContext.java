@@ -37,6 +37,14 @@ public class PathFindingContext {
         this.refresh();
     }
 
+    public IPathFind getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(IPathFind algorithm) {
+        this.algorithm = algorithm;
+    }
+
     // ONLY USED FOR TESTING
     // TESTS CANNOT USE MAIN SO IT IMPORTS THE DATABASE IN TEST
     public PathFindingContext(IPathFind algorithm, HashMap<String, LinkedList<Edge>> adjacencyList, HashMap<String, Node> nodesList){
