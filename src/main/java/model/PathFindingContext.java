@@ -37,8 +37,8 @@ public class PathFindingContext {
         this.refresh();
     }
 
-    public IPathFind getAlgorithm() {
-        return algorithm;
+    public String getAlgorithmName() {
+        return this.algorithm.getAlgorithmName();
     }
 
     public void setAlgorithm(IPathFind algorithm) {

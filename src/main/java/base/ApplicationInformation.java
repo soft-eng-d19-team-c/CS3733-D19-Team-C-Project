@@ -13,8 +13,8 @@ public final class ApplicationInformation {
     PathFindingContext pathfinding;
     public static AStar ASTAR = new AStar();
     public static Dijkstra DIJKSTRA = new Dijkstra();
-//    public static BFS BFS= new BFS();
-//    public static DFS DFS = new DFS();
+    public static BreadthFirstSearch BFS = new BreadthFirstSearch();
+    public static DepthFirstSearch DFS = new DepthFirstSearch();
 
     public ApplicationInformation(String kioskLocation) {
         this.pathfinding = new PathFindingContext(ASTAR);

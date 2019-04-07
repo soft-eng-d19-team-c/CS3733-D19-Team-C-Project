@@ -8,6 +8,10 @@ import java.util.Queue;
 import static java.lang.Math.sqrt;
 
 public class AStar implements IPathFind{
+
+    public String getAlgorithmName(){
+        return "A* Algorithm";
+    }
     // This is a star. It functions the same way as dijkstra, excluding the predictedCostToEnd.
     @SuppressWarnings("Duplicates")
     public HashMap<Node, PathValue> findPath(Node startNode, Node endNode, boolean isHandicap, HashMap<String, Node> nodesList, HashMap<String, LinkedList<Edge>> adjacencyList) {

@@ -14,6 +14,11 @@ import static java.lang.Math.sqrt;
 
 public class Dijkstra implements IPathFind{
 
+    public String getAlgorithmName(){
+        return "Dijkstra's Algorithm";
+    }
+
+
     @SuppressWarnings("Duplicates")
     public HashMap<Node, PathValue> findPath(Node startNode, Node endNode, boolean isHandicap, HashMap<String, Node> nodesList, HashMap<String, LinkedList<Edge>> adjacencyList) {
         // keeps track of visited nodes in PathValue class

@@ -70,7 +70,10 @@ public class EditMapController extends Controller implements Initializable {
                         "Floor 3");
         ObservableList<String> differentAlgorithms = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
-                        "A Star", "Dijkstra's", "Breadth First Search", "Depth First Search");
+                        Main.info.ASTAR.getAlgorithmName(),
+                        Main.info.DIJKSTRA.getAlgorithmName(),
+                        Main.info.BFS.getAlgorithmName(),
+                        Main.info.DFS.getAlgorithmName());
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
@@ -80,6 +83,7 @@ public class EditMapController extends Controller implements Initializable {
             floorsMenu.setItems(differentFloors);
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
             algosMenu.setItems(differentAlgorithms);
+            algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
         });
     }
 
@@ -216,17 +220,17 @@ public class EditMapController extends Controller implements Initializable {
 
     public void changeAlgorithm(ActionEvent e){
         switch (algosMenu.getValue()){
-            case "A Star":
+            case "A* Algorithm":
                 Main.info.setAlgorithm(Main.info.ASTAR);
                 break;
-            case "Dijkstra's":
+            case "Dijkstra's Algorithm":
                 Main.info.setAlgorithm(Main.info.DIJKSTRA);
                 break;
             case "Breadth First Search":
-                Main.info.setAlgorithm(Main.info.ASTAR);
+                Main.info.setAlgorithm(Main.info.BFS);
                 break;
             case "Depth First Search":
-                Main.info.setAlgorithm(Main.info.ASTAR);
+                Main.info.setAlgorithm(Main.info.DFS);
                 break;
         }
     }

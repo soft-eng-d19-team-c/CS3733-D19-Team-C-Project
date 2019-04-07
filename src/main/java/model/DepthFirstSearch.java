@@ -2,10 +2,10 @@ package model;
 
 import java.util.*;
 
-public class BreadthFirstSearch implements IPathFind {
+public class DepthFirstSearch implements IPathFind {
 
     public String getAlgorithmName(){
-        return "Breadth First Search";
+        return "Depth First Search";
     }
 
     @SuppressWarnings("Duplicates")
@@ -17,11 +17,11 @@ public class BreadthFirstSearch implements IPathFind {
         HashMap<Node, PathValue> pathValues = new HashMap<>();
         pathValues.put(startNode, new PathValue(startNode));
 
-        Queue<PathValue> queue = new LinkedList<>();
-        queue.add(pathValues.get(startNode));
+        Stack<PathValue> stack = new Stack<>();
+        stack.push(pathValues.get(startNode));
 
-        while (!queue.isEmpty()) {
-            PathValue currentPathValue = queue.remove();
+        while (!stack.isEmpty()) {
+            PathValue currentPathValue = stack.pop();
             Node currentNode = currentPathValue.getNode();
 
             if (!currentPathValue.visited()) { // makes sure the current node has not be
@@ -32,7 +32,7 @@ public class BreadthFirstSearch implements IPathFind {
 
                 if (currentNode.equals(endNode)) { //path has been found
 
-                    System.out.println("Number of nodes visited by bfs: " + count);
+                    System.out.println("Number of nodes visited by dfs: " + count);
                     return pathValues;
                 }
 
@@ -53,7 +53,7 @@ public class BreadthFirstSearch implements IPathFind {
 
                     PathValue path = pathValues.get(n);
                     if (!path.visited()) { //we do not need to add nodes that have already been visited
-                        queue.add(path);
+                        stack.push(path);
                     }
                 }
             }
