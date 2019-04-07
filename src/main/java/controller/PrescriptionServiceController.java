@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 public class PrescriptionServiceController extends Controller implements Initializable {
 
     @FXML private JFXTextArea patientID;
-    @FXML private JFXTextArea requesterID;
     @FXML private JFXTextArea prescriptionDescription;
 //    @FXML private JFXButton viewTableButton;
 //    @FXML private JFXTextArea description;
@@ -32,11 +31,11 @@ public class PrescriptionServiceController extends Controller implements Initial
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {
-        PrescriptionService prescriptionService = new PrescriptionService(patientID.getText(), requesterID.getText(), prescriptionDescription.getText());
+        // should also check permissions in the future
+        PrescriptionService prescriptionService = new PrescriptionService(patientID.getText(), Main.user.getUsername(), prescriptionDescription.getText());
         prescriptionService.insert();
 
         patientID.clear();
-        requesterID.clear();
         prescriptionDescription.clear();
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }

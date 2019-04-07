@@ -42,9 +42,9 @@ public class PrescriptionServiceTableController extends Controller implements In
         patientID.setCellValueFactory(new PropertyValueFactory("patientID"));
         requesterID.setCellValueFactory(new PropertyValueFactory("requesterID"));
         resolverID.setCellValueFactory(new PropertyValueFactory("resolverID"));
-//        drug.setCellValueFactory(new PropertyValueFactory("drug"));
-//        timeOrdered.setCellValueFactory(new PropertyValueFactory("timeOrdered"));
-//        timeDelivered.setCellValueFactory(new PropertyValueFactory("timeDelivered"));
+        drug.setCellValueFactory(new PropertyValueFactory("drug"));
+        timeOrdered.setCellValueFactory(new PropertyValueFactory("timeOrdered"));
+        timeDelivered.setCellValueFactory(new PropertyValueFactory("timeDelivered"));
 
         data = PrescriptionService.getAllPrescriptionServices();
         System.out.println(data);

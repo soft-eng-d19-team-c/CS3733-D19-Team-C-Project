@@ -12,16 +12,16 @@ public class PrescriptionService {
     // have to recieve them while they are at the hospital. Doctors or other people will request a prescription
     // then the prescription will be delivered to the floor a patient is on.
 
-    private int id;
-    private String patientID; // unique id of the patient
-    private String requesterID; // id of the doctor requesting the drug
-    private String resolverID; // id of nurse of doctor the receives the drug from the pharmacy
+    private int ID;
+    private String patientID; // unique ID of the patient
+    private String requesterID; // ID of the doctor requesting the drug
+    private String resolverID; // ID of nurse of doctor the receives the drug from the pharmacy
     private String drug; // name of drug and amount
     private Date timeOrdered;
     private Date timeDelivered;
 
     public PrescriptionService(int id, String patientID, String requesterID, String resolverID, String drug, Date timeOrdered, Date timeDelivered) {
-        this.id = id;
+        this.ID = id;
         this.patientID = patientID;
         this.requesterID = requesterID;
         this.resolverID = resolverID;
@@ -97,4 +97,31 @@ public class PrescriptionService {
         return requests;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public String getPatientID() {
+        return patientID;
+    }
+
+    public String getRequesterID() {
+        return requesterID;
+    }
+
+    public String getResolverID() {
+        return resolverID;
+    }
+
+    public String getDrug() {
+        return drug;
+    }
+
+    public Date getTimeOrdered() {
+        return timeOrdered;
+    }
+
+    public Date getTimeDelivered() {
+        return timeDelivered;
+    }
 }
