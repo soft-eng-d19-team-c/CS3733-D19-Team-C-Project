@@ -73,3 +73,7 @@
 .btn-success:hover,.btn-success:pressed {
     -fx-background-color: -success-dark;
 }
+
+.jfx-primary {
+    -jfx-default-color: -primary;
+}
