@@ -61,7 +61,7 @@ public final class Database {
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
             // create internal transportation service request
-            String createInternalTransportationServiceRequestTable = "create table INTERNALTRANSPORTATION(ID INTEGER default AUTOINCREMENT: start 1 increment 1 generated always as identity, NODEID VARCHAR(255) not null, NODEIDDEST VARCHAR(255) not null, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED DATE not null, DATETIMERESOLVED DATE, ISCOMPLETE BOOLEAN  not null, REQUESTEDBY VARCHAR(255), COMPLETEDBY VARCHAR(255))";
+            String createInternalTransportationServiceRequestTable = "create table INTERNALTRANSPORTATION(ID INTEGER default AUTOINCREMENT: start 1 increment 1 generated always as identity, NODEID VARCHAR(255) not null, NODEIDDEST VARCHAR(255) not null, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED DATE not null, DATETIMERESOLVED DATE, ISCOMPLETE BOOLEAN  not null, REQUESTEDBY VARCHAR(255), COMPLETEDBY VARCHAR(255) references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String InternalTransportationServiceRequestTableUINDEX = "create unique index INTERNALTRANSPORTATION_ID_UINDEX on INTERNALTRANSPORTATION (ID)";
             String InternalTransportationServiceRequestTablePK = " alter table INTERNALTRANSPORTATION add constraint INTERNALTRANSPORTATION_PK primary key (ID)";
             try {

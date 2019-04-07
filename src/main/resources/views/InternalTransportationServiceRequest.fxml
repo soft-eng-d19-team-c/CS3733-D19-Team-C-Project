@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InternalTransportationController">
    <children>
        <fx:include fx:id="Buttons" source="partialButtons.fxml" />
-       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2"  />
+       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" />
        <HBox layoutX="75.0" layoutY="150.0" prefHeight="66.0" prefWidth="262.0">
            <children>
                <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
@@ -22,7 +22,7 @@
                <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
            </children>
        </HBox>
-      <Text layoutX="104.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Internal Transportation Service Request" wrappingWidth="392.59130859375">
+      <Text layoutX="104.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Internal Transportation Service Request" wrappingWidth="392.59130859375">
          <font>
             <Font size="20.0" />
          </font>

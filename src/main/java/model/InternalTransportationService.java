@@ -71,7 +71,7 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, DATETIMERESOLVED) values (?, ?, ?, ?, ?)";
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime());  //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime());
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
