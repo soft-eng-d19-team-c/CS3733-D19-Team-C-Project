@@ -20,10 +20,12 @@ public class Main {
         info = new ApplicationInformation(EnumAlgorithm.ASTAR, "CHALL007L1");
         MainFXML app = new MainFXML();
         app.main(args);
-//
-//        PrescriptionService prescriptionService = new PrescriptionService("1" ,"2", "3");
-//        prescriptionService.insert();
-//        System.out.println("No errors!");
+
+//        for (int i = 0; i < 1000; i++) {
+//            PrescriptionService prescriptionService = new PrescriptionService("1", "2", "3");
+//            prescriptionService.insert();
+//        }
+        System.out.println("No errors!");
 
     }
 }

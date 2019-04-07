@@ -17,10 +17,10 @@ public class PrescriptionService {
     private String requesterID; // ID of the doctor requesting the drug
     private String resolverID; // ID of nurse of doctor the receives the drug from the pharmacy
     private String drug; // name of drug and amount
-    private Date timeOrdered;
-    private Date timeDelivered;
+    private Timestamp timeOrdered;
+    private Timestamp timeDelivered;
 
-    public PrescriptionService(int id, String patientID, String requesterID, String resolverID, String drug, Date timeOrdered, Date timeDelivered) {
+    public PrescriptionService(int id, String patientID, String requesterID, String resolverID, String drug, Timestamp timeOrdered, Timestamp timeDelivered) {
         this.ID = id;
         this.patientID = patientID;
         this.requesterID = requesterID;
@@ -34,12 +34,14 @@ public class PrescriptionService {
         this.patientID = patientID;
         this.requesterID = requesterID;
         this.drug = drug;
-        this.timeOrdered = new Date();
+        Date date = new Date();
+        this.timeOrdered = new Timestamp(date.getTime());
     }
 
     public void drugDelivered(String resolverID){
         this.resolverID = resolverID;
-        this.timeDelivered = new Date();
+        Date date = new Date();
+        this.timeDelivered = new Timestamp(date.getTime());
     }
 
     @SuppressWarnings("Duplicates")
@@ -48,13 +50,13 @@ public class PrescriptionService {
         boolean executed = false;
 
         String sqlCmd = "insert into PRESCRIPTIONSERVICE (PATIENTID, REQUESTERID, DRUG, TIMEORDERED) values (?,?,?,?)";
-        java.sql.Date sqlSubmitDate = new java.sql.Date(timeOrdered.getTime()); //because ps.setDate takes an sql.date, not a util.date
+//        java.sql.Date sqlSubmitDate = new java.sql.Date(timeOrdered.getTime()); //because ps.setDate takes an sql.date, not a util.date
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, patientID);
             ps.setObject(2, requesterID);
             ps.setString(3, drug);
-            ps.setDate(4, sqlSubmitDate);
+            ps.setTimestamp(4, timeOrdered);
             executed = ps.execute(); //returns a boolean
             System.out.println("PrescriptionService.insert " + executed);
         }
@@ -85,8 +87,8 @@ public class PrescriptionService {
                 String requesterID =  rs.getString("requesterID");
                 String resolverID = rs.getString("resolverID");
                 String drug = rs.getString("drug");
-                Date timeOrdered = rs.getDate("timeOrdered");
-                Date timeDelivered = rs.getDate("timeDelivered");
+                Timestamp timeOrdered = rs.getTimestamp("timeOrdered");
+                Timestamp timeDelivered = rs.getTimestamp("timeDelivered");
                 PrescriptionService prescriptionService = new PrescriptionService(ID, patientID, requesterID, resolverID, drug, timeOrdered, timeDelivered);
                 requests.add(prescriptionService);
             }

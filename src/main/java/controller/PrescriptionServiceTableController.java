@@ -59,8 +59,13 @@ public class PrescriptionServiceTableController extends Controller implements In
     }
 
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
-        PrescriptionService ps = (PrescriptionService) dataTable.getSelectionModel().getSelectedItem();
-        ps.resolve();
-        updateTable();
+        try {
+            PrescriptionService ps = (PrescriptionService) dataTable.getSelectionModel().getSelectedItem();
+            ps.resolve();
+            updateTable();
+        } catch (NullPointerException e){
+
+        }
+
     }
 }
