@@ -64,12 +64,15 @@ public final class Database {
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
             // creating prescription services table
-            String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID INTEGER default AUTOINCREMENT: start 1 increment 1 generated always as identity, PATIENTID VARCHAR(255), REQUESTERID VARCHAR(255), RESOLVERID VARCHAR(255), DRUG VARCHAR(255), TIMEORDERED TIMESTAMP, TIMEDELIVERED TIMESTAMP)";
-            String PrescriptionUINDEX = "create unique index PRESCRIPTIONSERVICE_ID_UINDEX on PRESCRIPTIONSERVICE (ID)";
-            String PrescriptionTablePK = "alter table PRESCRIPTIONSERVICE add constraint PRESCRIPTIONSERVICE_PK primary key (ID)";
+            String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID int generated always as identity, PATIENTID VARCHAR(255), REQUESTERID varchar(255), RESOLVERID varchar(255), DRUG varchar(255), TIMEORDERED varchar(255), TIMEDELIVERED int)";
+            String PrescriptionUINDEX = "create unique index PRESCRIPTIONSERVICE_ID_uindex on PRESCRIPTIONSERVICE (ID)";
+            String PrescriptionTablePK = "alter table PRESCRIPTIONSERVICE add constraint PRESCRIPTIONSERVICE_pk primary key (ID)";
 
             try {
                 Statement tableStmt = this.getConnection().createStatement();
+                tableStmt.executeUpdate(createPrescriptionServiceTable);
+                tableStmt.executeUpdate(PrescriptionUINDEX);
+                tableStmt.executeUpdate(PrescriptionTablePK);
                 tableStmt.executeUpdate(createNodesTable);
                 tableStmt.executeUpdate(NodesTableUINDEX);
                 tableStmt.executeUpdate(NodesTablePK);
@@ -88,9 +91,7 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
-                tableStmt.executeUpdate(createPrescriptionServiceTable);
-                tableStmt.executeUpdate(PrescriptionUINDEX);
-                tableStmt.executeUpdate(PrescriptionTablePK);
+
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists

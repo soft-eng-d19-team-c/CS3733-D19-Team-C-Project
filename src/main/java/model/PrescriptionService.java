@@ -81,6 +81,7 @@ public class PrescriptionService {
             while(rs.next()) {
                 System.out.println("PrescriptionService.getAllPrescriptionServices");
                 int ID = rs.getInt("ID");
+                System.out.println(ID);
                 String patientID = rs.getString("patientID");
                 String requesterID =  rs.getString("requesterID");
                 String resolverID = rs.getString("resolverID");

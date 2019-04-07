@@ -25,9 +25,6 @@ public class PrescriptionServiceTableController extends Controller implements In
     @FXML private TableColumn timeDelivered;
 
 
-
-    @FXML private AutocompleteSearchBarController autoCompleteTextController;
-
     private ObservableList<PrescriptionService> data;
 
     @Override
@@ -41,28 +38,23 @@ public class PrescriptionServiceTableController extends Controller implements In
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
 
-        ID.setCellValueFactory(new PropertyValueFactory("id"));
-        ID.setCellValueFactory(new PropertyValueFactory("patientID"));
-        ID.setCellValueFactory(new PropertyValueFactory("requesterID"));
-        ID.setCellValueFactory(new PropertyValueFactory("resolverID"));
-        ID.setCellValueFactory(new PropertyValueFactory("drug"));
-        ID.setCellValueFactory(new PropertyValueFactory("timeOrdered"));
-        ID.setCellValueFactory(new PropertyValueFactory("timeDelivered"));
+        ID.setCellValueFactory(new PropertyValueFactory("ID"));
+        patientID.setCellValueFactory(new PropertyValueFactory("patientID"));
+        requesterID.setCellValueFactory(new PropertyValueFactory("requesterID"));
+        resolverID.setCellValueFactory(new PropertyValueFactory("resolverID"));
+//        drug.setCellValueFactory(new PropertyValueFactory("drug"));
+//        timeOrdered.setCellValueFactory(new PropertyValueFactory("timeOrdered"));
+//        timeDelivered.setCellValueFactory(new PropertyValueFactory("timeDelivered"));
 
-        updateTable();
-
-    }
-
-    public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
-        SanitationRequest sr = (SanitationRequest) dataTable.getSelectionModel().getSelectedItem();
-        sr.resolve();
-        updateTable();
-    }
-
-    private void updateTable() {
         data = PrescriptionService.getAllPrescriptionServices();
+        System.out.println(data);
 
         dataTable.setItems(data);
         dataTable.refresh();
+
+    }
+
+    private void updateTable() {
+
     }
 }
