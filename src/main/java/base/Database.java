@@ -63,6 +63,10 @@ public final class Database {
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
+            //create security requests
+            String createSecurityRequestsTable = "create table SECURITYREQUESTS(ID int generated always as identity, ISURGENT BOOLEAN not null,LOCATION VARCHAR(255) not null constraint SECURITYREQUESTS_NODES_NODEID_FK references NODES on delete cascade, DESCRIPTION   VARCHAR(1000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64), COMPLETEDBY VARCHAR(64))";
+            String SecurityRequestsTableUIndex = "create unique index SECURITYREQUESTS_ID_UINDEX on SECURITYREQUESTS (ID)";
+            String SecurityRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             try {
                 Statement tableStmt = this.getConnection().createStatement();
                 tableStmt.executeUpdate(createNodesTable);
@@ -83,6 +87,9 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
+                tableStmt.executeUpdate(createSecurityRequestsTable);
+                tableStmt.executeUpdate(SecurityRequestsTableUIndex);
+                tableStmt.executeUpdate(SecurityRequestsTablePK);
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists
