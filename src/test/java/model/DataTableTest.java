@@ -17,7 +17,7 @@ public class DataTableTest {
 
     @Before
     public void setUp() throws Exception {
-         db = new Database(true);
+         //db = new Database(true);
          Statement stmt = db.getConnection().createStatement();
          String str = "SELECT * FROM NODES";
          rs = stmt.executeQuery(str);
