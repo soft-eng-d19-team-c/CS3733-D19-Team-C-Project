@@ -71,6 +71,12 @@ public final class Database {
             String createUserHasPermissionsTable = "create table USERHASPERMISSIONS(ID int generated always as identity, USERNAME varchar(64) not null constraint USERHASPERMISSIONS_USERS_USERNAME_fk references USERS (USERNAME) on delete cascade, PERMISSIONS varchar(255) not null constraint USERHASPERMISSIONS_PERMISSIONS_PERMISSIONS_fk references USERPERMISSIONS (PERMISSIONS) on delete cascade)";
             String UserHasPermissionsTableUINDEX = "create unique index USERHASPERMISSIONS_ID_uindex on USERHASPERMISSIONS (ID)";
             String UserHasPermissionsTablePK = "alter table USERHASPERMISSIONS add constraint USERHASPERMISSIONS_pk primary key (ID)";
+
+            // SERVICE REQUESTS
+            String createExternalTransportationRequestTable = "create table EXTERNALTRANSPORTATIONREQUESTS(ID int generated always as identity, PICKUPLOCATION varchar(255) not null constraint EXTERNALTRANSPORTATIONREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000) not null, DATETIMESUBMITTED timestamp, DATETIMEPICKUP timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint EXTERNALTRANSPORTATIONREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
+            String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on USERHASPERMISSIONS (ID)";
+            String ExternalTransportationRequestTablePK = "alter table EXTERNALTRANSPORTATIONREQUESTS add constraint EXTERNALTRANSPORTATIONREQUESTS_pk primary key (ID)";
+
             try {
                 Statement tableStmt = this.getConnection().createStatement();
                 tableStmt.executeUpdate(createNodesTable);
@@ -97,6 +103,9 @@ public final class Database {
                 tableStmt.executeUpdate(createUserHasPermissionsTable);
                 tableStmt.executeUpdate(UserHasPermissionsTableUINDEX);
                 tableStmt.executeUpdate(UserHasPermissionsTablePK);
+                tableStmt.executeUpdate(createExternalTransportationRequestTable);
+                tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
+                tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists
@@ -423,37 +432,6 @@ public final class Database {
                     }
                 }
             }
-
-
-
-
-
-
-/*
-            String sqlCmd = "insert into EMPLOYEES (USERNAME, PASSWORD, PERMISSIONS) values (?, ?, ?)";
-            try {
-                PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
-                ps.setString(1, "username@example.com");
-                ps.setString(2, null);
-                ps.setString(3, "developer");
-                ps.execute();
-            } catch (SQLException e) {
-                if (e.getSQLState().equals("23505")) {
-                    if (overwriteData) {
-                        sqlCmd = "update EMPLOYEES set PASSWORD = ?, PERMISSIONS = ? where USERNAME = ?";
-                        try {
-                            PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
-                            ps.setString(1, "username@example.com");
-                            ps.setString(2, null);
-                            ps.setString(3, "developer");
-                            ps.executeUpdate();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
-            }
-            */
 
 
         } // end if importData
