@@ -13,8 +13,9 @@ public enum EnumScreenType {
     REQUESTSERVICE("/views/requestServiceViewNew.fxml"),
     VIEWSERVICES("/views/ServiceRequestTableNew.fxml"),
     BOOKROOM("/views/bookLocationScreen.fxml"),
-    BOOKEDLOCATIONS("/views/bookedLocationsTable.fxml");
-    //DEVMAP("/views/../");
+    BOOKEDLOCATIONS("/views/bookedLocationsTable.fxml"),
+    INTERNALTRANSPORTATION("/views/internalTransportationServiceRequest.fxml");
+
 
 
     protected String path;
