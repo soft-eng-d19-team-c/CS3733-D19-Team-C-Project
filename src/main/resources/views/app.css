@@ -10,6 +10,8 @@
     -danger-dark: #c03141;
     -success:#28a745;
     -success-dark: #279742;
+    -jfx-focus-color: -primary;
+    -jfx-default-color: -primary;
 }
 /* utilities */
 .bg-primary {
@@ -72,8 +74,4 @@
 }
 .btn-success:hover,.btn-success:pressed {
     -fx-background-color: -success-dark;
-}
-
-.jfx-primary {
-    -jfx-default-color: -primary;
 }
