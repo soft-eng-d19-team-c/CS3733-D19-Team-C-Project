@@ -380,7 +380,7 @@ public final class Database {
             }
 
             // import users has permissions
-            System.out.println("Attempting to import users from /data/user_has_permissions.csv...");
+            System.out.println("Attempting to import users' permissions from /data/user_has_permissions.csv...");
             csvFile = getClass().getResource("/data/user_has_permissions.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
