@@ -64,7 +64,7 @@ public final class Database {
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
             // creating prescription services table
-            String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID int generated always as identity, PATIENTID VARCHAR(255), REQUESTERID varchar(255), RESOLVERID varchar(255), DRUG varchar(255), TIMEORDERED varchar(255), TIMEDELIVERED int)";
+            String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID int generated always as identity, PATIENTID VARCHAR(255), REQUESTERID varchar(255), RESOLVERID varchar(255), DRUG varchar(255), TIMEORDERED TIMESTAMP, TIMEDELIVERED TIMESTAMP)";
             String PrescriptionUINDEX = "create unique index PRESCRIPTIONSERVICE_ID_uindex on PRESCRIPTIONSERVICE (ID)";
             String PrescriptionTablePK = "alter table PRESCRIPTIONSERVICE add constraint PRESCRIPTIONSERVICE_pk primary key (ID)";
 

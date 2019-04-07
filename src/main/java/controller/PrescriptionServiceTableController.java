@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.PrescriptionService;
 import model.SanitationRequest;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,15 +47,20 @@ public class PrescriptionServiceTableController extends Controller implements In
         timeOrdered.setCellValueFactory(new PropertyValueFactory("timeOrdered"));
         timeDelivered.setCellValueFactory(new PropertyValueFactory("timeDelivered"));
 
-        data = PrescriptionService.getAllPrescriptionServices();
-        System.out.println(data);
+        updateTable();
 
-        dataTable.setItems(data);
-        dataTable.refresh();
 
     }
 
     private void updateTable() {
+        data = PrescriptionService.getAllPrescriptionServices();
+        dataTable.setItems(data);
+        dataTable.refresh();
+    }
 
+    public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
+        PrescriptionService ps = (PrescriptionService) dataTable.getSelectionModel().getSelectedItem();
+        ps.resolve();
+        updateTable();
     }
 }

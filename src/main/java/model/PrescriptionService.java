@@ -49,7 +49,6 @@ public class PrescriptionService {
 
         String sqlCmd = "insert into PRESCRIPTIONSERVICE (PATIENTID, REQUESTERID, DRUG, TIMEORDERED) values (?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(timeOrdered.getTime()); //because ps.setDate takes an sql.date, not a util.date
-
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, patientID);
@@ -79,9 +78,9 @@ public class PrescriptionService {
             String str = "SELECT * FROM PRESCRIPTIONSERVICE";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
-                System.out.println("PrescriptionService.getAllPrescriptionServices");
+//                System.out.println("PrescriptionService.getAllPrescriptionServices");
                 int ID = rs.getInt("ID");
-                System.out.println(ID);
+//                System.out.println(ID);
                 String patientID = rs.getString("patientID");
                 String requesterID =  rs.getString("requesterID");
                 String resolverID = rs.getString("resolverID");
@@ -123,5 +122,22 @@ public class PrescriptionService {
 
     public Date getTimeDelivered() {
         return timeDelivered;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public boolean resolve() {
+        String str = "UPDATE PRESCRIPTIONSERVICE SET RESOLVERID = ?, TIMEDELIVERED = ? WHERE ID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            ps.setString(1, Main.user.getUsername());
+            ps.setTimestamp(2, ts);
+            ps.setInt(3, this.getID());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
