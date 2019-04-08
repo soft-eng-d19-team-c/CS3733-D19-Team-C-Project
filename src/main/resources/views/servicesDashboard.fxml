@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServicesDashboardController">
    <children>
-       <fx:include source="backandhomebuttonpartial.fxml" fx:id="Buttons"/>
+       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <Label alignment="CENTER" styleClass="h1" text="Services" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
         <columnConstraints>
@@ -157,6 +157,51 @@
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </GridPane.margin>
             </JFXButton>
+            <Label text="Jacob Tutlis" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Kyle Heavey" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Matt Burd" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Lara Padir" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Fay Whittall" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Wenjing Ying" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Linda Puzey" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Shine Linn Thant" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Ryan LaMarche" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>
