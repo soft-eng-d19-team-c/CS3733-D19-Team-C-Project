@@ -37,6 +37,14 @@ public final class ApplicationInformation {
         return this.kioskLocation;
     }
 
+    public void setKioskLocation(Node newLocation){
+        this.kioskLocation = newLocation;
+    }
+
+    public void setKioskLocation(String newLocation){
+        this.kioskLocation = Node.getNodeByID(newLocation);
+    }
+
     /**
      *
      * @param algorithm One of ApplicationInformation.ASTAR, ApplicationInformation.DIJKSTRAS, ...
