@@ -275,7 +275,7 @@ public class PathfindingController extends Controller implements Initializable {
 
 
     public void level3BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
     }
 
     public void level2BtnClick(ActionEvent actionEvent) {
