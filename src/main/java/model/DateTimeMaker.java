@@ -16,17 +16,21 @@ public class DateTimeMaker {
         return yearToMilliseconds(this.date.getYear()) + monthToMilliseconds(this.date.getMonthValue(), this.date.isLeapYear()) + daysToMilliseconds(this.date.getDayOfMonth());
     }
 
+    //adds the time to the given timestamp
     public static Timestamp addTime(String time, Timestamp ts){
         long numToAdd = 0;
-        String[] hoursAndMinutes = time.split(":");
+        String[] hoursAndMinutes = time.split(":"); //splits hours from minutes
         long hrs = Long.parseLong(hoursAndMinutes[0]); //gets the hour
         long minutes = 0;
+        //if it is 12am, the hour should be set to 0
         if(hrs == 12 && hoursAndMinutes[1].charAt(2) == 'a'){
             hrs = 0;
         }
+        //if it is pm, the hours need to be doubled
         if(hoursAndMinutes[1].charAt(2) == 'p'){//finds if the time is in the am or pm
             hrs *= 2;
         }
+        //if it is at a half hour, add thirty minutes in milliseconds
         if(hoursAndMinutes[1].charAt(0) == '3'){//finds if this is at the hour or at the half hour
             minutes = 30;
         }

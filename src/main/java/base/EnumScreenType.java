@@ -1,21 +1,29 @@
 package base;
 
 public enum EnumScreenType {
-    NODETABLE("/views/prototypeNodeTable.fxml"),
-    MAP("/views/prototypeMap.fxml"),
-    NODEEDIT("/views/prototypeNodeEdit.fxml"),
-    DOWNLOADCSV("/views/downloadscreen.fxml"),
-    DASHBOARD("/views/assistScreen v3.fxml"),
-    SEARCH("/views/autocompleteSearchBar.fxml"),
-    LOGIN("/views/login screen example.fxml"),
-    FINDPATH("/views/findpath.fxml"),
-    SELECTLOCATION("/views/selectlocation.fxml"),
-    REQUESTSERVICE("/views/requestServiceViewNew.fxml"),
-    VIEWSERVICES("/views/ServiceRequestTableNew.fxml"),
-    BOOKROOM("/views/bookLocationScreen.fxml"),
-    BOOKEDLOCATIONS("/views/bookedLocationsTable.fxml");
-    //DEVMAP("/views/../");
-
+    NODETABLE("/views/nodeTable.fxml"),
+    NODEEDIT("/views/nodeEdit.fxml"),
+    EDITMAP("/views/editMap.fxml"),
+    DOWNLOADCSV("/views/download.fxml"),
+    DASHBOARD("/views/universalDashboard.fxml"),
+    LOGIN("/views/loginScreen.fxml"),
+    PATHFINDING("/views/pathfinding.fxml"),
+    SEARCHLOCATION("/views/searchLocation.fxml"),
+    BOOKLOCATIONS("/views/bookLocation.fxml"),
+    VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
+    SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
+    VIEWSERVICEREQUESTS("/views/serviceRequestTable.fxml"),
+    SANITATIONSERVICE("/views/sanitationService.fxml"),
+    INTERPRETERSERVICE("/views/servicesDashboard.fxml"),
+    INTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    EXTERNALTRANSPORTATIONSERVICE("/views/externalTransportationService.fxml"),
+    SECURITYSERVICE("/views/servicesDashboard.fxml"),
+    PRESCRIPTIONSERVICE("/views/prescriptionService.fxml"),
+    PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
+    ITSERVICE("/views/servicesDashboard.fxml"),
+    GIFTSTORESERVICE("/views/servicesDashboard.fxml"),
+    RELIGIOUSSERVICE("/views/servicesDashboard.fxml"),
+    FLORISTSERVICE("/views/servicesDashboard.fxml");
 
     protected String path;
 
