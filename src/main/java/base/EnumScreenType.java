@@ -1,9 +1,5 @@
 package base;
 
-/**
- * This Enum is to store all of the screens that our app can switch to in the Facade design pattern.
- * @author Ryan LaMarche
- */
 public enum EnumScreenType {
     NODETABLE("/views/nodeTable.fxml"),
     NODEEDIT("/views/nodeEdit.fxml"),
@@ -20,14 +16,13 @@ public enum EnumScreenType {
     SANITATIONSERVICE("/views/sanitationService.fxml"),
     INTERPRETERSERVICE("/views/servicesDashboard.fxml"),
     INTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
-    EXTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    EXTERNALTRANSPORTATIONSERVICE("/views/externalTransportationService.fxml"),
     SECURITYSERVICE("/views/servicesDashboard.fxml"),
     PRESCRIPTIONSERVICE("/views/servicesDashboard.fxml"),
     ITSERVICE("/views/servicesDashboard.fxml"),
     GIFTSTORESERVICE("/views/servicesDashboard.fxml"),
     RELIGIOUSSERVICE("/views/servicesDashboard.fxml"),
     FLORISTSERVICE("/views/servicesDashboard.fxml");
-
 
     protected String path;
 
