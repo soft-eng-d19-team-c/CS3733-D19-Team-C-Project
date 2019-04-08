@@ -70,12 +70,16 @@ public final class Database {
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(64) constraint BOOKINGS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
+            //create security requests
+            String createSecurityRequestsTable = "create table SECURITYREQUESTS(ID int generated always as identity, ISURGENT BOOLEAN not null,LOCATION VARCHAR(255) not null constraint SECURITYREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION VARCHAR(1000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64) constraint SECURITYREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), COMPLETEDBY VARCHAR(64) constraint SECURITYREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME))";
+            String SecurityRequestsTableUIndex = "create unique index SECURITYREQUESTS_ID_UINDEX on SECURITYREQUESTS (ID)";
+            String SecurityRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             //create religious service requests
             String createReligiousServiceRequestsTable = "create table RELIGIOUSSERVICEREQUESTS(ID int generated always as identity, LOCATION VARCHAR(255) not null constraint RELIGIOUSSERVICEREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION  VARCHAR(2000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64), COMPLETEDBY VARCHAR(64)), ISCOMPLETE BOOLEAN not null)";
             String ReligiousServiceRequestsTableUniqueIndex = "create unique index RELIGIOUSSERVICEREQUESTS_ID_UINDEX on REGLIOUSSERVICEREQUESTS (ID)";
             String ReligiousRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             // create florist service requests table
-            String createFloristRequestsTable = "create table FLORISTSERVICEREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk_2 references NODES, DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERRESOLVEDBY varchar(64) constraint FLORISTSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
+            String createFloristRequestsTable = "create table FLORISTSERVICEREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk_2 references NODES(NODEID), DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERRESOLVEDBY varchar(64) constraint FLORISTSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
             String FloristRequestsTableUINDEX = "create unique index FLORISTSERVICEREQUESTS_ID_uindex on FLORISTSERVICEREQUESTS (ID)";
             String FloristRequestsTablePK = "alter table FLORISTSERVICEREQUESTS add constraint FLORISTSERVICEREQUESTS_pk primary key (ID)";
 
@@ -131,6 +135,9 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
+                tableStmt.executeUpdate(createSecurityRequestsTable);
+                tableStmt.executeUpdate(SecurityRequestsTableUIndex);
+                tableStmt.executeUpdate(SecurityRequestsTablePK);
                 tableStmt.executeUpdate(createReligiousServiceRequestsTable);
                 tableStmt.executeUpdate(ReligiousServiceRequestsTableUniqueIndex);
                 tableStmt.executeUpdate(ReligiousRequestsTablePK);
