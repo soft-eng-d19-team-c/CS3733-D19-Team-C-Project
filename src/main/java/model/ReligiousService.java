@@ -1,9 +1,10 @@
 package model;
-import java.util.Date;
 import base.Main;
-import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.*;
+import java.util.Date;
 
 
 public class ReligiousService {
@@ -27,6 +28,11 @@ public class ReligiousService {
         this.completedBy = null;
     }
 
+    public ReligiousService(String nodeID, String text) {
+        this.nodeID = nodeID;
+        this.description = text;
+    }
+
     public String getNodeID() {
         return nodeID;
     }
@@ -48,7 +54,7 @@ public class ReligiousService {
 
         boolean executed = false;
 
-        String sqlCmd = "update RELIGIOUSREQUESTS set LOCATION = ?, DESCRIPTION = ?, TIMESUBMITTED = ?, TIMERESOLVED = ? COMPLETED = ? where ID = ?";
+        String sqlCmd = "update RELIGIOUSREQUESTS set LOCATION = ?, DESCRIPTION = ?, TIMESUBMITTED = ?, TIMERESOLVED = ?, COMPLETED = ? where ID = ?";
         java.sql.Timestamp sqlCompleteDate = new java.sql.Timestamp(dateTimeResolved.getTime());
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime());
 
@@ -110,8 +116,11 @@ public class ReligiousService {
                 String description = rs.getString("DESCRIPTION");
                 Date dateTimeSubmitted = rs.getDate("TIMESUBMITTED");
                 Date dateTimeResolved = rs.getDate("TIMECOMPLETED");
-                boolean isComplete = rs.getBoolean("COMPLETED");
-                ReligiousService religiousRequest = new ReligiousService(ID, description, dateTimeSubmitted, dateTimeResolved, nodeID, isComplete);
+                boolean isComplete = false;
+                if (dateTimeResolved != null) {
+                    isComplete = true;
+                }
+                ReligiousService religiousRequest = new ReligiousService(ID, nodeID, description, isComplete, dateTimeSubmitted, dateTimeResolved);
                 requests.add(religiousRequest);
             }
         } catch (SQLException e) {

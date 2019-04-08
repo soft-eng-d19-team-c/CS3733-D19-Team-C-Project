@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import model.InternalTransportationService;
-import model.ServiceRequest;
 
 import java.awt.*;
 import java.net.URL;
@@ -15,8 +14,8 @@ import java.util.ResourceBundle;
 public class InternalTransportationController  extends Controller implements Initializable {
 
     @FXML private TextField description;
-    @FXML private AutocompleteSearchBar searchController_origController;
-    @FXML private AutocompleteSearchBar searchController_destController;
+    @FXML private AutocompleteSearchBarController searchController_origController;
+    @FXML private AutocompleteSearchBarController searchController_destController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
