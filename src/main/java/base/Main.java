@@ -21,11 +21,5 @@ public class Main {
         MainFXML app = new MainFXML();
         app.main(args);
 
-//        for (int i = 0; i < 1000; i++) {
-//            PrescriptionService prescriptionService = new PrescriptionService("1", "2", "3");
-//            prescriptionService.insert();
-//        }
-        System.out.println("No errors!");
-
     }
 }
