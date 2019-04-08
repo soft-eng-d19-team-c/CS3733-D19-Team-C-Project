@@ -60,7 +60,62 @@ public final class Database {
             String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
             String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
             //create ITServiceRequestsTable
-            //TODO String createITServiceRequestsTable =
+            /*
+
+            create table ITSERVICEREQUESTS
+(
+	ID int generated always as identity,
+	type varchar(255) generated always as identity,
+	description varchar(2000) generated always as identity,
+	dateTimeSubmitted Date generated always as identity,
+	dateTimeCompleted DATE generated always as identity,
+	isComplete boolean generated always as identity,
+	userAssignedTo User generated always as identity,
+	userRequestedBy User generated always as identity,
+	nodeID varchar(64) generated always as identity,
+	constraint ITSERVICEREQUESTS_USERS_USERNAME_USERNAME_fk
+		foreign key (USEREQUESTEDBY, USERASSIGNEDTO) references USERS (USERNAME, USERNAME)
+);
+
+create unique index ITSERVICEREQUESTS_ID_uindex
+	on ITSERVICEREQUESTS (ID);
+
+create unique index ITSERVICEREQUESTS_dateTimeCompleted_uindex
+	on ITSERVICEREQUESTS (dateTimeCompleted);
+
+create unique index ITSERVICEREQUESTS_dateTimeSubmitted_uindex
+	on ITSERVICEREQUESTS (dateTimeSubmitted);
+
+create unique index ITSERVICEREQUESTS_description_uindex
+	on ITSERVICEREQUESTS (description);
+
+create unique index ITSERVICEREQUESTS_isComplete_uindex
+	on ITSERVICEREQUESTS (isComplete);
+
+create unique index ITSERVICEREQUESTS_nodeID_uindex
+	on ITSERVICEREQUESTS (nodeID);
+
+create unique index ITSERVICEREQUESTS_type_uindex
+	on ITSERVICEREQUESTS (type);
+
+create unique index ITSERVICEREQUESTS_userAssignedTo_uindex
+	on ITSERVICEREQUESTS (userAssignedTo);
+
+create unique index ITSERVICEREQUESTS_userRequestedBy_uindex
+	on ITSERVICEREQUESTS (userRequestedBy);
+
+alter table ITSERVICEREQUESTS
+	add constraint ITSERVICEREQUESTS_pk
+		primary key (nodeID);
+
+
+
+             */
+
+
+
+
+
 
             // create bookings table
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
