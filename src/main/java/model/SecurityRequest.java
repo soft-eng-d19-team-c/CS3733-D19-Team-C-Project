@@ -80,8 +80,9 @@ public class SecurityRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SECURITYREQUESTS (ISURGENT,  LOCATION, DESCRIPTION, TIMESUBMITTED) values (?,?,?,?)";
+        String sqlCmd = "insert into SECURITYREQUESTS (ISURGENT,  LOCATION, DESCRIPTION, TIMESUBMITTED, REQUESTEDBY) values (?,?,?,?,?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
+        String username = Main.user.getUsername();
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
@@ -89,6 +90,7 @@ public class SecurityRequest {
             ps.setString(2, nodeID);
             ps.setString(3, description);
             ps.setTimestamp(4, ts);
+            ps.setString(5, username);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -137,12 +139,14 @@ public class SecurityRequest {
 
     //Mark a SanitationRequest complete
     public boolean resolve() {
-        String str = "UPDATE SECURITYREQUESTS SET TIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE SECURITYREQUESTS SET TIMECOMPLETED = ?, COMPLETEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
+            String username = Main.user.getUsername();
             ps.setTimestamp(1, ts);
-            ps.setInt(2, this.getID());
+            ps.setString(2, username);
+            ps.setInt(3, this.getID());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
