@@ -4,6 +4,7 @@ import base.Main;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -11,13 +12,13 @@ public class InternalTransportationService {
     private String nodeID; //location of request
     private String nodeIDDest; //location of transportation destination
     private String description; //what is the reason for transport
-    private Date dateTimeSubmitted;
-    private Date pickUpTime;
+    private Timestamp dateTimeSubmitted;
+    private Timestamp pickUpTime;
     private User completedBy;
     private User requestedBy;
     private int ID;
 
-    public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Date dateTimeSubmitted, Date pickUpTime) {
+    public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Timestamp dateTimeSubmitted, Timestamp pickUpTime) {
         this.nodeID = nodeID;
         this.nodeIDDest = nodeIDDest;
         this.description = description;
@@ -29,7 +30,7 @@ public class InternalTransportationService {
     }
 
     //seperate constructor
-    public InternalTransportationService( String location, String destination, String description, Date pickUpTime) {
+    public InternalTransportationService( String location, String destination, String description, Timestamp pickUpTime) {
         this(-1, location, destination, description, new Timestamp(System.currentTimeMillis()), pickUpTime);
     }
 
@@ -43,8 +44,6 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "update INTERNALTRANSPORTATION set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, PICKUPTIME = ? where ID = ?";
-       // java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlpickup = new java.sql.Date(this.pickUpTime.getTime());
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
@@ -53,8 +52,7 @@ public class InternalTransportationService {
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
             ps.setTimestamp(1, ts);
-            //ps.setDate(3, sqlStartDate);
-            ps.setDate(4, sqlpickup);
+            ps.setTimestamp(4, this.pickUpTime);
 
             executed = ps.execute(); //returns a boolean
         }
@@ -71,7 +69,6 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME) values (?, ?, ?, ?, ?)";
-        java.sql.Date sqlPickup = new java.sql.Date(this.pickUpTime.getTime());
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 
@@ -81,7 +78,7 @@ public class InternalTransportationService {
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
             ps.setTimestamp(1, ts);
-            ps.setDate(4, sqlPickup);
+            ps.setTimestamp(4, this.pickUpTime);
             executed = ps.execute(); //returns a boolean
         }
 
