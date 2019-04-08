@@ -51,6 +51,8 @@ public class PathfindingController extends Controller implements Initializable {
     private Color somecolor;
 
     private String findLocationNodeID;
+    private String currentFloor;
+    private boolean hasPath;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -59,64 +61,42 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + (String) Main.screenController.getData("floor") + "_NoIcons.png"))));
-        findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
+        hasPath = false;
+        currentFloor = (String) Main.screenController.getData("floor");
+        updateFloorImg(currentFloor);
         Platform.runLater(() -> {
-
-            searchController_destController.refresh();
-            searchController_origController.refresh();
-
-            findLocationNodeID = (String)Main.screenController.getData("nodeID");
-
-            nodeCircles = new HashMap<>();
-            nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
-            edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
-            black = new Color(0,0,0,1);
-            drawNodes(nodes, edges, black);
-
-            if (findLocationNodeID != null) {
-                Circle foundNode = nodeCircles.get(findLocationNodeID);
-
-                foundNode.setRadius(6.0);
-                foundNode.setFill(Color.ORANGERED);
-                foundNode.toFront();
-
-                ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
-                st.setByX(1.2);
-                st.setByY(1.2);
-                st.setCycleCount(Animation.INDEFINITE);
-                st.setAutoReverse(true);
-                st.play();
-            }
-
+            displayAllNodes(currentFloor);
         });
     }
 
     private void generateNodes(LinkedList<Node> nodes) {
+        changeFloor();
         String prev = null;
         double mapX = findpathmap.getLayoutX();
         double mapY = findpathmap.getLayoutY();
         double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
         for (Node n : nodes) {
-            Circle circle = new Circle();
-            circle.setCenterX(mapX + n.getX()/mapScale);
-            circle.setCenterY(mapY + n.getY()/mapScale);
-            circle.setRadius(3.0);
-            circle.getProperties().put("node", n);
-            if (prev != null) {
+            if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
+                Circle circle = new Circle();
+                circle.setCenterX(mapX + n.getX() / mapScale);
+                circle.setCenterY(mapY + n.getY() / mapScale);
+                circle.setRadius(3.0);
+                circle.getProperties().put("node", n);
+                if (prev != null) {
 //                drawDancingline(prev, n.getID());
-                Line line = new Line();
-                line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
-                line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
-                line.endXProperty().bind(circle.centerXProperty());
-                line.endYProperty().bind(circle.centerYProperty());
-                line.setStroke(black);
-                line.setStrokeWidth(3.0);
-                mapImgPane.getChildren().add(line);
+                    Line line = new Line();
+                    line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
+                    line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
+                    line.endXProperty().bind(circle.centerXProperty());
+                    line.endYProperty().bind(circle.centerYProperty());
+                    line.setStroke(black);
+                    line.setStrokeWidth(3.0);
+                    mapImgPane.getChildren().add(line);
+                }
+                mapImgPane.getChildren().add(circle);
+                nodeCircles.put(n.getID(), circle);
+                prev = n.getID();
             }
-            mapImgPane.getChildren().add(circle);
-            nodeCircles.put(n.getID(), circle);
-            prev = n.getID();
         }
     }
 
@@ -237,7 +217,6 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(node_onPath);
         String path = pathToText.getDetailedPath();
         pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
-
     }
 
     private Color randomColorGenerator(){
@@ -252,6 +231,46 @@ public class PathfindingController extends Controller implements Initializable {
     public void Dancebtnclick(ActionEvent actionEvent) {
         dancePartyNode(node_onPath);
     }
+
+    public void updateFloorImg(String floor){
+        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floor + "_NoIcons.png"))));
+        findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
+    }
+
+    public void changeFloor(){
+        updateFloorImg("1");
+    }
+
+    public void displayAllNodes(String floor){
+        searchController_destController.refresh();
+        searchController_origController.refresh();
+
+        findLocationNodeID = (String)Main.screenController.getData("nodeID");
+
+        nodeCircles = new HashMap<>();
+        nodes = Node.getNodesByFloor(floor);
+        edges = Edge.getEdgesByFloor(floor);
+        black = new Color(0,0,0,1);
+        drawNodes(nodes, edges, black);
+
+        if (findLocationNodeID != null) {
+            Circle foundNode = nodeCircles.get(findLocationNodeID);
+
+            foundNode.setRadius(6.0);
+            foundNode.setFill(Color.ORANGERED);
+            foundNode.toFront();
+
+            ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
+            st.setByX(1.2);
+            st.setByY(1.2);
+            st.setCycleCount(Animation.INDEFINITE);
+            st.setAutoReverse(true);
+            st.play();
+        }
+    }
+
+
+
 }
 
 
