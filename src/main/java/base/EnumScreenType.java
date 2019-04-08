@@ -14,16 +14,16 @@ public enum EnumScreenType {
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
     VIEWSERVICEREQUESTS("/views/serviceRequestTable.fxml"),
     SANITATIONSERVICE("/views/sanitationService.fxml"),
-    INTERPRETERSERVICE("/views/servicesDashboard.fxml"),
-    INTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    INTERPRETERSERVICE("/views/interpreterService.fxml"),
+    INTERNALTRANSPORTATIONSERVICE("/views/InternalTransportationServiceRequest.fxml"),
     EXTERNALTRANSPORTATIONSERVICE("/views/externalTransportationService.fxml"),
-    SECURITYSERVICE("/views/servicesDashboard.fxml"),
+    SECURITYSERVICE("/views/securityServiceRequest.fxml"),
     PRESCRIPTIONSERVICE("/views/prescriptionService.fxml"),
     PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
-    ITSERVICE("/views/servicesDashboard.fxml"),
-    GIFTSTORESERVICE("/views/servicesDashboard.fxml"),
-    RELIGIOUSSERVICE("/views/servicesDashboard.fxml"),
-    FLORISTSERVICE("/views/servicesDashboard.fxml");
+    ITSERVICE("/views/itService.fxml"),
+    GIFTSTORESERVICE("/views/giftStoreService.fxml"),
+    RELIGIOUSSERVICE("/views/religiousservices.fxml"),
+    FLORISTSERVICE("/views/FloristServiceRequest.fxml");
 
     protected String path;
 

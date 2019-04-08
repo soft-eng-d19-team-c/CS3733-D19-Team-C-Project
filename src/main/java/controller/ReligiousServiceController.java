@@ -5,8 +5,7 @@ import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.ReligiousServices;
-import model.ServiceRequest;
+import model.ReligiousService;
 
 import java.awt.*;
 import java.net.URL;
@@ -15,7 +14,7 @@ import java.util.ResourceBundle;
 public class ReligiousServiceController extends Controller implements Initializable {
 
     @FXML
-    private AutocompleteSearchBar searchLocation;
+    private AutocompleteSearchBarController searchLocationController;
     @FXML
     private TextArea serviceDescription;
 
@@ -29,8 +28,8 @@ public class ReligiousServiceController extends Controller implements Initializa
     }
 
     public void sumbitButtonClick(ActionEvent actionEvent) {
-        ReligiousService religiousServiceRequest = new ReligiousService(searchLocation.getNodeID(), serviceDescription.getText());
-        religoiousServiceRequest.insert();
+        ReligiousService religiousServiceRequest = new ReligiousService(searchLocationController.getNodeID(), serviceDescription.getText());
+        religiousServiceRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }

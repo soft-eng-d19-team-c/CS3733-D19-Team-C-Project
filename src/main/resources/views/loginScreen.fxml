@@ -28,12 +28,12 @@
                         <Font size="38.0" />
                      </font>
                   </Label>
-                  <TextField promptText="username">
+                  <TextField fx:id="uname" promptText="username">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>
                   </TextField>
-                  <PasswordField promptText="password">
+                  <PasswordField fx:id="password" promptText="password">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>

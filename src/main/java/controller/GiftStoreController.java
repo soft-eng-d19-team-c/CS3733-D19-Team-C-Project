@@ -4,17 +4,16 @@ import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class GiftStoreController extends Controller implements Initializable {
     @FXML private JFXTextField recipient;
     @FXML private JFXTextField sender;
-    @FXML private AutocompleteSearchBar autocompletetextcontroller;
+    @FXML private AutocompleteSearchBarController autocompletetextcontroller;
 
 
     public void submitButtonClick(ActionEvent actionEvent) {
@@ -38,11 +37,13 @@ public class GiftStoreController extends Controller implements Initializable {
         this.sender = sender;
     }
 
-    public AutocompleteSearchBar getAutocompletetextcontroller() {
-        return autocompletetextcontroller;
+    @Override
+    public void init(URL location, ResourceBundle resources) {
+        initialize(location, resources);
     }
 
-    public void setAutocompletetextcontroller(AutocompleteSearchBar autocompletetextcontroller) {
-        this.autocompletetextcontroller = autocompletetextcontroller;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }
