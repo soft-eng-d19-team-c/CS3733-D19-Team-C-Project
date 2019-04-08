@@ -41,12 +41,12 @@ public class Booking {
     public static ObservableList<Booking> getCurrentBookings() {
         // TODO eventually this method should only fetch bookings that have not ended but like YOLO.
         ObservableList<Booking> result = FXCollections.observableArrayList();
-        String str = "SELECT * FROM BOOKINGS LEFT JOIN EMPLOYEES AS E ON BOOKINGS.USERCOMPLETEDBY = E.USERNAME";
+        String str = "SELECT * FROM BOOKINGS LEFT JOIN USERS AS E ON BOOKINGS.USERCOMPLETEDBY = E.USERNAME";
         try {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
-                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME")), rs.getInt("ID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

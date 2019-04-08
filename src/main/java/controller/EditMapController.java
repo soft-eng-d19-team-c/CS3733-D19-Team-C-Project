@@ -23,7 +23,6 @@ import javafx.scene.shape.Line;
 import model.Edge;
 import model.Node;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -83,9 +82,9 @@ public class EditMapController extends Controller implements Initializable {
 
             floorsMenu.setItems(differentFloors);
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
-            algosMenu.setOnAction(changeAlgorithmHandler);
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
+            algosMenu.setOnAction(changeAlgorithmHandler);
         });
     }
 

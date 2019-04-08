@@ -50,7 +50,7 @@ public final class Database {
             String createEdgesTable = "create table EDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint EDGES_NODES_STARTNODE_fk references NODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint EDGES_NODES_ENDNODE_fk references NODES (NODEID) on update no action on delete cascade)";
             String EdgesTableUINDEX = "create unique index EDGES_EDGEID_uindex	on EDGES (EDGEID)";
             String EdgesTablePK = "alter table EDGES add constraint EDGES_pk primary key (EDGEID)";
-            // create employees table
+            // create users table
             String createUsersTable = "create table USERS (username varchar(64) not null, password varchar(1000))";
             String UsersTableUINDEX = "create unique index USERS_username_uindex on USERS (username)";
             String UsersTablePK = "alter table USERS add constraint USERS_pk primary key (username)";
@@ -75,9 +75,9 @@ public final class Database {
             String SecurityRequestsTableUIndex = "create unique index SECURITYREQUESTS_ID_UINDEX on SECURITYREQUESTS (ID)";
             String SecurityRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             //create religious service requests
-            String createReligiousServiceRequestsTable = "create table RELIGIOUSSERVICEREQUESTS(ID int generated always as identity, LOCATION VARCHAR(255) not null constraint RELIGIOUSSERVICEREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION  VARCHAR(2000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64), COMPLETEDBY VARCHAR(64)), ISCOMPLETE BOOLEAN not null)";
-            String ReligiousServiceRequestsTableUniqueIndex = "create unique index RELIGIOUSSERVICEREQUESTS_ID_UINDEX on REGLIOUSSERVICEREQUESTS (ID)";
-            String ReligiousRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
+            String createReligiousServiceRequestsTable = "create table RELIGIOUSSERVICEREQUESTS(ID int generated always as identity, LOCATION VARCHAR(255) not null constraint RELIGIOUSSERVICEREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION VARCHAR(2000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64), COMPLETEDBY VARCHAR(64), ISCOMPLETE BOOLEAN not null)";
+            String ReligiousServiceRequestsTableUniqueIndex = "create unique index RELIGIOUSSERVICEREQUESTS_ID_UINDEX on RELIGIOUSSERVICEREQUESTS (ID)";
+            String ReligiousRequestsTablePK = "alter table RELIGIOUSSERVICEREQUESTS add constraint RELIGIOUSSERVICEREQUESTS_PK primary key (ID)";
             // create florist service requests table
             String createFloristRequestsTable = "create table FLORISTSERVICEREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk_2 references NODES(NODEID), DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERRESOLVEDBY varchar(64) constraint FLORISTSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
             String FloristRequestsTableUINDEX = "create unique index FLORISTSERVICEREQUESTS_ID_uindex on FLORISTSERVICEREQUESTS (ID)";
@@ -103,7 +103,7 @@ public final class Database {
 
             // SERVICE REQUESTS
             String createExternalTransportationRequestTable = "create table EXTERNALTRANSPORTATIONREQUESTS(ID int generated always as identity, PICKUPLOCATION varchar(255) not null constraint EXTERNALTRANSPORTATIONREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000) not null, DATETIMESUBMITTED timestamp, DATETIMEPICKUP timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint EXTERNALTRANSPORTATIONREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
-            String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on USERHASPERMISSIONS (ID)";
+            String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on EXTERNALTRANSPORTATIONREQUESTS (ID)";
             String ExternalTransportationRequestTablePK = "alter table EXTERNALTRANSPORTATIONREQUESTS add constraint EXTERNALTRANSPORTATIONREQUESTS_pk primary key (ID)";
 
             try {
