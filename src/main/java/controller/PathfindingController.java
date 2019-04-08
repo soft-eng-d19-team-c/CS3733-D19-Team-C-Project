@@ -278,39 +278,29 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
-    public void changeFloorGround(ActionEvent actionEvent) {
-        changeFloor("ground");
-    }
-
-
-
-
-
-
-
 
     public void level3BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("3");
     }
 
     public void level2BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("2");
     }
 
     public void level1BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("1");
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("Ground");
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("L1");
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        changeFloor("L2");
     }
 }
 
