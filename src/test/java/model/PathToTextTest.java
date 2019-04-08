@@ -12,20 +12,16 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
-public class AStarTest {
+public class PathToTextTest {
     Database db;
     HashMap<String, LinkedList<Edge>> adjacencyList; // <NodeID, [Edge1, Edge2, ...]>
     HashMap<String, Node> nodesList; // <NodeID, Node>
-    Node node1;
-    Node node2;
     AStar astar;
 
     @SuppressWarnings("Duplicates")
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         db = new Database(false, false);
-
-
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
         this.astar = new AStar(adjacencyList, nodesList);
@@ -62,50 +58,12 @@ public class AStarTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        node1 = nodesList.get("WHALL00602");
-        node2 = nodesList.get("EHALL03601");
     }
 
     @Test
-    public void compareAStarAndDijkstra(){
-        AStar pathFinder = new AStar(adjacencyList, nodesList);
-
-        LinkedList<Node> aStarSameBuildingDiffFloor =  pathFinder.findPath("WHALL00602", "EHALL03601");
-        LinkedList<Node> dijkstraSameBuildingDiffFloor =  pathFinder.dijkstra("WHALL00602", "EHALL03601");
-
-        LinkedList<Node> aStarSameBuildingSameFloor =  pathFinder.findPath("DCONF00102", "DEXIT00102");
-        LinkedList<Node> dijkstraSameBuildingSameFloor =  pathFinder.dijkstra("DCONF00102", "DEXIT00102");
-
-        LinkedList<Node> aStarSameNode =  pathFinder.findPath("DEXIT00102", "DEXIT00102");
-        LinkedList<Node> dijkstraSameNode =  pathFinder.dijkstra("DEXIT00102", "DEXIT00102");
-
-        LinkedList<Node> aStarL1 =  pathFinder.findPath("CHALL014L1", "CREST002L1");
-        LinkedList<Node> dijkstraL1 =  pathFinder.dijkstra("CHALL014L1", "CREST002L1");
-
-        LinkedList<Node> aStarWithNodes =  pathFinder.findPath(node1, node2);
-        LinkedList<Node> dijkstraWithNodes =  pathFinder.dijkstra(node1, node2);
-
-        assertEquals(aStarSameBuildingDiffFloor, dijkstraSameBuildingDiffFloor);
-        assertEquals(aStarSameBuildingSameFloor, dijkstraSameBuildingSameFloor);
-        assertEquals(aStarSameNode, dijkstraSameNode);
-        assertEquals(aStarL1, dijkstraL1);
-        assertEquals(aStarWithNodes, dijkstraWithNodes);
+    public void testPathToText1() {
+        LinkedList<Node> path =  astar.findPath("CHALL007L1", "CDEPT003L1");
+        PathToText ptt = new PathToText(path);
+//        assertEquals("test", ptt.getDetailedPath());
     }
-
-    @Test
-    public void longPath(){
-        AStar pathFinder = new AStar(adjacencyList, nodesList);
-
-        LinkedList<Node> astar =  pathFinder.findPath("ADEPT00301", "DHALL00402");
-        LinkedList<Node> dijkstra=  pathFinder.dijkstra("ADEPT00301", "DHALL00402");
-
-        assertEquals(astar, dijkstra);
-
-
-        astar =  pathFinder.findPath("DELEV00A02", "ACONF00103");
-        dijkstra =  pathFinder.dijkstra("DELEV00A02", "ACONF00103");
-
-        assertEquals(astar, dijkstra);
-    }
-    
 }
