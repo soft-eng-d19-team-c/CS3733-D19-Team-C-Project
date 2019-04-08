@@ -36,6 +36,12 @@ public class ITServiceRequest {
         this.nodeID = nodeID;
     }
 
+    public ITServiceRequest(String type, String description, String nodeID) {
+        this.type = type;
+        this.description = description;
+        this.nodeID = nodeID;
+    }
+
     public String getType() {
         return type;
     }
@@ -139,8 +145,8 @@ public class ITServiceRequest {
                 Boolean isComplete = rs.getBoolean("isComplete");
 
 
-                ITServiceRequest theITServiceRequest = new ITServiceRequest(type, description, nodeID, dateTimeSubmitted, dateTimeResolved, isComplete, userRequestedBy, userAssignedTo, ID);
-                requests.add(theITServiceRequest);
+                //ITServiceRequest theITServiceRequest = new ITServiceRequest(type, description, nodeID, dateTimeSubmitted, dateTimeResolved, isComplete, userRequestedBy, userAssignedTo, ID);
+                //requests.add(theITServiceRequest);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -59,6 +59,9 @@ public final class Database {
             String createBookingLocationsTable = "create table BOOKINGLOCATIONS(ID varchar(255) not null, TYPE varchar(255), TITLE varchar(255))";
             String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
             String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
+            //create ITServiceRequestsTable
+            //TODO String createITServiceRequestsTable =
+
             // create bookings table
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";

@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import model.ITServiceRequest;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ITServiceController extends Controller implements Initializable {
@@ -33,6 +34,9 @@ public class ITServiceController extends Controller implements Initializable {
     //save the service request to the database, to late view
     //set screen back to the dashboard
     public void submitButtonClick(ActionEvent actionEvent) {
+
+        //Date dateTimeSubmitted = new Date().getTime()
+
         ITServiceRequest ITServiceRequest = new ITServiceRequest(type.getText(), description.getText(), autoCompleteTextController.getNodeID());
         ITServiceRequest.insert();
 
