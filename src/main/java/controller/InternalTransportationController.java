@@ -25,6 +25,7 @@ public class InternalTransportationController  extends Controller implements Ini
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        description.setText(null);
     }
     public void sumbitBtnClick(ActionEvent actionEvent) {
 
