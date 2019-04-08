@@ -14,10 +14,10 @@ public class Booking {
     private String description;
     private Timestamp dateTimeStart;
     private Timestamp dateTimeEnd;
-    private User userCompletedBy;
+    private String userCompletedBy; //I have set this to a string so it matches w/ the database
     private int ID;
 
-    public Booking(String location, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, User userCompletedBy, int ID) {
+    public Booking(String location, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, String userCompletedBy, int ID) {
         this.description = description;
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
@@ -36,7 +36,7 @@ public class Booking {
         return this.dateTimeEnd.toString();
     }
     public String getUsername() {
-        return this.userCompletedBy.getUsername();
+        return this.userCompletedBy;
     }
 
     public static ObservableList<Booking> getCurrentBookings() {
@@ -47,7 +47,7 @@ public class Booking {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
-                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME")), rs.getInt("ID")));
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class Booking {
             ps.setString(1,bookableLocationTitle);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class Booking {
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4,sqlEndDate);
-            ps.setString(5, userCompletedBy.getUsername());
+            ps.setString(5, userCompletedBy);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -143,7 +143,7 @@ public class Booking {
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4,sqlEndDate);
-            ps.setString(5, userCompletedBy.getUsername());
+            ps.setString(5, userCompletedBy);
             executed = ps.execute(); //returns a boolean
 
             System.out.println(executed);

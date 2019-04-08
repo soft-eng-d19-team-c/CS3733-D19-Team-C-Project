@@ -68,7 +68,7 @@ public class BookingController extends Controller implements Initializable {
 
 
 
-        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user, 0);
+        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user.getUsername(), 0);
         if(b.hasConflicts()){
             errorLabel.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
         }
