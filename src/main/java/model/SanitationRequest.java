@@ -164,6 +164,4 @@ public class SanitationRequest {
         }
         return false;
     }
-
-
 }
