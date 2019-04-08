@@ -1,7 +1,6 @@
 package model;
 
 import base.Database;
-import base.Main;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class AStarTest {
     @SuppressWarnings("Duplicates")
     @Before
     public void setUp() throws Exception {
-        db = new Database(false);
+        db = new Database(false, false);
 
 
         this.adjacencyList = new HashMap<>();
