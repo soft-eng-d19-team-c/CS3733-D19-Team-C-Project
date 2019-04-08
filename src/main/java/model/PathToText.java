@@ -51,25 +51,26 @@ public class PathToText {
                 } else {
                     textPath.append("Go up a floor at " + curr.getLongName() + "\n");
                 }
-            }
+            } else {
 
-            Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
-            Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
+                Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
+                Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
 
-            EnumDirectionType dir = v_prev.getDirection(v_next);
+                EnumDirectionType dir = v_prev.getDirection(v_next);
 
-            switch (dir) {
-                case LEFT:
-                    textPath.append("Take a left at " + curr.getLongName() + "\n");
-                    break;
-                case RIGHT:
-                    textPath.append("Take a right at " + curr.getLongName() + "\n");
-                    break;
-                case STRAIGHT:
-                    textPath.append("Continue straight past " + curr.getLongName() + "\n");
-                    break;
-                default:
-                    System.err.println("Default case in direction switch");
+                switch (dir) {
+                    case LEFT:
+                        textPath.append("Take a left at " + curr.getLongName() + "\n");
+                        break;
+                    case RIGHT:
+                        textPath.append("Take a right at " + curr.getLongName() + "\n");
+                        break;
+                    case STRAIGHT:
+                        textPath.append("Continue straight past " + curr.getLongName() + "\n");
+                        break;
+                    default:
+                        System.err.println("Default case in direction switch");
+                }
             }
         }
 
