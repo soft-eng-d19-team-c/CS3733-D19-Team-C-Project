@@ -1,7 +1,5 @@
 package base;
 
-import model.PrescriptionService;
-import model.SanitationRequest;
 import model.User;
 
 /**
@@ -15,11 +13,10 @@ public class Main {
     public static User user;
     public static ApplicationInformation info;
     public static void main(String[] args) {
-        database = new Database(true, false);
+        database = new Database(false, false);
         user = new User("username@example.com", "developer");
         info = new ApplicationInformation(EnumAlgorithm.ASTAR, "CHALL007L1");
         MainFXML app = new MainFXML();
         app.main(args);
-
     }
 }
