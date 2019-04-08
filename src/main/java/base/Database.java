@@ -63,6 +63,11 @@ public final class Database {
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
+            // create florist service requests table
+            String createFloristRequestsTable = "create table FLORISTSERVICEREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk_2 references NODES, DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERRESOLVEDBY varchar(64) constraint FLORISTSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
+            String FloristRequestsTableUINDEX = "create unique index FLORISTSERVICEREQUESTS_ID_uindex on FLORISTSERVICEREQUESTS (ID)";
+            String FloristRequestsTablePK = "alter table FLORISTSERVICEREQUESTS add constraint FLORISTSERVICEREQUESTS_pk primary key (ID)";
+
             try {
                 Statement tableStmt = this.getConnection().createStatement();
                 tableStmt.executeUpdate(createNodesTable);
@@ -83,6 +88,9 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
+                tableStmt.executeUpdate(createFloristRequestsTable);
+                tableStmt.executeUpdate(FloristRequestsTableUINDEX);
+                tableStmt.executeUpdate(FloristRequestsTablePK);
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists
