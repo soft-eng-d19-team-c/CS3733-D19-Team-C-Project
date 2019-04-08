@@ -12,27 +12,25 @@ public class InternalTransportationService {
     private String nodeIDDest; //location of transportation destination
     private String description; //what is the reason for transport
     private Date dateTimeSubmitted;
-    private Date dateTimeResolved;
-    private boolean isComplete;
+    private Date pickUpTime;
     private User completedBy;
     private User requestedBy;
     private int ID;
 
-    public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Date dateTimeSubmitted, Date dateTimeResolved) {
+    public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Date dateTimeSubmitted, Date pickUpTime) {
         this.nodeID = nodeID;
         this.nodeIDDest = nodeIDDest;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
-        this.dateTimeResolved = dateTimeResolved;
-        this.isComplete = dateTimeResolved != null;
+        this.pickUpTime = pickUpTime;
         this.completedBy = null;
         this.requestedBy = null;
         this.ID = ID;
     }
 
     //seperate constructor
-    public InternalTransportationService( String location, String destination, String description) {
-        this(-1, location, destination, description,  new Date(), null);
+    public InternalTransportationService( String location, String destination, String description, Date pickUpTime) {
+        this(-1, location, destination, description, new Timestamp(System.currentTimeMillis()), pickUpTime);
     }
 
     public int getID() { return ID; }
@@ -44,18 +42,17 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMERESOLVED = ? where ID = ?";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(this.dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "update INTERNALTRANSPORTATION set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, PICKUPTIME = ? where ID = ?";
         java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-
+        java.sql.Date sqlpickup = new java.sql.Date(this.pickUpTime.getTime());
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            ps.setDate(4, sqlStartDate);
-            ps.setDate(5, sqlCompleteDate);
+            ps.setDate(3, sqlStartDate);
+            ps.setDate(4, sqlpickup);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -70,15 +67,18 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, DATETIMERESOLVED) values (?, ?, ?, ?, ?)";
-        java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime());
+        String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME) values (?, ?, ?, ?, ?)";
+        java.sql.Date sqlPickup = new java.sql.Date(this.pickUpTime.getTime());
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            //ps.setString(4, sqlStartDate);
+            ps.setTimestamp(1, ts);
+            ps.setDate(4, sqlPickup);
             executed = ps.execute(); //returns a boolean
         }
 
