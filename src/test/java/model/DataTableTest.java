@@ -12,16 +12,16 @@ import java.sql.Statement;
 
 public class DataTableTest {
     Database db;
-    NodeDataTable dt;
+    DataTable dt;
     ResultSet rs;
 
     @Before
     public void setUp() throws Exception {
-         db = new Database(true, false);
+         //db = new Database(true);
          Statement stmt = db.getConnection().createStatement();
          String str = "SELECT * FROM NODES";
          rs = stmt.executeQuery(str);
-         dt = new NodeDataTable();
+         dt = new DataTable();
 
     }
 

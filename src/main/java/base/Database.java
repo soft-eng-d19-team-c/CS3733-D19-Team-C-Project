@@ -1,6 +1,9 @@
 package base;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.*;
 
@@ -63,6 +66,10 @@ public final class Database {
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(64) constraint BOOKINGS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
+            // create internal transportation service request
+            String createInternalTransportationServiceRequestTable = "create table INTERNALTRANSPORTATION(ID int generated always as identity, NODEID VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEID_fk references NODES (NODEID) on update no action on delete no action, NODEIDDEST VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEIDDEST_fk references NODES (NODEID) on update no action on delete no action, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED DATE not null, DATETIMERESOLVED DATE, ISCOMPLETE BOOLEAN  not null, REQUESTEDBY VARCHAR(255), COMPLETEDBY VARCHAR(64) references USERS (USERNAME) on update no action on delete cascade)";
+            String InternalTransportationServiceRequestTableUINDEX = "create unique index INTERNALTRANSPORTATION_ID_UINDEX on INTERNALTRANSPORTATION (ID)";
+            String InternalTransportationServiceRequestTablePK = " alter table INTERNALTRANSPORTATION add constraint INTERNALTRANSPORTATION_PK primary key (ID)";
             // create user permissions
             String createUserPermissionsTable = "create table USERPERMISSIONS(PERMISSIONS varchar(255) not null)";
             String UserPermissionsTableUINDEX = "create unique index USERPERMISSIONS_PERMISSIONS_uindex on USERPERMISSIONS (PERMISSIONS)";
@@ -88,6 +95,12 @@ public final class Database {
                 tableStmt.executeUpdate(createUsersTable);
                 tableStmt.executeUpdate(UsersTableUINDEX);
                 tableStmt.executeUpdate(UsersTablePK);
+                tableStmt.executeUpdate(createUserPermissionsTable);
+                tableStmt.executeUpdate(UserPermissionsTableUINDEX);
+                tableStmt.executeUpdate(UserPermissionsTablePK);
+                tableStmt.executeUpdate(createUserHasPermissionsTable);
+                tableStmt.executeUpdate(UserHasPermissionsTableUINDEX);
+                tableStmt.executeUpdate(UserHasPermissionsTablePK);
                 tableStmt.executeUpdate(createServiceRequestsTable);
                 tableStmt.executeUpdate(ServiceRequestsTableUINDEX);
                 tableStmt.executeUpdate(ServiceRequestsTablePK);
@@ -97,12 +110,9 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
-                tableStmt.executeUpdate(createUserPermissionsTable);
-                tableStmt.executeUpdate(UserPermissionsTableUINDEX);
-                tableStmt.executeUpdate(UserPermissionsTablePK);
-                tableStmt.executeUpdate(createUserHasPermissionsTable);
-                tableStmt.executeUpdate(UserHasPermissionsTableUINDEX);
-                tableStmt.executeUpdate(UserHasPermissionsTablePK);
+                tableStmt.executeUpdate(createInternalTransportationServiceRequestTable);
+                tableStmt.executeUpdate(InternalTransportationServiceRequestTableUINDEX);
+                tableStmt.executeUpdate(InternalTransportationServiceRequestTablePK);
                 tableStmt.executeUpdate(createExternalTransportationRequestTable);
                 tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
                 tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
@@ -432,7 +442,6 @@ public final class Database {
                     }
                 }
             }
-
 
         } // end if importData
     } // end constructor
