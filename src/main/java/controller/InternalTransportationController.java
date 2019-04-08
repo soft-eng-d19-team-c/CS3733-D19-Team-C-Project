@@ -47,7 +47,7 @@ public class InternalTransportationController  extends Controller implements Ini
        // ExternalTransportationRequest sr = new ExternalTransportationRequest(pickupLocation, dest, dateTimeSubmitted, dateTimePickup);
 
         InternalTransportationService internalTransportationServiceRequest = new InternalTransportationService( searchController_origController.getNodeID(), searchController_destController.getNodeID(), description.getText() , pickUpTime);
-        internalTransportationServiceRequest.insert();
+        //internalTransportationServiceRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
 

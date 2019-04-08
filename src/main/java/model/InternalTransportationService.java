@@ -43,16 +43,19 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "update INTERNALTRANSPORTATION set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, PICKUPTIME = ? where ID = ?";
-        java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+       // java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlpickup = new java.sql.Date(this.pickUpTime.getTime());
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            ps.setDate(3, sqlStartDate);
+            ps.setTimestamp(1, ts);
+            //ps.setDate(3, sqlStartDate);
             ps.setDate(4, sqlpickup);
+
             executed = ps.execute(); //returns a boolean
         }
 
