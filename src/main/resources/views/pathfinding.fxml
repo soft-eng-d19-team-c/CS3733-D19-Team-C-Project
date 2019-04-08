@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
+<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
@@ -40,6 +40,35 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
+       <Button fx:id="level3" layoutX="393.0" layoutY="127.0" mnemonicParsing="false" onAction="#level3BtnClick" styleClass="bg-secondary" stylesheets="@../../../../out/production/resources/views/app.css" text="Level 3" textAlignment="CENTER">
+         <opaqueInsets>
+            <Insets bottom="10.0" />
+         </opaqueInsets></Button>
+       <Button fx:id="level2" layoutX="393.0" layoutY="167.0" mnemonicParsing="false" onAction="#level2BtnClick" styleClass="bg-secondary" text="Level 2">
+           <opaqueInsets>
+               <Insets bottom="10.0" top="10.0" />
+           </opaqueInsets>
+       </Button>
+       <Button fx:id="level1" layoutX="393.0" layoutY="207.0" mnemonicParsing="false" onAction="#level1BtnClick" styleClass="bg-secondary" text="Level 1">
+           <opaqueInsets>
+               <Insets bottom="10.0" top="10.0" />
+           </opaqueInsets>
+       </Button>
+       <Button fx:id="groundFloor" layoutX="391.0" layoutY="247.0" mnemonicParsing="false" onAction="#groundBtnClick" styleClass="bg-secondary" text="Ground">
+           <opaqueInsets>
+               <Insets bottom="10.0" top="10.0" />
+           </opaqueInsets>
+       </Button>
+       <Button fx:id="L1" layoutX="390.0" layoutY="287.0" mnemonicParsing="false" onAction="#L1BtnClick" styleClass="bg-secondary" text="    L1     ">
+           <opaqueInsets>
+               <Insets bottom="10.0" top="10.0" />
+           </opaqueInsets>
+       </Button>
+       <Button fx:id="L2" layoutX="391.0" layoutY="327.0" mnemonicParsing="false" onAction="#L2BtnClick" styleClass="bg-secondary" text="    L2    ">
+           <opaqueInsets>
+               <Insets bottom="10.0" top="10.0" />
+           </opaqueInsets>
+       </Button>
        <Pane fx:id="mapImgPane" layoutX="490.0" prefHeight="980.0" prefWidth="1380.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
            <children>
                  <ImageView fx:id="findpathmap" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />

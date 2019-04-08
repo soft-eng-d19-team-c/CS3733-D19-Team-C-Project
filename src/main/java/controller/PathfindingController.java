@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
@@ -216,6 +217,7 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(node_onPath);
         String path = pathToText.getDetailedPath();
         pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
+
     }
 
     private Color randomColorGenerator(){
@@ -286,6 +288,30 @@ public class PathfindingController extends Controller implements Initializable {
 
 
 
+
+    public void level3BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void level2BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void level1BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void groundBtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void L1BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void L2BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
 }
 
 
