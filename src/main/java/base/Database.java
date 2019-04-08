@@ -62,6 +62,10 @@ public final class Database {
             String createBookingLocationsTable = "create table BOOKINGLOCATIONS(ID varchar(255) not null, TYPE varchar(255), TITLE varchar(255))";
             String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
             String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
+            //create ITServiceRequestsTable
+            String createITServiceRequestsTable = "create table ITSERVICEREQUESTS(ID int generated always as identity, type varchar(255), description varchar(2000), dateTimeSubmitted Timestamp, dateTimeCompleted Timestamp, userRequestedBy varchar(64) constraint ITSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete no action, userCompletedBy varchar(64) constraint ITSERVICEREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME) on update no action on delete no action, nodeID varchar(255) constraint ITSERVICEREQUESTS_NODES_NODEID_fk references NODES(NODEID) on update no action on delete no action)";
+            String ITServiceRequestsTableUINDEX = "create unique index ITSERVICEREQUESTS_ID_uindex on ITSERVICEREQUESTS (ID)";
+            String ITServiceRequestsTablePK = "alter table ITSERVICEREQUESTS add constraint ITSERVICEREQUESTS_pk primary key (ID)";
             // create bookings table
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(64) constraint BOOKINGS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
@@ -123,6 +127,9 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
+                tableStmt.executeUpdate(createITServiceRequestsTable);
+                tableStmt.executeUpdate(ITServiceRequestsTableUINDEX);
+                tableStmt.executeUpdate(ITServiceRequestsTablePK);
                 tableStmt.executeUpdate(createFloristRequestsTable);
                 tableStmt.executeUpdate(FloristRequestsTableUINDEX);
                 tableStmt.executeUpdate(FloristRequestsTablePK);
