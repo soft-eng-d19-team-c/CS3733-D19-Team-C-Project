@@ -59,6 +59,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        algosMenu.setOnAction(null);
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
 //        mapImg.fitWidthProperty().bind(mapImgPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
         ObservableList<String> differentFloors = //set the dropdown in the fxml
@@ -82,6 +83,7 @@ public class EditMapController extends Controller implements Initializable {
 
             floorsMenu.setItems(differentFloors);
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
+            algosMenu.setOnAction(changeAlgorithmHandler);
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
         });
@@ -218,23 +220,6 @@ public class EditMapController extends Controller implements Initializable {
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
-    public void changeAlgorithm(ActionEvent e){
-        switch (algosMenu.getValue()){
-            case "A* Algorithm":
-                Main.info.setAlgorithm(Main.info.ASTAR);
-                break;
-            case "Dijkstra's Algorithm":
-                Main.info.setAlgorithm(Main.info.DIJKSTRA);
-                break;
-            case "Breadth First Search":
-                Main.info.setAlgorithm(Main.info.BFS);
-                break;
-            case "Depth First Search":
-                Main.info.setAlgorithm(Main.info.DFS);
-                break;
-        }
-    }
-
     /*
 
 
@@ -243,6 +228,26 @@ public class EditMapController extends Controller implements Initializable {
 
 
      */
+
+    EventHandler<ActionEvent> changeAlgorithmHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            switch (algosMenu.getValue()){
+                case "A* Algorithm":
+                    Main.info.setAlgorithm(Main.info.ASTAR);
+                    break;
+                case "Dijkstra's Algorithm":
+                    Main.info.setAlgorithm(Main.info.DIJKSTRA);
+                    break;
+                case "Breadth First Search":
+                    Main.info.setAlgorithm(Main.info.BFS);
+                    break;
+                case "Depth First Search":
+                    Main.info.setAlgorithm(Main.info.DFS);
+                    break;
+            }
+        }
+    };
 
     EventHandler addNodeHandler = new EventHandler<MouseEvent>(){
         public void handle(javafx.scene.input.MouseEvent me){
