@@ -20,7 +20,7 @@
             <Image url="@../img/giftstoreicon.png" />
          </image>
       </ImageView>
-      <VBox layoutX="910.0" layoutY="440.0" prefHeight="200.0" prefWidth="100.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="910.0" layoutY="440.0" prefHeight="200.0" prefWidth="100.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Gift Store Delivery Request">
                <font>
@@ -31,28 +31,14 @@
                <font>
                   <Font size="50.0" />
                </font>
-               <VBox.margin>
-                  <Insets left="200.0" right="200.0" top="100.0" />
-               </VBox.margin>
             </JFXTextField>
             <JFXTextField fx:id="sendertext" focusColor="#a84040" promptText="Sender">
-               <VBox.margin>
-                  <Insets left="200.0" right="200.0" />
-               </VBox.margin>
                <font>
                   <Font size="50.0" />
                </font>
             </JFXTextField>
-            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets left="300.0" right="300.0" top="50.0" />
-               </VBox.margin>
-            </JFXComboBox>
-            <JFXComboBox fx:id="locationMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Location">
-               <VBox.margin>
-                  <Insets left="300.0" right="300.0" top="20.0" />
-               </VBox.margin>
-            </JFXComboBox>
+            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS"/>
+            <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
             <JFXButton stylesheets="@app.css" text="Submit">
                <styleClass>
                   <String fx:value="btn-success" />
@@ -65,4 +51,5 @@
          </children>
       </VBox>
    </children>
+   <fx:include source="backandhomebuttonpartial.fxml" fx:id="Buttons"/>
 </AnchorPane>
