@@ -11,7 +11,6 @@ import java.util.Date;
 
 public class InterpreterRequest {
 
-    private String type;
     private String nodeID;
     private String description;
     private Date dateTimeSubmitted;
@@ -21,8 +20,7 @@ public class InterpreterRequest {
     private User userRequestedBy;
     private int ID;
 
-    public InterpreterRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
-        this.type = type;
+    public InterpreterRequest(int ID, String description, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
@@ -33,9 +31,6 @@ public class InterpreterRequest {
         this.ID = ID;
     }
 
-    public String getType() {
-        return type;
-    }
 
     public String getNodeID() {
         return nodeID;
@@ -49,8 +44,8 @@ public class InterpreterRequest {
         return this.isComplete;
     }
 
-    public InterpreterRequest(String type, String location, String description) {
-        this(-1, description, type, new Date(), null, location);
+    public InterpreterRequest(String location, String description) {
+        this(-1, description, new Date(), null, location);
     }
 
     //Determines amount of time task was completed in
@@ -63,7 +58,7 @@ public class InterpreterRequest {
     }
 
     //Update the information in a SanitationRequest
-    public boolean update(){
+/*    public boolean update(){
 
         boolean executed = false;
 
@@ -142,7 +137,7 @@ public class InterpreterRequest {
         return requests;
 
 
-    }
+    }*/
 
 
     public int getID() {

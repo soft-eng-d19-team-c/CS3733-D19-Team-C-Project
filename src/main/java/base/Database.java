@@ -92,6 +92,10 @@ public final class Database {
             String createInternalTransportationServiceRequestTable = "create table INTERNALTRANSPORTATION(ID int generated always as identity, NODEID VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEID_fk references NODES (NODEID) on update no action on delete no action, NODEIDDEST VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEIDDEST_fk references NODES (NODEID) on update no action on delete no action, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED DATE not null, DATETIMERESOLVED DATE, ISCOMPLETE BOOLEAN  not null, REQUESTEDBY VARCHAR(255), COMPLETEDBY VARCHAR(64) references USERS (USERNAME) on update no action on delete cascade)";
             String InternalTransportationServiceRequestTableUINDEX = "create unique index INTERNALTRANSPORTATION_ID_UINDEX on INTERNALTRANSPORTATION (ID)";
             String InternalTransportationServiceRequestTablePK = " alter table INTERNALTRANSPORTATION add constraint INTERNALTRANSPORTATION_PK primary key (ID)";
+            // create interpreter service request
+            String createInterpreterServiceRequestTable = "create table INTERPRETERSERVICEREQUEST (ID int generated always as identity, REQUESTEDLOCATION varchar(255) not null constraint REQUESTEDLOCATION___fk references NODES on delete cascade, DESCRIPTION varchar(2000), DATETIMEREQUESTED timestamp, DATETIMESOLVED timestamp, USERSOLVEDBY varchar(64) constraint USERSOLVEDBY___fk references USERS on delete cascade)";
+            String InterpreterServiceRequestTableUINDEX = "create unique index INTERPRETERSERVICEREQUEST_ID_uindex on INTERPRETERSERVICEREQUEST (ID)";
+            String InterpreterServiceRequestTablePK= " alter table INTERPRETERSERVICEREQUEST add constraint INTERPRETERSERVICEREQUEST_pk primary key (ID)";
             // create user permissions
             String createUserPermissionsTable = "create table USERPERMISSIONS(PERMISSIONS varchar(255) not null)";
             String UserPermissionsTableUINDEX = "create unique index USERPERMISSIONS_PERMISSIONS_uindex on USERPERMISSIONS (PERMISSIONS)";
@@ -150,6 +154,9 @@ public final class Database {
                 tableStmt.executeUpdate(createInternalTransportationServiceRequestTable);
                 tableStmt.executeUpdate(InternalTransportationServiceRequestTableUINDEX);
                 tableStmt.executeUpdate(InternalTransportationServiceRequestTablePK);
+                tableStmt.executeUpdate(createInterpreterServiceRequestTable);
+                tableStmt.executeUpdate(InterpreterServiceRequestTableUINDEX);
+                tableStmt.executeUpdate(InterpreterServiceRequestTablePK);
                 tableStmt.executeUpdate(createExternalTransportationRequestTable);
                 tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
                 tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
