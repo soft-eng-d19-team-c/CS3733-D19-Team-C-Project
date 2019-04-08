@@ -103,6 +103,8 @@ public class Booking {
             ps.setTimestamp(4,sqlEndDate);
             ps.setString(5, userCompletedBy.getUsername());
             executed = ps.execute(); //returns a boolean
+
+            System.out.println(executed);
         }
 
         catch (SQLException e) {
