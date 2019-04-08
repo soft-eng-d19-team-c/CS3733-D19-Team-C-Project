@@ -45,15 +45,15 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMERESOLVED = ? where ID = ?";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlCompleteDate = new java.sql.Date(this.dateTimeResolved.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, nodeIDDest);
-            ps.setString(3, description);
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.nodeIDDest);
+            ps.setString(3, this.description);
             ps.setDate(4, sqlStartDate);
             ps.setDate(5, sqlCompleteDate);
             executed = ps.execute(); //returns a boolean
@@ -71,13 +71,13 @@ public class InternalTransportationService {
         boolean executed = false;
 
         String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, DATETIMERESOLVED) values (?, ?, ?, ?, ?)";
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime());
+        java.sql.Date sqlStartDate = new java.sql.Date(this.dateTimeSubmitted.getTime());
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, nodeIDDest);
-            ps.setString(3, description);
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.nodeIDDest);
+            ps.setString(3, this.description);
             //ps.setString(4, sqlStartDate);
             executed = ps.execute(); //returns a boolean
         }
