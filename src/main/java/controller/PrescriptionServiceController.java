@@ -27,7 +27,8 @@ public class PrescriptionServiceController extends Controller implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        patientID.clear();
+        prescriptionDescription.clear();
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {
@@ -35,8 +36,7 @@ public class PrescriptionServiceController extends Controller implements Initial
         PrescriptionService prescriptionService = new PrescriptionService(patientID.getText(), Main.user.getUsername(), prescriptionDescription.getText());
         prescriptionService.insert();
 
-        patientID.clear();
-        prescriptionDescription.clear();
+
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 
