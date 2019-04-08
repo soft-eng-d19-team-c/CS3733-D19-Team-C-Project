@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class AutocompleteSearchBarController extends Controller implements Initializable {
     @FXML
-    private JFXTextField acTextInput;
+    JFXTextField acTextInput;
     @FXML
     private JFXTextField nodeID;
 
