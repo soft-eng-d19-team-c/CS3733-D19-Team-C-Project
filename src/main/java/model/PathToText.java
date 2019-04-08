@@ -4,8 +4,8 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
-
-
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class PathToText {
@@ -18,6 +18,7 @@ public class PathToText {
     }
 
     public String getDetailedPath(LinkedList<Node> listOfNodes){
+        /*
         StringBuilder textPath = new StringBuilder();
         //get start
         System.out.println(listOfNodes);
@@ -33,6 +34,45 @@ public class PathToText {
 
 
         return textPath.toString();
+        */
+
+        StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
+        Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
+        Collections.reverse(Arrays.asList(nodesArray));
+        Node prev, curr, next;
+        for (int i = 1; i < nodesArray.length - 1; i++) {
+            prev = nodesArray[i - 1];
+            curr = nodesArray[i];
+            next = nodesArray[i + 1];
+
+            Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
+            Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
+
+            EnumDirectionType dir = v_prev.getDirection(v_next);
+
+            switch (dir) {
+                case LEFT:
+                    textPath.append("Take a left at " + curr.getLongName() + "\n");
+                    break;
+                case RIGHT:
+                    textPath.append("Take a right at " + curr.getLongName() + "\n");
+                    break;
+                case STRAIGHT:
+                    textPath.append("Continue straight past " + curr.getLongName() + "\n");
+                    break;
+                default:
+                    System.err.println("Default case in direction switch");
+            }
+        }
+
+        textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+
+//        System.out.println(textPath.toString());
+
+        return textPath.toString();
+
+
+
     }
 
     public void SmsSender (String text, PhoneNumber phoneNumber) {
