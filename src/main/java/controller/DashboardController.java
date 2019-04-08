@@ -21,7 +21,7 @@ public class DashboardController extends Controller implements Initializable {
     }
 
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.REQUESTSERVICE);
+        Main.screenController.setScreen(EnumScreenType.SERVICESDASHBOARD);
     }
 
     public void findRoomButtonClick(ActionEvent actionEvent) {

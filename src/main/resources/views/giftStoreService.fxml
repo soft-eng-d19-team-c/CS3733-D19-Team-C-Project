@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="366.0" fitWidth="392.0" layoutX="1812.0" layoutY="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../img/giftstoreicon.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="910.0" layoutY="440.0" prefHeight="200.0" prefWidth="100.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Gift Store Delivery Request">
+               <font>
+                  <Font size="100.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="recipientText" focusColor="#a84040" promptText="Recipient">
+               <font>
+                  <Font size="50.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" top="100.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="sendertext" focusColor="#a84040" promptText="Sender">
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </JFXTextField>
+            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="300.0" right="300.0" top="50.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXComboBox fx:id="locationMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Location">
+               <VBox.margin>
+                  <Insets left="300.0" right="300.0" top="20.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXButton stylesheets="@app.css" text="Submit">
+               <styleClass>
+                  <String fx:value="btn-success" />
+                  <String fx:value="btn-lg" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets left="50.0" top="300.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
