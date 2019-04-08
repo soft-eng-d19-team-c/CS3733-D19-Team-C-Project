@@ -45,6 +45,14 @@ public class PathToText {
             curr = nodesArray[i];
             next = nodesArray[i + 1];
 
+            if (!curr.getFloor().equals(next.getFloor())) {
+                if (curr.getFloorNumber() > next.getFloorNumber()) {
+                    textPath.append("Go down a floor at " + curr.getLongName() + "\n");
+                } else {
+                    textPath.append("Go up a floor at " + curr.getLongName() + "\n");
+                }
+            }
+
             Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
             Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
 
