@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
@@ -251,6 +252,30 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void Dancebtnclick(ActionEvent actionEvent) {
         dancePartyNode(node_onPath);
+    }
+
+    public void level3BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+    }
+
+    public void level2BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void level1BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void groundBtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void L1BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+    }
+
+    public void L2BtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
     }
 }
 
