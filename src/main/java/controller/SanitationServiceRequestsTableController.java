@@ -11,7 +11,7 @@ import model.SanitationRequest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewServiceRequestsController extends Controller implements Initializable {
+public class SanitationServiceRequestsTableController extends Controller implements Initializable {
     @FXML
     private TableView dataTable;
 

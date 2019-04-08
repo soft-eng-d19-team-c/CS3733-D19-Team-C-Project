@@ -39,7 +39,7 @@ public class DashboardController extends Controller implements Initializable {
     }
 
     public void viewServicesButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.VIEWSERVICEREQUESTS);
+        Main.screenController.setScreen(EnumScreenType.SERVICEREQUESTTABLESDASHBOARD);
     }
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
