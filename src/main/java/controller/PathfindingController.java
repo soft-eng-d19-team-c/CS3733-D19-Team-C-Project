@@ -65,12 +65,11 @@ public class PathfindingController extends Controller implements Initializable {
         currentFloor = (String) Main.screenController.getData("floor");
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
-            displayAllNodes(currentFloor);
+            displayAllNodes();
         });
     }
 
     private void generateNodes(LinkedList<Node> nodes) {
-        changeFloor();
         String prev = null;
         double mapX = findpathmap.getLayoutX();
         double mapY = findpathmap.getLayoutY();
@@ -237,19 +236,16 @@ public class PathfindingController extends Controller implements Initializable {
         findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
 
-    public void changeFloor(){
-        updateFloorImg("1");
-    }
 
-    public void displayAllNodes(String floor){
+    public void displayAllNodes(){
         searchController_destController.refresh();
         searchController_origController.refresh();
 
         findLocationNodeID = (String)Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
-        nodes = Node.getNodesByFloor(floor);
-        edges = Edge.getEdgesByFloor(floor);
+        nodes = Node.getNodesByFloor(currentFloor);
+        edges = Edge.getEdgesByFloor(currentFloor);
         black = new Color(0,0,0,1);
         drawNodes(nodes, edges, black);
 
@@ -268,6 +264,25 @@ public class PathfindingController extends Controller implements Initializable {
             st.play();
         }
     }
+
+    public void changeFloor(String floor){
+        currentFloor = floor;
+        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        updateFloorImg(floor);
+        if(hasPath){
+            generateNodes(node_onPath);
+        } else {
+            displayAllNodes();
+        }
+    }
+
+    public void changeFloorGround(ActionEvent actionEvent) {
+        changeFloor("ground");
+    }
+
+
+
+
 
 
 
