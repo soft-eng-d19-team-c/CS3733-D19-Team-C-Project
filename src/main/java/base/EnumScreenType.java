@@ -20,7 +20,7 @@ public enum EnumScreenType {
     SANITATIONSERVICE("/views/sanitationService.fxml"),
     INTERPRETERSERVICE("/views/servicesDashboard.fxml"),
     INTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
-    EXTERNALTRANSPORTATIONSERVICE("/views/servicesDashboard.fxml"),
+    EXTERNALTRANSPORTATIONSERVICE("/views/externalTransportationService.fxml"),
     SECURITYSERVICE("/views/servicesDashboard.fxml"),
     PRESCRIPTIONSERVICE("/views/prescriptionService.fxml"),
     PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),

@@ -48,11 +48,11 @@ public final class Database {
             String EdgesTableUINDEX = "create unique index EDGES_EDGEID_uindex	on EDGES (EDGEID)";
             String EdgesTablePK = "alter table EDGES add constraint EDGES_pk primary key (EDGEID)";
             // create employees table
-            String createEmployeesTable = "create table EMPLOYEES (USERNAME varchar(32) not null, PASSWORD varchar(1000), PERMISSIONS varchar(255))";
-            String EmployeesTableUINDEX = "create unique index EMPLOYEES_USERNAME_uindex on EMPLOYEES (USERNAME)";
-            String EmployeesTablePK = "alter table EMPLOYEES add constraint EMPLOYEES_pk primary key (USERNAME)";
+            String createUsersTable = "create table USERS (username varchar(64) not null, password varchar(1000))";
+            String UsersTableUINDEX = "create unique index USERS_username_uindex on USERS (username)";
+            String UsersTablePK = "alter table USERS add constraint USERS_pk primary key (username)";
             // create servicerequests table
-            String createServiceRequestsTable = "create table SERVICEREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint SERVICEREQUESTS_NODES_NODEID_fk references NODES (NODEID) on update no action on delete cascade, DESCRIPTION varchar(2000), TYPE varchar(255), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(32) constraint SERVICEREQUESTS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
+            String createServiceRequestsTable = "create table SERVICEREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint SERVICEREQUESTS_NODES_NODEID_fk references NODES (NODEID) on update no action on delete cascade, DESCRIPTION varchar(2000), TYPE varchar(255), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(64) constraint SERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String ServiceRequestsTableUINDEX = "create unique index SERVICEREQUESTS_ID_uindex on SERVICEREQUESTS (ID)";
             String ServiceRequestsTablePK = "alter table SERVICEREQUESTS add constraint SERVICEREQUESTS_pk primary key (ID)";
             // create table of possible locations to book
@@ -60,13 +60,27 @@ public final class Database {
             String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
             String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
             // create bookings table
-            String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(32) constraint BOOKINGS_EMPLOYEES_USERNAME_fk references EMPLOYEES (USERNAME) on update no action on delete cascade)";
+            String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(64) constraint BOOKINGS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
             // creating prescription services table
             String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID int generated always as identity, PATIENTID VARCHAR(255), REQUESTERID varchar(255), RESOLVERID varchar(255), DRUG varchar(255), TIMEORDERED TIMESTAMP, TIMEDELIVERED TIMESTAMP)";
             String PrescriptionUINDEX = "create unique index PRESCRIPTIONSERVICE_ID_uindex on PRESCRIPTIONSERVICE (ID)";
             String PrescriptionTablePK = "alter table PRESCRIPTIONSERVICE add constraint PRESCRIPTIONSERVICE_pk primary key (ID)";
+
+            // create user permissions
+            String createUserPermissionsTable = "create table USERPERMISSIONS(PERMISSIONS varchar(255) not null)";
+            String UserPermissionsTableUINDEX = "create unique index USERPERMISSIONS_PERMISSIONS_uindex on USERPERMISSIONS (PERMISSIONS)";
+            String UserPermissionsTablePK = "alter table USERPERMISSIONS add constraint USERPERMISSIONS_pk primary key (PERMISSIONS)";
+            // create user has permissions
+            String createUserHasPermissionsTable = "create table USERHASPERMISSIONS(ID int generated always as identity, USERNAME varchar(64) not null constraint USERHASPERMISSIONS_USERS_USERNAME_fk references USERS (USERNAME) on delete cascade, PERMISSIONS varchar(255) not null constraint USERHASPERMISSIONS_PERMISSIONS_PERMISSIONS_fk references USERPERMISSIONS (PERMISSIONS) on delete cascade)";
+            String UserHasPermissionsTableUINDEX = "create unique index USERHASPERMISSIONS_ID_uindex on USERHASPERMISSIONS (ID)";
+            String UserHasPermissionsTablePK = "alter table USERHASPERMISSIONS add constraint USERHASPERMISSIONS_pk primary key (ID)";
+
+            // SERVICE REQUESTS
+            String createExternalTransportationRequestTable = "create table EXTERNALTRANSPORTATIONREQUESTS(ID int generated always as identity, PICKUPLOCATION varchar(255) not null constraint EXTERNALTRANSPORTATIONREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000) not null, DATETIMESUBMITTED timestamp, DATETIMEPICKUP timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint EXTERNALTRANSPORTATIONREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
+            String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on USERHASPERMISSIONS (ID)";
+            String ExternalTransportationRequestTablePK = "alter table EXTERNALTRANSPORTATIONREQUESTS add constraint EXTERNALTRANSPORTATIONREQUESTS_pk primary key (ID)";
 
             try {
                 Statement tableStmt = this.getConnection().createStatement();
@@ -79,9 +93,9 @@ public final class Database {
                 tableStmt.executeUpdate(createEdgesTable);
                 tableStmt.executeUpdate(EdgesTableUINDEX);
                 tableStmt.executeUpdate(EdgesTablePK);
-                tableStmt.executeUpdate(createEmployeesTable);
-                tableStmt.executeUpdate(EmployeesTableUINDEX);
-                tableStmt.executeUpdate(EmployeesTablePK);
+                tableStmt.executeUpdate(createUsersTable);
+                tableStmt.executeUpdate(UsersTableUINDEX);
+                tableStmt.executeUpdate(UsersTablePK);
                 tableStmt.executeUpdate(createServiceRequestsTable);
                 tableStmt.executeUpdate(ServiceRequestsTableUINDEX);
                 tableStmt.executeUpdate(ServiceRequestsTablePK);
@@ -91,6 +105,15 @@ public final class Database {
                 tableStmt.executeUpdate(createBookingsTable);
                 tableStmt.executeUpdate(BookingsTableUINDEX);
                 tableStmt.executeUpdate(BookingsTablePK);
+                tableStmt.executeUpdate(createUserPermissionsTable);
+                tableStmt.executeUpdate(UserPermissionsTableUINDEX);
+                tableStmt.executeUpdate(UserPermissionsTablePK);
+                tableStmt.executeUpdate(createUserHasPermissionsTable);
+                tableStmt.executeUpdate(UserHasPermissionsTableUINDEX);
+                tableStmt.executeUpdate(UserHasPermissionsTablePK);
+                tableStmt.executeUpdate(createExternalTransportationRequestTable);
+                tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
+                tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
 
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
@@ -284,29 +307,141 @@ public final class Database {
                 }
             }
 
-            String sqlCmd = "insert into EMPLOYEES (USERNAME, PASSWORD, PERMISSIONS) values (?, ?, ?)";
+
+            // import user permissions
+            System.out.println("Attempting to import user permissions from /data/user_permissions.csv...");
+            csvFile = getClass().getResource("/data/user_permissions.csv");
             try {
-                PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
-                ps.setString(1, "username@example.com");
-                ps.setString(2, null);
-                ps.setString(3, "developer");
-                ps.execute();
-            } catch (SQLException e) {
-                if (e.getSQLState().equals("23505")) {
-                    if (overwriteData) {
-                        sqlCmd = "update EMPLOYEES set PASSWORD = ?, PERMISSIONS = ? where USERNAME = ?";
-                        try {
-                            PreparedStatement ps = this.getConnection().prepareStatement(sqlCmd);
-                            ps.setString(1, "username@example.com");
-                            ps.setString(2, null);
-                            ps.setString(3, "developer");
-                            ps.executeUpdate();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                br.readLine(); // throw away header
+                while ((line = br.readLine()) != null) {
+                    String[] userPermissionsData = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String permissions = userPermissionsData[0];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "insert into USERPERMISSIONS (PERMISSIONS) values (?)";
+                    try {
+                        ps = this.getConnection().prepareStatement(sqlCmd);
+                        ps.setString(1, permissions);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+
+                        } else {
+                            e.printStackTrace();
                         }
                     }
                 }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+
+            // import users
+            System.out.println("Attempting to import users from /data/users.csv...");
+            csvFile = getClass().getResource("/data/users.csv");
+            try {
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                br.readLine(); // throw away header
+                while ((line = br.readLine()) != null) {
+                    String[] user = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String username = user[0];
+                    String password = user[1];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "insert into USERS (USERNAME, PASSWORD) values (?, ?)";
+                    try {
+                        ps = this.getConnection().prepareStatement(sqlCmd);
+                        ps.setString(1, username);
+                        ps.setString(2, password);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // import users has permissions
+            System.out.println("Attempting to import users' permissions from /data/user_has_permissions.csv...");
+            csvFile = getClass().getResource("/data/user_has_permissions.csv");
+            try {
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                br.readLine(); // throw away header
+                while ((line = br.readLine()) != null) {
+                    String[] userHasPermissions = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String username = userHasPermissions[0];
+                    String permissions = userHasPermissions[1];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "update USERHASPERMISSIONS set USERNAME = ?, PERMISSIONS = ? where USERNAME = ? and PERMISSIONS = ?";
+                    try {
+                        ps = this.getConnection().prepareStatement(sqlCmd);
+                        ps.setString(1, username);
+                        ps.setString(2, permissions);
+                        ps.setString(3, username);
+                        ps.setString(4, permissions);
+                        int count = ps.executeUpdate();
+                        if (count == 0) { // try to update, insert if it is not already there
+                            sqlCmd = "insert into USERHASPERMISSIONS (USERNAME, PERMISSIONS) values(?,?)";
+                            try {
+                                ps = this.getConnection().prepareStatement(sqlCmd);
+                                ps.setString(1, username);
+                                ps.setString(2, permissions);
+                                ps.execute();
+                            } catch (SQLException e1) {
+
+                            }
+                        }
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
 
         } // end if importData
     } // end constructor
