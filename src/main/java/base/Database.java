@@ -74,6 +74,10 @@ public final class Database {
             String createSecurityRequestsTable = "create table SECURITYREQUESTS(ID int generated always as identity, ISURGENT BOOLEAN not null,LOCATION VARCHAR(255) not null constraint SECURITYREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION VARCHAR(1000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64) constraint SECURITYREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), COMPLETEDBY VARCHAR(64) constraint SECURITYREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME))";
             String SecurityRequestsTableUIndex = "create unique index SECURITYREQUESTS_ID_UINDEX on SECURITYREQUESTS (ID)";
             String SecurityRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
+            //create religious service requests
+            String createReligiousServiceRequestsTable = "create table RELIGIOUSSERVICEREQUESTS(ID int generated always as identity, LOCATION VARCHAR(255) not null constraint RELIGIOUSSERVICEREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION  VARCHAR(2000), TIMESUBMITTED TIMESTAMP not null, TIMECOMPLETED TIMESTAMP, REQUESTEDBY VARCHAR(64), COMPLETEDBY VARCHAR(64)), ISCOMPLETE BOOLEAN not null)";
+            String ReligiousServiceRequestsTableUniqueIndex = "create unique index RELIGIOUSSERVICEREQUESTS_ID_UINDEX on REGLIOUSSERVICEREQUESTS (ID)";
+            String ReligiousRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             // create florist service requests table
             String createFloristRequestsTable = "create table FLORISTSERVICEREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTSERVICEREQUESTS_NODES_NODEID_fk_2 references NODES(NODEID), DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERRESOLVEDBY varchar(64) constraint FLORISTSERVICEREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
             String FloristRequestsTableUINDEX = "create unique index FLORISTSERVICEREQUESTS_ID_uindex on FLORISTSERVICEREQUESTS (ID)";
@@ -134,6 +138,9 @@ public final class Database {
                 tableStmt.executeUpdate(createSecurityRequestsTable);
                 tableStmt.executeUpdate(SecurityRequestsTableUIndex);
                 tableStmt.executeUpdate(SecurityRequestsTablePK);
+                tableStmt.executeUpdate(createReligiousServiceRequestsTable);
+                tableStmt.executeUpdate(ReligiousServiceRequestsTableUniqueIndex);
+                tableStmt.executeUpdate(ReligiousRequestsTablePK);
                 tableStmt.executeUpdate(createITServiceRequestsTable);
                 tableStmt.executeUpdate(ITServiceRequestsTableUINDEX);
                 tableStmt.executeUpdate(ITServiceRequestsTablePK);
