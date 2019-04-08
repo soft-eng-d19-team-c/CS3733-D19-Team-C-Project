@@ -66,6 +66,11 @@ public final class Database {
             String createBookingsTable = "create table BOOKINGS (ID int generated always as identity, LOCATION varchar(255) not null constraint BOOKING_BOOKINGLOCATIONS_ID_fk references BOOKINGLOCATIONS (ID) on update no action on delete cascade, DESCRIPTION varchar(2000), DATETIMESTART timestamp, DATETIMEEND timestamp, USERCOMPLETEDBY varchar(64) constraint BOOKINGS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade)";
             String BookingsTableUINDEX = "create unique index BOOKINGS_ID_uindex on BOOKINGS (ID)";
             String BookingsTablePK = "alter table BOOKINGS add constraint BOOKINGS_pk primary key (ID)";
+            // creating prescription services table
+            String createPrescriptionServiceTable = "create table PRESCRIPTIONSERVICE (ID int generated always as identity, PATIENTID VARCHAR(255), REQUESTERID varchar(255), RESOLVERID varchar(255), DRUG varchar(255), TIMEORDERED TIMESTAMP, TIMEDELIVERED TIMESTAMP)";
+            String PrescriptionUINDEX = "create unique index PRESCRIPTIONSERVICE_ID_uindex on PRESCRIPTIONSERVICE (ID)";
+            String PrescriptionTablePK = "alter table PRESCRIPTIONSERVICE add constraint PRESCRIPTIONSERVICE_pk primary key (ID)";
+
             // create internal transportation service request
             String createInternalTransportationServiceRequestTable = "create table INTERNALTRANSPORTATION(ID int generated always as identity, NODEID VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEID_fk references NODES (NODEID) on update no action on delete no action, NODEIDDEST VARCHAR(255) not null constraint INTERNALTRANSPORTATION_NODES_NODEIDDEST_fk references NODES (NODEID) on update no action on delete no action, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED DATE not null, DATETIMERESOLVED DATE, ISCOMPLETE BOOLEAN  not null, REQUESTEDBY VARCHAR(255), COMPLETEDBY VARCHAR(64) references USERS (USERNAME) on update no action on delete cascade)";
             String InternalTransportationServiceRequestTableUINDEX = "create unique index INTERNALTRANSPORTATION_ID_UINDEX on INTERNALTRANSPORTATION (ID)";
@@ -86,6 +91,9 @@ public final class Database {
 
             try {
                 Statement tableStmt = this.getConnection().createStatement();
+                tableStmt.executeUpdate(createPrescriptionServiceTable);
+                tableStmt.executeUpdate(PrescriptionUINDEX);
+                tableStmt.executeUpdate(PrescriptionTablePK);
                 tableStmt.executeUpdate(createNodesTable);
                 tableStmt.executeUpdate(NodesTableUINDEX);
                 tableStmt.executeUpdate(NodesTablePK);
@@ -116,6 +124,7 @@ public final class Database {
                 tableStmt.executeUpdate(createExternalTransportationRequestTable);
                 tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
                 tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
+
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists
