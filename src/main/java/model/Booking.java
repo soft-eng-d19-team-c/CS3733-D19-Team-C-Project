@@ -88,8 +88,7 @@ public class Booking {
             long bStartTime = b.dateTimeStart.getTime();
             long bEndTime = b.dateTimeEnd.getTime();
             //checks if either the start time or end time falls within the start and end time of the current booking
-            if(((this.dateTimeStart.getTime() > bStartTime) && (this.dateTimeStart.getTime() < bEndTime))
-            || (this.dateTimeEnd.getTime() > bStartTime) && (this.dateTimeEnd.getTime() < bEndTime)) {
+            if(((this.dateTimeStart.getTime() > bStartTime) && (this.dateTimeStart.getTime() < bEndTime)) || ((this.dateTimeEnd.getTime() > bStartTime) && (this.dateTimeEnd.getTime() < bEndTime))) {
                 return true;
             }
         }
