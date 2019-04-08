@@ -13,7 +13,6 @@ import java.util.Queue;
 import static java.lang.Math.sqrt;
 
 public class Dijkstra implements IPathFind{
-    //gets the algorithm name
     public String getAlgorithmName(){
         return "Dijkstra's Algorithm";
     }
