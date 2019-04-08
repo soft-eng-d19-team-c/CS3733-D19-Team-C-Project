@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.LinkedList;
 
 // This class is for booking rooms in the scheduling system
 public class Booking {
@@ -52,6 +53,47 @@ public class Booking {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     *
+     * @param bookableLocationTitle
+     * @return LinkedList</Booking> list of bookings for a given location
+     * @author Fay Whittall
+     */
+    private LinkedList<Booking> getBookingsForLocation(String bookableLocationTitle){
+        LinkedList<Booking> result = new LinkedList<>();
+        String str = "SELECT * FROM BOOKINGS WHERE LOCATION = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            ps.setString(1,bookableLocationTitle);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), new User(rs.getString("USERNAME"), rs.getString("PERMISSIONS")), rs.getInt("ID")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @return boolean true if the booking has a time conflict with another booking, false otherwise
+     * @author Fay Whittall
+     */
+    public boolean hasConflicts(){
+        LinkedList<Booking> bookingsFromRoom = getBookingsForLocation(this.location);
+        for(Booking b: bookingsFromRoom){
+            long bStartTime = b.dateTimeStart.getTime();
+            long bEndTime = b.dateTimeEnd.getTime();
+            //checks if either the start time or end time falls within the start and end time of the current booking
+            if(((this.dateTimeStart.getTime() > bStartTime) && (this.dateTimeStart.getTime() < bEndTime))
+            || (this.dateTimeEnd.getTime() > bStartTime) && (this.dateTimeEnd.getTime() < bEndTime)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //Determines duration of booking
