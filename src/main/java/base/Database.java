@@ -17,7 +17,7 @@ import static java.lang.Integer.parseInt;
 public final class Database {
     Connection connection;
     public Database() {
-        this(false, false);
+        this(true, false);
     }
     public Database(boolean importData, boolean overwriteData) {
         System.out.println("Attempting to connect to the embedded database...");
@@ -112,7 +112,7 @@ public final class Database {
             String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on EXTERNALTRANSPORTATIONREQUESTS (ID)";
             String ExternalTransportationRequestTablePK = "alter table EXTERNALTRANSPORTATIONREQUESTS add constraint EXTERNALTRANSPORTATIONREQUESTS_pk primary key (ID)";
 
-            String createGiftStoreRequestsTable = "create table createGiftStoreRequests(ID int generated always as identity, location varchar(255) not null constraint createGiftStoreRequests_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000) not null, DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint createGiftStoreRequests_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade, gifttype varchar(255), sender varchar(255), recipient varchar(255))";
+            String createGiftStoreRequestsTable = "create table createGiftStoreRequests(ID int generated always as identity, location varchar(255) not null constraint createGiftStoreRequests_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000), DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint createGiftStoreRequests_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade, gifttype varchar(255), sender varchar(255), recipient varchar(255))";
             String giftStoreRequestsTableUINDEX = "create unique index giftStoreRequests_ID_uindex on createGiftStoreRequests (ID)";
             String giftStoreRequestTablePK = "alter table createGiftStoreRequests add constraint createGiftStoreRequests_pk primary key (ID)";
 
@@ -120,15 +120,14 @@ public final class Database {
 
             try {
                 Statement tableStmt = this.getConnection().createStatement();
-                tableStmt.executeUpdate(createPrescriptionServiceTable);
-                tableStmt.executeUpdate(PrescriptionUINDEX);
-                tableStmt.executeUpdate(PrescriptionTablePK);
+                // create nodes and edges first
                 tableStmt.executeUpdate(createNodesTable);
                 tableStmt.executeUpdate(NodesTableUINDEX);
                 tableStmt.executeUpdate(NodesTablePK);
                 tableStmt.executeUpdate(createEdgesTable);
                 tableStmt.executeUpdate(EdgesTableUINDEX);
                 tableStmt.executeUpdate(EdgesTablePK);
+                // then users and their stuff
                 tableStmt.executeUpdate(createUsersTable);
                 tableStmt.executeUpdate(UsersTableUINDEX);
                 tableStmt.executeUpdate(UsersTablePK);
@@ -138,6 +137,7 @@ public final class Database {
                 tableStmt.executeUpdate(createUserHasPermissionsTable);
                 tableStmt.executeUpdate(UserHasPermissionsTableUINDEX);
                 tableStmt.executeUpdate(UserHasPermissionsTablePK);
+                // then service request stuff
                 tableStmt.executeUpdate(createServiceRequestsTable);
                 tableStmt.executeUpdate(ServiceRequestsTableUINDEX);
                 tableStmt.executeUpdate(ServiceRequestsTablePK);
@@ -171,8 +171,9 @@ public final class Database {
                 tableStmt.executeUpdate(createGiftStoreRequestsTable);
                 tableStmt.executeUpdate(giftStoreRequestsTableUINDEX);
                 tableStmt.executeUpdate(giftStoreRequestTablePK);
-
-
+                tableStmt.executeUpdate(createPrescriptionServiceTable);
+                tableStmt.executeUpdate(PrescriptionUINDEX);
+                tableStmt.executeUpdate(PrescriptionTablePK);
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {
                     // table exists

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
    <children>
       <ImageView fitHeight="366.0" fitWidth="392.0" layoutX="1812.0" layoutY="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
@@ -26,22 +25,23 @@
                   <Font size="100.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="recipientText" focusColor="#a84040" promptText="Recipient">
+            <JFXTextField fx:id="recipient" focusColor="#a84040" promptText="Recipient">
                <font>
                   <Font size="50.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="sendertext" focusColor="#a84040" promptText="Sender">
+            <JFXTextField fx:id="sender" focusColor="#a84040" promptText="Sender">
                <font>
                   <Font size="50.0" />
                </font>
             </JFXTextField>
-            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS" />
+            <JFXTextField fx:id="type" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift" VBox.vgrow="ALWAYS" />
             <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
-            <JFXButton fx:id="submitButton" onAction="#submitButtonClick" stylesheets="@app.css" text="Submit">
+            <JFXButton fx:id="submitButton" onAction="#submitButtonClick" text="Submit">
                <styleClass>
                   <String fx:value="btn-success" />
                   <String fx:value="btn-lg" />
+                  <String fx:value="btn" />
                </styleClass>
                <VBox.margin>
                   <Insets left="50.0" top="300.0" />

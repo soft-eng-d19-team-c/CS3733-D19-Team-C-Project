@@ -37,12 +37,12 @@ public class GiftStoreTableController extends Controller implements Initializabl
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
 
-        locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
+        locationCol.setCellValueFactory(new PropertyValueFactory("Location"));
         Sender.setCellValueFactory(new PropertyValueFactory("Sender"));
         Recipient.setCellValueFactory(new PropertyValueFactory("Recipient"));
-        GiftType.setCellValueFactory(new PropertyValueFactory("Giftype"));
-        DateTimeSubmitted.setCellValueFactory(new PropertyValueFactory("Datetimesubmitted"));
-        isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
+        GiftType.setCellValueFactory(new PropertyValueFactory("GiftType"));
+        DateTimeSubmitted.setCellValueFactory(new PropertyValueFactory("DateTimeSubmitted"));
+        isCompleted.setCellValueFactory(new PropertyValueFactory("IsCompleted"));
 
         updateTable();
 
