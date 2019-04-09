@@ -15,18 +15,18 @@
 <AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <Text fill="#a7a6a6" layoutX="81.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" />
-      <HBox layoutX="8.0" layoutY="170.0" prefHeight="66.0" prefWidth="262.0" AnchorPane.bottomAnchor="842.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="170.0">
+      <Text fill="#a7a6a6" layoutX="81.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" AnchorPane.topAnchor="110.0" />
+      <HBox layoutX="8.0" layoutY="170.0" prefHeight="66.0" prefWidth="262.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="190.0">
          <children>
              <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
-      <HBox layoutX="11.0" layoutY="250.0" prefHeight="28.0" prefWidth="371.0" AnchorPane.leftAnchor="30.0">
+      <HBox layoutX="11.0" layoutY="250.0" prefHeight="28.0" prefWidth="371.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="280.0">
          <children>
              <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
          </children>
       </HBox>
-      <Label text="Where are you?" AnchorPane.bottomAnchor="901.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="161.0" />
+      <Label text="Where are you?" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="161.0" />
       <Label text="Where do you want to go?" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="250.0" />
       <Button fx:id="findpathbtn" layoutX="42.0" layoutY="303.0" mnemonicParsing="false" onAction="#gobtnclick" prefHeight="31.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@app.css" text="GO!" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="350.0">
          <font>

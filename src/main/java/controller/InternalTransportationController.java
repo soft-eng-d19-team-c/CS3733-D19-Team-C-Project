@@ -7,9 +7,9 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import model.InternalTransportationService;
 
-import java.awt.*;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class InternalTransportationController  extends Controller implements Initializable {
 
-    @FXML private TextField description;
+    @FXML private TextArea description;
     @FXML private JFXDatePicker dateField;
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController searchController_origController;
