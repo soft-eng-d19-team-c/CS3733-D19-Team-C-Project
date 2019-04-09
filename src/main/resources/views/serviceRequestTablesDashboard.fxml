@@ -12,7 +12,6 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServiceRequestsTablesDashboardController">
    <children>
-       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <Label alignment="CENTER" styleClass="h1" text="View Service Requests" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
         <columnConstraints>
@@ -205,4 +204,5 @@
          </children>
       </GridPane>
    </children>
+   <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>
