@@ -28,11 +28,11 @@
       </Button>
         <AnchorPane layoutX="12.0" layoutY="9.0" prefHeight="100.0" prefWidth="210.0"><fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" /></AnchorPane>
         <AnchorPane layoutX="615.0" layoutY="219.0" prefHeight="131.0" prefWidth="359.0">
-         <!--<fx:include fx:id="acSearchStart" source="autocompleteSearchBar.fxml" />-->
+         <fx:include fx:id="acSearchStart" source="autocompleteSearchBar.fxml" />
+
       </AnchorPane>
         <TextField fx:id="description" layoutX="89.0" layoutY="602.0" prefHeight="178.0" prefWidth="393.0" promptText="Type where it is from" />
-          <!--<AnchorPane layoutX="1048.0" layoutY="220.0" prefHeight="79.0" prefWidth="388.0"> <fx:include fx:id="acSearchEnd" source="autocompleteSearchBar.fxml" />-->
-      <!--</AnchorPane>-->
+        <fx:include fx:id="acSearchEnd" source="autocompleteSearchBar.fxml" />
 
     </children>
 </AnchorPane>
