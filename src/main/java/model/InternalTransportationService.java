@@ -76,8 +76,8 @@ public class InternalTransportationService {
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            ps.setTimestamp(1, ts);
-            ps.setTimestamp(4, this.pickUpTime);
+            ps.setTimestamp(4, ts);
+            ps.setTimestamp(5, this.pickUpTime);
 
             executed = ps.execute(); //returns a boolean
         }
@@ -102,8 +102,8 @@ public class InternalTransportationService {
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            ps.setTimestamp(1, ts);
-            ps.setTimestamp(4, this.pickUpTime);
+            ps.setTimestamp(4, ts);
+            ps.setTimestamp(5, this.pickUpTime);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -144,7 +144,7 @@ public class InternalTransportationService {
                 String description = rs.getString("description");
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp pickUpTime = rs.getTimestamp("PICKUPTIME");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeCompleted");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMERESOLVED");
                 String nodeID = rs.getString("NODEID");
                 String nodeIDDest = rs.getString("NODEIDDEST");
                 InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved);

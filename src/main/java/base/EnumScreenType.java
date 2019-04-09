@@ -30,7 +30,7 @@ public enum EnumScreenType {
     INTERPRETERSERVICETABLE("/views/interpreterService.fxml"),
     INTERNALTRANSPORTATIONSERVICETABLE("/views/internalTransportationServiceRequestTable.fxml"),
     EXTERNALTRANSPORTATIONSERVICETABLE("/views/externalTransportationServiceRequestTable.fxml"),
-    SECURITYSERVICETABLE("/views/securityServiceRequest.fxml"),
+    SECURITYSERVICETABLE("/views/securityServiceRequestTable.fxml"),
     PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
     ITSERVICETABLE("/views/ITServiceRequestTable.fxml"),
     GIFTSTORESERVICETABLE("/views/giftStoreService.fxml"),
