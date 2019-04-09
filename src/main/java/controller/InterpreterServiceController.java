@@ -4,14 +4,11 @@ import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import model.InterpreterRequest;
-import model.SanitationRequest;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -49,8 +46,5 @@ public class InterpreterServiceController extends Controller implements Initiali
         InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeSubmitted, description.getText());
         interpreterRequest.insert();
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
-    }
-
-    public void viewBtnClick(ActionEvent actionEvent) {
     }
 }

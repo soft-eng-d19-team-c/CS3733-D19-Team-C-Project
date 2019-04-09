@@ -10,8 +10,6 @@ import java.util.Date;
 //Create service request, get service request, and have it talk to database
 
 public class SanitationRequest {
-
-    private String type;
     private String nodeID;
     private String description;
     private Date dateTimeSubmitted;
@@ -21,8 +19,7 @@ public class SanitationRequest {
     private User userRequestedBy;
     private int ID;
 
-    public SanitationRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
-        this.type = type;
+    public SanitationRequest(int ID, String description, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
@@ -31,10 +28,6 @@ public class SanitationRequest {
         this.userCompletedBy = null;
         this.userRequestedBy = null;
         this.ID = ID;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getNodeID() {
@@ -49,8 +42,8 @@ public class SanitationRequest {
         return this.isComplete;
     }
 
-    public SanitationRequest(String type, String location, String description) {
-        this(-1, description, type, new Date(), null, location);
+    public SanitationRequest(String location, String description) {
+        this(-1, description, new Date(), null, location);
     }
 
     //Determines amount of time task was completed in
@@ -67,7 +60,7 @@ public class SanitationRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
+        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
         java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
@@ -76,7 +69,6 @@ public class SanitationRequest {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setString(3, type);
             ps.setDate(4, sqlStartDate);
             ps.setDate(5, sqlCompleteDate);
             executed = ps.execute(); //returns a boolean
@@ -94,15 +86,14 @@ public class SanitationRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, TYPE, DATETIMESUBMITTED) values (?,?,?,?)";
+        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setString(3, type);
-            ps.setDate(4, sqlSubmitDate);
+            ps.setDate(3, sqlSubmitDate);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -129,11 +120,10 @@ public class SanitationRequest {
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
-                String type = rs.getString("type");
                 Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
                 Date dateTimeResolved = rs.getDate("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                SanitationRequest theSanitationRequest = new SanitationRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
+                SanitationRequest theSanitationRequest = new SanitationRequest(ID, description, dateTimeSubmitted, dateTimeResolved, nodeID);
                 requests.add(theSanitationRequest);
             }
         } catch (SQLException e) {
@@ -164,6 +154,4 @@ public class SanitationRequest {
         }
         return false;
     }
-
-
 }

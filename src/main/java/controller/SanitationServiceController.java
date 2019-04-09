@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SanitationServiceController extends Controller implements Initializable {
-    @FXML private JFXTextField type;
     @FXML private JFXTextArea description;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -33,7 +32,7 @@ public class SanitationServiceController extends Controller implements Initializ
     //save the service request to the database, to late view
     //set screen back to the dashboard
     public void submitButtonClick(ActionEvent actionEvent) {
-        SanitationRequest sanitationRequest = new SanitationRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
+        SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
         sanitationRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
