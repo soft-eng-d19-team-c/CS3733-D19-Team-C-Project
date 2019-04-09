@@ -18,6 +18,19 @@ public class InternalTransportationService {
     private boolean isComplete;
     private int ID;
 
+    public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Timestamp dateTimeSubmitted, Timestamp pickUpTime, Timestamp dateTimeResolved, User completedBy, User requestedBy) {
+        this.nodeID = nodeID;
+        this.nodeIDDest = nodeIDDest;
+        this.description = description;
+        this.dateTimeSubmitted = dateTimeSubmitted;
+        this.pickUpTime = pickUpTime;
+        this.dateTimeResolved = dateTimeResolved;
+        this.isComplete = dateTimeResolved != null;
+        this.completedBy = completedBy;
+        this.requestedBy = requestedBy;
+        this.ID = ID;
+    }
+
     public InternalTransportationService (int ID, String nodeID, String nodeIDDest, String description, Timestamp dateTimeSubmitted, Timestamp pickUpTime, Timestamp dateTimeResolved) {
         this.nodeID = nodeID;
         this.nodeIDDest = nodeIDDest;
@@ -95,7 +108,7 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME) values (?, ?, ?, ?, ?)";
+        String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, REQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 
@@ -106,6 +119,7 @@ public class InternalTransportationService {
             ps.setString(3, this.description);
             ps.setTimestamp(4, ts);
             ps.setTimestamp(5, this.pickUpTime);
+            ps.setString(6, Main.user.getUsername());
             executed = ps.execute(); //returns a boolean
         }
 
@@ -150,7 +164,9 @@ public class InternalTransportationService {
                 Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
                 String nodeID = rs.getString("NODEID");
                 String nodeIDDest = rs.getString("NODEIDDEST");
-                InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved);
+                User req = new User(rs.getString("REQUESTEDBY"));
+                User comp = new User(rs.getString("COMPLETEDBY"));
+                InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved, comp, req);
                 requests.add(theServiceRequest);
             }
         } catch (SQLException e) {
