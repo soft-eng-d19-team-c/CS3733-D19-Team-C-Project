@@ -34,27 +34,29 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
-    @FXML
-    private ToggleButton dancebtn;
-    @FXML
-    private ImageView findpathmap;
-    @FXML
-    private AnchorPane findpathview;
-    @FXML
-    private Pane mapImgPane;
-    @FXML
-    private AutocompleteSearchBarController searchController_origController;
-    @FXML
-    private AutocompleteSearchBarController searchController_destController;
-    @FXML
-    private JFXTextArea phoneNumberInput;
-    @FXML
-    private Button phoneNumberBtn;
+    @FXML private ToggleButton dancebtn;
+    @FXML private ImageView findpathmap;
+    @FXML private AnchorPane findpathview;
+    @FXML private Pane mapImgPane;
+    @FXML private AutocompleteSearchBarController searchController_origController;
+    @FXML private AutocompleteSearchBarController searchController_destController;
+    @FXML private JFXTextArea phoneNumberInput;
+    @FXML private Button phoneNumberBtn;
+    @FXML private Button Floor3;
+    @FXML private Button Floor2;
+    @FXML private Button Floor1;
+    @FXML private Button Ground;
+    @FXML private Button L1;
+    @FXML private Button L2;
+
+
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> node_onPath;
     private HashMap<String, Circle> nodeCircles;
+
+    private LinkedList<Button> allButtons = new LinkedList<Button>();
 
     private Color black;
     private Color somecolor;
@@ -62,6 +64,7 @@ public class PathfindingController extends Controller implements Initializable {
     private String findLocationNodeID;
     private String currentFloor;
     private boolean hasPath;
+    private Button currentButton;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -72,9 +75,16 @@ public class PathfindingController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
+        allButtons.add(Floor3);
+        allButtons.add(Floor2);
+        allButtons.add(Floor1);
+        allButtons.add(Ground);
+        allButtons.add(L1);
+        allButtons.add(L2);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
+            changeColor2(currentButton);
         });
     }
 
@@ -320,28 +330,106 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
-    public void level3BtnClick(ActionEvent actionEvent) {
+    public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
+        changeColor2(Floor3);
     }
 
-    public void level2BtnClick(ActionEvent actionEvent) {
+    public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
+        changeColor2(Floor2);
     }
 
-    public void level1BtnClick(ActionEvent actionEvent) {
+    public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
+        changeColor2(Floor1);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("G");
+        changeColor2(Ground);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
+        changeColor2(L1);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
+        changeColor2(L2);
+    }
+
+    public void changeColor(Button button){
+        for(int i =1; i <= allButtons.size(); i++ ){
+            if(!(allButtons.get(i) == button)){
+               // System.out.println("s");
+                button.setOnAction((ActionEvent e) -> {
+                    button.setStyle("-fx-background-color:-secondary");
+                });
+            }else{
+                button.setOnAction((ActionEvent e) -> {
+                  //  System.out.println("f");
+                    button.setStyle(" -fx-background-color: -primary");
+                });
+            }
+        }
+    }
+
+    public void changeColor2(Button button){
+        switch (currentFloor){
+            case "3": currentButton = Floor3;
+                Floor3.setStyle(" -fx-background-color: -primary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+
+                break;
+            case "2": currentButton = Floor2;
+                Floor2.setStyle(" -fx-background-color: -primary");
+                Floor3.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+                break;
+            case "1": currentButton = Floor1;
+                Floor1.setStyle(" -fx-background-color: -primary");
+                Floor3.setStyle(" -fx-background-color: -secondary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+                break;
+            case "Ground": currentButton = Ground;
+                Ground.setStyle(" -fx-background-color: -primary");
+                Floor3.setStyle(" -fx-background-color: -secondary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+                break;
+            case "L1": currentButton = L1;
+                L1.setStyle(" -fx-background-color: -primary");
+                Floor3.setStyle(" -fx-background-color: -secondary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+
+                break;
+            case "L2": currentButton = L2;
+                L2.setStyle(" -fx-background-color: -primary");
+                Floor3.setStyle(" -fx-background-color: -secondary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+
+                break;
+        }
     }
 }
 

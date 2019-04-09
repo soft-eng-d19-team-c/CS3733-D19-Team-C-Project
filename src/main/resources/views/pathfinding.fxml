@@ -40,21 +40,21 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-       <Button fx:id="level3" layoutX="393.0" layoutY="127.0" mnemonicParsing="false" onAction="#level3BtnClick" styleClass="bg-secondary" stylesheets="@../../../../out/production/resources/views/app.css" text="Level 3" textAlignment="CENTER">
+       <Button fx:id="Floor3" layoutX="393.0" layoutY="127.0" mnemonicParsing="false" onAction="#floor3BtnClick" styleClass="bg-secondary" stylesheets="@../../../../out/production/resources/views/app.css" text="Floor 3" textAlignment="CENTER">
          <opaqueInsets>
             <Insets bottom="10.0" />
          </opaqueInsets></Button>
-       <Button fx:id="level2" layoutX="393.0" layoutY="167.0" mnemonicParsing="false" onAction="#level2BtnClick" styleClass="bg-secondary" text="Level 2">
+       <Button fx:id="Floor2" layoutX="393.0" layoutY="167.0" mnemonicParsing="false" onAction="#floor2BtnClick" styleClass="bg-secondary" text="Floor 2">
            <opaqueInsets>
                <Insets bottom="10.0" top="10.0" />
            </opaqueInsets>
        </Button>
-       <Button fx:id="level1" layoutX="393.0" layoutY="207.0" mnemonicParsing="false" onAction="#level1BtnClick" styleClass="bg-secondary" text="Level 1">
+       <Button fx:id="Floor1" layoutX="393.0" layoutY="207.0" mnemonicParsing="false" onAction="#floor1BtnClick" styleClass="bg-secondary" text="Floor 1">
            <opaqueInsets>
                <Insets bottom="10.0" top="10.0" />
            </opaqueInsets>
        </Button>
-       <Button fx:id="groundFloor" layoutX="391.0" layoutY="247.0" mnemonicParsing="false" onAction="#groundBtnClick" styleClass="bg-secondary" text="Ground">
+       <Button fx:id="Ground" layoutX="391.0" layoutY="247.0" mnemonicParsing="false" onAction="#groundBtnClick" styleClass="bg-secondary" text="Ground">
            <opaqueInsets>
                <Insets bottom="10.0" top="10.0" />
            </opaqueInsets>
