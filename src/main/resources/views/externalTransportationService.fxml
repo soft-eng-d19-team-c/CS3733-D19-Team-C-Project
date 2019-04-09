@@ -83,7 +83,7 @@
       </GridPane>
       <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
-            <Image url="@../img/Outside%20Transportation.png" />
+            <Image url="@../img/Outside Transportation.png" />
          </image>
       </ImageView>
    </children>
