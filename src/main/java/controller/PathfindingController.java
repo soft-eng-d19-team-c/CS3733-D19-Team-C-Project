@@ -321,7 +321,7 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         drawNodes(nodes, edges, black);
 
-        if (findLocationNodeID != null) {
+        if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
             Circle foundNode = nodeCircles.get(findLocationNodeID);
 
             foundNode.setRadius(6.0);
@@ -422,7 +422,6 @@ public class PathfindingController extends Controller implements Initializable {
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
             case "Ground": currentButton = Ground;
-                System.out.println("xx");
                 Ground.setStyle(" -fx-background-color: -primary");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
