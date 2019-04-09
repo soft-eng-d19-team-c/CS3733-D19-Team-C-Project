@@ -2,21 +2,26 @@ package controller;
 
 import base.EnumScreenType;
 import base.Main;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.SanitationRequest;
+import model.InterpreterRequest;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class InterpreterServiceController extends Controller implements Initializable {
-    @FXML private JFXTextField type;
+    @FXML private JFXDatePicker dateField;
+    @FXML private JFXTimePicker timeField;
+    @FXML private AutocompleteSearchBarController acSearchController;
     @FXML private JFXTextArea description;
-
-    @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
 
 
@@ -32,10 +37,14 @@ public class InterpreterServiceController extends Controller implements Initiali
 
     //save the service request to the database, to late view
     //set screen back to the dashboard
-    public void submitButtonClick(ActionEvent actionEvent) {
-        SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
-        sanitationRequest.insert();
-
+    public void saveBtnClick(ActionEvent actionEvent) {
+        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
+        LocalDate date = dateField.getValue();
+        LocalTime time = timeField.getValue();
+        Calendar cal = Calendar.getInstance();
+        cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
+        InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeSubmitted, description.getText());
+        interpreterRequest.insert();
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }

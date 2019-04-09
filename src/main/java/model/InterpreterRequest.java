@@ -11,31 +11,24 @@ import java.util.Date;
 
 public class InterpreterRequest {
 
-    private String type;
     private String nodeID;
     private String description;
-    private Date dateTimeSubmitted;
-    private Date dateTimeCompleted;
+    private Timestamp dateTimeSubmitted;
+    private Timestamp dateTimeCompleted;
     private boolean isComplete;
-    private User userCompletedBy;
-    private User userRequestedBy;
+    private String userCompletedBy;
     private int ID;
 
-    public InterpreterRequest(int ID, String description, String type, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
-        this.type = type;
+    public InterpreterRequest(int ID, String description, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, String nodeID) {
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = dateTimeCompleted != null;
         this.userCompletedBy = null;
-        this.userRequestedBy = null;
         this.ID = ID;
     }
 
-    public String getType() {
-        return type;
-    }
 
     public String getNodeID() {
         return nodeID;
@@ -49,8 +42,8 @@ public class InterpreterRequest {
         return this.isComplete;
     }
 
-    public InterpreterRequest(String type, String location, String description) {
-        this(-1, description, type, new Date(), null, location);
+    public InterpreterRequest(String location, Timestamp dateTimeSubmitted, String description) {
+        this(-1, description, dateTimeSubmitted, null, location);
     }
 
     //Determines amount of time task was completed in
@@ -62,47 +55,41 @@ public class InterpreterRequest {
 
     }
 
+    @SuppressWarnings("Duplicates")
     //Update the information in a SanitationRequest
-    public boolean update(){
-
+    public boolean insert(){
         boolean executed = false;
-
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-
-
+        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED) values (?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, description);
-            ps.setString(3, type);
-            ps.setDate(4, sqlStartDate);
-            ps.setDate(5, sqlCompleteDate);
-            executed = ps.execute(); //returns a boolean
-        }
-
-        catch (SQLException e) {
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.description);
+            ps.setTimestamp(3, this.dateTimeSubmitted);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return executed;
     }
 
-    //Insert a new SanitationRequest into the database
-    public boolean insert(){
+    
+
+    //Insert a new Interpreter into the database
+    public boolean update(){
+        // TODO
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, TYPE, DATETIMESUBMITTED) values (?,?,?,?)";
+        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, description);
-            ps.setString(3, type);
-            ps.setDate(4, sqlSubmitDate);
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.description);
+            ps.setTimestamp(3, this.dateTimeSubmitted);
+            ps.setTimestamp(4, this.dateTimeCompleted);
+            ps.setString(5, this.userCompletedBy);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -123,7 +110,7 @@ public class InterpreterRequest {
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM SERVICEREQUESTS";
+            String str = "SELECT * FROM INTERPRETERSERVICEREQUEST";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -133,8 +120,8 @@ public class InterpreterRequest {
                 Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
                 Date dateTimeResolved = rs.getDate("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                InterpreterRequest theSanitationRequest = new InterpreterRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
-                requests.add(theSanitationRequest);
+//                InterpreterRequest theSanitationRequest = new InterpreterRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
+//                requests.add(theSanitationRequest);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,7 +138,7 @@ public class InterpreterRequest {
 
     //Mark a SanitationRequest complete
     public boolean resolve() {
-        String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
