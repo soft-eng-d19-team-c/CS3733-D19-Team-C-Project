@@ -83,6 +83,11 @@ public class EditMapController extends Controller implements Initializable {
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
             floorsMenu.setOnAction((event) -> {
                 String selectedFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                if (selectedFloor.equals("G")) {
+                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+                } else {
+                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + selectedFloor + "_NoIcons.png"))));
+                }
                 nodes = Node.getNodesByFloor(selectedFloor);
                 edges = Edge.getEdgesByFloor(selectedFloor);
                 drawNodes();
