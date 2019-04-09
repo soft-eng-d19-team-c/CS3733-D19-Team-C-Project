@@ -20,12 +20,14 @@
                         <Font size="80.0" />
                     </font>
                 </Label>
-            <CheckBox mnemonicParsing="false" text="URGENT" fx:id="urgentCheckBox">
+            <CheckBox fx:id="urgentCheckBox" mnemonicParsing="false" text="URGENT">
                <font>
                   <Font size="47.0" />
                </font>
             </CheckBox>
-                <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+                <VBox prefHeight="105.0" prefWidth="1960.0">
+                    <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+                </VBox>
                 <JFXTextArea fx:id="description" focusColor="#b82020" promptText="Description of the Issue">
                     <VBox.margin>
                         <Insets left="20.0" right="20.0" />
@@ -49,6 +51,9 @@
                 </JFXButton>
             </children>
         </VBox>
+        <VBox>
+        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
+        </VBox>
     </children>
-    <!--   <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />-->
+
 </AnchorPane>
