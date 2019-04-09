@@ -73,11 +73,12 @@ public class InterpreterRequest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return executed;
     }
 
-    //Insert a new SanitationRequest into the database
+    
+
+    //Insert a new Interpreter into the database
     public boolean insert(){
 
         boolean executed = false;

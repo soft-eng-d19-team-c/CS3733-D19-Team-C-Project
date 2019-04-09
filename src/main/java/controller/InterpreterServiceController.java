@@ -48,7 +48,6 @@ public class InterpreterServiceController extends Controller implements Initiali
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
         InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeSubmitted, description.getText());
         interpreterRequest.insert();
-
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 
