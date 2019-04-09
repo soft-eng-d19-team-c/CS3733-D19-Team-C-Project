@@ -11,20 +11,31 @@ public enum EnumScreenType {
     SEARCHLOCATION("/views/searchLocation.fxml"),
     BOOKLOCATIONS("/views/bookLocation.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
+    // services
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
-    VIEWSERVICEREQUESTS("/views/serviceRequestTable.fxml"),
     SANITATIONSERVICE("/views/sanitationService.fxml"),
     INTERPRETERSERVICE("/views/interpreterService.fxml"),
     INTERNALTRANSPORTATIONSERVICE("/views/InternalTransportationServiceRequest.fxml"),
     EXTERNALTRANSPORTATIONSERVICE("/views/externalTransportationService.fxml"),
     SECURITYSERVICE("/views/securityServiceRequest.fxml"),
     PRESCRIPTIONSERVICE("/views/prescriptionService.fxml"),
-    PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
     ITSERVICE("/views/itService.fxml"),
     GIFTSTORESERVICE("/views/giftStoreService.fxml"),
     RELIGIOUSSERVICE("/views/religiousservices.fxml"),
     FLORISTSERVICE("/views/FloristServiceRequest.fxml"),
-    BOOKLOCATIONMAP("/views/bookLocationMap.fxml");
+    BOOKLOCATIONMAP("/views/bookLocationMap.fxml"),
+    // service request tables,
+    SERVICEREQUESTTABLESDASHBOARD("/views/serviceRequestTablesDashboard.fxml"),
+    SANITATIONSERVICETABLE("/views/sanitationServiceRequestTable.fxml"),
+    INTERPRETERSERVICETABLE("/views/interpreterService.fxml"),
+    INTERNALTRANSPORTATIONSERVICETABLE("/views/InternalTransportationServiceRequest.fxml"),
+    EXTERNALTRANSPORTATIONSERVICETABLE("/views/externalTransportationServiceRequestTable.fxml"),
+    SECURITYSERVICETABLE("/views/securityServiceRequest.fxml"),
+    PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
+    ITSERVICETABLE("/views/itService.fxml"),
+    GIFTSTORESERVICETABLE("/views/giftStoreService.fxml"),
+    RELIGIOUSSERVICETABLE("/views/religiousservices.fxml"),
+    FLORISTSERVICETABLE("/views/FloristServiceRequest.fxml");
 
     protected String path;
 

@@ -1,5 +1,7 @@
 package controller;
 
+import base.EnumScreenType;
+import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTimePicker;
@@ -57,6 +59,7 @@ public class ExternalTransportationServiceController extends Controller implemen
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
         Timestamp dateTimePickup = new Timestamp(cal.getTimeInMillis());
         ExternalTransportationRequest sr = new ExternalTransportationRequest(pickupLocation, dest, dateTimeSubmitted, dateTimePickup);
-        System.out.println(sr.toString());
+        sr.insert();
+        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 }
