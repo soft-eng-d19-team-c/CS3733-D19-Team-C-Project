@@ -33,7 +33,7 @@ public enum EnumScreenType {
     SECURITYSERVICETABLE("/views/securityServiceRequestTable.fxml"),
     PRESCRIPTIONSERVICETABLE("/views/prescriptionServiceTable.fxml"),
     ITSERVICETABLE("/views/ITServiceRequestTable.fxml"),
-    GIFTSTORESERVICETABLE("/views/giftStoreService.fxml"),
+    GIFTSTORESERVICETABLE("/views/giftStoreRequestTable.fxml"),
     RELIGIOUSSERVICETABLE("/views/religiousservices.fxml"),
     FLORISTSERVICETABLE("/views/FloristServiceRequest.fxml"),
     WELCOME("/views/screensaver.fxml");

@@ -15,9 +15,11 @@ public class GiftStoreTableController extends Controller implements Initializabl
     @FXML
     private TableView dataTable;
 
-    @FXML private TableColumn issue;
     @FXML private TableColumn locationCol;
-    @FXML private TableColumn Description;
+    @FXML private TableColumn Sender;
+    @FXML private TableColumn Recipient;
+    @FXML private TableColumn GiftType;
+    @FXML private TableColumn DateTimeSubmitted;
     @FXML private TableColumn isCompleted;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -35,16 +37,17 @@ public class GiftStoreTableController extends Controller implements Initializabl
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
 
-        issue.setCellValueFactory(new PropertyValueFactory("Type"));
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
-        Description.setCellValueFactory(new PropertyValueFactory("Description"));
+        Sender.setCellValueFactory(new PropertyValueFactory("Sender"));
+        Recipient.setCellValueFactory(new PropertyValueFactory("Recipient"));
+        GiftType.setCellValueFactory(new PropertyValueFactory("Giftype"));
+        DateTimeSubmitted.setCellValueFactory(new PropertyValueFactory("Datetimesubmitted"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
 
-       // updateTable();
+        updateTable();
 
     }
 
-    /*
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
         GiftStoreRequest sr = (GiftStoreRequest) dataTable.getSelectionModel().getSelectedItem();
         sr.resolve();
@@ -57,5 +60,4 @@ public class GiftStoreTableController extends Controller implements Initializabl
         dataTable.setItems(data);
         dataTable.refresh();
     }
-    */
 }
