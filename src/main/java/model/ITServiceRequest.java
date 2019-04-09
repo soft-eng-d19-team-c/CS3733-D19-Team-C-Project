@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Date;
 
 /**
  * ITServiceRequest for requesting assistance from IT
@@ -15,35 +14,27 @@ import java.util.Date;
 public class ITServiceRequest {
 
     private int ID;
-    private String type;
     private String description;
-    private Date dateTimeSubmitted;
-    private Date dateTimeCompleted;
+    private Timestamp dateTimeSubmitted;
+    private Timestamp dateTimeCompleted;
     private boolean isComplete;
-    private User userAssignedTo;
+    private User userResolvedBy;
     private User userRequestedBy;
     private String nodeID;
 
-    public ITServiceRequest(String type, String description, String nodeID, Date dateTimeSubmitted, Date dateTimeCompleted, boolean isComplete, User userAssignedTo, User userRequestedBy, int ID) {
+    public ITServiceRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, boolean isComplete, int ID) {
         this.ID = ID;
-        this.type = type;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = isComplete;
-        this.userAssignedTo = userAssignedTo;
-        this.userRequestedBy = userRequestedBy;
         this.nodeID = nodeID;
     }
 
-    public ITServiceRequest(String type, String description, String nodeID) {
-        this.type = type;
+    public ITServiceRequest(String description, String nodeID) {
         this.description = description;
         this.nodeID = nodeID;
-    }
-
-    public String getType() {
-        return type;
+        this.userRequestedBy = Main.user;
     }
 
     public String getDescription() {
@@ -59,11 +50,11 @@ public class ITServiceRequest {
     }
 
     //Determines amount of time task was completed in
-    public Date computeTimeDiff(){
+    public Timestamp computeTimeDiff(){
 
         long end = dateTimeCompleted.getTime();
         long start = dateTimeSubmitted.getTime();
-        return new Date(end - start);
+        return new Timestamp(end - start);
 
     }
 
@@ -72,19 +63,18 @@ public class ITServiceRequest {
 
         boolean executed = false;
         //are these fields correct? How do we deal with assignment without completion?
-        String sqlCmd = "update ITSERVICEREQUESTS set USERASSIGNEDTO = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ?, NODEID = ? where ID = ?";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "update ITSERVICEREQUESTS set USERASSIGNEDTO = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ?, NODEID = ? where ID = ?";
+        java.sql.Timestamp sqlCompleteDate = new java.sql.Timestamp(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, userAssignedTo.getUsername());
+            ps.setString(1, userResolvedBy.getUsername());
             ps.setString(2, description);
-            ps.setString(3, type);
-            ps.setDate(4, sqlStartDate);
-            ps.setDate(5, sqlCompleteDate);
-            ps.setString(6, nodeID);
+            ps.setTimestamp(3, sqlStartDate);
+            ps.setTimestamp(4, sqlCompleteDate);
+            ps.setString(5, nodeID);
             executed = ps.execute(); //returns a boolean
         }
 
@@ -100,17 +90,15 @@ public class ITServiceRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (DESCRIPTION, TYPE, DATETIMESUBMITTED, USERSUBMITTEDBY, NODEID, ID) values (?,?,?,?,?,?)";
-        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "insert into ITSERVICEREQUESTS (DESCRIPTION, DATETIMESUBMITTED, USERREQUESTEDBY, NODEID) values (?,?,?,?)";
+        java.sql.Timestamp sqlSubmitDate = new java.sql.Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, description);
-            ps.setString(2, type);
-            ps.setDate(3, sqlSubmitDate);
-            ps.setString(4, userRequestedBy.getUsername());
-            ps.setString(5, nodeID);
-            ps.setInt(6, ID);
+            ps.setTimestamp(2, sqlSubmitDate);
+            ps.setString(3, userRequestedBy.getUsername());
+            ps.setString(4, nodeID);
 
             executed = ps.execute(); //returns a boolean
         }
@@ -136,17 +124,16 @@ public class ITServiceRequest {
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
-                String type = rs.getString("type");
-                Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
-                Date dateTimeResolved = rs.getDate("dateTimeCompleted");
+                Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
+                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                String userAssignedTo = rs.getString("userAssignedTo");
+                String userResolvedBy = rs.getString("userResolvedBy");
                 String userRequestedBy = rs.getString("userRequestedBy");
                 Boolean isComplete = rs.getBoolean("isComplete");
 
 
-                //ITServiceRequest theITServiceRequest = new ITServiceRequest(type, description, nodeID, dateTimeSubmitted, dateTimeResolved, isComplete, userRequestedBy, userAssignedTo, ID);
-                //requests.add(theITServiceRequest);
+                ITServiceRequest theITServiceRequest = new ITServiceRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, isComplete, ID);
+                requests.add(theITServiceRequest);
             }
         } catch (SQLException e) {
             e.printStackTrace();

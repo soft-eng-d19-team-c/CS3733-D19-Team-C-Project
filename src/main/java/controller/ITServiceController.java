@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ITServiceController extends Controller implements Initializable {
-    @FXML private JFXTextField type;
     @FXML private JFXTextArea description;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -37,7 +36,7 @@ public class ITServiceController extends Controller implements Initializable {
 
         //Date dateTimeSubmitted = new Date().getTime()
 
-        ITServiceRequest ITServiceRequest = new ITServiceRequest(type.getText(), description.getText(), autoCompleteTextController.getNodeID());
+        ITServiceRequest ITServiceRequest = new ITServiceRequest(description.getText(), autoCompleteTextController.getNodeID());
         ITServiceRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
