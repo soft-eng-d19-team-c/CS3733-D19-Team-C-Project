@@ -17,7 +17,6 @@ public class GiftStoreController extends Controller implements Initializable {
 
 
     public void submitButtonClick(ActionEvent actionEvent) {
-
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
 
@@ -44,6 +43,6 @@ public class GiftStoreController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
     }
 }

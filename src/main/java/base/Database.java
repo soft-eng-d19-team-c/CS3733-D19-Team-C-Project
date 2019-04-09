@@ -106,6 +106,12 @@ public final class Database {
             String ExternalTransportationRequestTableUINDEX = "create unique index EXTERNALTRANSPORTATIONREQUESTS_ID_uindex on EXTERNALTRANSPORTATIONREQUESTS (ID)";
             String ExternalTransportationRequestTablePK = "alter table EXTERNALTRANSPORTATIONREQUESTS add constraint EXTERNALTRANSPORTATIONREQUESTS_pk primary key (ID)";
 
+            String createGiftStoreRequestsTable = "create table createGiftStoreRequests(ID int generated always as identity, location varchar(255) not null constraint createGiftStoreRequests_NODES_NODEID_fk references NODES (NODEID) on delete no action, DESTINATION varchar(1000) not null, DATETIMESUBMITTED timestamp, DATETIMERESOLVED timestamp, USERCOMPLETEDBY varchar(64) constraint createGiftStoreRequests_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade, gifttype varchar(255), sender varchar(255), recipient varchar(255))";
+            String giftStoreRequestsTableUINDEX = "create unique index giftStoreRequests_ID_uindex on createGiftStoreRequests (ID)";
+            String giftStoreRequestTablePK = "alter table createGiftStoreRequests add constraint createGiftStoreRequests_pk primary key (ID)";
+
+
+
             try {
                 Statement tableStmt = this.getConnection().createStatement();
                 tableStmt.executeUpdate(createPrescriptionServiceTable);
@@ -153,6 +159,10 @@ public final class Database {
                 tableStmt.executeUpdate(createExternalTransportationRequestTable);
                 tableStmt.executeUpdate(ExternalTransportationRequestTableUINDEX);
                 tableStmt.executeUpdate(ExternalTransportationRequestTablePK);
+                tableStmt.executeUpdate(createGiftStoreRequestsTable);
+                tableStmt.executeUpdate(giftStoreRequestsTableUINDEX);
+                tableStmt.executeUpdate(giftStoreRequestTablePK);
+
 
             } catch (SQLException e) {
                 if (e.getSQLState().equals("X0Y32")) {

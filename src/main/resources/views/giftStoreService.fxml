@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
    <children>
       <ImageView fitHeight="366.0" fitWidth="392.0" layoutX="1812.0" layoutY="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
@@ -37,9 +36,9 @@
                   <Font size="50.0" />
                </font>
             </JFXTextField>
-            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS"/>
+            <JFXComboBox fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" promptText="Gift Choice" VBox.vgrow="ALWAYS" />
             <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
-            <JFXButton stylesheets="@app.css" text="Submit">
+            <JFXButton fx:id="submitButton" onAction="#submitButtonClick" stylesheets="@app.css" text="Submit">
                <styleClass>
                   <String fx:value="btn-success" />
                   <String fx:value="btn-lg" />
