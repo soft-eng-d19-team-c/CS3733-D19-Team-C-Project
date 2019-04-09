@@ -27,7 +27,7 @@ public enum EnumScreenType {
     // service request tables,
     SERVICEREQUESTTABLESDASHBOARD("/views/serviceRequestTablesDashboard.fxml"),
     SANITATIONSERVICETABLE("/views/sanitationServiceRequestTable.fxml"),
-    INTERPRETERSERVICETABLE("/views/interpreterService.fxml"),
+    INTERPRETERSERVICETABLE("/views/interpreterServiceRequestTable.fxml"),
     INTERNALTRANSPORTATIONSERVICETABLE("/views/internalTransportationServiceRequestTable.fxml"),
     EXTERNALTRANSPORTATIONSERVICETABLE("/views/externalTransportationServiceRequestTable.fxml"),
     SECURITYSERVICETABLE("/views/securityServiceRequestTable.fxml"),
