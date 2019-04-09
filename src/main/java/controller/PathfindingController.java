@@ -231,7 +231,7 @@ public class PathfindingController extends Controller implements Initializable {
         updateFloorImg(startNode.getFloor());
         generateNodes(node_onPath);
         Node last = Node.getNodeByID(searchController_destController.getNodeID());
-        node_onPath.add(last);
+//        node_onPath.addFirst(last);
         System.out.println(node_onPath);
         phoneNumberBtn.setDisable(false);
         dancebtn.setVisible(true);
@@ -260,6 +260,9 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void updateFloorImg(String floor) {
+        if (floor.equals("Ground")){
+            floor = "G";
+        }
         String floorURL;
         switch (floor) {
             case "3":
