@@ -54,13 +54,10 @@ public class EditMapController extends Controller implements Initializable {
         initialize(location, resources);
     }
 
-    public void danceParty(ActionEvent e){}
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         algosMenu.setOnAction(null);
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
-//        mapImg.fitWidthProperty().bind(mapImgPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
@@ -160,6 +157,7 @@ public class EditMapController extends Controller implements Initializable {
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
+    @SuppressWarnings("Duplicates")
     public void addPathButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -225,6 +223,7 @@ public class EditMapController extends Controller implements Initializable {
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
+    @SuppressWarnings("Duplicates")
     public void setKioskButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -435,16 +434,23 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(javafx.scene.input.MouseEvent me){
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
-                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
                 Main.info.setKioskLocation(n);
+                // remove this event handler, set everything to null, add drag event handlers again
+                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+                    if (node.getProperties().containsKey("node")) {
+                        node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    }
+                }
+                mapImgPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }
     };
