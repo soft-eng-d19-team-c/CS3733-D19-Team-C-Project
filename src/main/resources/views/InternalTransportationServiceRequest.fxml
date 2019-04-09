@@ -8,44 +8,66 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InternalTransportationController">
    <children>
        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-       <Text fill="#a7a6a6" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" />
-      <Label alignment="CENTER" styleClass="h1" text="Internal Transportation Service Request" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-       <HBox layoutX="112.0" layoutY="140.0" prefHeight="66.0" prefWidth="262.0" AnchorPane.leftAnchor="700.0">
-           <children>
-               <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
-           </children>
-       </HBox>
-       <HBox layoutX="112.0" layoutY="173.0" prefHeight="66.0" prefWidth="262.0" AnchorPane.leftAnchor="700.0">
-           <children>
-               <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
-           </children>
-       </HBox>
-       <JFXDatePicker fx:id="dateField" layoutX="346.0" layoutY="140.0" AnchorPane.leftAnchor="1100.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-           <GridPane.margin>
-               <Insets left="50.0" />
-           </GridPane.margin>
-       </JFXDatePicker>
-       <JFXTimePicker fx:id="timeField" layoutX="347.0" layoutY="174.0" AnchorPane.leftAnchor="1100.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-           <GridPane.margin>
-               <Insets left="50.0" />
-           </GridPane.margin>
-       </JFXTimePicker>
-    <HBox layoutX="11.0" layoutY="201.0" prefHeight="28.0" prefWidth="371.0">
-            </HBox>
-      <Button fx:id="submit" layoutX="269.0" layoutY="344.0" mnemonicParsing="false" onAction="#sumbitBtnClick" text="Submit" AnchorPane.leftAnchor="920.0">
-         <styleClass>
-            <String fx:value="btn" />
-            <String fx:value="btn-success" />
-         </styleClass></Button>
-      <TextArea fx:id="description" layoutX="85.0" layoutY="224.0" prefHeight="98.0" prefWidth="442.0" promptText="What is your reason for transport?" AnchorPane.leftAnchor="775.0" />
-      <Label layoutX="60.0" layoutY="144.0" text="From:" AnchorPane.leftAnchor="600.0" />
-      <Label layoutX="74.0" layoutY="178.0" text="To:" AnchorPane.leftAnchor="600.0" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1" text="Internal Transportation Service Request" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="300.0">
+         <children>
+             <HBox prefHeight="66.0" prefWidth="262.0" spacing="100.0">
+                 <children>
+                  <Label text="To:">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Label>
+                     <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
+                   <JFXDatePicker fx:id="dateField">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                   </JFXDatePicker>
+                 </children>
+               <VBox.margin>
+                  <Insets left="450.0" />
+               </VBox.margin>
+             </HBox>
+             <HBox prefHeight="66.0" prefWidth="262.0" spacing="100.0">
+                 <children>
+                  <Label text="From:">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Label>
+                     <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
+                   <JFXTimePicker fx:id="timeField" />
+                 </children>
+               <VBox.margin>
+                  <Insets left="450.0" />
+               </VBox.margin>
+             </HBox>
+            <TextArea fx:id="description" prefHeight="98.0" prefWidth="442.0" promptText="What is your reason for transport?">
+               <VBox.margin>
+                  <Insets left="450.0" right="480.0" />
+               </VBox.margin>
+            </TextArea>
+            <Button fx:id="submit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sumbitBtnClick" text="Submit" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-success" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets left="770.0" top="100.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
