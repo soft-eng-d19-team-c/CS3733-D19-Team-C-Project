@@ -346,7 +346,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
-        changeFloor("G");
+        changeFloor("Ground");
         changeColor2(Ground);
     }
 
@@ -404,6 +404,7 @@ public class PathfindingController extends Controller implements Initializable {
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
             case "Ground": currentButton = Ground;
+                System.out.println("xx");
                 Ground.setStyle(" -fx-background-color: -primary");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
