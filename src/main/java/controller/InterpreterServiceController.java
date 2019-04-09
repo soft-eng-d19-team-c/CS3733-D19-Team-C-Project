@@ -36,14 +36,11 @@ public class InterpreterServiceController extends Controller implements Initiali
 
     //save the service request to the database, to late view
     //set screen back to the dashboard
-    public void submitButtonClick(ActionEvent actionEvent) {
-        InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), description.getText());
+    public void saveBtnClick(ActionEvent actionEvent) {
+//        InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), description.getText());
 //        interpreterRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
-    }
-
-    public void saveBtnClick(ActionEvent actionEvent) {
     }
 
     public void viewBtnClick(ActionEvent actionEvent) {

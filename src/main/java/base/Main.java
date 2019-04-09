@@ -13,7 +13,7 @@ public class Main {
     public static User user;
     public static ApplicationInformation info;
     public static void main(String[] args) {
-        database = new Database(true, false);
+        database = new Database(true, true);
         user = new User("guest");
         info = new ApplicationInformation("CHALL007L1");
         MainFXML app = new MainFXML();

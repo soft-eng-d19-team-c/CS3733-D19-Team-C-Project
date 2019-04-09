@@ -13,14 +13,14 @@ public class InterpreterRequest {
 
     private String nodeID;
     private String description;
-    private Date dateTimeSubmitted;
-    private Date dateTimeCompleted;
+    private Timestamp dateTimeSubmitted;
+    private Timestamp dateTimeCompleted;
     private boolean isComplete;
     private User userCompletedBy;
     private User userRequestedBy;
     private int ID;
 
-    public InterpreterRequest(int ID, String description, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
+    public InterpreterRequest(int ID, String description, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, String nodeID) {
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
@@ -44,8 +44,8 @@ public class InterpreterRequest {
         return this.isComplete;
     }
 
-    public InterpreterRequest(String location, String description) {
-        this(-1, description, new Date(), null, location);
+    public InterpreterRequest(String location, Timestamp dateTimeSubmitted, String description) {
+        this(-1, description, dateTimeSubmitted, null, location);
     }
 
     //Determines amount of time task was completed in
@@ -57,27 +57,22 @@ public class InterpreterRequest {
 
     }
 
+    @SuppressWarnings("Duplicates")
     //Update the information in a SanitationRequest
-/*    public boolean update(){
-
+    public boolean update(){
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, TYPE = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
+        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED) values (?,?,?,?)";
         java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-
-
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, description);
-            ps.setString(3, type);
-            ps.setDate(4, sqlStartDate);
-            ps.setDate(5, sqlCompleteDate);
-            executed = ps.execute(); //returns a boolean
-        }
-
-        catch (SQLException e) {
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.description);
+            ps.setTimestamp(3, this.dateTimeSubmitted);
+//            ps.setTimestamp(4, this.dateTimePickup);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -96,7 +91,7 @@ public class InterpreterRequest {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
-            ps.setString(3, type);
+//            ps.setString(3, type);
             ps.setDate(4, sqlSubmitDate);
             executed = ps.execute(); //returns a boolean
         }
@@ -128,8 +123,8 @@ public class InterpreterRequest {
                 Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
                 Date dateTimeResolved = rs.getDate("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                InterpreterRequest theSanitationRequest = new InterpreterRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
-                requests.add(theSanitationRequest);
+//                InterpreterRequest theSanitationRequest = new InterpreterRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
+//                requests.add(theSanitationRequest);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,7 +132,7 @@ public class InterpreterRequest {
         return requests;
 
 
-    }*/
+    }
 
 
     public int getID() {

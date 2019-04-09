@@ -79,8 +79,8 @@
             </JFXButton>
             <JFXButton onAction="#viewBtnClick" text="View Service Request" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <styleClass>
-                  <String fx:value="btn" />
                   <String fx:value="btn-sm" />
+                  <String fx:value="bg-primary" />
                </styleClass>
             </JFXButton>
          </children>
