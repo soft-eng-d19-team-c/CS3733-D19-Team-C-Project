@@ -13,22 +13,31 @@ public class InterpreterRequest {
 
     private String nodeID;
     private String description;
-    private Timestamp dateTimeSubmitted;
+    private Timestamp dateTimeRequest;
     private Timestamp dateTimeCompleted;
     private boolean isComplete;
-    private String userCompletedBy;
+    private User userCompletedBy;
     private int ID;
 
-    public InterpreterRequest(int ID, String description, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, String nodeID) {
+    public InterpreterRequest(String nodeID, String description, Timestamp dateTimeRequest, Timestamp dateTimeCompleted, boolean isComplete, User userCompletedBy, int ID) {
         this.nodeID = nodeID;
         this.description = description;
-        this.dateTimeSubmitted = dateTimeSubmitted;
+        this.dateTimeRequest = dateTimeRequest;
+        this.dateTimeCompleted = dateTimeCompleted;
+        this.isComplete = isComplete;
+        this.userCompletedBy = userCompletedBy;
+        this.ID = ID;
+    }
+
+    public InterpreterRequest(int ID, String description, Timestamp dateTimeRequest, Timestamp dateTimeCompleted, String nodeID) {
+        this.nodeID = nodeID;
+        this.description = description;
+        this.dateTimeRequest = dateTimeRequest;
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = dateTimeCompleted != null;
         this.userCompletedBy = null;
         this.ID = ID;
     }
-
 
     public String getNodeID() {
         return nodeID;
@@ -42,34 +51,48 @@ public class InterpreterRequest {
         return this.isComplete;
     }
 
-    public InterpreterRequest(String location, Timestamp dateTimeSubmitted, String description) {
-        this(-1, description, dateTimeSubmitted, null, location);
+    public Timestamp getDateTimeCompleted() {
+        return dateTimeCompleted;
+    }
+
+    public Timestamp getDateTimeRequest() {
+        return this.dateTimeRequest;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public String getCompletedBy() {
+        return userCompletedBy.getUsername();
+    }
+
+    public InterpreterRequest(String location, Timestamp dateTimeRequest, String description) {
+        this(-1, description, dateTimeRequest, null, location);
     }
 
     //Determines amount of time task was completed in
     public Date computeTimeDiff(){
-
         long end = dateTimeCompleted.getTime();
-        long start = dateTimeSubmitted.getTime();
+        long start = dateTimeRequest.getTime();
         return new Date(end - start);
 
     }
 
     @SuppressWarnings("Duplicates")
-    //Update the information in a SanitationRequest
     public boolean insert(){
-        boolean executed = false;
         String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED) values (?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.description);
-            ps.setTimestamp(3, this.dateTimeSubmitted);
+            ps.setTimestamp(3, this.dateTimeRequest);
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return executed;
+        return false;
     }
 
     
@@ -81,15 +104,15 @@ public class InterpreterRequest {
         boolean executed = false;
 
         String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
-        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeRequest.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.description);
-            ps.setTimestamp(3, this.dateTimeSubmitted);
+            ps.setTimestamp(3, this.dateTimeRequest);
             ps.setTimestamp(4, this.dateTimeCompleted);
-            ps.setString(5, this.userCompletedBy);
+            ps.setString(5, this.userCompletedBy.getUsername());
             executed = ps.execute(); //returns a boolean
         }
 
@@ -101,34 +124,27 @@ public class InterpreterRequest {
 
     }
 
-    // TODO we probably want a getActiveServiceRequests()
-
     //Returns an observable list of all ServiceRequests for JavaFX's sake
     public static ObservableList<InterpreterRequest> getAllServiceRequests() {
-
         ObservableList<InterpreterRequest> requests =  FXCollections.observableArrayList();
-
         try {
             Statement stmt = Main.database.getConnection().createStatement();
             String str = "SELECT * FROM INTERPRETERSERVICEREQUEST";
             ResultSet rs = stmt.executeQuery(str);
-
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
-                String type = rs.getString("type");
-                Date dateTimeSubmitted = rs.getDate("dateTimeSubmitted");
-                Date dateTimeResolved = rs.getDate("dateTimeCompleted");
-                String nodeID = rs.getString("nodeID");
-//                InterpreterRequest theSanitationRequest = new InterpreterRequest(ID, description, type, dateTimeSubmitted, dateTimeResolved, nodeID);
-//                requests.add(theSanitationRequest);
+                String username = rs.getString("USERSOLVEDBY");
+                Timestamp dateTimeRequest = rs.getTimestamp("dateTimeRequested");
+                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeSolved");
+                String nodeID = rs.getString("requestedLocation");
+                InterpreterRequest req = new InterpreterRequest(nodeID, description, dateTimeRequest, dateTimeResolved, dateTimeResolved != null, new User(username), ID);
+                requests.add(req);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return requests;
-
-
     }
 
 
@@ -136,14 +152,15 @@ public class InterpreterRequest {
         return ID;
     }
 
-    //Mark a SanitationRequest complete
+    @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMESOLVED = ?, USERSOLVEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
-            ps.setInt(2, this.getID());
+            ps.setString(2, Main.user.getUsername());
+            ps.setInt(3, this.getID());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
