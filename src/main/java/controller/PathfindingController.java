@@ -264,28 +264,34 @@ public class PathfindingController extends Controller implements Initializable {
         switch (floor) {
             case "3":
                 floorURL = "3_NoIcons.png";
+                currentButton = Floor3;
                 break;
             case "2":
                 floorURL = "2_NoIcons.png";
+                currentButton = Floor2;
                 break;
             case "1":
                 floorURL = "1_NoIcons.png";
+                currentButton = Floor1;
                 break;
             case "G":
                 floorURL = "00_thegroundfloor.png";
+                currentButton = Ground;
                 break;
             case "L1":
                 floorURL = "L1_NoIcons.png";
+                currentButton = L1;
                 break;
             case "L2":
                 floorURL = "L2_NoIcons.png";
+                currentButton = L2;
                 break;
             default:
                 System.out.println("Error in PathfindingController.updateFloorImg invalid floor");
                 floorURL = "01_thefirstfloor.png";
         }
 
-
+        changeColor2(currentButton);
         findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
         findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
