@@ -16,6 +16,7 @@ public class Booking {
     private Timestamp dateTimeEnd;
     private String userCompletedBy; //I have set this to a string so it matches w/ the database
     private int ID;
+    private BookableLocation bookedLocation;
 
     public Booking(String location, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, String userCompletedBy, int ID) {
         this.description = description;
@@ -24,6 +25,16 @@ public class Booking {
         this.userCompletedBy = userCompletedBy;
         this.ID = ID;
         this.location = location;
+    }
+
+    public Booking(String location, String description, Timestamp dateTimeStart, Timestamp dateTimeEnd, String userCompletedBy, int ID, BookableLocation bookedLocation) {
+        this.location = location;
+        this.description = description;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+        this.userCompletedBy = userCompletedBy;
+        this.ID = ID;
+        this.bookedLocation = bookedLocation;
     }
 
     public String getLocation() {
@@ -39,6 +50,10 @@ public class Booking {
         return this.userCompletedBy;
     }
 
+    public BookableLocation getBookedLocation() {
+        return bookedLocation;
+    }
+
     public static ObservableList<Booking> getCurrentBookings() {
         // TODO eventually this method should only fetch bookings that have not ended but like YOLO.
         ObservableList<Booking> result = FXCollections.observableArrayList();
@@ -48,6 +63,35 @@ public class Booking {
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
                 result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static LinkedList<Booking> getBookingsDuring(Timestamp time) {
+        LinkedList<Booking> result = new LinkedList<>();
+        String sqlStr = "select BOOKINGS.ID, LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY, B.ID AS B_ID, TYPE, TITLE, XCOORD, YCOORD from BOOKINGS LEFT JOIN BOOKINGLOCATIONS AS B ON BOOKINGS.LOCATION = B.ID where DATETIMESTART < ? and DATETIMEEND > ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            ps.setTimestamp(1,time);
+            ps.setTimestamp(2,time);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String location = rs.getString("LOCATION");
+                String description = rs.getString("DESCRIPTION");
+                Timestamp dateTimeStart = rs.getTimestamp("DATETIMESTART");
+                Timestamp dateTimeEnd = rs.getTimestamp("DATETIMEEND");
+                String user = rs.getString("USERCOMPLETEDBY");
+                int ID = rs.getInt("ID");
+                String BID = rs.getString("B_ID");
+                String type = rs.getString("type");
+                String title = rs.getString("title");
+                int x = rs.getInt("xcoord");
+                int y = rs.getInt("ycoord");
+                BookableLocation bookableLocation = new BookableLocation(BID, type, title, x, y);
+                result.add(new Booking(location, description, dateTimeStart, dateTimeEnd, user, ID, bookableLocation));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,7 +175,6 @@ public class Booking {
 
     //Insert a new booking into the database
     public boolean insert(){
-        boolean executed = false;
         String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY) values (?,?,?,?,?)";
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeStart.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
@@ -143,16 +186,15 @@ public class Booking {
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4,sqlEndDate);
             ps.setString(5, userCompletedBy);
-            executed = ps.execute(); //returns a boolean
-
-            System.out.println(executed);
+            ps.execute(); //returns a boolean
+            return true;
         }
 
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return executed;
+        return false;
 
     }
 }

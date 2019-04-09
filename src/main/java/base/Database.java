@@ -59,7 +59,7 @@ public final class Database {
             String ServiceRequestsTableUINDEX = "create unique index SERVICEREQUESTS_ID_uindex on SERVICEREQUESTS (ID)";
             String ServiceRequestsTablePK = "alter table SERVICEREQUESTS add constraint SERVICEREQUESTS_pk primary key (ID)";
             // create table of possible locations to book
-            String createBookingLocationsTable = "create table BOOKINGLOCATIONS(ID varchar(255) not null, TYPE varchar(255), TITLE varchar(255))";
+            String createBookingLocationsTable = "create table BOOKINGLOCATIONS(ID varchar(255) not null, TYPE varchar(255), TITLE varchar(255), XCOORD int not null , YCOORD int not null )";
             String BookingLocationsTableUINDEX = "create unique index BOOKINGLOCATIONS_ID_uindex on BOOKINGLOCATIONS (ID)";
             String BookingLocationsTablePK = "alter table BOOKINGLOCATIONS add constraint BOOKINGLOCATIONS_pk primary key (ID)";
             //create ITServiceRequestsTable
@@ -304,14 +304,18 @@ public final class Database {
                     String bookingLocationID = bookingLocationData[0];
                     String type = bookingLocationData[1];
                     String title = bookingLocationData[2];
+                    int XCOORD = Integer.parseInt(bookingLocationData[3]);
+                    int YCOORD = Integer.parseInt(bookingLocationData[4]);
                     // prepare the insert sql statement with room to insert variables
                     PreparedStatement ps = null;
-                    String sqlCmd = "insert into BOOKINGLOCATIONS (ID, TYPE, TITLE) values (?, ?, ?)";
+                    String sqlCmd = "insert into BOOKINGLOCATIONS (ID, TYPE, TITLE, XCOORD, YCOORD) values (?, ?, ?, ?, ?)";
                     try {
                         ps = this.getConnection().prepareStatement(sqlCmd);
                         ps.setString(1, bookingLocationID);
                         ps.setString(2, type);
                         ps.setString(3, title);
+                        ps.setInt(4, XCOORD);
+                        ps.setInt(5, YCOORD);
                         ps.execute();
                     } catch (SQLException e) {
                         if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
