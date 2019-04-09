@@ -49,6 +49,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Button Ground;
     @FXML private Button L1;
     @FXML private Button L2;
+    @FXML private JFXTextArea pathText;
 
 
 
@@ -241,6 +242,9 @@ public class PathfindingController extends Controller implements Initializable {
         phoneNumberBtn.setDisable(false);
         dancebtn.setVisible(true);
         hasPath = true;
+        PathToText pathToText = new PathToText(node_onPath);
+        pathText.setText(pathToText.getDetailedPath());
+
     }
 
     public void sendTextClick(ActionEvent actionEvent) {

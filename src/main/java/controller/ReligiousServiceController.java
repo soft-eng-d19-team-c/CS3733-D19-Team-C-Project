@@ -27,7 +27,7 @@ public class ReligiousServiceController extends Controller implements Initializa
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void sumbitButtonClick(ActionEvent actionEvent) {
+    public void submitButtonClick(ActionEvent actionEvent) {
         ReligiousService religiousServiceRequest = new ReligiousService(searchLocationController.getNodeID(), serviceDescription.getText());
         religiousServiceRequest.insert();
 

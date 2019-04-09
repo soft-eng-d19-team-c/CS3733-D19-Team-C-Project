@@ -76,5 +76,10 @@
       <JFXTextArea fx:id="phoneNumberInput" layoutX="14.0" layoutY="396.0" prefHeight="0.0" prefWidth="183.0" promptText="Phone number" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="430.0" />
       <JFXToggleButton fx:id="dancebtn" layoutX="39.0" layoutY="500.0" onAction="#Dancebtnclick" text="Dance party?" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="550.0">
       </JFXToggleButton>
+      <JFXTextArea fx:id="pathText" layoutX="24.0" layoutY="632.0" prefHeight="358.0" prefWidth="437.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </JFXTextArea>
    </children>
 </AnchorPane>
