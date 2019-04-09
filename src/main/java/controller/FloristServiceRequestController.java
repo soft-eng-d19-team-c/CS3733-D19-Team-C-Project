@@ -1,5 +1,7 @@
 package controller;
 
+import base.EnumScreenType;
+import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,13 +33,13 @@ public class FloristServiceRequestController extends Controller implements Initi
 
 
     public void sumbitBtnClick(ActionEvent actionEvent) {
-        String startNodeID = acSearchStartController.getNodeID();
-        String endNodeID = acSearchEndController.getNodeID();
-        String desc = description.getText();
-        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
-
-        FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
-
-        newServiceRequest.insert();
+//        String startNodeID = acSearchStartController.getNodeID();
+//        String endNodeID = acSearchEndController.getNodeID();
+//        String desc = description.getText();
+//        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
+//
+//        FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
+//
+//        newServiceRequest.insert();
     }
 }

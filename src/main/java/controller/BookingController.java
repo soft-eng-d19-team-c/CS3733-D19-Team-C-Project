@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import model.Booking;
 import model.BookableLocation;
@@ -31,6 +28,8 @@ public class BookingController extends Controller implements Initializable {
     private ComboBox<String> endTimeBox;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private Label errorLabel;
 
     //create booking object to be updated
     private ObservableList<BookableLocation> bookableLocations;
@@ -50,6 +49,7 @@ public class BookingController extends Controller implements Initializable {
         locationBox.setItems(bookableLocations);
         locationBox.setCellFactory(locationBoxFactory);
         locationBox.setButtonCell(locationBoxFactory.call(null));
+        errorLabel.setText("");
     }
 
 
@@ -68,10 +68,14 @@ public class BookingController extends Controller implements Initializable {
 
 
 
-        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user, 0);
-        b.insert();
-
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user.getUsername(), 0);
+        if(b.hasConflicts()){
+            errorLabel.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
+        }
+        else {
+            b.insert();
+            Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        }
     }
 
     private Callback<ListView<BookableLocation>, ListCell<BookableLocation>> locationBoxFactory = new Callback<ListView<BookableLocation>, ListCell<BookableLocation>>() {

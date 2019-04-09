@@ -45,23 +45,32 @@ public class PathToText {
             curr = nodesArray[i];
             next = nodesArray[i + 1];
 
-            Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
-            Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
+            if (!curr.getFloor().equals(next.getFloor())) {
+                if (curr.getFloorNumber() > next.getFloorNumber()) {
+                    textPath.append("Go down a floor at " + curr.getLongName() + "\n");
+                } else {
+                    textPath.append("Go up a floor at " + curr.getLongName() + "\n");
+                }
+            } else {
 
-            EnumDirectionType dir = v_prev.getDirection(v_next);
+                Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
+                Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
 
-            switch (dir) {
-                case LEFT:
-                    textPath.append("Take a left at " + curr.getLongName() + "\n");
-                    break;
-                case RIGHT:
-                    textPath.append("Take a right at " + curr.getLongName() + "\n");
-                    break;
-                case STRAIGHT:
-                    textPath.append("Continue straight past " + curr.getLongName() + "\n");
-                    break;
-                default:
-                    System.err.println("Default case in direction switch");
+                EnumDirectionType dir = v_prev.getDirection(v_next);
+
+                switch (dir) {
+                    case LEFT:
+                        textPath.append("Take a left at " + curr.getLongName() + "\n");
+                        break;
+                    case RIGHT:
+                        textPath.append("Take a right at " + curr.getLongName() + "\n");
+                        break;
+                    case STRAIGHT:
+                        textPath.append("Continue straight past " + curr.getLongName() + "\n");
+                        break;
+                    default:
+                        System.err.println("Default case in direction switch");
+                }
             }
         }
 

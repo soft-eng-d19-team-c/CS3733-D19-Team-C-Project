@@ -13,11 +13,21 @@ public class BookableLocation {
     private String ID;
     private String type;
     private String title;
+    private int x;
+    private int y;
 
     public BookableLocation(String ID, String type, String title) {
         this.ID = ID;
         this.type = type;
         this.title = title;
+    }
+
+    public BookableLocation(String ID, String type, String title, int x, int y) {
+        this.ID = ID;
+        this.type = type;
+        this.title = title;
+        this.x = x;
+        this.y = y;
     }
 
     public String getID() {
@@ -44,6 +54,13 @@ public class BookableLocation {
         this.title = title;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
     public static ObservableList<BookableLocation> getAllBookingLocations() {
         ObservableList<BookableLocation> result = FXCollections.observableArrayList();
@@ -52,7 +69,7 @@ public class BookableLocation {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
-                result.add(new BookableLocation(rs.getString("ID"), rs.getString("type"), rs.getString("title")));
+                result.add(new BookableLocation(rs.getString("ID"), rs.getString("type"), rs.getString("title"), rs.getInt("XCOORD"), rs.getInt("YCOORD")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
