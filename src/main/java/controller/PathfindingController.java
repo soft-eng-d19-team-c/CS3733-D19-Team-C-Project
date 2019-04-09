@@ -86,7 +86,7 @@ public class PathfindingController extends Controller implements Initializable {
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
-            changeColor2(currentButton);
+            changeColor(currentButton);
         });
     }
 
@@ -230,7 +230,10 @@ public class PathfindingController extends Controller implements Initializable {
         node_onPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
         somecolor = new Color(0, 1, 1, 1);
 //        drawNodes(node_onPath, somecolor);
-        findFloorsNeededColor( node_onPath);
+
+        //button colors
+        findFloorsNeededColor(node_onPath, currentFloor);
+
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         currentFloor = startNode.getFloor();
@@ -304,7 +307,8 @@ public class PathfindingController extends Controller implements Initializable {
                 floorURL = "01_thefirstfloor.png";
         }
 
-        changeColor2(currentButton);
+        //findFloorsNeededColor(node_onPath, currentFloor);
+        changeColor(currentButton);
         findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
         findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
@@ -351,36 +355,41 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
-        changeColor2(Floor3);
+        //changeColor(Floor3);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
-        changeColor2(Floor2);
+        //changeColor(Floor2);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
-        changeColor2(Floor1);
+       // changeColor(Floor1);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("Ground");
-        changeColor2(Ground);
+        //changeColor(Ground);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
-        changeColor2(L1);
+        //changeColor(L1);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
-        changeColor2(L2);
+        //changeColor(L2);
+        findFloorsNeededColor(node_onPath, currentFloor);
     }
 
-    public void changeColor2(Button button){
-        //findFloorsNeededColor(node_onPath); //to keep the floors blue that the path is on (after going to green once on floor)
+    public void changeColor(Button button){
 
         switch (currentFloor){
             case "3": currentButton = Floor3;
@@ -436,43 +445,76 @@ public class PathfindingController extends Controller implements Initializable {
 
                 break;
         }
+        //findFloorsNeededColor(node_onPath); //to keep the floors blue that the path is on (after going to green once on floor)
     }
 
-    public void findFloorsNeededColor(LinkedList<Node> node_onPath){
+    public void findFloorsNeededColor(LinkedList<Node> node_onPath, String currentFloor){
         //if the floor has paths drawn on it setStyle(" -fx-background-color: -primary")
         LinkedList<String> allFloors = new LinkedList<>();
-        for(int i = 1; i <= node_onPath.size(); i ++){
+        for(int i = 0; i < node_onPath.size(); i++){
             String floor = node_onPath.get(i).getFloor();
            if(allFloors.size() < 6) {
+               System.out.println(i);
                if (! allFloors.contains(floor)){
-                   System.out.println(allFloors);
                    allFloors.add(floor);
+                   System.out.println(allFloors);
                }
            }
-
         }
-        System.out.println(allFloors.size());
+
         for(int i=0; i <= allFloors.size(); i++){
             String floor = allFloors.get(i);
-            System.out.println(allFloors.get(i));
             switch (floor){
                 case "3": Floor3.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
                 case "2": Floor2.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
                 case "1": Floor1.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
                 case "Ground": Ground.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
                 case "L1": L1.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
                 case "L2": L2.setStyle("-fx-background-color: -primary");
-                break;
+                    break;
             }
+            switch (currentFloor){
+                case "3": Floor3.setStyle("-fx-background-color: -success");
+                    break;
+                case "2": Floor2.setStyle("-fx-background-color: -success");
+                    break;
+                case "1": Floor1.setStyle("-fx-background-color: -success");
+                    break;
+                case "Ground": Ground.setStyle("-fx-background-color: -success");
+                    break;
+                case "L1": L1.setStyle("-fx-background-color: -success");
+                    break;
+                case "L2": L2.setStyle("-fx-background-color: -success");
+                    break;
+            }
+
+            if((! (floor == currentFloor)) && (!( allFloors.contains(floor)))) {
+                switch (floor){
+                    case "3": Floor3.setStyle("-fx-background-color: -secondary");
+                        break;
+                    case "2": Floor2.setStyle("-fx-background-color: -secondary");
+                        break;
+                    case "1": Floor1.setStyle("-fx-background-color: -secondary");
+                        break;
+                    case "Ground": Ground.setStyle("-fx-background-color: -secondary");
+                        break;
+                    case "L1": L1.setStyle("-fx-background-color: -secondary");
+                        break;
+                    case "L2": L2.setStyle("-fx-background-color: -secondary");
+                        break;
+                }
+            }
+
 
         }
 
     }
+
 
 }
 
