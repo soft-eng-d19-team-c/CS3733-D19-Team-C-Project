@@ -35,11 +35,11 @@
       </Button>
         <AnchorPane layoutX="12.0" layoutY="9.0" prefHeight="100.0" prefWidth="210.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" /></AnchorPane>
         <AnchorPane layoutX="615.0" layoutY="219.0" prefHeight="131.0" prefWidth="359.0" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="219.0">
-         <fx:include fx:id="acSearchStart" source="autocompleteSearchBar.fxml" />
+         <fx:include fx:id="acSearchStart" source="bigAutoCompleteBar.fxml" />
 
       </AnchorPane>
         <AnchorPane layoutX="1116.0" layoutY="219.0" prefHeight="131.0" prefWidth="359.0" AnchorPane.leftAnchor="1116.0" AnchorPane.topAnchor="219.0">
-            <fx:include fx:id="acSearchEnd" source="autocompleteSearchBar.fxml" />
+            <fx:include fx:id="acSearchEnd" source="bigAutoCompleteBar.fxml" />
 
         </AnchorPane>
         <TextField fx:id="description" layoutX="757.0" layoutY="602.0" prefHeight="178.0" prefWidth="485.0" promptText="Please Type Flower Company and Description of the Flowers" AnchorPane.leftAnchor="757.0" AnchorPane.topAnchor="602.0" />

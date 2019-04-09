@@ -27,7 +27,7 @@
                   <Font size="47.0" />
                </font>
             </CheckBox>
-                <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+                <fx:include fx:id="autoCompleteText" source="bigAutoCompleteBar.fxml" />
                 <JFXTextArea fx:id="description" focusColor="#b82020" promptText="Description of the Issue">
                     <VBox.margin>
                         <Insets left="20.0" right="20.0" />

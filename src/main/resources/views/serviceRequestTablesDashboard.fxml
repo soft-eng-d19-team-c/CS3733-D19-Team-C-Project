@@ -207,7 +207,5 @@
       <VBox>
          <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       </VBox>
-
    </children>
-
 </AnchorPane>

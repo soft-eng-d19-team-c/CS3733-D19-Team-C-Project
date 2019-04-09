@@ -25,7 +25,7 @@
          </font>
       </Text>
        <AnchorPane layoutX="105.0" layoutY="387.0" prefHeight="100.0" prefWidth="379.0">
-            <fx:include fx:id="autoCompleteText" source="autocompleteSearchBar.fxml" />
+            <fx:include fx:id="autoCompleteText" source="bigAutoCompleteBar.fxml" />
        </AnchorPane>
       <Text layoutX="107.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" AnchorPane.leftAnchor="200.0">
          <font>
