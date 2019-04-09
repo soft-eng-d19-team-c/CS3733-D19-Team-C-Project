@@ -57,14 +57,16 @@ public class EditMapController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         algosMenu.setOnAction(null);
+        floorsMenu.setOnAction(null);
         mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
                         "L1",
-                        "Floor 1",
-                        "Floor 2",
-                        "Floor 3");
+                        "G",
+                        "1",
+                        "2",
+                        "3");
         ObservableList<String> differentAlgorithms = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         Main.info.ASTAR.getAlgorithmName(),
@@ -79,6 +81,13 @@ public class EditMapController extends Controller implements Initializable {
 
             floorsMenu.setItems(differentFloors);
             floorsMenu.setValue((String) Main.screenController.getData("floor"));
+            floorsMenu.setOnAction((event) -> {
+                String selectedFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                nodes = Node.getNodesByFloor(selectedFloor);
+                edges = Edge.getEdgesByFloor(selectedFloor);
+                drawNodes();
+            });
+
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
