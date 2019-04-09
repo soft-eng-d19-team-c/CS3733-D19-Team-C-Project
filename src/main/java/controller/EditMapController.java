@@ -49,6 +49,9 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Circle> nodeCircles;
 
+    private boolean addEdgeHandler_on = false;
+    private String currentFloor;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -58,7 +61,17 @@ public class EditMapController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         algosMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
-        mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
+        if (Main.screenController.getData("floor") != null)
+            currentFloor = (String) Main.screenController.getData("floor");
+        if (currentFloor == null)
+            currentFloor = Main.info.getKioskLocation().getFloor();
+        if (currentFloor == null)
+            currentFloor = "L1";
+        if (currentFloor.equals("G")) {
+            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+        } else {
+            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
+        }
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
@@ -75,22 +88,26 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DFS.getAlgorithmName());
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
-            nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
-            edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
+            nodes = Node.getNodesByFloor(currentFloor);
+            edges = Edge.getEdgesByFloor(currentFloor);
             drawNodes();
 
             floorsMenu.setItems(differentFloors);
-            floorsMenu.setValue((String) Main.screenController.getData("floor"));
+            floorsMenu.setValue(currentFloor);
             floorsMenu.setOnAction((event) -> {
-                String selectedFloor = floorsMenu.getSelectionModel().getSelectedItem();
-                if (selectedFloor.equals("G")) {
+                nodeCircles.clear();
+                currentFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                if (currentFloor.equals("G")) {
                     mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
                 } else {
-                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + selectedFloor + "_NoIcons.png"))));
+                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
                 }
-                nodes = Node.getNodesByFloor(selectedFloor);
-                edges = Edge.getEdgesByFloor(selectedFloor);
+                nodes = Node.getNodesByFloor(currentFloor);
+                edges = Edge.getEdgesByFloor(currentFloor);
                 drawNodes();
+                if (addEdgeHandler_on) {
+                    addPathButtonClick(new ActionEvent());
+                }
             });
 
             algosMenu.setItems(differentAlgorithms);
@@ -186,6 +203,7 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+        addEdgeHandler_on = true;
     }
 
     public void editNodeButtonClick(ActionEvent e){
@@ -288,7 +306,7 @@ public class EditMapController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 double randID = new Random().nextDouble();
                 double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), (String) Main.screenController.getData("floor"), "", "CUSTOM", "New Node", "New Custom Node");
+                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), currentFloor, "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
                 n.insert();
                 mapImgPane.getScene().setCursor(Cursor.DEFAULT);
