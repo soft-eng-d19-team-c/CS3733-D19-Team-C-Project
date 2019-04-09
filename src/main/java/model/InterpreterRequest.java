@@ -16,8 +16,7 @@ public class InterpreterRequest {
     private Timestamp dateTimeSubmitted;
     private Timestamp dateTimeCompleted;
     private boolean isComplete;
-    private User userCompletedBy;
-    private User userRequestedBy;
+    private String userCompletedBy;
     private int ID;
 
     public InterpreterRequest(int ID, String description, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, String nodeID) {
@@ -27,7 +26,6 @@ public class InterpreterRequest {
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = dateTimeCompleted != null;
         this.userCompletedBy = null;
-        this.userRequestedBy = null;
         this.ID = ID;
     }
 
@@ -84,15 +82,16 @@ public class InterpreterRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, TYPE, DATETIMESUBMITTED) values (?,?,?,?)";
+        String sqlCmd = "insert into SERVICEREQUESTS (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, nodeID);
-            ps.setString(2, description);
-//            ps.setString(3, type);
-            ps.setDate(4, sqlSubmitDate);
+            ps.setString(1, this.nodeID);
+            ps.setString(2, this.description);
+            ps.setTimestamp(3, this.dateTimeSubmitted);
+            ps.setTimestamp(4, this.dateTimeCompleted);
+            ps.setString(5, this.userCompletedBy);
             executed = ps.execute(); //returns a boolean
         }
 
