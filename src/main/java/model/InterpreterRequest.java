@@ -57,18 +57,14 @@ public class InterpreterRequest {
 
     @SuppressWarnings("Duplicates")
     //Update the information in a SanitationRequest
-    public boolean update(){
+    public boolean insert(){
         boolean executed = false;
-
-        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED) values (?,?,?,?)";
-        java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
-        java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED) values (?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.description);
             ps.setTimestamp(3, this.dateTimeSubmitted);
-//            ps.setTimestamp(4, this.dateTimePickup);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,11 +75,12 @@ public class InterpreterRequest {
     
 
     //Insert a new Interpreter into the database
-    public boolean insert(){
+    public boolean update(){
+        // TODO
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
+        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
@@ -113,7 +110,7 @@ public class InterpreterRequest {
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM SERVICEREQUESTS";
+            String str = "SELECT * FROM INTERPRETERSERVICEREQUEST";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -141,7 +138,7 @@ public class InterpreterRequest {
 
     //Mark a SanitationRequest complete
     public boolean resolve() {
-        String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
