@@ -56,6 +56,7 @@ public class PathfindingController extends Controller implements Initializable {
     private Color somecolor;
 
     private String findLocationNodeID;
+    private static final int MIN_PIXELS = 10;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -64,7 +65,10 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: setimage
+        Image myImage = new Image(String.valueOf(getClass().getResource("/img/" + (String) Main.screenController.getData("floor") + "_NoIcons.png")));
+        findpathmap.setImage(myImage);
+        findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
+        setImageI(myImage);
         Platform.runLater(() -> {
 
             searchController_destController.refresh();
@@ -257,11 +261,8 @@ public class PathfindingController extends Controller implements Initializable {
         dancePartyNode(node_onPath);
     }
 
-    private void setImage(int imageId) {
-        Image selectedImage = new Image(String.valueOf(getClass().getResource("/img/" + (String) Main.screenController.getData("floor") + "_NoIcons.png")));
-        findpathmap = setImageView(selectedImage);
-        findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
-
+    private void setImageI(Image image) {
+        findpathmap.setImage(image);
 
         //zoom
         double width = findpathmap.getImage().getWidth();
@@ -329,7 +330,7 @@ public class PathfindingController extends Controller implements Initializable {
         });
 
         findpathmap.setPreserveRatio(true);
-        mapImgPane.setCenter(findpathmap);
+        //mapImgPane.setCenter(findpathmap);
 
         findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
         findpathmap.fitHeightProperty().bind(mapImgPane.heightProperty());
@@ -378,9 +379,8 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     private ImageView setImageView(Image image) {
-
         ImageView imageView = new ImageView();
-        imageView.setImage(new javafx.scene.image.Image("file:" + image.getAbsPathI()));
+        imageView.setImage(image);
 
         double w;
         double h;
