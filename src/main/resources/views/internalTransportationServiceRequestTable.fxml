@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DOESNOTEXISTYET">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InternalTransportationRequestTableController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="980.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1710.0" AnchorPane.topAnchor="0.0" />
         <Button fx:id="resolveRequest" layoutX="438.0" layoutY="359.0" maxHeight="52.0" maxWidth="182.0" mnemonicParsing="false" onAction="#revolveRequestButtonClicked" prefHeight="52.0" prefWidth="182.0" text="Resolve Request" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
@@ -28,8 +28,10 @@
                 </Label>
                 <TableView fx:id="dataTable" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn id="issue" fx:id="issue" minWidth="-1.0" prefWidth="75.0" text="Issue" />
-                        <TableColumn id="location" fx:id="locationCol" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
+                        <TableColumn id="locationFrom" fx:id="locationFrom" minWidth="-1.0" prefWidth="63.383392333984375" text="Location From" />
+                        <TableColumn id="locationTo" fx:id="locationTo" minWidth="-1.0" prefWidth="63.383392333984375" text="Location To" />
+                        <TableColumn id="pickupTime" fx:id="pickupTime" minWidth="-1.0" prefWidth="63.383392333984375" text="Pickup Time" />
+                        <TableColumn id="requestedBy" fx:id="requestedBy" minWidth="-1.0" prefWidth="63.383392333984375" text="Requested By" />
                         <TableColumn id="Description" fx:id="Description" minWidth="-1.0" prefWidth="74.39031982421875" text="Description" />
                         <TableColumn fx:id="isCompleted" prefWidth="75.0" text="Completed?" />
                     </columns>
