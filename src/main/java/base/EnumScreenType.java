@@ -23,7 +23,8 @@ public enum EnumScreenType {
     ITSERVICE("/views/itService.fxml"),
     GIFTSTORESERVICE("/views/giftStoreService.fxml"),
     RELIGIOUSSERVICE("/views/religiousservices.fxml"),
-    FLORISTSERVICE("/views/FloristServiceRequest.fxml");
+    FLORISTSERVICE("/views/FloristServiceRequest.fxml"),
+    BOOKLOCATIONMAP("/views/bookLocationMap.fxml");
 
     protected String path;
 
