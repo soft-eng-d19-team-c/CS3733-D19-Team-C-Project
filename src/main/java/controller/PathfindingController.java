@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
@@ -25,7 +24,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import model.*;
+import model.Edge;
+import model.Node;
+import model.PathToText;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -93,6 +94,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findpathmap.getLayoutX();
         double mapY = findpathmap.getLayoutY();
         double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
+        System.out.println("TEST: " + currentFloor);
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -122,28 +124,30 @@ public class PathfindingController extends Controller implements Initializable {
     private void dancePartyNode(LinkedList<Node> nodes) {
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         if (dancebtn.isSelected()) {
-            String prev = null;
+            Node prev = null;
             double mapX = findpathmap.getLayoutX();
             double mapY = findpathmap.getLayoutY();
             double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
             for (Node n : nodes) {
-                Circle circle = new Circle();
-                circle.setCenterX(mapX + n.getX() / mapScale);
-                circle.setCenterY(mapY + n.getY() / mapScale);
-                circle.setRadius(3.0 + (new Random().nextDouble() * 3.0));
-                circle.getProperties().put("node", n);
-                Color c1 = randomColorGenerator();
-                Color c2 = randomColorGenerator();
-                FillTransition ft = new FillTransition(Duration.millis(517), circle, c1, c2);
-                ft.setAutoReverse(true);
-                ft.setCycleCount(Animation.INDEFINITE);
-                ft.play();
-                if (prev != null) {
-                    drawDancingline(prev, n.getID());
+                if (n.getFloor().equals(currentFloor)) {
+                    Circle circle = new Circle();
+                    circle.setCenterX(mapX + n.getX() / mapScale);
+                    circle.setCenterY(mapY + n.getY() / mapScale);
+                    circle.setRadius(3.0 + (new Random().nextDouble() * 3.0));
+                    circle.getProperties().put("node", n);
+                    Color c1 = randomColorGenerator();
+                    Color c2 = randomColorGenerator();
+                    FillTransition ft = new FillTransition(Duration.millis(517), circle, c1, c2);
+                    ft.setAutoReverse(true);
+                    ft.setCycleCount(Animation.INDEFINITE);
+                    ft.play();
+                    if (prev != null && prev.getFloor().equals(currentFloor)) {
+                        drawDancingline(prev.getID(), n.getID());
+                    }
+                    mapImgPane.getChildren().add(circle);
+                    nodeCircles.put(n.getID(), circle);
                 }
-                mapImgPane.getChildren().add(circle);
-                nodeCircles.put(n.getID(), circle);
-                prev = n.getID();
+                prev = n;
             }
             for (Circle c : nodeCircles.values()) {
                 c.toFront();
@@ -228,6 +232,7 @@ public class PathfindingController extends Controller implements Initializable {
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         currentFloor = startNode.getFloor();
+        System.out.println(currentFloor);
         updateFloorImg(startNode.getFloor());
         generateNodes(node_onPath);
         Node last = Node.getNodeByID(searchController_destController.getNodeID());

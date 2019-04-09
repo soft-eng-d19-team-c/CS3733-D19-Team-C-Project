@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,7 +23,6 @@ import javafx.scene.shape.Line;
 import model.Edge;
 import model.Node;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -100,6 +98,9 @@ public class EditMapController extends Controller implements Initializable {
         }
         for (Edge e : edges){
             generateEdge(e);
+        }
+        for (Circle c : nodeCircles.values()) {
+            c.toFront();
         }
     }
     @SuppressWarnings("Duplicates")
