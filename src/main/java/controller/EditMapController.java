@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.shape.Line;
 import model.Edge;
 import model.Node;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -165,6 +167,7 @@ public class EditMapController extends Controller implements Initializable {
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, setKioskNodeHandler);
                 // add event handler for mouse click on node
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
             }
@@ -196,6 +199,7 @@ public class EditMapController extends Controller implements Initializable {
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, setKioskNodeHandler);
                 // add event handler for mouse click on node
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
             }
@@ -212,8 +216,25 @@ public class EditMapController extends Controller implements Initializable {
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, setKioskNodeHandler);
                 // add event handler for mouse click on node
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
+            }
+        }
+        mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void setKioskButtonClick(ActionEvent e){
+        for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+            if (node.getProperties().containsKey("node")) {
+                // remove drag from nodes when adding path
+                node.removeEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
+                // add event handler for mouse click on node
+                node.addEventFilter(MouseEvent.MOUSE_PRESSED, setKioskNodeHandler);
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
@@ -409,6 +430,20 @@ public class EditMapController extends Controller implements Initializable {
                 HashMap<String, Object> hm = new HashMap<>();
                 hm.put("node", n);
                 Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
+            }
+        }
+    };
+
+    EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                }
+                Circle circle = (Circle) me.getTarget();
+                Node n = (Node) circle.getProperties().get("node");
+                Main.info.setKioskLocation(n);
             }
         }
     };
