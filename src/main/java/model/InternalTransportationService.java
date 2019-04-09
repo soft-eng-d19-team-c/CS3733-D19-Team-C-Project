@@ -54,11 +54,13 @@ public class InternalTransportationService {
         return pickUpTime;
     }
 
-    public User getRequestedBy() {
-        return requestedBy;
+    public String getRequestedBy() {
+        if (this.requestedBy != null)
+            return requestedBy.getUsername();
+        return "User not found";
     }
 
-    public boolean isComplete() {
+    public boolean getIsComplete() {
         return isComplete;
     }
 
@@ -76,8 +78,8 @@ public class InternalTransportationService {
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
-            ps.setTimestamp(4, ts);
-            ps.setTimestamp(5, this.pickUpTime);
+            ps.setTimestamp(1, ts);
+            ps.setTimestamp(4, this.pickUpTime);
 
             executed = ps.execute(); //returns a boolean
         }
@@ -115,6 +117,7 @@ public class InternalTransportationService {
 
     }
 
+    @SuppressWarnings("Duplicates")
     public boolean resolve() {
         String str = "UPDATE INTERNALTRANSPORTATION SET DATETIMERESOLVED = ? WHERE ID = ?";
         try {
@@ -144,7 +147,7 @@ public class InternalTransportationService {
                 String description = rs.getString("description");
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp pickUpTime = rs.getTimestamp("PICKUPTIME");
-                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMERESOLVED");
+                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
                 String nodeID = rs.getString("NODEID");
                 String nodeIDDest = rs.getString("NODEIDDEST");
                 InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved);
