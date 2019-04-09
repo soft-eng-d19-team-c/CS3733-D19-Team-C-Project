@@ -37,7 +37,7 @@ public class InternalTransportationController  extends Controller implements Ini
         description.setText(null);
 
     }
-    public void sumbitBtnClick(ActionEvent actionEvent) {
+    public void submitBtnClick(ActionEvent actionEvent) {
         LocalDate date = dateField.getValue();
         LocalTime time = timeField.getValue();
         Calendar cal = Calendar.getInstance();
