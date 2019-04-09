@@ -23,6 +23,7 @@ public enum EnumScreenType {
     GIFTSTORESERVICE("/views/giftStoreService.fxml"),
     RELIGIOUSSERVICE("/views/religiousservices.fxml"),
     FLORISTSERVICE("/views/FloristServiceRequest.fxml"),
+    BOOKLOCATIONMAP("/views/bookLocationMap.fxml"),
     // service request tables,
     SERVICEREQUESTTABLESDASHBOARD("/views/serviceRequestTablesDashboard.fxml"),
     SANITATIONSERVICETABLE("/views/sanitationServiceRequestTable.fxml"),

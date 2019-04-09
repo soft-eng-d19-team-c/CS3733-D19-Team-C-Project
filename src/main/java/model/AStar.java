@@ -19,6 +19,9 @@ public class AStar implements IPathFind{
         // list of nodes kept in nodeList
         int count = 0;
 
+//        System.out.println("Start Node: " + startNode + " \nEnd Node" + endNode);
+
+
         HashMap<Node, PathValue> pathValues = new HashMap<>();
         pathValues.put(startNode, new PathValue(startNode));
 

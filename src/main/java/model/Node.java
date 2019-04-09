@@ -251,13 +251,14 @@ public class Node {
     //used when determining the distance between floors
     public int getFloorNumber(){
         switch (this.floor){
-            case "3": return 4;
-            case "2": return 3;
-            case "1": return 2;
+            case "3": return 5;
+            case "2": return 4;
+            case "1": return 3;
+            case "G": return 2;
             case "L1": return 1;
             case "L2": return 0;
             default:
-                System.out.println("Error in node.getfloornumber");
+                System.out.println("Error in node.getfloornumber couldn't find floor: " + this.floor);
                 return -1;
 
         }
