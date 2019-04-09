@@ -33,7 +33,7 @@ public class InterpreterServiceController extends Controller implements Initiali
     //save the service request to the database, to late view
     //set screen back to the dashboard
     public void submitButtonClick(ActionEvent actionEvent) {
-        SanitationRequest sanitationRequest = new SanitationRequest(type.getText(), autoCompleteTextController.getNodeID(), description.getText());
+        SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
         sanitationRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
