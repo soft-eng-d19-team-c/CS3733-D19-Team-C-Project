@@ -75,3 +75,7 @@
 .btn-success:hover,.btn-success:pressed {
     -fx-background-color: -success-dark;
 }
+.screen-background{
+    -fx-background-image: url("../img/Screen Saver@2x.png");
+    -fx-background-size: cover, auto;
+}

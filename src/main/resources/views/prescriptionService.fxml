@@ -5,6 +5,8 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -13,7 +15,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrescriptionServiceController">
    <children>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <VBox alignment="CENTER" layoutX="140.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+      <VBox alignment="CENTER" layoutX="140.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="200.0">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Prescription Request">
                <font>
@@ -26,12 +28,12 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
                <font>
-                  <Font size="20.0" />
+                  <Font size="40.0" />
                </font>
             </JFXTextArea>
             <JFXTextArea fx:id="prescriptionDescription" focusColor="#b82020" promptText="Prescription Description">
                <font>
-                  <Font size="20.0" />
+                  <Font size="40.0" />
                </font>
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
@@ -48,6 +50,9 @@
                         <String fx:value="btn-success" />
                         <String fx:value="btn-lg" />
                      </styleClass>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </JFXButton>
                   <VBox prefHeight="200.0" prefWidth="100.0" />
                   <JFXButton fx:id="submitButton" alignment="CENTER" buttonType="RAISED" onAction="#submitButtonClick" text="Submit" textAlignment="CENTER">
@@ -61,8 +66,16 @@
                      </styleClass>
                   </JFXButton>
                </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
+      <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../img/Perscriptions.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
