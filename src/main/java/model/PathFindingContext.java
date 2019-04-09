@@ -120,7 +120,9 @@ public class PathFindingContext {
     private LinkedList<Node> createPath(Node goalNode, Node endNode, HashMap<Node, PathValue> pathValues) {
         LinkedList<Node> path = new LinkedList<>();
         Node temp = goalNode;
-        while (!temp.equals(endNode)) {
+        path.add(temp);
+
+        while (!temp.equals(endNode)){
             temp = pathValues.get(temp).getPreviousNode();
             path.add(temp);
         }
