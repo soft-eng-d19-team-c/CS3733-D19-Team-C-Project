@@ -22,7 +22,7 @@
                         <Font size="80.0" />
                     </font>
                 </Label>
-            <CheckBox fx:id="urgentCheckBox" mnemonicParsing="false" text="URGENT">
+            <CheckBox mnemonicParsing="false" text="URGENT" fx:id="urgentCheckBox">
                <font>
                   <Font size="47.0" />
                </font>
