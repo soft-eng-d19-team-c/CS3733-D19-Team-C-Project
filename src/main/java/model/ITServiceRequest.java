@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Date;
 
 /**
  * ITServiceRequest for requesting assistance from IT
@@ -35,6 +34,7 @@ public class ITServiceRequest {
     public ITServiceRequest(String description, String nodeID) {
         this.description = description;
         this.nodeID = nodeID;
+        this.userRequestedBy = Main.user;
     }
 
     public String getDescription() {
@@ -90,8 +90,8 @@ public class ITServiceRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (DESCRIPTION, DATETIMESUBMITTED, USERSUBMITTEDBY, NODEID, ID) values (?,?,?,?,?,?)";
-        java.sql.Timestamp sqlSubmitDate = new java.sql.Timestamp(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "insert into ITSERVICEREQUESTS (DESCRIPTION, DATETIMESUBMITTED, USERREQUESTEDBY, NODEID) values (?,?,?,?)";
+        java.sql.Timestamp sqlSubmitDate = new java.sql.Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
@@ -99,7 +99,6 @@ public class ITServiceRequest {
             ps.setTimestamp(2, sqlSubmitDate);
             ps.setString(3, userRequestedBy.getUsername());
             ps.setString(4, nodeID);
-            ps.setInt(5, ID);
 
             executed = ps.execute(); //returns a boolean
         }
