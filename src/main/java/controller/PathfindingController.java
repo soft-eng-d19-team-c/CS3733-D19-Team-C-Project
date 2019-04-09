@@ -34,14 +34,22 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
-    @FXML private ToggleButton dancebtn;
-    @FXML private ImageView findpathmap;
-    @FXML private AnchorPane findpathview;
-    @FXML private Pane mapImgPane;
-    @FXML private AutocompleteSearchBarController searchController_origController;
-    @FXML private AutocompleteSearchBarController searchController_destController;
-    @FXML private JFXTextArea phoneNumberInput;
-    @FXML private Button phoneNumberBtn;
+    @FXML
+    private ToggleButton dancebtn;
+    @FXML
+    private ImageView findpathmap;
+    @FXML
+    private AnchorPane findpathview;
+    @FXML
+    private Pane mapImgPane;
+    @FXML
+    private AutocompleteSearchBarController searchController_origController;
+    @FXML
+    private AutocompleteSearchBarController searchController_destController;
+    @FXML
+    private JFXTextArea phoneNumberInput;
+    @FXML
+    private Button phoneNumberBtn;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -153,7 +161,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     private void drawNodes(LinkedList<Node> nodes_p, LinkedList<Edge> edges_p, Color c) {
-        Color w = new Color(1,1,1,1);
+        Color w = new Color(1, 1, 1, 1);
         findpathview.setBackground(new Background(new BackgroundFill(w, null, null)));
         ColorAdjust reset = new ColorAdjust();
         reset.setBrightness(0);
@@ -165,10 +173,10 @@ public class PathfindingController extends Controller implements Initializable {
         final double[] orgSceneX = new double[1];
         final double[] orgSceneY = new double[1];
 
-        for (Node n : nodes_p){
+        for (Node n : nodes_p) {
             generateNode(n, orgSceneX, orgSceneY, mapX, mapY, c);
         }
-        for (Edge e : edges_p){
+        for (Edge e : edges_p) {
             generateEdge(e, c);
         }
     }
@@ -193,26 +201,34 @@ public class PathfindingController extends Controller implements Initializable {
         orgSceneY[0] = -1;
         Circle circle = new Circle();
         double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
-        circle.setCenterX(mapX + n.getX()/mapScale);
-        circle.setCenterY(mapY + n.getY()/mapScale);
+        circle.setCenterX(mapX + n.getX() / mapScale);
+        circle.setCenterY(mapY + n.getY() / mapScale);
         circle.setRadius(3.0);
         circle.setFill(c);
         mapImgPane.getChildren().add(circle);
         nodeCircles.put(n.getID(), circle);
     }
+
     public void gobtnclick(ActionEvent actionEvent) {
         String orgi_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         node_onPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
-        somecolor = new Color(0,1,1,1);
+        somecolor = new Color(0, 1, 1, 1);
 //        drawNodes(node_onPath, somecolor);
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
+        currentFloor = startNode.getFloor();
+        updateFloorImg(startNode.getFloor());
         generateNodes(node_onPath);
+        Node last = Node.getNodeByID(searchController_destController.getNodeID());
+        node_onPath.add(last);
+        System.out.println(node_onPath);
         phoneNumberBtn.setDisable(false);
         dancebtn.setVisible(true);
+        hasPath = true;
     }
 
-    public void sendTextClick(ActionEvent actionEvent){
+    public void sendTextClick(ActionEvent actionEvent) {
         String phoneNumber = phoneNumberInput.getText();
         PathToText pathToText = new PathToText(node_onPath);
         String path = pathToText.getDetailedPath();
@@ -220,7 +236,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     }
 
-    private Color randomColorGenerator(){
+    private Color randomColorGenerator() {
         Random rand = new Random();
         double r = rand.nextDouble();
         double g = rand.nextDouble();
@@ -233,22 +249,48 @@ public class PathfindingController extends Controller implements Initializable {
         dancePartyNode(node_onPath);
     }
 
-    public void updateFloorImg(String floor){
-        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floor + "_NoIcons.png"))));
+    public void updateFloorImg(String floor) {
+        String floorURL;
+        switch (floor) {
+            case "3":
+                floorURL = "3_NoIcons.png";
+                break;
+            case "2":
+                floorURL = "2_NoIcons.png";
+                break;
+            case "1":
+                floorURL = "1_NoIcons.png";
+                break;
+            case "G":
+                floorURL = "00_thegroundfloor.png";
+                break;
+            case "L1":
+                floorURL = "L1_NoIcons.png";
+                break;
+            case "L2":
+                floorURL = "L2_NoIcons.png";
+                break;
+            default:
+                System.out.println("Error in PathfindingController.updateFloorImg invalid floor");
+                floorURL = "01_thefirstfloor.png";
+        }
+
+
+        findpathmap.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
         findpathmap.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
 
 
-    public void displayAllNodes(){
+    public void displayAllNodes() {
         searchController_destController.refresh();
         searchController_origController.refresh();
 
-        findLocationNodeID = (String)Main.screenController.getData("nodeID");
+        findLocationNodeID = (String) Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
         nodes = Node.getNodesByFloor(currentFloor);
         edges = Edge.getEdgesByFloor(currentFloor);
-        black = new Color(0,0,0,1);
+        black = new Color(0, 0, 0, 1);
         drawNodes(nodes, edges, black);
 
         if (findLocationNodeID != null) {
@@ -267,17 +309,16 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
-    public void changeFloor(String floor){
+    public void changeFloor(String floor) {
         currentFloor = floor;
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         updateFloorImg(floor);
-        if(hasPath){
+        if (hasPath) {
             generateNodes(node_onPath);
         } else {
             displayAllNodes();
         }
     }
-
 
     public void level3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
@@ -292,7 +333,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
-        changeFloor("Ground");
+        changeFloor("G");
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
