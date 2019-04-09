@@ -42,11 +42,28 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private AutocompleteSearchBarController searchController_destController;
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private Button phoneNumberBtn;
+    @FXML private Button Floor3;
+    @FXML private Button Floor2;
+    @FXML private Button Floor1;
+    @FXML private Button Ground;
+    @FXML private Button L1;
+    @FXML private Button L2;
+    
+    
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> node_onPath;
     private HashMap<String, Circle> nodeCircles;
+
+    private LinkedList<Button> allButtons = new LinkedList<Button>() {{
+        add(Floor3);
+        add(Floor2);
+        add(Floor1);
+        add(Ground);
+        add(L1);
+        add(L2);
+    }};
 
     private Color black;
     private Color somecolor;
@@ -54,6 +71,7 @@ public class PathfindingController extends Controller implements Initializable {
     private String findLocationNodeID;
     private String currentFloor;
     private boolean hasPath;
+    private Button currentButton;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -64,9 +82,26 @@ public class PathfindingController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
+        System.out.println(allButtons);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
+            
+            switch (currentFloor){
+                case "3": currentButton = Floor3;
+                        break;
+                case "2": currentButton = Floor2;
+                    break;
+                case "1": currentButton = Floor1;
+                    break;
+                case "Ground": currentButton = Ground;
+                    break;
+                case "L1": currentButton = L1;
+                    break;
+                case "L2": currentButton = L2;
+                    break;    
+            }
+            changeColor(currentButton);
         });
     }
 
@@ -279,28 +314,53 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
 
-    public void level3BtnClick(ActionEvent actionEvent) {
+    public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
+        changeColor(Floor3);
     }
 
-    public void level2BtnClick(ActionEvent actionEvent) {
+    public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
+        changeColor(Floor2);
     }
 
-    public void level1BtnClick(ActionEvent actionEvent) {
+    public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
+        changeColor(Floor1);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("Ground");
+        changeColor(Ground);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
+        changeColor(L1);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
+        changeColor(L2);
+    }
+    
+    public void changeColor(Button button){
+        System.out.println(allButtons.size());
+        for(int i =1; i <= allButtons.size(); i++ ){
+            System.out.println("x");
+            if(allButtons.get(i) == button){
+                System.out.println("s");
+                button.setOnAction((ActionEvent e) -> {
+                    button.setStyle("-fx-background-color:-secondary");
+                    button.setStyle(" -fx-background-color: -primary");
+                });
+            }else{
+                button.setOnAction((ActionEvent e) -> {
+                    System.out.println("f");
+                    button.setStyle("-fx-background-color:-secondary");
+                });
+            }
+        }
     }
 }
 
