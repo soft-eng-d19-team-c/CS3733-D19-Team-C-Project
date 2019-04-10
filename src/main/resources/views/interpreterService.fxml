@@ -7,13 +7,16 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InterpreterServiceController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InterpreterServiceController">
    <children>
       <Label alignment="CENTER" styleClass="h1" text="Request Interpreter Service" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
@@ -22,12 +25,10 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
@@ -43,19 +44,10 @@
                </GridPane.margin>
             </JFXTimePicker>
             <fx:include fx:id="acSearch" source="autocompleteSearchBar.fxml" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXTextArea fx:id="description" promptText="Reminder: our interpreter service is not a multilanguage translator! This service is for patients who has hearing obsticals to understand what the doctor is saying." GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets right="100.0" />
-               </GridPane.margin></JFXTextArea>
-            <Label text="Where do you want our Interpreter" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+            <Label prefHeight="17.0" prefWidth="236.0" text="Where is the Interpreter Required?" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="7.0" />
                </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label prefHeight="15.0" prefWidth="101.0" text="Description" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -77,7 +69,22 @@
                   <String fx:value="btn-success" />
                </styleClass>
             </JFXButton>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Description">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Reminder: our interpreter service is not a multilanguage translator! This service is for patients who has hearing obsticals to understand what the doctor is saying." />
+               </children>
+            </VBox>
          </children>
       </GridPane>
+      <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../img/Translation.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

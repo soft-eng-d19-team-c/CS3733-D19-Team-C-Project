@@ -32,14 +32,14 @@ public class FloristServiceRequestController extends Controller implements Initi
     }
 
 
-    public void sumbitBtnClick(ActionEvent actionEvent) {
-//        String startNodeID = acSearchStartController.getNodeID();
-//        String endNodeID = acSearchEndController.getNodeID();
-//        String desc = description.getText();
-//        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
-//
-//        FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
-//
-//        newServiceRequest.insert();
+    public void submitBtnClick(ActionEvent actionEvent) {
+        String startNodeID = acSearchStartController.getNodeID();
+        String endNodeID = acSearchEndController.getNodeID();
+        String desc = description.getText();
+        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
+
+        FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
+
+        newServiceRequest.insert();
     }
 }

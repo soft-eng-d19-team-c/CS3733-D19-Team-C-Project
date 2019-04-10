@@ -6,8 +6,10 @@
 
 <AnchorPane prefHeight="32.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutocompleteSearchBarController">
    <children>
-      <JFXTextField fx:id="acTextInput" prefHeight="32.0" prefWidth="333.0" promptText="Search for a location...">
-          <JFXTextField fx:id="nodeID" visible="false" AnchorPane.topAnchor="30.0" />
+
+       <JFXTextField fx:id="nodeID" visible="false" AnchorPane.topAnchor="30.0" />
+       <JFXTextField fx:id="acTextInput" prefHeight="32.0" prefWidth="333.0" promptText="Search for a location...">
+
       </JFXTextField>
    </children>
 </AnchorPane>
