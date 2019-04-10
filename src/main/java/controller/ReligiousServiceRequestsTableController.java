@@ -37,7 +37,7 @@ public class ReligiousServiceRequestsTableController extends Controller implemen
 
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
-        timeSubmitted.setCellValueFactory(new PropertyValueFactory("TimeSubmitted"));
+        timeSubmitted.setCellValueFactory(new PropertyValueFactory("DateTimeSubmitted"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
 
         updateTable();

@@ -80,7 +80,7 @@ public class ReligiousService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into RELIGIOUSSERVICEREQUESTS (LOCATION, DESCRIPTION, TIMESUBMITTED, COMPLETED) values (?,?,?,?)";
+        String sqlCmd = "insert into RELIGIOUSSERVICEREQUESTS (LOCATION, DESCRIPTION, TIMESUBMITTED, ISCOMPLETE) values (?,?,?,?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
@@ -88,7 +88,7 @@ public class ReligiousService {
             ps.setString(1, nodeID);
             ps.setString(2, description);
             ps.setTimestamp(3, ts);
-            ps.setBoolean(4,isComplete);
+            ps.setBoolean(4,false);
 
             executed = ps.execute(); //returns a boolean
         }

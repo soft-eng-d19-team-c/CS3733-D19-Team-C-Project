@@ -15,7 +15,6 @@ public class FloristServiceRequestTableController extends Controller implements 
     @FXML
     private TableView dataTable;
 
-    @FXML private TableColumn locationCol;
     @FXML private TableColumn startNode;
     @FXML private TableColumn endNode;
     @FXML private TableColumn dateTimeSubmitted;
@@ -37,7 +36,6 @@ public class FloristServiceRequestTableController extends Controller implements 
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
 
-        locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         startNode.setCellValueFactory(new PropertyValueFactory("StartNodeID"));
         endNode.setCellValueFactory(new PropertyValueFactory("EndNodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));

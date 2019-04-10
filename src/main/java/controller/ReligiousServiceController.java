@@ -5,16 +5,16 @@ import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import model.ReligiousService;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReligiousServiceController extends Controller implements Initializable {
 
     @FXML
-    private AutocompleteSearchBarController searchLocationController;
+    private AutocompleteSearchBarController autoCompleteTextController;
     @FXML
     private TextArea serviceDescription;
 
@@ -28,7 +28,7 @@ public class ReligiousServiceController extends Controller implements Initializa
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {
-        ReligiousService religiousServiceRequest = new ReligiousService(searchLocationController.getNodeID(), serviceDescription.getText());
+        ReligiousService religiousServiceRequest = new ReligiousService(autoCompleteTextController.getNodeID(), serviceDescription.getText());
         religiousServiceRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);

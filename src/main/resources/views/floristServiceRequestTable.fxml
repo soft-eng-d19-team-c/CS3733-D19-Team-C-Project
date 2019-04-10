@@ -28,11 +28,10 @@
                 </Label>
                 <TableView fx:id="dataTable" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn id="location" fx:id="locationCol" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
-                        <TableColumn id="startNode" fx:id="startNode" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
-                        <TableColumn id="endNode" fx:id="endNode" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
+                        <TableColumn id="startNode" fx:id="startNode" minWidth="-1.0" prefWidth="63.383392333984375" text="Start" />
+                        <TableColumn id="endNode" fx:id="endNode" minWidth="-1.0" prefWidth="63.383392333984375" text="End" />
                         <TableColumn id="Description" fx:id="Description" minWidth="-1.0" prefWidth="74.39031982421875" text="Description" />
-                        <TableColumn id="dateTimeSubmitted" fx:id="dateTimeSubmitted" minWidth="-1.0" prefWidth="63.383392333984375" text="Location" />
+                        <TableColumn id="dateTimeSubmitted" fx:id="dateTimeSubmitted" minWidth="-1.0" prefWidth="63.383392333984375" text="Submitted At" />
                         <TableColumn fx:id="isCompleted" prefWidth="75.0" text="Completed?" />
                     </columns>
                     <columnResizePolicy>
@@ -45,5 +44,5 @@
             </children>
         </VBox>
     </children>
-    <fx:include fx:id="Buttons" source="partialButtons.fxml" />
+    <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>

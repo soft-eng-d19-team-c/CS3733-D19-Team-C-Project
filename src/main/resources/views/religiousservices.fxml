@@ -54,7 +54,7 @@
                <!--<String fx:value="btn-lg" />-->
            <!--</styleClass>-->
        <!--</JFXButton>-->
-      <TextArea layoutX="172.0" layoutY="603.0" prefHeight="186.0" prefWidth="1428.0" promptText="Please describe what you need." AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="400.0" />
+      <TextArea fx:id="serviceDescription" layoutX="172.0" layoutY="603.0" prefHeight="186.0" prefWidth="1428.0" promptText="Please describe what you need." AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="400.0" />
       <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
             <Image url="@../img/Religous.png" />
