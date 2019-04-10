@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Date;
 
 //Create service request, get service request, and have it talk to database
 
@@ -13,18 +12,20 @@ public class SecurityRequest {
     private boolean isUrgent;
     private String nodeID;
     private String description;
-    private Date dateTimeSubmitted;
-    private Date dateTimeCompleted;
+    private Timestamp dateTimeSubmitted;
+    private Timestamp dateTimeCompleted;
     private String userCompletedBy;
     private String userRequestedBy;
+    private boolean isComplete;
     private int ID;
 
-    public SecurityRequest(int ID, String description, boolean isUrgent, Date dateTimeSubmitted, Date dateTimeCompleted, String nodeID) {
+    public SecurityRequest(int ID, String description, boolean isUrgent, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, String nodeID) {
         this.isUrgent = isUrgent;
         this.nodeID = nodeID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
+        this.isComplete = dateTimeCompleted != null;
         this.userCompletedBy = null;
         this.userRequestedBy = null;
         this.ID = ID;
@@ -39,7 +40,7 @@ public class SecurityRequest {
     }
 
     public SecurityRequest(boolean isUrgent, String location, String description) {
-        this(-1, description, isUrgent, new Date(), null, location);
+        this(-1, description, isUrgent, new Timestamp(System.currentTimeMillis()), null, location);
     }
 
     //Determines amount of time task was completed in
@@ -105,13 +106,13 @@ public class SecurityRequest {
     // TODO we probably want a getActiveServiceRequests()
 
     //Returns an observable list of all ServiceRequests for JavaFX's sake
-    public static ObservableList<SecurityRequest> getAllSecurityRequests() {
+    public static ObservableList<SecurityRequest> getAllServiceRequests() {
 
         ObservableList<SecurityRequest> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM SERVICEREQUESTS";
+            String str = "SELECT * FROM SECURITYREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -119,8 +120,8 @@ public class SecurityRequest {
                 boolean isUrgent = rs.getBoolean("ISURGENT");
                 String nodeID = rs.getString("LOCATION");
                 String description = rs.getString("DESCRIPTION");
-                Date dateTimeSubmitted = rs.getDate("TIMESUBMITTED");
-                Date dateTimeResolved = rs.getDate("TIMECOMPLETED");
+                Timestamp dateTimeSubmitted = rs.getTimestamp("TIMESUBMITTED");
+                Timestamp dateTimeResolved = rs.getTimestamp("TIMECOMPLETED");
                 SecurityRequest theSecurityRequest = new SecurityRequest(ID, description, isUrgent, dateTimeSubmitted, dateTimeResolved, nodeID);
                 requests.add(theSecurityRequest);
             }
@@ -135,6 +136,18 @@ public class SecurityRequest {
 
     public int getID() {
         return ID;
+    }
+
+    public boolean getIsUrgent() {
+        return isUrgent;
+    }
+
+    public Timestamp getDateTimeSubmitted() {
+        return dateTimeSubmitted;
+    }
+
+    public boolean getIsComplete() {
+        return isComplete;
     }
 
     //Mark a SanitationRequest complete

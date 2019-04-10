@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import model.InternalTransportationService;
 import model.InterpreterRequest;
 
 import java.net.URL;
@@ -37,15 +38,15 @@ public class InternalTransportationController  extends Controller implements Ini
         description.setText(null);
 
     }
-    public void sumbitBtnClick(ActionEvent actionEvent) {
+    public void submitBtnClick(ActionEvent actionEvent) {
         LocalDate date = dateField.getValue();
         LocalTime time = timeField.getValue();
         Calendar cal = Calendar.getInstance();
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
         Timestamp pickUpTime = new Timestamp(cal.getTimeInMillis());
 
-        InterpreterRequest interpreterRequest = new InterpreterRequest(searchController_origController.getNodeID(), pickUpTime, description.getText());
-        interpreterRequest.insert();
+        InternalTransportationService sr = new InternalTransportationService(searchController_origController.getNodeID(), searchController_destController.getNodeID(), description.getText(), pickUpTime);
+        sr.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
 

@@ -18,16 +18,16 @@ public class ITServiceRequest {
     private Timestamp dateTimeSubmitted;
     private Timestamp dateTimeCompleted;
     private boolean isComplete;
-    private User userResolvedBy;
+    private User userCompletedBy;
     private User userRequestedBy;
     private String nodeID;
 
-    public ITServiceRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, boolean isComplete, int ID) {
+    public ITServiceRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, int ID) {
         this.ID = ID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
-        this.isComplete = isComplete;
+        this.isComplete = dateTimeCompleted != null;
         this.nodeID = nodeID;
     }
 
@@ -70,7 +70,7 @@ public class ITServiceRequest {
 
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
-            ps.setString(1, userResolvedBy.getUsername());
+            ps.setString(1, userCompletedBy.getUsername());
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
             ps.setTimestamp(4, sqlCompleteDate);
@@ -112,7 +112,7 @@ public class ITServiceRequest {
     }
 
     //Returns an observable list of all ITServiceRequests for JavaFX's sake
-    public static ObservableList<ITServiceRequest> getAllITServiceRequests() {
+    public static ObservableList<ITServiceRequest> getAllServiceRequests() {
 
         ObservableList<ITServiceRequest> requests =  FXCollections.observableArrayList();
 
@@ -127,12 +127,10 @@ public class ITServiceRequest {
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp dateTimeResolved = rs.getTimestamp("dateTimeCompleted");
                 String nodeID = rs.getString("nodeID");
-                String userResolvedBy = rs.getString("userResolvedBy");
+                String userResolvedBy = rs.getString("userCompletedBy");
                 String userRequestedBy = rs.getString("userRequestedBy");
-                Boolean isComplete = rs.getBoolean("isComplete");
 
-
-                ITServiceRequest theITServiceRequest = new ITServiceRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, isComplete, ID);
+                ITServiceRequest theITServiceRequest = new ITServiceRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, ID);
                 requests.add(theITServiceRequest);
             }
         } catch (SQLException e) {
@@ -148,7 +146,7 @@ public class ITServiceRequest {
     }
 
     //Mark a ITServiceRequest complete
-    public boolean resolveITServiceRequest() {
+    public boolean resolve() {
         String str = "UPDATE ITSERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);

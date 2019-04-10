@@ -38,12 +38,12 @@ public class InterpreterServiceController extends Controller implements Initiali
     //save the service request to the database, to late view
     //set screen back to the dashboard
     public void saveBtnClick(ActionEvent actionEvent) {
-        Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());
+        Timestamp dateTimeRequest = new Timestamp(System.currentTimeMillis());
         LocalDate date = dateField.getValue();
         LocalTime time = timeField.getValue();
         Calendar cal = Calendar.getInstance();
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
-        InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeSubmitted, description.getText());
+        InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeRequest, description.getText());
         interpreterRequest.insert();
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }

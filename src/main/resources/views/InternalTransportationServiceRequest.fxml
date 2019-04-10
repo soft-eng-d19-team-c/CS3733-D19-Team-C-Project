@@ -60,7 +60,7 @@
                   <Insets left="450.0" right="480.0" />
                </VBox.margin>
             </TextArea>
-            <Button fx:id="submit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sumbitBtnClick" text="Submit" textAlignment="CENTER">
+            <Button fx:id="submit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submitBtnClick" text="Submit" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-success" />
