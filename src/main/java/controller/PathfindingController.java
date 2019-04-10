@@ -232,6 +232,12 @@ public class PathfindingController extends Controller implements Initializable {
 //        drawNodes(node_onPath, somecolor);
 
         //button colors
+        Floor3.setStyle("-fx-background-color: -secondary");
+        Floor2.setStyle("-fx-background-color: -secondary");
+        Floor1.setStyle("-fx-background-color: -secondary");
+        Ground.setStyle("-fx-background-color: -secondary");
+        L1.setStyle("-fx-background-color: -secondary");
+        L2.setStyle("-fx-background-color: -secondary");
         findFloorsNeededColor(node_onPath, currentFloor);
 
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
