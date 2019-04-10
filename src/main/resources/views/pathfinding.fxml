@@ -35,7 +35,7 @@
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Button fx:id="findpathbtn" layoutX="42.0" layoutY="303.0" mnemonicParsing="false" onAction="#gobtnclick" prefHeight="31.0" prefWidth="246.0" stylesheets="@app.css" text="GO!" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="350.0">
+      <Button fx:id="findpathbtn" layoutX="30.0" layoutY="326.0" mnemonicParsing="false" onAction="#gobtnclick" prefHeight="31.0" prefWidth="246.0" stylesheets="@app.css" text="GO!" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="326.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -78,11 +78,11 @@
                  <ImageView fx:id="findpathmap" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
            </children>
        </Pane>
-      <Label layoutX="24.0" layoutY="524.0" prefHeight="31.0" prefWidth="408.0" text="Enter phone number for texted directions" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="524.0">
+      <Label layoutX="24.0" layoutY="468.0" prefHeight="31.0" prefWidth="408.0" text="Enter phone number for texted directions" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="468.0">
          <font>
             <Font size="22.0" />
          </font></Label>
-      <Button fx:id="phoneNumberBtn" disable="true" layoutX="30.0" layoutY="632.0" mnemonicParsing="false" onAction="#sendTextClick" prefHeight="76.0" prefWidth="236.0" stylesheets="@app.css" text="Send text" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="632.0">
+      <Button fx:id="phoneNumberBtn" disable="true" layoutX="30.0" layoutY="582.0" mnemonicParsing="false" onAction="#sendTextClick" prefHeight="76.0" prefWidth="236.0" stylesheets="@app.css" text="Send text" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="582.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -91,15 +91,15 @@
             <String fx:value="btn-primary" />
          </styleClass>
       </Button>
-      <JFXTextArea fx:id="phoneNumberInput" layoutX="27.0" layoutY="566.0" prefHeight="32.0" prefWidth="285.0" promptText="Phone number" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="566.0">
+      <JFXTextArea fx:id="phoneNumberInput" layoutX="27.0" layoutY="510.0" prefHeight="32.0" prefWidth="285.0" promptText="Phone number" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="510.0">
          <font>
             <Font size="18.0" />
          </font></JFXTextArea>
-      <JFXToggleButton fx:id="dancebtn" layoutX="39.0" layoutY="500.0" onAction="#Dancebtnclick" text="Dance party?" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="550.0">
+      <JFXToggleButton fx:id="dancebtn" layoutX="39.0" layoutY="500.0" onAction="#Dancebtnclick" text="Dance party?" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="400.0">
       </JFXToggleButton>
-      <JFXTextArea fx:id="pathText" layoutX="24.0" layoutY="708.0" prefHeight="358.0" prefWidth="437.0">
+      <JFXTextArea fx:id="pathText" layoutX="24.0" layoutY="672.0" prefHeight="379.0" prefWidth="437.0" unFocusColor="#4d4d4d">
          <font>
-            <Font size="10.0" />
+            <Font size="20.0" />
          </font>
       </JFXTextArea>
    </children>
