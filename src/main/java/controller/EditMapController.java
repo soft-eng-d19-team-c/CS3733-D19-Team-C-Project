@@ -49,25 +49,39 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Circle> nodeCircles;
 
+    private boolean addEdgeHandler_on = false;
+    private String currentFloor;
+
+    private HashMap<String, Node> allNodes = Node.getHashedNodes();
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
     }
 
-    public void danceParty(ActionEvent e){}
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         algosMenu.setOnAction(null);
-        mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/"+ Main.screenController.getData("floor")+"_NoIcons.png"))));
-//        mapImg.fitWidthProperty().bind(mapImgPane.widthProperty()); // this breaks the nodes and gives them a weird offset right now
+        floorsMenu.setOnAction(null);
+        if (Main.screenController.getData("floor") != null)
+            currentFloor = (String) Main.screenController.getData("floor");
+        if (currentFloor == null)
+            currentFloor = Main.info.getKioskLocation().getFloor();
+        if (currentFloor == null)
+            currentFloor = "L1";
+        if (currentFloor.equals("G")) {
+            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+        } else {
+            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
+        }
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
                         "L1",
-                        "Floor 1",
-                        "Floor 2",
-                        "Floor 3");
+                        "G",
+                        "1",
+                        "2",
+                        "3");
         ObservableList<String> differentAlgorithms = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         Main.info.ASTAR.getAlgorithmName(),
@@ -76,12 +90,28 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DFS.getAlgorithmName());
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
-            nodes = Node.getNodesByFloor((String) Main.screenController.getData("floor"));
-            edges = Edge.getEdgesByFloor((String) Main.screenController.getData("floor"));
+            nodes = Node.getNodesByFloor(currentFloor);
+            edges = Edge.getEdgesByFloor(currentFloor);
             drawNodes();
 
             floorsMenu.setItems(differentFloors);
-            floorsMenu.setValue((String) Main.screenController.getData("floor"));
+            floorsMenu.setValue(currentFloor);
+            floorsMenu.setOnAction((event) -> {
+                nodeCircles.clear();
+                currentFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                if (currentFloor.equals("G")) {
+                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+                } else {
+                    mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
+                }
+                nodes = Node.getNodesByFloor(currentFloor);
+                edges = Edge.getEdgesByFloor(currentFloor);
+                drawNodes();
+                if (addEdgeHandler_on) {
+                    addPathButtonClick(new ActionEvent());
+                }
+            });
+
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
@@ -98,11 +128,57 @@ public class EditMapController extends Controller implements Initializable {
         }
         for (Edge e : edges){
             generateEdge(e);
+            colorMultifloorNode(e);
         }
         for (Circle c : nodeCircles.values()) {
             c.toFront();
         }
     }
+
+    private void colorMultifloorNode(Edge e) {
+
+        if (e.getEndNode().equals("DHALL00102")) {
+            System.out.println("HELP ME");
+        }
+
+        if (!allNodes.get(e.getStartNode()).getFloor().equals(allNodes.get(e.getEndNode()).getFloor())) {
+            if (nodeCircles.containsKey(e.getStartNode())) {
+                nodeCircles.get(e.getStartNode()).setFill(Color.ORANGERED);
+            } else {
+                nodeCircles.get(e.getEndNode()).setFill(Color.ORANGERED);
+            }
+        }
+
+
+        /*
+
+        if (!((Node) nodeCircles.get(e.getStartNode()).getProperties().get("node")).getFloor()
+                .equals(((Node) nodeCircles.get(e.getEndNode()).getProperties().get("node")).getFloor())) {
+            System.out.println("tests");
+        }
+
+        /*
+
+        if (nodeCircles.containsKey(e.getStartNode()) && !nodeCircles.containsKey(e.getEndNode())) {
+            Circle c = nodeCircles.get(e.getStartNode());
+            c.setFill(Color.ORANGERED);
+        } else if (!nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode())) {
+            Circle c = nodeCircles.get(e.getEndNode());
+            c.setFill(Color.ORANGERED);
+        } else {
+            Node n1 = Node.getNodeByID(e.getStartNode());
+            Node n2 = Node.getNodeByID(e.getEndNode());
+            if (!n1.getFloor().equals(n2.getFloor())) {
+                System.out.println("EDGE : " + e.getEdgeId());
+                System.out.println(n1.getFloor());
+                System.out.println(n2.getFloor());
+                System.out.println();
+            }
+        }
+
+         */
+    }
+
     @SuppressWarnings("Duplicates")
     private void generateEdge(Edge e) {
         if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
@@ -160,6 +236,7 @@ public class EditMapController extends Controller implements Initializable {
         mapImg.addEventFilter(MouseEvent.MOUSE_PRESSED, addNodeHandler);
     }
 
+    @SuppressWarnings("Duplicates")
     public void addPathButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -174,6 +251,7 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+        addEdgeHandler_on = true;
     }
 
     public void editNodeButtonClick(ActionEvent e){
@@ -225,6 +303,7 @@ public class EditMapController extends Controller implements Initializable {
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
     }
 
+    @SuppressWarnings("Duplicates")
     public void setKioskButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -275,7 +354,7 @@ public class EditMapController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 double randID = new Random().nextDouble();
                 double mapScale = mapImg.getImage().getWidth() / mapImg.getFitWidth();
-                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), (String) Main.screenController.getData("floor"), "", "CUSTOM", "New Node", "New Custom Node");
+                Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), currentFloor, "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
                 n.insert();
                 mapImgPane.getScene().setCursor(Cursor.DEFAULT);
@@ -435,16 +514,23 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(javafx.scene.input.MouseEvent me){
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
-                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
                 Main.info.setKioskLocation(n);
+                // remove this event handler, set everything to null, add drag event handlers again
+                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+                    if (node.getProperties().containsKey("node")) {
+                        node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    }
+                }
+                mapImgPane.getScene().setCursor(Cursor.DEFAULT);
             }
         }
     };

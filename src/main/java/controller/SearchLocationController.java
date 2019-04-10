@@ -21,15 +21,14 @@ public class SearchLocationController extends Controller implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        acTextInputController.init(location, resources);
     }
 
 
     public void searchLocation(ActionEvent actionEvent) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("nodeID", acTextInputController.getNodeID());
-//  TODO      data.put("floor", acTextInputController.getNodeFloor());
-        data.put("floor", "L1");
+        data.put("floor", acTextInputController.getNodeFloor());
         Main.screenController.setScreen(EnumScreenType.PATHFINDING, data);
     }
 }

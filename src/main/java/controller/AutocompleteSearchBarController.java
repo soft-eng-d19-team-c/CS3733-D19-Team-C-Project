@@ -25,9 +25,12 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     private LinkedList<Node> nodes;
 
+    private String nodeFloor;
+
     public String getNodeID() {
         return nodeID.getText();
     }
+    public String getNodeFloor() {return this.nodeFloor;}
 
     public void setLocation(String nodeID) {
         this.nodeID.setText(nodeID);
@@ -65,6 +68,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         acSuggestions.setSelectionHandler(event -> {
             acTextInput.setText(event.getObject().getShortName());
             nodeID.setText(event.getObject().getID());
+            this.nodeFloor = event.getObject().getFloor();
         });
         // listen for changes to text field and filter results
         acTextInput.textProperty().addListener(observable -> {
@@ -83,16 +87,12 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void refresh() {
-        String floor = (String) Main.screenController.getData("autocompleteFloor");
-        if (floor != null) {
-            nodes = Node.getNodesByFloor(floor);
-        } else {
-            nodes = Node.getNodes();
-        }
+        nodes = Node.getNodes();
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);
         }
         this.setLocation(Main.info.getKioskLocation().getID());
+        this.nodeFloor = Main.info.getKioskLocation().getFloor();
     }
 }
