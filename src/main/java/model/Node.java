@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Node {
@@ -214,6 +215,17 @@ public class Node {
             e.printStackTrace();
         }
         return nodes;
+    }
+
+    public static HashMap<String, Node> getHashedNodes() {
+        LinkedList<Node> nodes = getNodes();
+
+        HashMap<String, Node> result = new HashMap<>();
+
+        for (Node n : nodes) {
+            result.put(n.getID(), n);
+        }
+        return result;
     }
     
     @SuppressWarnings("Duplicates")
