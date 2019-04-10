@@ -357,6 +357,7 @@ public class EditMapController extends Controller implements Initializable {
                 Node n = new Node("CUSTOMNODE" + randID, (int) (me.getX() * mapScale), (int) (me.getY() * mapScale), currentFloor, "", "CUSTOM", "New Node", "New Custom Node");
                 generateNode(n);
                 n.insert();
+                allNodes = Node.getHashedNodes();
                 mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 mapImg.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
             }
@@ -368,6 +369,9 @@ public class EditMapController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
+                if (Main.info.getKioskLocation().getID().equals(n.getID())) {
+                    return;
+                }
                 for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                     if (node.getProperties().containsKey("edge")) {
                         Edge e = (Edge) node.getProperties().get("edge");
@@ -387,6 +391,7 @@ public class EditMapController extends Controller implements Initializable {
                 mapImgPane.getChildren().remove(me.getTarget());
                 n.remove();
                 mapImgPane.getScene().setCursor(Cursor.DEFAULT);
+
             }
         }
     };
@@ -457,6 +462,9 @@ public class EditMapController extends Controller implements Initializable {
                     }
                     startNodeForAddEdge = null;
                     endNodeForAddEdge = null;
+                    nodes = Node.getNodesByFloor(currentFloor);
+                    edges = Edge.getEdgesByFloor(currentFloor);
+                    drawNodes();
                     mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 }
             }

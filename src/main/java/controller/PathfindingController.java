@@ -75,6 +75,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pathText.setText(null);
         searchController_destController.refresh();
         searchController_origController.refresh();
         Main.info.getAlgorithm().refresh();
@@ -106,7 +107,7 @@ public class PathfindingController extends Controller implements Initializable {
                 circle.setCenterY(mapY + n.getY() / mapScale);
                 circle.setRadius(3.0);
                 circle.getProperties().put("node", n);
-                if (prev != null) {
+                if (prev != null && nodeCircles.containsKey(prev) && ((Node) nodeCircles.get(prev).getProperties().get("node")).getFloor().equals(currentFloor)) {
                     Line line = new Line();
                     line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
                     line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
@@ -119,6 +120,8 @@ public class PathfindingController extends Controller implements Initializable {
                 mapImgPane.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
+            } else {
+                prev = null;
             }
         }
     }

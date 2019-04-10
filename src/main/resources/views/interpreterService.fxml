@@ -76,7 +76,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Reminder: our interpreter service is not a multilanguage translator! This service is for patients who has hearing obsticals to understand what the doctor is saying." />
+                  <JFXTextArea fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Reminder: our interpreter service is not a multilanguage translator! This service is for patients who have hearing obstacles to understand what the doctor is saying." />
                </children>
             </VBox>
          </children>
