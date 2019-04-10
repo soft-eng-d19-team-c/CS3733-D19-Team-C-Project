@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -30,10 +31,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="bookRoomButton" mnemonicParsing="false" onAction="#bookRoomButtonClick" prefHeight="100.0" prefWidth="300.0" styleClass="btn" stylesheets="@app.css" text="Book" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Button fx:id="bookRoomButton" mnemonicParsing="false" onAction="#bookRoomButtonClick" prefHeight="100.0" prefWidth="300.0" stylesheets="@app.css" text="Book" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="36.0" />
                </font>
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-success" />
+                  <String fx:value="btn-lg" />
+               </styleClass>
             </Button>
             <Label stylesheets="@app.css" text="Book Room" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                <font>
