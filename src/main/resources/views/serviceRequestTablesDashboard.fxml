@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.VBox?>
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServiceRequestsTablesDashboardController">
    <children>
       <Label alignment="CENTER" styleClass="h1" text="View Service Requests" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
@@ -203,6 +204,8 @@
             </Label>
          </children>
       </GridPane>
+      <VBox>
+         <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
+      </VBox>
    </children>
-   <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>
