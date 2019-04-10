@@ -54,7 +54,7 @@ public class ReligiousService {
 
         boolean executed = false;
 
-        String sqlCmd = "update RELIGIOUSREQUESTS set LOCATION = ?, DESCRIPTION = ?, TIMESUBMITTED = ?, TIMERESOLVED = ?, COMPLETED = ? where ID = ?";
+        String sqlCmd = "update RELIGIOUSSERVICEREQUESTS set LOCATION = ?, DESCRIPTION = ?, TIMESUBMITTED = ?, TIMERESOLVED = ?, COMPLETED = ? where ID = ?";
         java.sql.Timestamp sqlCompleteDate = new java.sql.Timestamp(dateTimeResolved.getTime());
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime());
 
@@ -80,7 +80,7 @@ public class ReligiousService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into RELIGIOUSREQUESTS (LOCATION, DESCRIPTION, TIMESUBMITTED, COMPLETED) values (?,?,?,?)";
+        String sqlCmd = "insert into RELIGIOUSSERVICEREQUESTS (LOCATION, DESCRIPTION, TIMESUBMITTED, COMPLETED) values (?,?,?,?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
@@ -101,13 +101,21 @@ public class ReligiousService {
 
     }
 
-    public static ObservableList<ReligiousService> getAllRelgiousServiceRequests() {
+    public Date getDateTimeSubmitted() {
+        return dateTimeSubmitted;
+    }
+
+    public boolean getIsComplete() {
+        return isComplete;
+    }
+
+    public static ObservableList<ReligiousService> getAllServiceRequests() {
 
         ObservableList<ReligiousService> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM SERVICEREQUESTS";
+            String str = "SELECT * FROM RELIGIOUSSERVICEREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -138,7 +146,7 @@ public class ReligiousService {
 
     //Mark complete
     public boolean resolve() {
-        String str = "UPDATE RELIGIOUSREQUESTS SET TIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE RELIGIOUSSERVICEREQUESTS SET TIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
