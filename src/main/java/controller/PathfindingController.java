@@ -95,7 +95,6 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findpathmap.getLayoutX();
         double mapY = findpathmap.getLayoutY();
         double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
-        System.out.println("TEST: " + currentFloor);
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -321,7 +320,7 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         drawNodes(nodes, edges, black);
 
-        if (findLocationNodeID != null) {
+        if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
             Circle foundNode = nodeCircles.get(findLocationNodeID);
 
             foundNode.setRadius(6.0);
@@ -364,7 +363,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
-        changeFloor("Ground");
+        changeFloor("G");
         changeColor2(Ground);
     }
 
@@ -421,8 +420,7 @@ public class PathfindingController extends Controller implements Initializable {
                 L1.setStyle(" -fx-background-color: -secondary");
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
-            case "Ground": currentButton = Ground;
-                System.out.println("xx");
+            case "G": currentButton = Ground;
                 Ground.setStyle(" -fx-background-color: -primary");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
