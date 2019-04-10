@@ -464,8 +464,10 @@ public class EditMapController extends Controller implements Initializable {
                     endNodeForAddEdge = null;
                     nodes = Node.getNodesByFloor(currentFloor);
                     edges = Edge.getEdgesByFloor(currentFloor);
-                    drawNodes();
+//                    drawNodes();
                     mapImgPane.getScene().setCursor(Cursor.DEFAULT);
+//                    System.out.println(startNodeForAddEdge);
+//                    System.out.println(endNodeForAddEdge);
                 }
             }
         }
