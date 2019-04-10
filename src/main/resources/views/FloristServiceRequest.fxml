@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FloristServiceRequestController">
     <children>
-        <VBox layoutX="353.0" layoutY="235.0">
-            <fx:include fx:id="acSearchStart" source="bigAutoCompleteBar.fxml" />
-        </VBox>
-        <VBox layoutX="1223.0" layoutY="231.0">
-            <fx:include fx:id="acSearchEnd" source="bigAutoCompleteBar.fxml" />
-        </VBox>
         <Text layoutX="25.0" layoutY="58.58203125" strokeType="OUTSIDE" strokeWidth="0.0" text="Florist Service Request" textAlignment="CENTER" wrappingWidth="1256.59130859375" AnchorPane.leftAnchor="313.0" AnchorPane.topAnchor="37.0">
-         <font>
-            <Font size="96.0" />
-         </font></Text>
-        <JFXButton fx:id="submitButton" alignment="CENTER" buttonType="RAISED" layoutX="833.0" layoutY="817.0" onAction="#submitBtnClick" text="Submit" textAlignment="CENTER">
+            <font>
+                <Font size="100.0" />
+            </font>
+        </Text>
+        <Text layoutX="567.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Where are the Flowers From (Company)?" wrappingWidth="983.92724609375" AnchorPane.leftAnchor="567.0" AnchorPane.topAnchor="464.0">
+            <font>
+                <Font size="52.0" />
+            </font>
+        </Text>
+        <Text layoutX="122.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drop Off Location:" wrappingWidth="427.92724609375" AnchorPane.leftAnchor="122.0" AnchorPane.topAnchor="249.88671875">
+            <font>
+                <Font size="52.0" />
+            </font>
+        </Text>
+        <Button fx:id="submit" layoutX="814.0" layoutY="835.0" mnemonicParsing="false" onAction="#submitBtnClick" prefHeight="96.0" prefWidth="384.0" text="Submit" AnchorPane.leftAnchor="814.0" AnchorPane.topAnchor="835.0">
             <styleClass>
                 <String fx:value="btn" />
                 <String fx:value="btn-success" />
                 <String fx:value="btn-lg" />
             </styleClass>
-        </JFXButton>
-        <VBox AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-        </VBox>
-        <TextField fx:id="description" alignment="TOP_LEFT" layoutX="635.0" layoutY="406.0" prefHeight="374.0" prefWidth="680.0" promptText="Please Type Flower Company and Description of the Flowers" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="406.0" />
-        <Text layoutX="252.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:" wrappingWidth="89.92724609375" AnchorPane.leftAnchor="252.0" AnchorPane.topAnchor="259.9658203125">
-         <font>
-            <Font size="51.0" />
-         </font></Text>
-      <Text layoutX="975.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drop Off Location:" wrappingWidth="242.92724609375">
-         <font>
-            <Font size="51.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="1558.0" layoutY="817.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <image>
-            <Image url="@../img/Florist.png" />
-         </image>
-      </ImageView>
+        </Button>
+        <AnchorPane layoutX="12.0" layoutY="9.0" prefHeight="100.0" prefWidth="210.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" /></AnchorPane>
+        <AnchorPane layoutX="558.0" layoutY="219.0" prefHeight="131.0" prefWidth="359.0" AnchorPane.leftAnchor="558.0" AnchorPane.topAnchor="219.0">
+            <fx:include fx:id="acSearchStart" source="bigAutoCompleteBar.fxml" />
+
+        </AnchorPane>
+        <AnchorPane layoutX="1355.0" layoutY="219.0" prefHeight="131.0" prefWidth="359.0" AnchorPane.leftAnchor="1355.0" AnchorPane.topAnchor="219.0">
+            <fx:include fx:id="acSearchEnd" source="bigAutoCompleteBar.fxml" />
+
+        </AnchorPane>
+        <TextField fx:id="description" layoutX="757.0" layoutY="602.0" prefHeight="178.0" prefWidth="485.0" promptText="Please Type Flower Company and Description of the Flowers" AnchorPane.leftAnchor="757.0" AnchorPane.topAnchor="602.0" />
+        <Text layoutX="1242.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:" wrappingWidth="77.92724609375" AnchorPane.leftAnchor="1242.0" AnchorPane.topAnchor="249.88671875">
+            <font>
+                <Font size="52.0" />
+            </font>
+        </Text>
+        <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <image>
+                <Image url="@../img/Florist.png" />
+            </image>
+        </ImageView>
+
     </children>
 </AnchorPane>
