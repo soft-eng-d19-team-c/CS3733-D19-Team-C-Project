@@ -355,37 +355,31 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
-        //changeColor(Floor3);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
-        //changeColor(Floor2);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
-       // changeColor(Floor1);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("Ground");
-        //changeColor(Ground);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
-        //changeColor(L1);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
-        //changeColor(L2);
         findFloorsNeededColor(node_onPath, currentFloor);
     }
 
@@ -451,13 +445,13 @@ public class PathfindingController extends Controller implements Initializable {
     public void findFloorsNeededColor(LinkedList<Node> node_onPath, String currentFloor){
         //if the floor has paths drawn on it setStyle(" -fx-background-color: -primary")
         LinkedList<String> allFloors = new LinkedList<>();
+
+
         for(int i = 0; i < node_onPath.size(); i++){
             String floor = node_onPath.get(i).getFloor();
            if(allFloors.size() < 6) {
-               System.out.println(i);
                if (! allFloors.contains(floor)){
                    allFloors.add(floor);
-                   System.out.println(allFloors);
                }
            }
         }
