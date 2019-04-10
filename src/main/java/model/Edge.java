@@ -54,7 +54,7 @@ public class Edge {
     @SuppressWarnings("Duplicates")
     public static LinkedList<Edge> getEdgesByFloor(String floor) {
         LinkedList<Edge> edges = new LinkedList<>();
-        String sqlStmt = "SELECT DISTINCT EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM EDGES INNER JOIN NODES ON EDGES.STARTNODE = NODES.NODEID WHERE NODES.FLOOR='"+floor+"'";
+        String sqlStmt = "SELECT DISTINCT EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM EDGES INNER JOIN NODES ON EDGES.STARTNODE = NODES.NODEID OR EDGES.ENDNODE = NODES.NODEID WHERE NODES.FLOOR='"+floor+"'";
         try {
             Statement stmt = Main.database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);

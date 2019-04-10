@@ -52,6 +52,8 @@ public class EditMapController extends Controller implements Initializable {
     private boolean addEdgeHandler_on = false;
     private String currentFloor;
 
+    private HashMap<String, Node> allNodes = Node.getHashedNodes();
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -126,11 +128,57 @@ public class EditMapController extends Controller implements Initializable {
         }
         for (Edge e : edges){
             generateEdge(e);
+            colorMultifloorNode(e);
         }
         for (Circle c : nodeCircles.values()) {
             c.toFront();
         }
     }
+
+    private void colorMultifloorNode(Edge e) {
+
+        if (e.getEndNode().equals("DHALL00102")) {
+            System.out.println("HELP ME");
+        }
+
+        if (!allNodes.get(e.getStartNode()).getFloor().equals(allNodes.get(e.getEndNode()).getFloor())) {
+            if (nodeCircles.containsKey(e.getStartNode())) {
+                nodeCircles.get(e.getStartNode()).setFill(Color.ORANGERED);
+            } else {
+                nodeCircles.get(e.getEndNode()).setFill(Color.ORANGERED);
+            }
+        }
+
+
+        /*
+
+        if (!((Node) nodeCircles.get(e.getStartNode()).getProperties().get("node")).getFloor()
+                .equals(((Node) nodeCircles.get(e.getEndNode()).getProperties().get("node")).getFloor())) {
+            System.out.println("tests");
+        }
+
+        /*
+
+        if (nodeCircles.containsKey(e.getStartNode()) && !nodeCircles.containsKey(e.getEndNode())) {
+            Circle c = nodeCircles.get(e.getStartNode());
+            c.setFill(Color.ORANGERED);
+        } else if (!nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode())) {
+            Circle c = nodeCircles.get(e.getEndNode());
+            c.setFill(Color.ORANGERED);
+        } else {
+            Node n1 = Node.getNodeByID(e.getStartNode());
+            Node n2 = Node.getNodeByID(e.getEndNode());
+            if (!n1.getFloor().equals(n2.getFloor())) {
+                System.out.println("EDGE : " + e.getEdgeId());
+                System.out.println(n1.getFloor());
+                System.out.println(n2.getFloor());
+                System.out.println();
+            }
+        }
+
+         */
+    }
+
     @SuppressWarnings("Duplicates")
     private void generateEdge(Edge e) {
         if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
