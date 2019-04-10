@@ -54,7 +54,7 @@ public class PathFindingContext {
     }
 
     @SuppressWarnings("Duplicates")
-    private void refresh() {
+    public void refresh() {
         /*
         This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
         using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These

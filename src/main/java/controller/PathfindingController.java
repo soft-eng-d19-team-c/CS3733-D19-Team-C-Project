@@ -75,6 +75,9 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        searchController_destController.refresh();
+        searchController_origController.refresh();
+        Main.info.getAlgorithm().refresh();
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
         allButtons.add(Floor3);
@@ -95,6 +98,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findpathmap.getLayoutX();
         double mapY = findpathmap.getLayoutY();
         double mapScale = findpathmap.getImage().getWidth() / findpathmap.getFitWidth();
+        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -103,7 +107,6 @@ public class PathfindingController extends Controller implements Initializable {
                 circle.setRadius(3.0);
                 circle.getProperties().put("node", n);
                 if (prev != null) {
-//                drawDancingline(prev, n.getID());
                     Line line = new Line();
                     line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
                     line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
@@ -195,6 +198,7 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private Line generateEdge(Edge e, Color r) {
         if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
             return null; // this edge is not on this floor so we do not draw it
@@ -228,24 +232,11 @@ public class PathfindingController extends Controller implements Initializable {
         String dest_nodeID = searchController_destController.getNodeID();
         node_onPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
         somecolor = new Color(0, 1, 1, 1);
-//        drawNodes(node_onPath, somecolor);
-
-        //button colors
-//        Floor3.setStyle("-fx-background-color: -secondary");
-//        Floor2.setStyle("-fx-background-color: -secondary");
-//        Floor1.setStyle("-fx-background-color: -secondary");
-//        Ground.setStyle("-fx-background-color: -secondary");
-//        L1.setStyle("-fx-background-color: -secondary");
-//        L2.setStyle("-fx-background-color: -secondary");
-
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+//        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
-//        System.out.println(currentFloor);
         generateNodes(node_onPath);
-        Node last = Node.getNodeByID(searchController_destController.getNodeID());
-//        node_onPath.addFirst(last);
-//        System.out.println(node_onPath);
+//        Node last = Node.getNodeByID(searchController_destController.getNodeID());
         phoneNumberBtn.setDisable(false);
         dancebtn.setVisible(true);
         hasPath = true;
@@ -319,9 +310,6 @@ public class PathfindingController extends Controller implements Initializable {
 
 
     public void displayAllNodes() {
-        searchController_destController.refresh();
-        searchController_origController.refresh();
-
         findLocationNodeID = (String) Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
