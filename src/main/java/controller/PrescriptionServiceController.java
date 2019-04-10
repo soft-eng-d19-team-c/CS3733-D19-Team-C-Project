@@ -2,9 +2,7 @@ package controller;
 
 import base.EnumScreenType;
 import base.Main;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,11 +37,4 @@ public class PrescriptionServiceController extends Controller implements Initial
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
-
-    public void viewTable(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.PRESCRIPTIONSERVICETABLE);
-    }
-
-
-
 }

@@ -41,19 +41,6 @@
             </JFXTextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXButton fx:id="viewTableButton" alignment="CENTER" buttonType="RAISED" onAction="#viewTable" text="View Table" textAlignment="CENTER">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="btn-success" />
-                        <String fx:value="btn-lg" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
                   <VBox prefHeight="200.0" prefWidth="100.0" />
                   <JFXButton fx:id="submitButton" alignment="CENTER" buttonType="RAISED" onAction="#submitButtonClick" text="Submit" textAlignment="CENTER">
                      <font>

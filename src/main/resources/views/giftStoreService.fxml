@@ -36,7 +36,7 @@
                   <Font size="50.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="giftChoiceMenu" focusColor="#a84040" maxWidth="1.7976931348623157E308" prefHeight="88.0" prefWidth="1321.0" promptText="Gift" VBox.vgrow="ALWAYS" />
+            <JFXTextField fx:id="type" focusColor="#a84040" maxWidth="1.7976931348623157E308" prefHeight="88.0" prefWidth="1321.0" promptText="Gift" VBox.vgrow="ALWAYS" />
             <fx:include fx:id="autoCompleteText" source="bigAutoCompleteBar.fxml" />
            <VBox />
          <JFXButton fx:id="submitButton" onAction="#submitButtonClick" stylesheets="@app.css" text="Submit">

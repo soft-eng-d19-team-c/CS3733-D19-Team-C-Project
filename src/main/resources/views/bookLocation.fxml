@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookingController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookingController">
    <children>
        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <GridPane layoutX="865.0" layoutY="495.0" stylesheets="@app.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
@@ -39,14 +41,14 @@
                </font>
             </Label>
             <ComboBox fx:id="locationBox" prefWidth="300.0" promptText="Location" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-            <DatePicker fx:id="datePicker" promptText="Date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-            <ComboBox fx:id="startTimeBox" prefWidth="300.0" promptText="Start Time" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-            <ComboBox fx:id="endTimeBox" prefWidth="300.0" promptText="End Time" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </ComboBox>
             <Label fx:id="errorLabel" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <JFXTimePicker fx:id="startTimeBox" promptText="Start time" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+            <JFXDatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+            <JFXTextField fx:id="duration" prefHeight="26.0" prefWidth="334.0" promptText="Enter duaration in minutes" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="40.0" right="40.0" />
+               </GridPane.margin>
+            </JFXTextField>
          </children>
       </GridPane>
    </children>

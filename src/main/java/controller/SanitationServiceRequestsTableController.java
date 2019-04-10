@@ -15,7 +15,6 @@ public class SanitationServiceRequestsTableController extends Controller impleme
     @FXML
     private TableView dataTable;
 
-    @FXML private TableColumn issue;
     @FXML private TableColumn locationCol;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
@@ -35,7 +34,6 @@ public class SanitationServiceRequestsTableController extends Controller impleme
         //serviceRequests.getAll(serviceRequests);
         //like initialize fcn in nodeTable
 
-        issue.setCellValueFactory(new PropertyValueFactory("Type"));
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
