@@ -83,7 +83,7 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "update INTERNALTRANSPORTATION set NODEID = ?, NODEIDDEST = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, PICKUPTIME = ? where ID = ?";
+        String sqlCmd = "update INTERNALTRANSPORTATIONREQUESTS set STARTNODEID = ?, ENDNODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, PICKUPTIME = ? where ID = ?";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
@@ -108,7 +108,7 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERNALTRANSPORTATION (NODEID, NODEIDDEST, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, REQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
+        String sqlCmd = "insert into INTERNALTRANSPORTATIONREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, REQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 
@@ -133,7 +133,7 @@ public class InternalTransportationService {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERNALTRANSPORTATION SET DATETIMERESOLVED = ? WHERE ID = ?";
+        String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -146,14 +146,14 @@ public class InternalTransportationService {
         }
         return false;
     }
-    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
+    //Returns an observable list of all internal transportation requests for JavaFX's sake
     public static ObservableList<InternalTransportationService> getAllServiceRequests() {
 
         ObservableList<InternalTransportationService> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM INTERNALTRANSPORTATION";
+            String str = "SELECT * FROM INTERNALTRANSPORTATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -162,8 +162,8 @@ public class InternalTransportationService {
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp pickUpTime = rs.getTimestamp("PICKUPTIME");
                 Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
-                String nodeID = rs.getString("NODEID");
-                String nodeIDDest = rs.getString("NODEIDDEST");
+                String nodeID = rs.getString("STARTNODEID");
+                String nodeIDDest = rs.getString("ENDNODEID");
                 User req = new User(rs.getString("REQUESTEDBY"));
                 User comp = new User(rs.getString("COMPLETEDBY"));
                 InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved, comp, req);
