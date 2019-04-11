@@ -11,26 +11,26 @@ public class ExternalTransportationRequest {
     private String nodeID;
     private String destination;
     private Timestamp dateTimeSubmitted;
-    private Timestamp dateTimePickup;
-    private Timestamp dateTimeResolved;
-    private User userResolvedBy;
+    private Timestamp pickupTime;
+    private Timestamp dateTimeCompleted;
+    private User userCompletedBy;
     private boolean isCompleted;
 
-    public ExternalTransportationRequest(String nodeID, String destination, Timestamp dateTimeSubmitted, Timestamp dateTimePickup) {
+    public ExternalTransportationRequest(String nodeID, String destination, Timestamp dateTimeSubmitted, Timestamp pickupTime) {
         this.nodeID = nodeID;
         this.destination = destination;
         this.dateTimeSubmitted = dateTimeSubmitted;
-        this.dateTimePickup = dateTimePickup;
+        this.pickupTime = pickupTime;
     }
 
-    public ExternalTransportationRequest(int ID, String nodeID, String destination, Timestamp dateTimeSubmitted, Timestamp dateTimePickup, Timestamp dateTimeResolved, User userResolvedBy, boolean isCompleted) {
+    public ExternalTransportationRequest(int ID, String nodeID, String destination, Timestamp dateTimeSubmitted, Timestamp pickupTime, Timestamp dateTimeCompleted, User userCompletedBy, boolean isCompleted) {
         this.ID = ID;
         this.nodeID = nodeID;
         this.destination = destination;
         this.dateTimeSubmitted = dateTimeSubmitted;
-        this.dateTimePickup = dateTimePickup;
-        this.dateTimeResolved = dateTimeResolved;
-        this.userResolvedBy = userResolvedBy;
+        this.pickupTime = pickupTime;
+        this.dateTimeCompleted = dateTimeCompleted;
+        this.userCompletedBy = userCompletedBy;
         this.isCompleted = isCompleted;
     }
 
@@ -43,17 +43,17 @@ public class ExternalTransportationRequest {
 
             while(rs.next()) {
                 int ID = rs.getInt("ID");
-                String nodeID = rs.getString("pickupLocation");
+                String nodeID = rs.getString("NODEID");
                 String destination = rs.getString("DESTINATION");
-                Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
-                Timestamp dateTimePickup = rs.getTimestamp("dateTimePickup");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
-                String userID = rs.getString("userCompletedBy");
+                Timestamp dateTimeSubmitted = rs.getTimestamp("DATETIMESUBMITTED");
+                Timestamp pickupTime = rs.getTimestamp("PICKUPTIME");
+                Timestamp dateTimeCompleted = rs.getTimestamp("DATETIMECOMPLETED");
+                String userCompletedBy = rs.getString("USERCOMPLETEDBY");
                 User user = null;
-                if (userID != null) {
-                    user = new User(userID);
+                if (userCompletedBy != null) {
+                    user = new User(userCompletedBy);
                 }
-                ExternalTransportationRequest req = new ExternalTransportationRequest(ID, nodeID, destination, dateTimeSubmitted, dateTimePickup, dateTimeResolved, user, dateTimeResolved != null);
+                ExternalTransportationRequest req = new ExternalTransportationRequest(ID, nodeID, destination, dateTimeSubmitted, pickupTime, dateTimeCompleted, user, dateTimeCompleted != null);
                 requests.add(req);
             }
         } catch (SQLException e) {
@@ -63,13 +63,13 @@ public class ExternalTransportationRequest {
     }
 
     public void insert() {
-        String sqlStr = "insert into EXTERNALTRANSPORTATIONREQUESTS (PICKUPLOCATION, DESTINATION, DATETIMESUBMITTED, DATETIMEPICKUP) values (?,?,?,?)";
+        String sqlStr = "insert into EXTERNALTRANSPORTATIONREQUESTS (NODEID, DESTINATION, DATETIMESUBMITTED, PICKUPTIME) values (?,?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.destination);
             ps.setTimestamp(3, this.dateTimeSubmitted);
-            ps.setTimestamp(4, this.dateTimePickup);
+            ps.setTimestamp(4, this.pickupTime);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class ExternalTransportationRequest {
                 "nodeID='" + nodeID + '\'' +
                 ", destination='" + destination + '\'' +
                 ", dateTimeSubmitted=" + dateTimeSubmitted +
-                ", dateTimePickup=" + dateTimePickup +
+                ", pickupTime=" + pickupTime +
                 '}';
     }
 
@@ -103,16 +103,16 @@ public class ExternalTransportationRequest {
         return dateTimeSubmitted;
     }
 
-    public Timestamp getDateTimePickup() {
-        return dateTimePickup;
+    public Timestamp getPickupTime() {
+        return pickupTime;
     }
 
-    public Timestamp getDateTimeResolved() {
-        return dateTimeResolved;
+    public Timestamp getDateTimeCompleted() {
+        return dateTimeCompleted;
     }
 
-    public User getUserResolvedBy() {
-        return userResolvedBy;
+    public User getUserCompletedBy() {
+        return userCompletedBy;
     }
 
     public boolean getIsCompleted() {
@@ -120,11 +120,12 @@ public class ExternalTransportationRequest {
     }
 
     public String getUsername() {
-        return userResolvedBy.getUsername();
+        return userCompletedBy.getUsername();
     }
 
+    @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE EXTERNALTRANSPORTATIONREQUESTS SET DATETIMERESOLVED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
+        String str = "UPDATE EXTERNALTRANSPORTATIONREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
