@@ -37,6 +37,10 @@ public final class ApplicationInformation {
         return this.kioskLocation;
     }
 
+    /**
+     * @author Ryan LaMarche.
+     * @return Set Node kiosk location.
+     */
     public void setKioskLocation(Node newLocation){
         this.kioskLocation = newLocation;
     }
