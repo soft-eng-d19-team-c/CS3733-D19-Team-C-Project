@@ -146,7 +146,7 @@ public class InternalTransportationService {
         }
         return false;
     }
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<InternalTransportationService> getAllServiceRequests() {
 
         ObservableList<InternalTransportationService> requests =  FXCollections.observableArrayList();

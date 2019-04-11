@@ -34,7 +34,7 @@ public class GiftStoreTableController extends Controller implements Initializabl
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         locationCol.setCellValueFactory(new PropertyValueFactory("Location"));

@@ -105,7 +105,7 @@ public class SecurityRequest {
 
     // TODO we probably want a getActiveServiceRequests()
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<SecurityRequest> getAllServiceRequests() {
 
         ObservableList<SecurityRequest> requests =  FXCollections.observableArrayList();

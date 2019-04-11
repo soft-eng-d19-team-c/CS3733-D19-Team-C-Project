@@ -36,7 +36,7 @@ public class PrescriptionServiceTableController extends Controller implements In
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         ID.setCellValueFactory(new PropertyValueFactory("ID"));

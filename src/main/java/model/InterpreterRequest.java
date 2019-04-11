@@ -124,7 +124,7 @@ public class InterpreterRequest {
 
     }
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<InterpreterRequest> getAllServiceRequests() {
         ObservableList<InterpreterRequest> requests =  FXCollections.observableArrayList();
         try {

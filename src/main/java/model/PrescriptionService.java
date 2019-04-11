@@ -69,7 +69,7 @@ public class PrescriptionService {
 
     }
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     @SuppressWarnings("Duplicates")
     public static ObservableList<PrescriptionService> getAllPrescriptionServices() {
 
