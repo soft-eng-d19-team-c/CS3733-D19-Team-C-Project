@@ -108,7 +108,7 @@ public final class Database {
             String FloristRequestsTableUINDEX = "create unique index FLORISTREQUESTS_ID_uindex on FLORISTREQUESTS (ID)";
             String FloristRequestsTablePK = "alter table FLORISTREQUESTS add constraint FLORISTREQUESTS_pk primary key (ID)";
             // creating prescription services table
-            String createPrescriptionServiceTable = "create table PRESCRIPTIONREQUESTS (ID int generated always as identity, PATIENTID VARCHAR(255), USERSUBMITTEDBY varchar(64) not null constraint PRESCRIPTIONREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), USERCOMPLETEDBY varchar(64) not null constraint PRESCRIPTIONREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME), DRUG varchar(255), DATETIMESUBMITTED TIMESTAMP, DATETIMECOMPLETED TIMESTAMP)";
+            String createPrescriptionServiceTable = "create table PRESCRIPTIONREQUESTS (ID int generated always as identity, PATIENTID VARCHAR(255), USERSUBMITTEDBY varchar(64) not null constraint PRESCRIPTIONREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), USERCOMPLETEDBY varchar(64) constraint PRESCRIPTIONREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME), DRUG varchar(255), DATETIMESUBMITTED TIMESTAMP, DATETIMECOMPLETED TIMESTAMP)";
             String PrescriptionUINDEX = "create unique index PRESCRIPTIONREQUESTS_ID_uindex on PRESCRIPTIONREQUESTS (ID)";
             String PrescriptionTablePK = "alter table PRESCRIPTIONREQUESTS add constraint PRESCRIPTIONREQUESTS_pk primary key (ID)";
             // create internal transportation service request

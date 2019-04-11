@@ -14,32 +14,32 @@ public class PrescriptionService {
 
     private int ID;
     private String patientID; // unique ID of the patient
-    private String requesterID; // ID of the doctor requesting the drug
-    private String resolverID; // ID of nurse of doctor the receives the drug from the pharmacy
+    private String userSubmittedBy; // ID of the doctor requesting the drug
+    private String UserCompletedBy; // ID of nurse of doctor the receives the drug from the pharmacy
     private String drug; // name of drug and amount
-    private Timestamp timeOrdered;
+    private Timestamp dateTimeSubmitted;
     private Timestamp timeDelivered;
 
-    public PrescriptionService(int id, String patientID, String requesterID, String resolverID, String drug, Timestamp timeOrdered, Timestamp timeDelivered) {
+    public PrescriptionService(int id, String patientID, String userSubmittedBy, String UserCompletedBy, String drug, Timestamp dateTimeSubmitted, Timestamp timeDelivered) {
         this.ID = id;
         this.patientID = patientID;
-        this.requesterID = requesterID;
-        this.resolverID = resolverID;
+        this.userSubmittedBy = userSubmittedBy;
+        this.UserCompletedBy = UserCompletedBy;
         this.drug = drug;
-        this.timeOrdered = timeOrdered;
+        this.dateTimeSubmitted = dateTimeSubmitted;
         this.timeDelivered = timeDelivered;
     }
 
-    public PrescriptionService(String patientID, String requesterID, String drug) {
+    public PrescriptionService(String patientID, String userSubmittedBy, String drug) {
         this.patientID = patientID;
-        this.requesterID = requesterID;
+        this.userSubmittedBy = userSubmittedBy;
         this.drug = drug;
         Date date = new Date();
-        this.timeOrdered = new Timestamp(date.getTime());
+        this.dateTimeSubmitted = new Timestamp(date.getTime());
     }
 
-    public void drugDelivered(String resolverID){
-        this.resolverID = resolverID;
+    public void drugDelivered(String UserCompletedBy){
+        this.UserCompletedBy = UserCompletedBy;
         Date date = new Date();
         this.timeDelivered = new Timestamp(date.getTime());
     }
@@ -49,14 +49,14 @@ public class PrescriptionService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into PRESCRIPTIONSERVICE (PATIENTID, REQUESTERID, DRUG, TIMEORDERED) values (?,?,?,?)";
-//        java.sql.Date sqlSubmitDate = new java.sql.Date(timeOrdered.getTime()); //because ps.setDate takes an sql.date, not a util.date
+        String sqlCmd = "insert into PRESCRIPTIONREQUESTS (PATIENTID, USERSUBMITTEDBY, DRUG, DATETIMESUBMITTED) values (?,?,?,?)";
+//        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, patientID);
-            ps.setObject(2, requesterID);
+            ps.setString(2, userSubmittedBy);
             ps.setString(3, drug);
-            ps.setTimestamp(4, timeOrdered);
+            ps.setTimestamp(4, dateTimeSubmitted);
             executed = ps.execute(); //returns a boolean
             System.out.println("PrescriptionService.insert " + executed);
         }
@@ -77,19 +77,19 @@ public class PrescriptionService {
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM PRESCRIPTIONSERVICE";
+            String str = "SELECT * FROM PRESCRIPTIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
 //                System.out.println("PrescriptionService.getAllPrescriptionServices");
                 int ID = rs.getInt("ID");
 //                System.out.println(ID);
                 String patientID = rs.getString("patientID");
-                String requesterID =  rs.getString("requesterID");
-                String resolverID = rs.getString("resolverID");
+                String userSubmittedBy =  rs.getString("userSubmittedBy");
+                String UserCompletedBy = rs.getString("UserCompletedBy");
                 String drug = rs.getString("drug");
-                Timestamp timeOrdered = rs.getTimestamp("timeOrdered");
-                Timestamp timeDelivered = rs.getTimestamp("timeDelivered");
-                PrescriptionService prescriptionService = new PrescriptionService(ID, patientID, requesterID, resolverID, drug, timeOrdered, timeDelivered);
+                Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
+                Timestamp timeDelivered = rs.getTimestamp("dateTimecompleted");
+                PrescriptionService prescriptionService = new PrescriptionService(ID, patientID, userSubmittedBy, UserCompletedBy, drug, dateTimeSubmitted, timeDelivered);
                 requests.add(prescriptionService);
             }
         } catch (SQLException e) {
@@ -107,11 +107,11 @@ public class PrescriptionService {
     }
 
     public String getRequesterID() {
-        return requesterID;
+        return userSubmittedBy;
     }
 
     public String getResolverID() {
-        return resolverID;
+        return UserCompletedBy;
     }
 
     public String getDrug() {
@@ -119,7 +119,7 @@ public class PrescriptionService {
     }
 
     public Date getTimeOrdered() {
-        return timeOrdered;
+        return dateTimeSubmitted;
     }
 
     public Date getTimeDelivered() {
@@ -128,7 +128,7 @@ public class PrescriptionService {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE PRESCRIPTIONSERVICE SET RESOLVERID = ?, TIMEDELIVERED = ? WHERE ID = ?";
+        String str = "UPDATE PRESCRIPTIONREQUESTS SET USERCOMPLETEDBY = ?, DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
