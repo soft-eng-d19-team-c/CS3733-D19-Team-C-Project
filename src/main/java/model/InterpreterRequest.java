@@ -134,10 +134,10 @@ public class InterpreterRequest {
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
-                String username = rs.getString("USERSOLVEDBY");
-                Timestamp dateTimeRequest = rs.getTimestamp("dateTimeRequested");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeSolved");
-                String nodeID = rs.getString("requestedLocation");
+                String username = rs.getString("USERCOMPLETEDBY");
+                Timestamp dateTimeRequest = rs.getTimestamp("DATETIMESUBMITTED");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMECOMPLETED");
+                String nodeID = rs.getString("NODEID");
                 InterpreterRequest req = new InterpreterRequest(nodeID, description, dateTimeRequest, dateTimeResolved, dateTimeResolved != null, new User(username), ID);
                 requests.add(req);
             }
