@@ -12,7 +12,7 @@ import model.SanitationRequest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ITServiceRequestTableController extends Controller implements Initializable {
+public class ITRequestTableController extends Controller implements Initializable {
     @FXML
     private TableView dataTable;
 

@@ -36,8 +36,8 @@ public class ITServiceController extends Controller implements Initializable {
 
         //Date dateTimeSubmitted = new Date().getTime()
 
-        ITRequest ITServiceRequest = new ITRequest(description.getText(), autoCompleteTextController.getNodeID());
-        ITServiceRequest.insert();
+        ITRequest ITRequest = new ITRequest(description.getText(), autoCompleteTextController.getNodeID());
+        ITRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
