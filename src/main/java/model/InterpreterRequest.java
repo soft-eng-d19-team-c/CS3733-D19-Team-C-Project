@@ -81,7 +81,7 @@ public class InterpreterRequest {
 
     @SuppressWarnings("Duplicates")
     public boolean insert(){
-        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED) values (?,?,?)";
+        String sqlCmd = "insert into INTERPRETERREQUESTS (NODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
@@ -103,7 +103,7 @@ public class InterpreterRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
+        String sqlCmd = "insert into INTERPRETERREQUESTS (NODEID,  DESCRIPTION, DATETIMESUBMITTED, DATETIMECOMPLETED, USERCOMPLETEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeRequest.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
@@ -129,7 +129,7 @@ public class InterpreterRequest {
         ObservableList<InterpreterRequest> requests =  FXCollections.observableArrayList();
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM INTERPRETERSERVICEREQUEST";
+            String str = "SELECT * FROM INTERPRETERREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
                 int ID = rs.getInt("ID");
@@ -154,7 +154,7 @@ public class InterpreterRequest {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMESOLVED = ?, USERSOLVEDBY = ? WHERE ID = ?";
+        String str = "UPDATE INTERPRETERREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
