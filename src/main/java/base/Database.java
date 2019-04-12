@@ -100,8 +100,8 @@ public final class Database {
             String SecurityRequestsTableUIndex = "create unique index SECURITYREQUESTS_ID_UINDEX on SECURITYREQUESTS (ID)";
             String SecurityRequestsTablePK = "alter table SECURITYREQUESTS add constraint SECURITYREQUESTS_PK primary key (ID)";
             //create religious service requests
-            String createReligiousServiceRequestsTable = "create table RELIGIOUSREQUESTS(ID int generated always as identity, NODEID VARCHAR(255) not null constraint RELIGIOUSREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED TIMESTAMP not null, DATETIMECOMPLETED TIMESTAMP, USERREQUESTEDBY VARCHAR(64), USERCOMPLETEDBY VARCHAR(64))";
-            String ReligiousServiceRequestsTableUniqueIndex = "create unique index RELIGIOUSREQUESTS_ID_UINDEX on RELIGIOUSREQUESTS (ID)";
+            String createReligiousRequestsTable = "create table RELIGIOUSREQUESTS(ID int generated always as identity, NODEID VARCHAR(255) not null constraint RELIGIOUSREQUESTS_NODES_NODEID_FK references NODES (NODEID) on delete cascade, DESCRIPTION VARCHAR(2000), DATETIMESUBMITTED TIMESTAMP not null, DATETIMECOMPLETED TIMESTAMP, USERREQUESTEDBY VARCHAR(64), USERCOMPLETEDBY VARCHAR(64))";
+            String ReligiousRequestsTableUniqueIndex = "create unique index RELIGIOUSREQUESTS_ID_UINDEX on RELIGIOUSREQUESTS (ID)";
             String ReligiousRequestsTablePK = "alter table RELIGIOUSREQUESTS add constraint RELIGIOUSREQUESTS_PK primary key (ID)";
             // create florist service requests table
             String createFloristRequestsTable = "create table FLORISTREQUESTS(ID int generated always as identity, STARTNODEID varchar(255) constraint FLORISTREQUESTS_NODES_NODEID_fk references NODES, ENDNODEID varchar(255) constraint FLORISTREQUESTS_NODES_NODEID_fk_2 references NODES(NODEID), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(64) constraint FLORISTREQUESTS_USERS_USERNAME_fk references USERS (USERNAME), DESCRIPTION varchar(1000))";
@@ -162,8 +162,8 @@ public final class Database {
                 tableStmt.executeUpdate(createSecurityRequestsTable);
                 tableStmt.executeUpdate(SecurityRequestsTableUIndex);
                 tableStmt.executeUpdate(SecurityRequestsTablePK);
-                tableStmt.executeUpdate(createReligiousServiceRequestsTable);
-                tableStmt.executeUpdate(ReligiousServiceRequestsTableUniqueIndex);
+                tableStmt.executeUpdate(createReligiousRequestsTable);
+                tableStmt.executeUpdate(ReligiousRequestsTableUniqueIndex);
                 tableStmt.executeUpdate(ReligiousRequestsTablePK);
                 tableStmt.executeUpdate(createITServiceRequestsTable);
                 tableStmt.executeUpdate(ITServiceRequestsTableUINDEX);
