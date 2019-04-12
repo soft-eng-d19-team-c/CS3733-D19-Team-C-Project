@@ -35,7 +35,7 @@ public class InternalTransportationRequestTableController extends Controller imp
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         locationFrom.setCellValueFactory(new PropertyValueFactory("NodeID"));

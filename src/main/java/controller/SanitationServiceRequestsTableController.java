@@ -31,7 +31,7 @@ public class SanitationServiceRequestsTableController extends Controller impleme
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));

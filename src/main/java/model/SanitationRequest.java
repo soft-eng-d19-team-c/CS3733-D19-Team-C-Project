@@ -60,7 +60,7 @@ public class SanitationRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "update SERVICEREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
+        String sqlCmd = "update SANITATIONREQUESTS set NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
         java.sql.Date sqlCompleteDate = new java.sql.Date(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Date sqlStartDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
@@ -86,7 +86,7 @@ public class SanitationRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SERVICEREQUESTS (NODEID,  DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
+        String sqlCmd = "insert into SANITATIONREQUESTS (NODEID,  DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
@@ -107,14 +107,14 @@ public class SanitationRequest {
 
     // TODO we probably want a getActiveServiceRequests()
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<SanitationRequest> getAllServiceRequests() {
 
         ObservableList<SanitationRequest> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM SERVICEREQUESTS";
+            String str = "SELECT * FROM SANITATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -141,7 +141,7 @@ public class SanitationRequest {
 
     //Mark a SanitationRequest complete
     public boolean resolve() {
-        String str = "UPDATE SERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE SANITATIONREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());

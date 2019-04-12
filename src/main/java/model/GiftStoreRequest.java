@@ -77,7 +77,7 @@ public class GiftStoreRequest {
             }
     }
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<GiftStoreRequest> getAllServiceRequests() {
 
             ObservableList<GiftStoreRequest> requests =  FXCollections.observableArrayList();

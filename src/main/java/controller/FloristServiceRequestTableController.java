@@ -33,8 +33,6 @@ public class FloristServiceRequestTableController extends Controller implements 
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
-        //like initialize fcn in nodeTable
 
         startNode.setCellValueFactory(new PropertyValueFactory("StartNodeID"));
         endNode.setCellValueFactory(new PropertyValueFactory("EndNodeID"));

@@ -81,7 +81,7 @@ public class InterpreterRequest {
 
     @SuppressWarnings("Duplicates")
     public boolean insert(){
-        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION, DESCRIPTION, DATETIMEREQUESTED) values (?,?,?)";
+        String sqlCmd = "insert into INTERPRETERREQUESTS (NODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
@@ -103,7 +103,7 @@ public class InterpreterRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERPRETERSERVICEREQUEST (REQUESTEDLOCATION,  DESCRIPTION, DATETIMEREQUESTED, DATETIMESOLVED, USERSOLVEDBY) values (?,?,?,?,?)";
+        String sqlCmd = "insert into INTERPRETERREQUESTS (NODEID,  DESCRIPTION, DATETIMESUBMITTED, DATETIMECOMPLETED, USERCOMPLETEDBY) values (?,?,?,?,?)";
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeRequest.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
@@ -124,20 +124,20 @@ public class InterpreterRequest {
 
     }
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
     public static ObservableList<InterpreterRequest> getAllServiceRequests() {
         ObservableList<InterpreterRequest> requests =  FXCollections.observableArrayList();
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM INTERPRETERSERVICEREQUEST";
+            String str = "SELECT * FROM INTERPRETERREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 String description = rs.getString("description");
-                String username = rs.getString("USERSOLVEDBY");
-                Timestamp dateTimeRequest = rs.getTimestamp("dateTimeRequested");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeSolved");
-                String nodeID = rs.getString("requestedLocation");
+                String username = rs.getString("USERCOMPLETEDBY");
+                Timestamp dateTimeRequest = rs.getTimestamp("DATETIMESUBMITTED");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMECOMPLETED");
+                String nodeID = rs.getString("NODEID");
                 InterpreterRequest req = new InterpreterRequest(nodeID, description, dateTimeRequest, dateTimeResolved, dateTimeResolved != null, new User(username), ID);
                 requests.add(req);
             }
@@ -154,7 +154,7 @@ public class InterpreterRequest {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERPRETERSERVICEREQUEST SET DATETIMESOLVED = ?, USERSOLVEDBY = ? WHERE ID = ?";
+        String str = "UPDATE INTERPRETERREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());

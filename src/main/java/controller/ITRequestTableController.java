@@ -6,13 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.ITServiceRequest;
-import model.SanitationRequest;
+import model.ITRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ITServiceRequestTableController extends Controller implements Initializable {
+public class ITRequestTableController extends Controller implements Initializable {
     @FXML
     private TableView dataTable;
 
@@ -23,7 +22,7 @@ public class ITServiceRequestTableController extends Controller implements Initi
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
-    private ObservableList<ITServiceRequest> data;
+    private ObservableList<ITRequest> data;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -33,12 +32,12 @@ public class ITServiceRequestTableController extends Controller implements Initi
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
-        userRequestedBy.setCellValueFactory(new PropertyValueFactory("Requested By"));
+        userRequestedBy.setCellValueFactory(new PropertyValueFactory("UserRequestedBy"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
 
         updateTable();
@@ -46,13 +45,13 @@ public class ITServiceRequestTableController extends Controller implements Initi
     }
 
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
-        ITServiceRequest sr = (ITServiceRequest) dataTable.getSelectionModel().getSelectedItem();
+        ITRequest sr = (ITRequest) dataTable.getSelectionModel().getSelectedItem();
         sr.resolve();
         updateTable();
     }
 
     private void updateTable() {
-        data = ITServiceRequest.getAllServiceRequests();
+        data = ITRequest.getAllServiceRequests();
 
         dataTable.setItems(data);
         dataTable.refresh();

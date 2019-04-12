@@ -11,7 +11,7 @@ import java.sql.*;
  * @author Matt Burd
  */
 
-public class ITServiceRequest {
+public class ITRequest {
 
     private int ID;
     private String description;
@@ -22,16 +22,17 @@ public class ITServiceRequest {
     private User userRequestedBy;
     private String nodeID;
 
-    public ITServiceRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, int ID) {
+    public ITRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, int ID, User userRequestedBy) {
         this.ID = ID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = dateTimeCompleted != null;
         this.nodeID = nodeID;
+        this.userRequestedBy = userRequestedBy;
     }
 
-    public ITServiceRequest(String description, String nodeID) {
+    public ITRequest(String description, String nodeID) {
         this.description = description;
         this.nodeID = nodeID;
         this.userRequestedBy = Main.user;
@@ -49,6 +50,14 @@ public class ITServiceRequest {
         return nodeID;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public String getUserRequestedBy() {
+        return this.userRequestedBy.getUsername();
+    }
+
     //Determines amount of time task was completed in
     public Timestamp computeTimeDiff(){
 
@@ -63,7 +72,7 @@ public class ITServiceRequest {
 
         boolean executed = false;
         //are these fields correct? How do we deal with assignment without completion?
-        String sqlCmd = "update ITSERVICEREQUESTS set USERASSIGNEDTO = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ?, NODEID = ? where ID = ?";
+        String sqlCmd = "update ITREQUESTS set USERASSIGNEDTO = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ?, NODEID = ? where ID = ?";
         java.sql.Timestamp sqlCompleteDate = new java.sql.Timestamp(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
@@ -90,7 +99,7 @@ public class ITServiceRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into ITSERVICEREQUESTS (DESCRIPTION, DATETIMESUBMITTED, USERREQUESTEDBY, NODEID) values (?,?,?,?)";
+        String sqlCmd = "insert into ITREQUESTS (DESCRIPTION, DATETIMESUBMITTED, USERREQUESTEDBY, NODEID) values (?,?,?,?)";
         java.sql.Timestamp sqlSubmitDate = new java.sql.Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
@@ -112,13 +121,13 @@ public class ITServiceRequest {
     }
 
     //Returns an observable list of all ITServiceRequests for JavaFX's sake
-    public static ObservableList<ITServiceRequest> getAllServiceRequests() {
+    public static ObservableList<ITRequest> getAllServiceRequests() {
 
-        ObservableList<ITServiceRequest> requests =  FXCollections.observableArrayList();
+        ObservableList<ITRequest> requests =  FXCollections.observableArrayList();
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM ITSERVICEREQUESTS";
+            String str = "SELECT * FROM ITREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -130,7 +139,7 @@ public class ITServiceRequest {
                 String userResolvedBy = rs.getString("userCompletedBy");
                 String userRequestedBy = rs.getString("userRequestedBy");
 
-                ITServiceRequest theITServiceRequest = new ITServiceRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, ID);
+                ITRequest theITServiceRequest = new ITRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, ID, new User(userRequestedBy));
                 requests.add(theITServiceRequest);
             }
         } catch (SQLException e) {
@@ -141,13 +150,9 @@ public class ITServiceRequest {
 
     }
 
-    public int getID() {
-        return ID;
-    }
-
     //Mark a ITServiceRequest complete
     public boolean resolve() {
-        String str = "UPDATE ITSERVICEREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
+        String str = "UPDATE ITREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());

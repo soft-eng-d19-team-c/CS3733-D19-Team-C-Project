@@ -55,7 +55,7 @@ public class SecurityRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "update SECURITYREQUESTS set ISURGENT = ?, LOCATION = ?, DESCRIPTION = ?, TIMESUBMITTED = ?, TIMECOMPLETED = ? where ID = ?";
+        String sqlCmd = "update SECURITYREQUESTS set ISURGENT = ?, NODEID = ?, DESCRIPTION = ?, DATETIMESUBMITTED = ?, DATETIMECOMPLETED = ? where ID = ?";
         java.sql.Timestamp sqlCompleteDate = new java.sql.Timestamp(dateTimeCompleted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
@@ -81,7 +81,7 @@ public class SecurityRequest {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into SECURITYREQUESTS (ISURGENT,  LOCATION, DESCRIPTION, TIMESUBMITTED, REQUESTEDBY) values (?,?,?,?,?)";
+        String sqlCmd = "insert into SECURITYREQUESTS (ISURGENT,  NODEID, DESCRIPTION, DATETIMESUBMITTED, USERREQUESTEDBY) values (?,?,?,?,?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
         String username = Main.user.getUsername();
 
@@ -105,7 +105,7 @@ public class SecurityRequest {
 
     // TODO we probably want a getActiveServiceRequests()
 
-    //Returns an observable list of all ServiceRequests for JavaFX's sake
+    //Returns an observable list of all SECURITYREQUESTS for JavaFX's sake
     public static ObservableList<SecurityRequest> getAllServiceRequests() {
 
         ObservableList<SecurityRequest> requests =  FXCollections.observableArrayList();
@@ -118,10 +118,10 @@ public class SecurityRequest {
             while(rs.next()) {
                 int ID = rs.getInt("ID");
                 boolean isUrgent = rs.getBoolean("ISURGENT");
-                String nodeID = rs.getString("LOCATION");
+                String nodeID = rs.getString("NODEID");
                 String description = rs.getString("DESCRIPTION");
-                Timestamp dateTimeSubmitted = rs.getTimestamp("TIMESUBMITTED");
-                Timestamp dateTimeResolved = rs.getTimestamp("TIMECOMPLETED");
+                Timestamp dateTimeSubmitted = rs.getTimestamp("DATETIMESUBMITTED");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMECOMPLETED");
                 SecurityRequest theSecurityRequest = new SecurityRequest(ID, description, isUrgent, dateTimeSubmitted, dateTimeResolved, nodeID);
                 requests.add(theSecurityRequest);
             }
@@ -152,7 +152,7 @@ public class SecurityRequest {
 
     //Mark a SanitationRequest complete
     public boolean resolve() {
-        String str = "UPDATE SECURITYREQUESTS SET TIMECOMPLETED = ?, COMPLETEDBY = ? WHERE ID = ?";
+        String str = "UPDATE SECURITYREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());

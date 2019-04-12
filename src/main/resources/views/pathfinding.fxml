@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="findpathview" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
+<AnchorPane fx:id="findPathView" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <Text fill="#a7a6a6" layoutX="81.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2" text="Find Path" AnchorPane.topAnchor="110.0" />
@@ -35,7 +35,7 @@
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Button fx:id="findpathbtn" layoutX="30.0" layoutY="326.0" mnemonicParsing="false" onAction="#gobtnclick" prefHeight="31.0" prefWidth="246.0" stylesheets="@app.css" text="GO!" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="326.0">
+      <Button fx:id="findpathbtn" layoutX="30.0" layoutY="326.0" mnemonicParsing="false" onAction="#goBtnClick" prefHeight="31.0" prefWidth="246.0" stylesheets="@app.css" text="GO!" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="326.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -75,7 +75,7 @@
        </Button>
        <Pane fx:id="mapImgPane" layoutX="490.0" prefHeight="980.0" prefWidth="1380.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
            <children>
-                 <ImageView fx:id="findpathmap" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                 <ImageView fx:id="findPathImgView" fitHeight="980.0" fitWidth="1380.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
            </children>
        </Pane>
       <Label layoutX="24.0" layoutY="468.0" prefHeight="31.0" prefWidth="408.0" text="Enter phone number for texted directions" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="468.0">
@@ -95,7 +95,7 @@
          <font>
             <Font size="18.0" />
          </font></JFXTextArea>
-      <JFXToggleButton fx:id="dancebtn" layoutX="39.0" layoutY="500.0" onAction="#Dancebtnclick" text="Dance party?" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="400.0">
+      <JFXToggleButton fx:id="danceBtn" layoutX="39.0" layoutY="500.0" onAction="#dancePartyBtnClick" text="Dance party?" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="400.0">
       </JFXToggleButton>
       <JFXTextArea fx:id="pathText" layoutX="24.0" layoutY="672.0" prefHeight="379.0" prefWidth="437.0" unFocusColor="#4d4d4d">
          <font>

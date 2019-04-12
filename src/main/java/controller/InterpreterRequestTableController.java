@@ -34,7 +34,7 @@ public class InterpreterRequestTableController extends Controller implements Ini
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serviceRequests.getAll(serviceRequests);
+        //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
         this.location.setCellValueFactory(new PropertyValueFactory("NodeID"));
