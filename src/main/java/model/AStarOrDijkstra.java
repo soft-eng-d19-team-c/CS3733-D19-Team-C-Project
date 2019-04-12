@@ -33,7 +33,7 @@ public abstract class AStarOrDijkstra implements IPathFind{
 
                 if (currentNode.equals(endNode)) { //the path has been found
 
-                    System.out.println("Number of nodes visited Dijkstra:" + count);
+                    System.out.println("Number of nodes visited using " + getAlgorithmName() + ": " + count);
                     return pathValues;
                 }
 
