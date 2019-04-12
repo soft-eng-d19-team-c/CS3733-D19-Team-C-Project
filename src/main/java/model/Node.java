@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Node {
@@ -216,6 +217,42 @@ public class Node {
         return nodes;
     }
 
+    public static HashMap<String, Node> getHashedNodes() {
+        LinkedList<Node> nodes = getNodes();
+
+        HashMap<String, Node> result = new HashMap<>();
+
+        for (Node n : nodes) {
+            result.put(n.getID(), n);
+        }
+        return result;
+    }
+    
+    @SuppressWarnings("Duplicates")
+    public static Node getNodeByID(String nodeID) {
+        Node result = null;
+        String sqlStmt = "SELECT * FROM NODES WHERE NODEID = ?";
+        try {
+            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStmt);
+            ps.setString(1,nodeID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String newNodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                result = new Node(newNodeID, x, y, floor, building, nodeType, longName, shortName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 
     // Floor 3  4
@@ -223,16 +260,17 @@ public class Node {
     // Floor 1  2
     // Floor L1 1
     // Floor L2 0
-
+    //used when determining the distance between floors
     public int getFloorNumber(){
         switch (this.floor){
-            case "3": return 4;
-            case "2": return 3;
-            case "1": return 2;
+            case "3": return 5;
+            case "2": return 4;
+            case "1": return 3;
+            case "G": return 2;
             case "L1": return 1;
             case "L2": return 0;
             default:
-                System.out.println("Error in node.getfloornumber");
+                System.out.println("Error in node.getfloornumber couldn't find floor: " + this.floor);
                 return -1;
 
         }

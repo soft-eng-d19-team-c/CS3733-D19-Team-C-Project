@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReligiousServiceController">
+   <children>
+       <AnchorPane layoutX="13.0" layoutY="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
+       </AnchorPane>
+      <Text layoutX="504.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request a Religious Service">
+         <font>
+            <Font size="80.0" />
+         </font>
+      </Text>
+      <Text layoutX="103.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter a location:">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+       <AnchorPane layoutX="105.0" layoutY="387.0" prefHeight="100.0" prefWidth="379.0">
+            <fx:include fx:id="autoCompleteText" source="bigAutoCompleteBar.fxml" />
+       </AnchorPane>
+      <Text layoutX="107.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" AnchorPane.leftAnchor="200.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Button fx:id="submitButton" layoutX="874.0" layoutY="901.0" mnemonicParsing="false" onAction="#submitButtonClick" text="Submit" textFill="WHITE">
+         <styleClass>
+            <String fx:value="btn-success" />
+            <String fx:value="btn-lg" />
+         </styleClass>
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+       <!--<JFXButton fx:id="submitButton" alignment="CENTER" buttonType="RAISED" onAction="#submitButtonClick" text="Submit" textAlignment="CENTER">-->
+           <!--<font>-->
+               <!--<Font size="36.0" />-->
+           <!--</font>-->
+           <!--<VBox.margin>-->
+               <!--<Insets bottom="20.0" top="20.0" />-->
+           <!--</VBox.margin>-->
+           <!--<styleClass>-->
+               <!--<String fx:value="btn" />-->
+               <!--<String fx:value="btn-success" />-->
+               <!--<String fx:value="btn-lg" />-->
+           <!--</styleClass>-->
+       <!--</JFXButton>-->
+      <TextArea fx:id="serviceDescription" layoutX="172.0" layoutY="603.0" prefHeight="186.0" prefWidth="1428.0" promptText="Please describe what you need." AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="400.0" />
+      <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../img/Religous.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

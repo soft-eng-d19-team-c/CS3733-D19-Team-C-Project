@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
+   <children>
+      <Label alignment="CENTER" styleClass="h1" text="Booked Locations" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <JFXDatePicker fx:id="datePicker" onAction="#inputChanged" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <JFXTimePicker fx:id="timePicker" onAction="#inputChanged" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="260.0" />
+      <JFXButton onAction="#bookRoomBtnClick" text="Book a Room" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="btn-primary" />
+         </styleClass>
+      </JFXButton>
+      <Pane fx:id="circlePane" prefHeight="847.0" prefWidth="1265.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <ImageView fx:id="mapImgView" fitHeight="786.0" fitWidth="1050.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/bookableLocationsMap.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
+   </children>
+</AnchorPane>

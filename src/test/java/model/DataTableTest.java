@@ -12,16 +12,16 @@ import java.sql.Statement;
 
 public class DataTableTest {
     Database db;
-    DataTable dt;
+    //DataTable dt;
     ResultSet rs;
 
     @Before
     public void setUp() throws Exception {
-         db = new Database(true);
+         //db = new Database(true);
          Statement stmt = db.getConnection().createStatement();
          String str = "SELECT * FROM NODES";
          rs = stmt.executeQuery(str);
-         dt = new DataTable();
+         //dt = new DataTable();
 
     }
 
@@ -31,7 +31,7 @@ public class DataTableTest {
 
     @Test
     public void getAllData() throws SQLException {
-        ObservableList<Node> ObsL = dt.getAllNodeData(); // getting data from the database built in main
+        //ObservableList<Node> ObsL = dt.getAllNodeData(); // getting data from the database built in main
     }
 
     @Test
