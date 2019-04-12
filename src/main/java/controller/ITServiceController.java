@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import model.ITServiceRequest;
+import model.ITRequest;
 
 import java.net.URL;
 import java.util.Date;
@@ -36,7 +36,7 @@ public class ITServiceController extends Controller implements Initializable {
 
         //Date dateTimeSubmitted = new Date().getTime()
 
-        ITServiceRequest ITServiceRequest = new ITServiceRequest(description.getText(), autoCompleteTextController.getNodeID());
+        ITRequest ITServiceRequest = new ITRequest(description.getText(), autoCompleteTextController.getNodeID());
         ITServiceRequest.insert();
 
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);

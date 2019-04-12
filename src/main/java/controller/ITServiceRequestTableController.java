@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.ITServiceRequest;
+import model.ITRequest;
 import model.SanitationRequest;
 
 import java.net.URL;
@@ -23,7 +23,7 @@ public class ITServiceRequestTableController extends Controller implements Initi
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
-    private ObservableList<ITServiceRequest> data;
+    private ObservableList<ITRequest> data;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -46,13 +46,13 @@ public class ITServiceRequestTableController extends Controller implements Initi
     }
 
     public void revolveRequestButtonClicked(javafx.event.ActionEvent actionEvent) {
-        ITServiceRequest sr = (ITServiceRequest) dataTable.getSelectionModel().getSelectedItem();
+        ITRequest sr = (ITRequest) dataTable.getSelectionModel().getSelectedItem();
         sr.resolve();
         updateTable();
     }
 
     private void updateTable() {
-        data = ITServiceRequest.getAllServiceRequests();
+        data = ITRequest.getAllServiceRequests();
 
         dataTable.setItems(data);
         dataTable.refresh();
