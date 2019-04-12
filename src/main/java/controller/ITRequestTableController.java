@@ -7,7 +7,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.ITRequest;
-import model.SanitationRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +37,7 @@ public class ITRequestTableController extends Controller implements Initializabl
 
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
-        userRequestedBy.setCellValueFactory(new PropertyValueFactory("Requested By"));
+        userRequestedBy.setCellValueFactory(new PropertyValueFactory("UserRequestedBy"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));
 
         updateTable();

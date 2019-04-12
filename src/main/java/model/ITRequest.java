@@ -22,13 +22,14 @@ public class ITRequest {
     private User userRequestedBy;
     private String nodeID;
 
-    public ITRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, int ID) {
+    public ITRequest(String description, String nodeID, Timestamp dateTimeSubmitted, Timestamp dateTimeCompleted, int ID, User userRequestedBy) {
         this.ID = ID;
         this.description = description;
         this.dateTimeSubmitted = dateTimeSubmitted;
         this.dateTimeCompleted = dateTimeCompleted;
         this.isComplete = dateTimeCompleted != null;
         this.nodeID = nodeID;
+        this.userRequestedBy = userRequestedBy;
     }
 
     public ITRequest(String description, String nodeID) {
@@ -47,6 +48,14 @@ public class ITRequest {
 
     public String getNodeID() {
         return nodeID;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getUserRequestedBy() {
+        return this.userRequestedBy.getUsername();
     }
 
     //Determines amount of time task was completed in
@@ -130,7 +139,7 @@ public class ITRequest {
                 String userResolvedBy = rs.getString("userCompletedBy");
                 String userRequestedBy = rs.getString("userRequestedBy");
 
-                ITRequest theITServiceRequest = new ITRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, ID);
+                ITRequest theITServiceRequest = new ITRequest(description, nodeID, dateTimeSubmitted, dateTimeResolved, ID, new User(userRequestedBy));
                 requests.add(theITServiceRequest);
             }
         } catch (SQLException e) {
@@ -139,10 +148,6 @@ public class ITRequest {
         return requests;
 
 
-    }
-
-    public int getID() {
-        return ID;
     }
 
     //Mark a ITServiceRequest complete
