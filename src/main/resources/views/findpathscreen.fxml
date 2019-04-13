@@ -139,7 +139,7 @@
                </padding>
             </VBox>
          </children></Pane>
-      <Pane prefHeight="200.0" prefWidth="400.0" styleClass="white-box" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Pane prefHeight="200.0" prefWidth="400.0" styleClass="white-box" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="55.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="400.0">
                <children>
