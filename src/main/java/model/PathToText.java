@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import static java.lang.Math.sqrt;
+
 public class PathToText {
     // Converts linked list to a detailed text based path
 
@@ -60,17 +62,22 @@ public class PathToText {
 
                 switch (dir) {
                     case LEFT:
-                        textPath.append("Take a left at " + curr.getLongName() + "\n");
+                        textPath.append("Take a left at " + curr.getLongName());
                         break;
                     case RIGHT:
-                        textPath.append("Take a right at " + curr.getLongName() + "\n");
+                        textPath.append("Take a right at " + curr.getLongName());
                         break;
                     case STRAIGHT:
-                        textPath.append("Continue straight past " + curr.getLongName() + "\n");
+                        textPath.append("Continue straight past " + curr.getLongName());
                         break;
                     default:
                         System.err.println("Default case in direction switch");
                 }
+
+                // 3ft = 8px
+                double distance = findEuclideanDistance(curr, next) * 3 / 8;
+
+                textPath.append(String.format(" distance: %.0fft\n", distance));
             }
         }
 
@@ -104,6 +111,21 @@ public class PathToText {
 
     public String getDetailedPath(){
         return getDetailedPath(nodes);
+    }
+
+    @SuppressWarnings("Duplicates")
+    //also used to find the predicted cost to the end
+    private double findEuclideanDistance(Node a, Node b) {
+
+        int aX = a.getX();
+        int aY = a.getY();
+        int bX = b.getX();
+        int bY = b.getY();
+
+        int xDistance = aX - bX;
+        int yDistance = aY - bY;
+        int distSquared = (xDistance * xDistance) + (yDistance * yDistance);
+        return sqrt(distSquared);
     }
 
 
