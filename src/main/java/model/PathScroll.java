@@ -4,7 +4,7 @@ public class PathScroll {
     Node[] nodesOnPath;
     int oldPosition;
 
-    public PathScroll(Node[] nodesOnPath, int newPosition) {
+    public PathScroll(Node[] nodesOnPath) {
         this.nodesOnPath = nodesOnPath;
         this.oldPosition = 0;
     }

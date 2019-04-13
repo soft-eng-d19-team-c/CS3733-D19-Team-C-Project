@@ -24,6 +24,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.Edge;
 import model.Node;
+import model.PathScroll;
 import model.PathToText;
 
 import java.net.URL;
@@ -31,8 +32,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import static java.lang.Thread.sleep;
 
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
@@ -57,10 +56,13 @@ public class PathfindingController extends Controller implements Initializable {
     private LinkedList<Node> nodesOnPath;
     private Node[] nodesOnPathArray;
     private HashMap<String, Circle> nodeCircles;
+    private HashMap<String, Line> nodeLines;
+    private PathScroll pathScroll;
 
     private LinkedList<Button> allButtons = new LinkedList<Button>();
 
     private Color black;
+    private Color red;
 
     private String findLocationNodeID; // this is the node ID that comes from the Find a Room page
     private String currentFloor;
@@ -102,9 +104,11 @@ public class PathfindingController extends Controller implements Initializable {
         findLocationNodeID = (String) Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
+        nodeLines = new HashMap<>();
         nodes = Node.getNodesByFloor(currentFloor);
         edges = Edge.getEdgesByFloor(currentFloor);
         black = new Color(0, 0, 0, 1);
+        red = new Color(1, 0,0,1);
 
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
@@ -170,7 +174,9 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPathArray = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
+        pathScrollBar.setValue(0);
         pathScrollBar.setMax(nodesOnPath.size());
+        pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setVisible(true);
@@ -178,6 +184,31 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
+    }
+
+    /**
+     * Changes the color of the nodes on the path based on where the scrollbar is located
+     * @param e
+     * @author Fay Whittall
+     */
+    public void pathBarScrolled(ActionEvent e){
+        int newPosition = (int) pathScrollBar.getValue();
+        Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+        for(Node n: nodesToRedraw){
+            Circle nodeCircle = nodeCircles.get(n.getID());
+            if(nodeCircle.getFill().equals(black)){
+                nodeCircle.setFill(red);
+            }
+                else nodeCircle.setFill(black);
+            if (nodeLines.containsKey(n.getID())){
+                Line nodeLine = nodeLines.get(n.getID());
+                if(nodeLine.getStroke().equals(black)){
+                    nodeLine.setStroke(red);
+                }
+                else nodeLine.setStroke(black);
+            }
+        }
+        pathScroll.setOldPosition(newPosition);
     }
 
     /**
@@ -196,6 +227,7 @@ public class PathfindingController extends Controller implements Initializable {
                 circle.setCenterX(mapX + n.getX() / mapScale);
                 circle.setCenterY(mapY + n.getY() / mapScale);
                 circle.setRadius(3.0);
+                circle.setFill(black);
                 circle.getProperties().put("node", n);
                 if (prev != null && nodeCircles.containsKey(prev) && ((Node) nodeCircles.get(prev).getProperties().get("node")).getFloor().equals(currentFloor)) {
                     Line line = new Line();
@@ -206,6 +238,7 @@ public class PathfindingController extends Controller implements Initializable {
                     line.setStroke(black);
                     line.setStrokeWidth(3.0);
                     mapImgPane.getChildren().add(line);
+                    nodeLines.put(n.getID(), line);
                 }
                 mapImgPane.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
