@@ -24,7 +24,7 @@
          <children>
             <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
+                  <JFXButton fx:id="mapButton" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#mapButtonClick" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -35,7 +35,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Search for a Room" textOverrun="CLIP">
+                  <JFXButton fx:id="roomSearch" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#roomSearchButton" styleClass="btn-menubar" text="Search for a Room" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -46,7 +46,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Request A Service" textOverrun="CLIP">
+                  <JFXButton fx:id="serviceRequest" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#serviceRequestButton" styleClass="btn-menubar" text="Request A Service" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -57,7 +57,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Book a Room" textOverrun="CLIP">
+                  <JFXButton fx:id="bookRoom" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#bookRoomClick" styleClass="btn-menubar" text="Book a Room" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Admin View" textOverrun="CLIP">
+                  <JFXButton fx:id="adminView" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#adminViewClick" styleClass="btn-menubar" text="Admin View" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -79,7 +79,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" styleClass="btn-menubar" text="Employee Login" textOverrun="CLIP">
+                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#loginButtonClick" styleClass="btn-menubar" text="Employee Login" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
