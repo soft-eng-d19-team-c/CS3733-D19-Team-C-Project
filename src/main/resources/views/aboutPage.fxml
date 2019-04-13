@@ -30,12 +30,12 @@
       </Label>
       <Label layoutX="121.0" layoutY="178.0" prefHeight="20.0" prefWidth="307.0" text="Assistant Lead Software Engineer - Jacob Tutlis " />
       <Label layoutX="121.0" layoutY="199.0" prefHeight="17.0" prefWidth="405.0" text="Assistant Lead Software Engineer - Shine Linn Thant" />
-      <Label layoutX="121.0" layoutY="218.0" prefHeight="17.0" prefWidth="405.0" text=" Project Manager - Fay Whittall" />
-      <Label layoutX="121.0" layoutY="236.0" prefHeight="17.0" prefWidth="361.0" text=" Scrum Master - Lara Padir" />
-      <Label layoutX="121.0" layoutY="254.0" prefHeight="17.0" prefWidth="285.0" text=" Product Owner - Linda Puzey" />
-      <Label layoutX="121.0" layoutY="273.0" prefHeight="17.0" prefWidth="295.0" text=" Test Engineer - Wenjing Ying" />
-      <Label layoutX="122.0" layoutY="292.0" prefHeight="17.0" prefWidth="383.0" text=" Documentation Analyst - Matt Burd" />
-      <Label layoutX="122.0" layoutY="310.0" prefHeight="17.0" prefWidth="383.0" text=" Software Engineer - Kyle Heavey" />
+      <Label layoutX="121.0" layoutY="218.0" prefHeight="17.0" prefWidth="405.0" text="Project Manager - Fay Whittall" />
+      <Label layoutX="121.0" layoutY="236.0" prefHeight="17.0" prefWidth="361.0" text="Scrum Master - Lara Padir" />
+      <Label layoutX="121.0" layoutY="254.0" prefHeight="17.0" prefWidth="285.0" text="Product Owner - Linda Puzey" />
+      <Label layoutX="121.0" layoutY="273.0" prefHeight="17.0" prefWidth="295.0" text="Test Engineer - Wenjing Ying" />
+      <Label layoutX="122.0" layoutY="292.0" prefHeight="17.0" prefWidth="383.0" text="Documentation Analyst - Matt Burd" />
+      <Label layoutX="122.0" layoutY="310.0" prefHeight="17.0" prefWidth="383.0" text="Software Engineer - Kyle Heavey" />
       <Label alignment="TOP_LEFT" layoutX="32.0" layoutY="342.0" prefHeight="27.0" prefWidth="489.0" text="Thank you to Brigham and Women's Faulkner Hospital and">
          <font>
             <Font size="16.0" />
