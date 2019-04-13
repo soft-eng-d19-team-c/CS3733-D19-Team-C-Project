@@ -39,6 +39,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
+    @FXML private NavController navController;
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private JFXButton phoneNumberBtn;
     @FXML private JFXButton Floor3;
@@ -72,6 +73,9 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (!Main.user.checkPermissions("employee")) {
+            navController.mapButton.setVisible(false);
+        }
         pathText.setText(null);
         searchController_destController.refresh();
         searchController_origController.refresh();
