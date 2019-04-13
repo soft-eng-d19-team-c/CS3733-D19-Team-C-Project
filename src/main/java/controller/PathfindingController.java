@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +32,8 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.sleep;
+
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
     @FXML private ImageView findPathImgView;
@@ -47,8 +50,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Button L1;
     @FXML private Button L2;
     @FXML private JFXTextArea pathText;
-
-
+    @FXML private ScrollBar pathScrollBar;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -160,14 +162,13 @@ public class PathfindingController extends Controller implements Initializable {
 
 
      */
-
-
     public void goBtnClick(ActionEvent actionEvent) {
-        String orgi_nodeID = searchController_origController.getNodeID();
+        String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
-        nodesOnPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
+        nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
+        pathScrollBar.setMax(nodesOnPath.size());
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setVisible(true);
@@ -176,8 +177,6 @@ public class PathfindingController extends Controller implements Initializable {
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
     }
-
-
 
     /**
      * Draw nodes and edges from a linked list.
