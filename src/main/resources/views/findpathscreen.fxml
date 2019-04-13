@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
+      <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="mapImgView" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
       <Pane layoutX="114.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="0.0" />
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="150.0">
          <children>
@@ -27,10 +33,10 @@
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="540.0" prefHeight="200.0" prefWidth="540.0" spacing="5.0">
                      <children>
                         <Label styleClass="field-question-text" text="Where are you?" />
-                        <JFXTextField fx:id="fromTextField" />
+                        <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
                         <Label styleClass="field-question-text" text="Where do you want to go?" />
-                        <JFXTextField fx:id="toTextField" />
-                        <JFXButton fx:id="goButton" alignment="CENTER" contentDisplay="CENTER" onAction="#goButtonClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
+                        <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
+                        <JFXButton fx:id="goBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
                            <font>
                               <Font size="20.0" />
                            </font></JFXButton>
@@ -53,13 +59,14 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXTextField fx:id="directionsText" editable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="540.0">
+                        <JFXTextArea fx:id="pathText" editable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="540.0">
                            <VBox.margin>
                               <Insets right="50.0" />
                            </VBox.margin>
                            <padding>
                               <Insets right="50.0" />
-                           </padding></JFXTextField>
+                           </padding>
+                        </JFXTextArea>
                      </children>
                      <padding>
                         <Insets left="50.0" right="50.0" />
