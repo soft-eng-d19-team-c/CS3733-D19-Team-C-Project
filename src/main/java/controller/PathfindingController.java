@@ -1,6 +1,7 @@
 package controller;
 
 import base.Main;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
 import javafx.animation.Animation;
@@ -8,11 +9,12 @@ import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,7 +51,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Button L1;
     @FXML private Button L2;
     @FXML private JFXTextArea pathText;
-    @FXML private ScrollBar pathScrollBar;
+    @FXML private JFXSlider pathScrollBar;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -88,6 +90,7 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(Ground);
         allButtons.add(L1);
         allButtons.add(L2);
+        pathScrollBar.valueChangingProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
@@ -176,6 +179,7 @@ public class PathfindingController extends Controller implements Initializable {
         changeFloor(startNode.getFloor());
         pathScrollBar.setValue(0);
         pathScrollBar.setMax(nodesOnPath.size());
+        pathScrollBar.valueChangingProperty().addListener(pathBarScrollListener);
         pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
@@ -188,33 +192,38 @@ public class PathfindingController extends Controller implements Initializable {
 
     /**
      * Changes the color of the nodes on the path based on where the scrollbar is located
+     * Right now, if you switch floors, it just changes the ones that should be redrawn to red
      * @param e
      * @author Fay Whittall
      */
-    public void pathBarScrolled(ActionEvent e){
-        int newPosition = (int) pathScrollBar.getValue();
-        Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
-        if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-            changeFloor(nodesOnPathArray[newPosition].getFloor());
-        }
-        for(Node n: nodesToRedraw){
-            if(nodeCircles.containsKey(n.getID())){
-                Circle nodeCircle = nodeCircles.get(n.getID());
-                if(nodeCircle.getFill().equals(black)){
-                    nodeCircle.setFill(red);
-                }
-                else nodeCircle.setFill(black);
+    ChangeListener pathBarScrollListener = new ChangeListener<Boolean>(){
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasChanging, Boolean changing){
+            System.out.println("Slidy boi be a slidin");
+            int newPosition = (int) pathScrollBar.getValue();
+            Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+            if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+                changeFloor(nodesOnPathArray[newPosition].getFloor());
             }
-            if (nodeLines.containsKey(n.getID())){
-                Line nodeLine = nodeLines.get(n.getID());
-                if(nodeLine.getStroke().equals(black)){
-                    nodeLine.setStroke(red);
+            for(Node n: nodesToRedraw){
+                if(nodeCircles.containsKey(n.getID())){
+                    Circle nodeCircle = nodeCircles.get(n.getID());
+                    if(nodeCircle.getFill().equals(black)){
+                        nodeCircle.setFill(red);
+                    }
+                    else nodeCircle.setFill(black);
                 }
-                else nodeLine.setStroke(black);
+                if (nodeLines.containsKey(n.getID())){
+                    Line nodeLine = nodeLines.get(n.getID());
+                    if(nodeLine.getStroke().equals(black)){
+                        nodeLine.setStroke(red);
+                    }
+                    else nodeLine.setStroke(black);
+                }
             }
+            pathScroll.setOldPosition(newPosition);
         }
-        pathScroll.setOldPosition(newPosition);
-    }
+    };
 
     /**
      * Draw nodes and edges from a linked list.

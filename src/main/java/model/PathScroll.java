@@ -29,7 +29,7 @@ public class PathScroll {
             b = oldPosition;
             a = newPosition;
         }
-        Node[] nodesInRange = new Node[b - a];
+        Node[] nodesInRange = new Node[(b - a) + 1];
         int indexOfNodesInRange = 0;
         for(int i = a; i <= b; i++){
             nodesInRange[indexOfNodesInRange] = this.nodesOnPath[i];
