@@ -12,7 +12,9 @@
     -success-dark: #279742;
     -jfx-focus-color: -primary;
     -jfx-default-color: -primary;
+
     -bwblue:#012d5a; /* Brigham and Women's Dark Blue */
+    -bwgold:#f6bd38; /* BW goldenrod */
 }
 /* utilities */
 .bg-primary {
@@ -76,6 +78,52 @@
 .btn-success:hover,.btn-success:pressed {
     -fx-background-color: -success-dark;
 }
-.screen-background{
+
+/* Quick Note; the Menu Bar is 135 Pixels tall, so always leave that space empty */
+
+.blue-boxes{
     -fx-background-color: -bwblue;
+}
+
+.white-box{
+    -fx-background-color: -white;
+    -fx-background-radius: 30;
+}
+
+.btn-menubar{
+    -fx-text-fill: -black;
+    -fx-background-color: -white;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 22;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    /* I don't actually think these set the margin correctly*/
+    margin-bottom: 30;
+    margin-top: 30;
+}
+
+.select-bar{
+    -fx-background-color: -bwgold;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    -fx-background-radius: 30;
+}
+
+.header-text{
+    -fx-font-size: 50;
+    -fx-text-fill: -white;
+}
+.field-question-text{
+    -fx-font-size: 20;
+    -fx-text-fill: -black;
+}
+
+.floor-select-button{
+
+}
+
+.btn-primary-v2{
+    -fx-background-color: -bwgold;
+    -fx-background-radius: 30;
+    -fx-text-fill: -black;
 }
