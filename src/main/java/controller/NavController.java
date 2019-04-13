@@ -13,19 +13,18 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class NavController extends Controller implements Initializable {
-    @FXML
-    public JFXButton mapButton;
-    public JFXButton roomSearch;
-    public JFXButton serviceRequest;
-    public JFXButton bookRoom;
-    public JFXButton adminView;
-    public JFXButton loginButton;
-    public Pane mapSelectBar;
-    public Pane roomSelectBar;
-    public Pane serviceSelectBar;
-    public Pane bookSelectBar;
-    public Pane adminSelectBar;
-    public Pane loginSelectBar;
+    @FXML public JFXButton mapButton;
+    @FXML public JFXButton roomSearch;
+    @FXML public JFXButton serviceRequest;
+    @FXML public JFXButton bookRoom;
+    @FXML public JFXButton adminView;
+    @FXML public JFXButton loginButton;
+    @FXML public Pane mapSelectBar;
+    @FXML public Pane roomSelectBar;
+    @FXML public Pane serviceSelectBar;
+    @FXML public Pane bookSelectBar;
+    @FXML public Pane adminSelectBar;
+    @FXML public Pane loginSelectBar;
 
     private LinkedList<Pane> selectBars;
 
