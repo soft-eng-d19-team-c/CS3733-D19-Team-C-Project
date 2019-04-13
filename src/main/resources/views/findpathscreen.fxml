@@ -2,9 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
@@ -15,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
-      <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
             <ImageView fx:id="mapImgView" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
          </children>
@@ -33,19 +31,28 @@
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
                <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="540.0" prefHeight="200.0" prefWidth="540.0" spacing="5.0">
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="540.0" prefHeight="200.0" prefWidth="540.0">
                      <children>
-                        <Label styleClass="field-question-text" text="Where are you?" />
+                        <Label styleClass="field-question-text" text="Where are you?">
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin></Label>
                         <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
-                        <Label styleClass="field-question-text" text="Where do you want to go?" />
+                        <Label styleClass="field-question-text" text="Where do you want to go?">
+                           <VBox.margin>
+                              <Insets top="-15.0" />
+                           </VBox.margin></Label>
                         <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
                         <JFXButton fx:id="goBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
                            <font>
                               <Font size="20.0" />
-                           </font></JFXButton>
+                           </font>
+                           <VBox.margin>
+                              <Insets top="-20.0" />
+                           </VBox.margin></JFXButton>
                      </children>
                      <padding>
-                        <Insets left="50.0" right="150.0" top="10.0" />
+                        <Insets left="50.0" right="150.0" />
                      </padding>
                   </VBox>
                </children>
@@ -96,17 +103,17 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXButton fx:id="Floor3" contentDisplay="CENTER" onAction="#floor3BtnClick" styleClass="floor-select-button" text="3">
+                  <JFXButton fx:id="Floor3" contentDisplay="CENTER" onAction="#floor3BtnClick" styleClass="floor-select-button" text="     3     ">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="Floor2" contentDisplay="CENTER" onAction="#floor2BtnClick" styleClass="floor-select-button" text="2">
+                  <JFXButton fx:id="Floor2" contentDisplay="CENTER" onAction="#floor2BtnClick" styleClass="floor-select-button" text="     2     ">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="Floor1" contentDisplay="CENTER" onAction="#floor1BtnClick" styleClass="floor-select-button" text="1">
+                  <JFXButton fx:id="Floor1" contentDisplay="CENTER" onAction="#floor1BtnClick" styleClass="floor-select-button" text="     1     ">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
@@ -116,12 +123,12 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="L1" contentDisplay="CENTER" onAction="#L1BtnClick" styleClass="floor-select-button" text="L1">
+                  <JFXButton fx:id="L1" contentDisplay="CENTER" onAction="#L1BtnClick" styleClass="floor-select-button" text="    L1    ">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="L2" contentDisplay="CENTER" onAction="#L2BtnClick" styleClass="floor-select-button" text="L2">
+                  <JFXButton fx:id="L2" contentDisplay="CENTER" onAction="#L2BtnClick" styleClass="floor-select-button" text="    L2    ">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
