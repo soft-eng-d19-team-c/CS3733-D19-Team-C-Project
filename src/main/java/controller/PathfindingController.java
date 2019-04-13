@@ -199,16 +199,23 @@ public class PathfindingController extends Controller implements Initializable {
     ChangeListener pathBarScrollListener = new ChangeListener<Boolean>(){
         @Override
         public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasChanging, Boolean changing){
-            System.out.println("Slidy boi be a slidin");
+            int oldPosition = pathScroll.getOldPosition();
             int newPosition = (int) pathScrollBar.getValue();
+            boolean forwards = false;
+            if (oldPosition < newPosition)
+                forwards = true;
+
             Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                changeFloor(nodesOnPathArray[newPosition].getFloor());
+                if (forwards)
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                else
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
             }
             for(Node n: nodesToRedraw){
                 if(nodeCircles.containsKey(n.getID())){
                     Circle nodeCircle = nodeCircles.get(n.getID());
-                    if(nodeCircle.getFill().equals(black)){
+                    if (nodeCircle.getFill().equals(black)){
                         nodeCircle.setFill(red);
                     }
                     else nodeCircle.setFill(black);
@@ -225,11 +232,15 @@ public class PathfindingController extends Controller implements Initializable {
         }
     };
 
+    private void generateNodesAndEdges(LinkedList<Node> nodes) {
+        generateNodesAndEdges(nodes, Color.BLACK);
+    }
+
     /**
      * Draw nodes and edges from a linked list.
      * @param nodes Linked List of nodes to draw from.
      */
-    private void generateNodesAndEdges(LinkedList<Node> nodes) {
+    private void generateNodesAndEdges(LinkedList<Node> nodes, Color c) {
         String prev = null;
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
@@ -241,7 +252,7 @@ public class PathfindingController extends Controller implements Initializable {
                 circle.setCenterX(mapX + n.getX() / mapScale);
                 circle.setCenterY(mapY + n.getY() / mapScale);
                 circle.setRadius(3.0);
-                circle.setFill(black);
+                circle.setFill(c);
                 circle.getProperties().put("node", n);
                 if (prev != null && nodeCircles.containsKey(prev) && ((Node) nodeCircles.get(prev).getProperties().get("node")).getFloor().equals(currentFloor)) {
                     Line line = new Line();
@@ -249,7 +260,7 @@ public class PathfindingController extends Controller implements Initializable {
                     line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
                     line.endXProperty().bind(circle.centerXProperty());
                     line.endYProperty().bind(circle.centerYProperty());
-                    line.setStroke(black);
+                    line.setStroke(c);
                     line.setStrokeWidth(3.0);
                     mapImgPane.getChildren().add(line);
                     nodeLines.put(n.getID(), line);
@@ -390,11 +401,15 @@ public class PathfindingController extends Controller implements Initializable {
 
 
     public void changeFloor(String floor) {
+        changeFloor(floor, Color.BLACK);
+    }
+
+    public void changeFloor(String floor, Color c) {
         currentFloor = floor;
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         updateFloorImg(floor);
         if (hasPath) {
-            generateNodesAndEdges(nodesOnPath);
+            generateNodesAndEdges(nodesOnPath, c);
         } else {
             displayAllNodes();
         }

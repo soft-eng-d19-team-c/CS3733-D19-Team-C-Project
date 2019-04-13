@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public class PathScroll {
     Node[] nodesOnPath;
     int oldPosition;
@@ -19,22 +21,10 @@ public class PathScroll {
      * @author Fay Whittall
      */
     public Node[] getNodesInRange(int newPosition){
-        int a;
-        int b;
-        if(oldPosition < newPosition){
-            a = oldPosition;
-            b = newPosition;
-        }
-        else{
-            b = oldPosition;
-            a = newPosition;
-        }
-        Node[] nodesInRange = new Node[(b - a) + 1];
-        int indexOfNodesInRange = 0;
-        for(int i = a; i <= b; i++){
-            nodesInRange[indexOfNodesInRange] = this.nodesOnPath[i];
-            indexOfNodesInRange++;
-        }
-        return nodesInRange;
+        return Arrays.copyOfRange(this.nodesOnPath, Math.min(oldPosition, newPosition), Math.max(oldPosition, newPosition));
+    }
+
+    public int getOldPosition() {
+        return this.oldPosition;
     }
 }
