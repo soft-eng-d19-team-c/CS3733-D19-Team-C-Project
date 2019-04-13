@@ -310,11 +310,11 @@ public class PathfindingController extends Controller implements Initializable {
                 currentFloorButton = Floor3;
                 break;
             case "2":
-                floorURL = "2_NoIcons.png";
+                floorURL = "02_thesecondfloor_withbookablelocations.png";
                 currentFloorButton = Floor2;
                 break;
             case "1":
-                floorURL = "1_NoIcons.png";
+                floorURL = "01_thefirstfloor.png";
                 currentFloorButton = Floor1;
                 break;
             case "G":
@@ -322,11 +322,11 @@ public class PathfindingController extends Controller implements Initializable {
                 currentFloorButton = Ground;
                 break;
             case "L1":
-                floorURL = "L1_NoIcons.png";
+                floorURL = "00_thelowerlevel1.png";
                 currentFloorButton = L1;
                 break;
             case "L2":
-                floorURL = "L2_NoIcons.png";
+                floorURL = "00_thelowerlevel2.png";
                 currentFloorButton = L2;
                 break;
             default:
