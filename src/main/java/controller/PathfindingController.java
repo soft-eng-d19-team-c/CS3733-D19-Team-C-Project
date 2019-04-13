@@ -55,6 +55,7 @@ public class PathfindingController extends Controller implements Initializable {
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodesOnPath;
+    private Node[] nodesOnPathArray;
     private HashMap<String, Circle> nodeCircles;
 
     private LinkedList<Button> allButtons = new LinkedList<Button>();
@@ -166,6 +167,7 @@ public class PathfindingController extends Controller implements Initializable {
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
+        nodesOnPathArray = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
         pathScrollBar.setMax(nodesOnPath.size());
