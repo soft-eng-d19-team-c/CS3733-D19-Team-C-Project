@@ -73,9 +73,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!Main.user.checkPermissions("employee")) {
-            navController.mapButton.setVisible(false);
-        }
+        navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         searchController_destController.refresh();
         searchController_origController.refresh();
