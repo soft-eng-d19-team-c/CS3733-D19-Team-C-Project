@@ -194,12 +194,17 @@ public class PathfindingController extends Controller implements Initializable {
     public void pathBarScrolled(ActionEvent e){
         int newPosition = (int) pathScrollBar.getValue();
         Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+        if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+            changeFloor(nodesOnPathArray[newPosition].getFloor());
+        }
         for(Node n: nodesToRedraw){
-            Circle nodeCircle = nodeCircles.get(n.getID());
-            if(nodeCircle.getFill().equals(black)){
-                nodeCircle.setFill(red);
-            }
+            if(nodeCircles.containsKey(n.getID())){
+                Circle nodeCircle = nodeCircles.get(n.getID());
+                if(nodeCircle.getFill().equals(black)){
+                    nodeCircle.setFill(red);
+                }
                 else nodeCircle.setFill(black);
+            }
             if (nodeLines.containsKey(n.getID())){
                 Line nodeLine = nodeLines.get(n.getID());
                 if(nodeLine.getStroke().equals(black)){
