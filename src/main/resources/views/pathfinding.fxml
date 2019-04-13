@@ -103,7 +103,7 @@
             <Font size="20.0" />
          </font>
       </JFXTextArea>
-       <JFXSlider fx:id="pathScrollBar" layoutX="609.0" layoutY="21.0" prefWidth="1000.0">
+       <JFXSlider fx:id="pathScrollBar" layoutX="460.0" layoutY="22.0" prefWidth="1000.0">
        </JFXSlider>
    </children>
 </AnchorPane>

@@ -90,6 +90,7 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(Ground);
         allButtons.add(L1);
         allButtons.add(L2);
+        pathScrollBar.setVisible(false);
         pathScrollBar.valueChangingProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
@@ -177,9 +178,11 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPathArray = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
-        pathScrollBar.setValue(0);
+        pathScrollBar.setMin(1);
+        pathScrollBar.setValue(1);
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueChangingProperty().addListener(pathBarScrollListener);
+        pathScrollBar.setVisible(true);
         pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
@@ -206,26 +209,32 @@ public class PathfindingController extends Controller implements Initializable {
                 forwards = true;
 
             Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
-            if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                if (forwards)
-                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
-                else
-                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+            //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
+            if(newPosition == (int) pathScrollBar.getMax()){
+                generateNodesAndEdges(nodesOnPath, Color.RED);
             }
-            for(Node n: nodesToRedraw){
-                if(nodeCircles.containsKey(n.getID())){
-                    Circle nodeCircle = nodeCircles.get(n.getID());
-                    if (nodeCircle.getFill().equals(black)){
-                        nodeCircle.setFill(red);
-                    }
-                    else nodeCircle.setFill(black);
+            else{
+                if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+                    if (forwards)
+                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                    else
+                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
                 }
-                if (nodeLines.containsKey(n.getID())){
-                    Line nodeLine = nodeLines.get(n.getID());
-                    if(nodeLine.getStroke().equals(black)){
-                        nodeLine.setStroke(red);
+                for(Node n: nodesToRedraw){
+                    if(nodeCircles.containsKey(n.getID())){
+                        Circle nodeCircle = nodeCircles.get(n.getID());
+                        if (nodeCircle.getFill().equals(black)){
+                            nodeCircle.setFill(red);
+                        }
+                        else nodeCircle.setFill(black);
                     }
-                    else nodeLine.setStroke(black);
+                    if (nodeLines.containsKey(n.getID())){
+                        Line nodeLine = nodeLines.get(n.getID());
+                        if(nodeLine.getStroke().equals(black)){
+                            nodeLine.setStroke(red);
+                        }
+                        else nodeLine.setStroke(black);
+                    }
                 }
             }
             pathScroll.setOldPosition(newPosition);
