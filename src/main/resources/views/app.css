@@ -119,7 +119,15 @@
 }
 
 .floor-select-button{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwblue;
+    -fx-text-fill: -white;
+}
 
+.floor-select-button-selected{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwgold;
+    -fx-text-fill: -black;
 }
 
 .btn-primary-v2{
