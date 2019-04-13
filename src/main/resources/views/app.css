@@ -12,6 +12,7 @@
     -success-dark: #279742;
     -jfx-focus-color: -primary;
     -jfx-default-color: -primary;
+    -bwblue:#012d5a; /* Brigham and Women's Dark Blue */
 }
 /* utilities */
 .bg-primary {
@@ -76,6 +77,5 @@
     -fx-background-color: -success-dark;
 }
 .screen-background{
-    -fx-background-image: url("../img/Screen Saver@2x.png");
-    -fx-background-size: cover, auto;
+    -fx-background-color: -bwblue;
 }
