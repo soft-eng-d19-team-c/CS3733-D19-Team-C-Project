@@ -11,6 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -20,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.WindowEvent;
 import model.Edge;
 import model.Node;
 
@@ -88,6 +92,72 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+
+        final ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent e) {
+               // System.out.println("showing");
+            }
+        });
+        contextMenu.setOnShown(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent e) {
+                //System.out.println("shown");
+            }
+        });
+
+        MenuItem nodeID = new MenuItem("NodeID");
+        nodeID.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("NodeID");
+            }
+        });
+        MenuItem xcoord = new MenuItem(" Xcoord");
+        xcoord.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Xcoord");
+            }
+        });
+        MenuItem ycoord = new MenuItem(" Ycoord");
+        ycoord.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Ycoord");
+            }
+        });
+        MenuItem floor = new MenuItem(" Floor");
+        floor.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Floor");
+            }
+        });
+        MenuItem building = new MenuItem(" Building");
+        building.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Building");
+            }
+        });
+        MenuItem nodeType = new MenuItem(" Node Type");
+        nodeType.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Node Type");
+            }
+        });
+        MenuItem shortName = new MenuItem(" Short Name");
+        shortName.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Short Name");
+            }
+        });
+        MenuItem longName = new MenuItem(" Long Name");
+        longName.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("Long Name");
+            }
+        });
+        contextMenu.getItems().addAll(nodeID, xcoord, ycoord, floor, building, nodeType, shortName, longName);
+
+        final TextField textField = new TextField("Type Something");
+        textField.setContextMenu(contextMenu);
+
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor(currentFloor);
@@ -566,4 +636,6 @@ public class EditMapController extends Controller implements Initializable {
     public void submitButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
+
+
 }
