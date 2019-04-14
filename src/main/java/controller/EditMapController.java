@@ -108,6 +108,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
 
+        editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
         IDContent.getChildren().add(new Label("Node ID: "));
         IDContent.getChildren().add(nodeID);
@@ -126,6 +127,8 @@ public class EditMapController extends Controller implements Initializable {
         IDContent.getChildren().add(new Label("Long Name: "));
         IDContent.getChildren().add(longName);
         IDContent.getChildren().add(save);
+        save.setText("Save");
+
 
         TitledPane.setText("Edit Node Data");
         TitledPane.setContent(IDContent);
@@ -560,8 +563,6 @@ public class EditMapController extends Controller implements Initializable {
                 }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                editNode.setVisible(true);
-                save.setText("Save");
 
                 nodeID.setText(n.getID());
                 nodeID.setDisable(true);
@@ -610,13 +611,6 @@ public class EditMapController extends Controller implements Initializable {
                         //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
                     }
                 });
-
-
-                //after submit set visible back to false
-
-                //HashMap<String, Object> hm = new HashMap<>();
-                //hm.put("node", n);
-                //Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
             }
         }
     };
