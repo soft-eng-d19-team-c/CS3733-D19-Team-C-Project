@@ -383,6 +383,8 @@ public class PathfindingController extends Controller implements Initializable {
             }
         } else {
             generateNodesAndEdges(nodesOnPath);
+            pathScroll.setOldPosition(0);
+            scroll();
         }
     }
 
