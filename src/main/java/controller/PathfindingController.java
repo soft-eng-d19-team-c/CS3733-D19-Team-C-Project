@@ -214,6 +214,7 @@ public class PathfindingController extends Controller implements Initializable {
                 generateNodesAndEdges(nodesOnPath, Color.RED);
             }
             else{
+                //draw the nodes again red if moving forward, draw them again black if moving backward
                 if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
                     if (forwards)
                         changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
