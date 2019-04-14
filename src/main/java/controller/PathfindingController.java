@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
@@ -50,6 +52,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Button Ground;
     @FXML private Button L1;
     @FXML private Button L2;
+    @FXML private Button playButton;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
 
@@ -60,6 +63,7 @@ public class PathfindingController extends Controller implements Initializable {
     private HashMap<String, Circle> nodeCircles;
     private HashMap<String, Line> nodeLines;
     private PathScroll pathScroll;
+    private ExecutorService executorService;
 
     private LinkedList<Button> allButtons = new LinkedList<Button>();
 
@@ -194,53 +198,79 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     /**
-     * Changes the color of the nodes on the path based on where the scrollbar is located
-     * Right now, if you switch floors, it just changes the ones that should be redrawn to red
+     * plays through the whole scrollbar sequence
      * @param e
+     * @author Fay Whittall
+     */
+    public void playScroll(ActionEvent e){
+        for(int i = 0; i < nodesOnPath.size() + 2; i++){
+            pathScrollBar.setValue(i);
+            scroll();
+            try{
+                Thread.sleep(250);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    /**
+     * Allows scroll to work when the scrollbar is scrolled
      * @author Fay Whittall
      */
     ChangeListener pathBarScrollListener = new ChangeListener<Boolean>(){
         @Override
         public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasChanging, Boolean changing){
-            int oldPosition = pathScroll.getOldPosition();
-            int newPosition = (int) pathScrollBar.getValue();
-            boolean forwards = false;
-            if (oldPosition < newPosition)
-                forwards = true;
-
-            Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
-            //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
-            if(newPosition == (int) pathScrollBar.getMax()){
-                generateNodesAndEdges(nodesOnPath, Color.RED);
-            }
-            else{
-                //draw the nodes again red if moving forward, draw them again black if moving backward
-                if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                    if (forwards)
-                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
-                    else
-                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
-                }
-                for(Node n: nodesToRedraw){
-                    if(nodeCircles.containsKey(n.getID())){
-                        Circle nodeCircle = nodeCircles.get(n.getID());
-                        if (nodeCircle.getFill().equals(black)){
-                            nodeCircle.setFill(red);
-                        }
-                        else nodeCircle.setFill(black);
-                    }
-                    if (nodeLines.containsKey(n.getID())){
-                        Line nodeLine = nodeLines.get(n.getID());
-                        if(nodeLine.getStroke().equals(black)){
-                            nodeLine.setStroke(red);
-                        }
-                        else nodeLine.setStroke(black);
-                    }
-                }
-            }
-            pathScroll.setOldPosition(newPosition);
+            scroll();
         }
     };
+
+    /**
+     * Changes the color of the nodes on the path based on where the scrollbar is located
+     * Right now, if you switch floors, it just changes the ones that should be redrawn to red
+     * @author Fay Whittall
+     */
+    private void scroll(){
+        int oldPosition = pathScroll.getOldPosition();
+        int newPosition = (int) pathScrollBar.getValue();
+        boolean forwards = false;
+        if (oldPosition < newPosition)
+            forwards = true;
+
+        Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+        //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
+        if(newPosition == (int) pathScrollBar.getMax()){
+            generateNodesAndEdges(nodesOnPath, Color.RED);
+        }
+        else{
+            //draw the nodes again red if moving forward, draw them again black if moving backward
+            if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+                if (forwards)
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                else
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+            }
+            for(Node n: nodesToRedraw){
+                if(nodeCircles.containsKey(n.getID())){
+                    Circle nodeCircle = nodeCircles.get(n.getID());
+                    if (nodeCircle.getFill().equals(black)){
+                        nodeCircle.setFill(red);
+                    }
+                    else nodeCircle.setFill(black);
+                }
+                if (nodeLines.containsKey(n.getID())){
+                    Line nodeLine = nodeLines.get(n.getID());
+                    if(nodeLine.getStroke().equals(black)){
+                        nodeLine.setStroke(red);
+                    }
+                    else nodeLine.setStroke(black);
+                }
+            }
+        }
+        pathScroll.setOldPosition(newPosition);
+    }
 
     private void generateNodesAndEdges(LinkedList<Node> nodes) {
         generateNodesAndEdges(nodes, Color.BLACK);
