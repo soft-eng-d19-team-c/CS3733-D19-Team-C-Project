@@ -99,10 +99,14 @@ public class PathfindingController extends Controller implements Initializable {
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+        });
+
 
             /*
-                Load images into the cache
+                Load images into the cache with MULTITEHRADING
              */
+
+        new Thread(() -> {
             if (!imageCache.containsKey("3_NoIcons.png")) {
                 imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
             }
@@ -121,7 +125,9 @@ public class PathfindingController extends Controller implements Initializable {
             if (!imageCache.containsKey("00_thelowerlevel2.png")) {
                 imageCache.put("00_thelowerlevel2.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel2.png"))));
             }
-        });
+        }).start();
+
+
     }
 
 
