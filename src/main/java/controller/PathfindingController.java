@@ -4,10 +4,7 @@ import base.Main;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.StrokeTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,7 +32,6 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
@@ -95,7 +91,8 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(L1);
         allButtons.add(L2);
         pathScrollBar.setVisible(false);
-        pathScrollBar.valueChangingProperty().removeListener(pathBarScrollListener);
+        playButton.setVisible(false);
+        pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
@@ -185,8 +182,9 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setMin(1);
         pathScrollBar.setValue(1);
         pathScrollBar.setMax(nodesOnPath.size());
-        pathScrollBar.valueChangingProperty().addListener(pathBarScrollListener);
+        pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
+        playButton.setVisible(true);
         pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
@@ -203,26 +201,19 @@ public class PathfindingController extends Controller implements Initializable {
      * @author Fay Whittall
      */
     public void playScroll(ActionEvent e){
-        for(int i = 0; i < nodesOnPath.size() + 2; i++){
-            pathScrollBar.setValue(i);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(250), event -> {
             scroll();
-            try{
-                Thread.sleep(250);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
-        }
+        }));
+        timeline.play();
     }
 
     /**
      * Allows scroll to work when the scrollbar is scrolled
      * @author Fay Whittall
      */
-    ChangeListener pathBarScrollListener = new ChangeListener<Boolean>(){
+    ChangeListener pathBarScrollListener = new ChangeListener(){
         @Override
-        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasChanging, Boolean changing){
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
             scroll();
         }
     };
