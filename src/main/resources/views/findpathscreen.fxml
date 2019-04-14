@@ -30,7 +30,7 @@
                         <JFXTextField fx:id="fromTextField" />
                         <Label styleClass="field-question-text" text="Where do you want to go?" />
                         <JFXTextField fx:id="toTextField" />
-                        <JFXButton fx:id="goButton" alignment="CENTER" contentDisplay="CENTER" onAction="#goButtonClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
+                        <JFXButton fx:id="goButton" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
                            <font>
                               <Font size="20.0" />
                            </font></JFXButton>
