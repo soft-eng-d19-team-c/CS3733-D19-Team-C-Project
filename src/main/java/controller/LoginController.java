@@ -35,6 +35,6 @@ public class LoginController extends Controller implements Initializable {
         } catch (AuthException e) {
             e.printStackTrace();
         }
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
     }
 }
