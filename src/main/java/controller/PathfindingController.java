@@ -69,6 +69,7 @@ public class PathfindingController extends Controller implements Initializable {
     private String currentFloor;
     private boolean hasPath;
     private Button currentFloorButton;
+    private HashMap<String, Image> imageCache = new HashMap<>();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -414,7 +415,13 @@ public class PathfindingController extends Controller implements Initializable {
 
         //colorFloorsOnPath(nodesOnPath, currentFloor);
         changeButtonColor(currentFloorButton);
-        findPathImgView.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
+        if (imageCache.containsKey(floorURL)) {
+            findPathImgView.setImage(imageCache.get(floorURL));
+        } else {
+            Image newImage = new Image(String.valueOf(getClass().getResource("/img/" + floorURL)));
+            imageCache.put(floorURL, newImage);
+            findPathImgView.setImage(newImage);
+        }
         findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
 
