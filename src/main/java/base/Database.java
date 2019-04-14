@@ -41,6 +41,11 @@ public final class Database {
         // ------------------------------------------------------------------------
         // Let's build a database.
         // table exists sql state => X0Y32
+        // "globals"
+        URL csvFile = getClass().getResource("/data/nodes.csv");
+        BufferedReader br = null;
+        String line;
+        String cvsSplitBy = ",";
         if (importData) {
             /*
                     NODES AND EDGES STUFF
@@ -200,10 +205,7 @@ public final class Database {
 
             // import nodes
             System.out.println("Attempting to import nodes from /data/nodes.csv...");
-            URL csvFile = getClass().getResource("/data/nodes.csv");
-            BufferedReader br = null;
-            String line;
-            String cvsSplitBy = ",";
+            csvFile = getClass().getResource("/data/nodes.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
                 br.readLine(); // throw away header
@@ -381,6 +383,7 @@ public final class Database {
                     }
                 }
             }
+        } // end if importData
 
 
             // import user permissions
@@ -422,7 +425,7 @@ public final class Database {
                 }
             }
 
-            // import users
+            // import users. we always try to import and update users because it will re-encrypt their password
             System.out.println("Attempting to import users from /data/users.csv...");
             csvFile = getClass().getResource("/data/users.csv");
             try {
@@ -439,11 +442,19 @@ public final class Database {
                     try {
                         ps = this.getConnection().prepareStatement(sqlCmd);
                         ps.setString(1, username);
-                        ps.setString(2, password);
+                        ps.setString(2, Main.auth.encryptPassword(password));
                         ps.execute();
                     } catch (SQLException e) {
                         if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
-
+                            sqlCmd = "update USERS set PASSWORD = ? where USERNAME = ?";
+                            try {
+                                ps = this.getConnection().prepareStatement(sqlCmd);
+                                ps.setString(1, Main.auth.encryptPassword(password));
+                                ps.setString(2, username);
+                                ps.executeUpdate();
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
                         } else {
                             e.printStackTrace();
                         }
@@ -517,7 +528,6 @@ public final class Database {
                 }
             }
 
-        } // end if importData
     } // end constructor
 
     public Connection getConnection() {
