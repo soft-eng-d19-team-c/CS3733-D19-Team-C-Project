@@ -64,5 +64,6 @@
             <Image url="@../img/Perscriptions.png" />
          </image>
       </ImageView>
+      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>
