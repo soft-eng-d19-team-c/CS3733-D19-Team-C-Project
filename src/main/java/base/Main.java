@@ -17,6 +17,7 @@ public class Main {
     public static void main(String[] args) {
         auth = new AuthenticationManager();
         database = new Database(true, false);
+        user = new User("staff");
         info = new ApplicationInformation("CHALL007L1");
         try {
             user = new User("guest", "guest");
