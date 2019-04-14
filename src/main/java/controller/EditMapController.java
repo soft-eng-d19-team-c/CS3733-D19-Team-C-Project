@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -43,6 +44,8 @@ public class EditMapController extends Controller implements Initializable {
 
     @FXML
     private ComboBox<String> algosMenu;
+
+    @FXML private TextField changeIdletime;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -253,6 +256,8 @@ public class EditMapController extends Controller implements Initializable {
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
         addEdgeHandler_on = true;
     }
+
+//    public void setIdleTime
 
     public void editNodeButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {

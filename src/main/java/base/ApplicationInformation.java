@@ -11,6 +11,7 @@ import model.*;
 public final class ApplicationInformation {
     Node kioskLocation;
     PathFindingContext pathfinding;
+    double idleTime;
     public static AStar ASTAR = new AStar();
     public static Dijkstra DIJKSTRA = new Dijkstra();
     public static BreadthFirstSearch BFS = new BreadthFirstSearch();
@@ -19,6 +20,7 @@ public final class ApplicationInformation {
     public ApplicationInformation(String kioskLocation) {
         this.pathfinding = new PathFindingContext(ASTAR);
         this.kioskLocation = Node.getNodeByID(kioskLocation);
+        this.idleTime = 0.5;
     }
 
     /**
@@ -47,6 +49,10 @@ public final class ApplicationInformation {
 
     public void setKioskLocation(String newLocation){
         this.kioskLocation = Node.getNodeByID(newLocation);
+    }
+
+    public void setIdleTime(double idleTime) {
+        this.idleTime = idleTime;
     }
 
     /**
