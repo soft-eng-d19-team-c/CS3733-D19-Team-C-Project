@@ -50,5 +50,6 @@
             <Image url="@../img/IT.png" />
          </image>
       </ImageView>
+        <fx:include fx:id="menu" source="menuBarPartial.fxml" />
     </children>
 </AnchorPane>

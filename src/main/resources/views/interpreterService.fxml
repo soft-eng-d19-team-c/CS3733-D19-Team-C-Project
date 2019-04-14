@@ -86,5 +86,6 @@
             <Image url="@../img/Translation.png" />
          </image>
       </ImageView>
+      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>
