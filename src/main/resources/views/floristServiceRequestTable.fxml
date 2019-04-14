@@ -43,6 +43,7 @@
                 </TableView>
             </children>
         </VBox>
+        <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
     </children>
-    <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>

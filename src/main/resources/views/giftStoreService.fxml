@@ -5,21 +5,14 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="screen-background" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
    <children>
-      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <ImageView fitHeight="366.0" fitWidth="400.0" layoutX="1812.0" layoutY="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <image>
-            <Image url="@../img/Gift Store.png" />
-         </image>
-      </ImageView>
-      <VBox layoutX="910.0" layoutY="440.0" prefHeight="200.0" prefWidth="100.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="29.0" layoutY="48.0" prefHeight="1018.0" prefWidth="1126.0" stylesheets="@app.css">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Gift Store Delivery Request">
                <font>
@@ -55,6 +48,8 @@
          </JFXButton>
          </children>
       </VBox>
+      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
    </children>
-   <fx:include source="backandhomebuttonpartial.fxml" fx:id="Buttons"/>
+
 </AnchorPane>

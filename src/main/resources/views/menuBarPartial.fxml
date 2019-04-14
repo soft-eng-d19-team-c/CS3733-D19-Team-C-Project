@@ -68,7 +68,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </padding>
                   </JFXButton>
-                  <JFXButton fx:id="adminView" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#adminViewClick" styleClass="btn-menubar" text="Admin View" textOverrun="CLIP">
+                  <JFXButton fx:id="adminView" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#adminViewClick" styleClass="btn-menubar" text="Employee View" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
