@@ -343,6 +343,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         if (danceBtn.isSelected() && hasPath) {
+            pathScrollBar.setDisable(true);
             Node prev = null;
             for (Node n : nodesOnPath) {
                 if (n.getFloor().equals(currentFloor)) {
@@ -422,6 +423,7 @@ public class PathfindingController extends Controller implements Initializable {
                 c.toFront();
             }
         } else if (hasPath) {
+            pathScrollBar.setDisable(false);
             generateNodesAndEdges(nodesOnPath);
             pathScroll.setOldPosition(0);
             scroll();
