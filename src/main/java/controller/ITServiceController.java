@@ -39,7 +39,7 @@ public class ITServiceController extends Controller implements Initializable {
         ITRequest ITRequest = new ITRequest(description.getText(), autoCompleteTextController.getNodeID());
         ITRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }
 

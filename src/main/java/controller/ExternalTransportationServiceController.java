@@ -60,6 +60,6 @@ public class ExternalTransportationServiceController extends Controller implemen
         Timestamp dateTimePickup = new Timestamp(cal.getTimeInMillis());
         ExternalTransportationRequest sr = new ExternalTransportationRequest(pickupLocation, dest, dateTimeSubmitted, dateTimePickup);
         sr.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }

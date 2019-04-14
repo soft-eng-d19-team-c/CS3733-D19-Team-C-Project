@@ -32,9 +32,13 @@ public class LoginController extends Controller implements Initializable {
     public void loginButtonClick(ActionEvent actionEvent) {
         try {
             Main.user = new User(uname.getText(), password.getText());
-        } catch (AuthException e) {
+        } catch(AuthException e) {
             e.printStackTrace();
         }
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        if(!Main.user.checkPermissions("developer")) {
+            Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
+        } else {
+            Main.screenController.setScreen(EnumScreenType.DEVDASHBOARD);
+        }
     }
 }

@@ -42,7 +42,7 @@ public final class Facade {
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
-        this.prevType = EnumScreenType.DASHBOARD;
+        this.prevType = EnumScreenType.EMPDASHBOARD;
     }
 
     /**
@@ -83,7 +83,7 @@ public final class Facade {
         } else {
             loadNewScreen(type);
         }
-        if (type == EnumScreenType.DASHBOARD) {
+        if (type == EnumScreenType.EMPDASHBOARD) {
             clearHistory();
         }
     }
@@ -139,7 +139,7 @@ public final class Facade {
      */
     private void clearHistory() {
         this.history.clear();
-        this.history.push(EnumScreenType.DASHBOARD);
+        this.history.push(EnumScreenType.EMPDASHBOARD);
     }
 
     /**

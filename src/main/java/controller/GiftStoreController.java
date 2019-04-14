@@ -21,7 +21,7 @@ public class GiftStoreController extends Controller implements Initializable {
     public void submitButtonClick(ActionEvent actionEvent) {
         GiftStoreRequest gr = new GiftStoreRequest(recipient.getText(), sender.getText(), autoCompleteTextController.getNodeID(), type.getText());
         gr.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 
     public JFXTextField getRecipient() {

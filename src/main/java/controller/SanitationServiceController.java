@@ -35,6 +35,6 @@ public class SanitationServiceController extends Controller implements Initializ
         SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
         sanitationRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }

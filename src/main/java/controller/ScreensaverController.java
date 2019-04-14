@@ -20,6 +20,6 @@ public class ScreensaverController extends Controller implements Initializable {
     }
 
     public void startButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }

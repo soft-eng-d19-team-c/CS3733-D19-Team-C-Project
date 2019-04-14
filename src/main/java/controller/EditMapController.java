@@ -547,6 +547,6 @@ public class EditMapController extends Controller implements Initializable {
 
 //a "fake submit" button, to bring you back to the dashboard, appear as if you are saving the page
     public void submitButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }

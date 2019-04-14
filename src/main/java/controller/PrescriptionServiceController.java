@@ -35,6 +35,6 @@ public class PrescriptionServiceController extends Controller implements Initial
         prescriptionService.insert();
 
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
     }
 }

@@ -48,7 +48,7 @@ public class InternalTransportationController  extends Controller implements Ini
         InternalTransportationService sr = new InternalTransportationService(searchController_origController.getNodeID(), searchController_destController.getNodeID(), description.getText(), pickUpTime);
         sr.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.setScreen(EnumScreenType.EMPDASHBOARD);
 
     }
 
