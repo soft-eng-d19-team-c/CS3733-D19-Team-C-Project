@@ -99,6 +99,28 @@ public class PathfindingController extends Controller implements Initializable {
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+
+            /*
+                Load images into the cache
+             */
+            if (!imageCache.containsKey("3_NoIcons.png")) {
+                imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
+            }
+            if (!imageCache.containsKey("02_thesecondfloor_withbookablelocations.png")) {
+                imageCache.put("02_thesecondfloor_withbookablelocations.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor_withbookablelocations.png"))));
+            }
+            if (!imageCache.containsKey("01_thefirstfloor.png")) {
+                imageCache.put("01_thefirstfloor.png", new Image(String.valueOf(getClass().getResource("/img/01_thefirstfloor.png"))));
+            }
+            if (!imageCache.containsKey("00_thegroundfloor.png")) {
+                imageCache.put("00_thegroundfloor.png", new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+            }
+            if (!imageCache.containsKey("00_thelowerlevel1.png")) {
+                imageCache.put("00_thelowerlevel1.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel1.png"))));
+            }
+            if (!imageCache.containsKey("00_thelowerlevel2.png")) {
+                imageCache.put("00_thelowerlevel2.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel2.png"))));
+            }
         });
     }
 
