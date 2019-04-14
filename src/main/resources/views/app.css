@@ -139,3 +139,30 @@
     -fx-text-fill: -black;
     -fx-cursor: hand;
 }
+
+/* PATH SLIDER */
+/* Styling the slider track */
+.jfx-slider > .track {
+    /*-fx-background-color: yellow;*/
+}
+
+/* Styling the slider thumb */
+.jfx-slider > .thumb {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the filled track */
+.jfx-slider > .colored-track {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the animated thumb */
+.jfx-slider > .animated-thumb {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the slider value text inside animated thumb */
+.jfx-slider .slider-value {
+    -fx-fill: -bwgold;
+    -fx-stroke: -bwgold;
+}

@@ -1,14 +1,14 @@
 package controller;
 
 import base.Main;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.StrokeTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +24,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.Edge;
 import model.Node;
+import model.PathScroll;
 import model.PathToText;
 
 import java.net.URL;
@@ -49,22 +50,26 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXButton L1;
     @FXML private JFXButton L2;
     @FXML private JFXTextArea pathText;
-
-
+    @FXML private JFXSlider pathScrollBar;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodesOnPath;
+    private Node[] nodesOnPathArray;
     private HashMap<String, Circle> nodeCircles;
+    private HashMap<String, Line> nodeLines;
+    private PathScroll pathScroll;
 
     private LinkedList<Button> allButtons = new LinkedList<Button>();
 
     private Color black;
+    private Color red;
 
     private String findLocationNodeID; // this is the node ID that comes from the Find a Room page
     private String currentFloor;
     private boolean hasPath;
     private Button currentFloorButton;
+    private HashMap<String, Image> imageCache = new HashMap<>();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -88,11 +93,41 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(Ground);
         allButtons.add(L1);
         allButtons.add(L2);
+        pathScrollBar.setVisible(false);
+        pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
         });
+
+
+            /*
+                Load images into the cache with MULTITEHRADING
+             */
+
+        new Thread(() -> {
+            if (!imageCache.containsKey("3_NoIcons.png")) {
+                imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
+            }
+            if (!imageCache.containsKey("02_thesecondfloor_withbookablelocations.png")) {
+                imageCache.put("02_thesecondfloor_withbookablelocations.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor_withbookablelocations.png"))));
+            }
+            if (!imageCache.containsKey("01_thefirstfloor.png")) {
+                imageCache.put("01_thefirstfloor.png", new Image(String.valueOf(getClass().getResource("/img/01_thefirstfloor.png"))));
+            }
+            if (!imageCache.containsKey("00_thegroundfloor.png")) {
+                imageCache.put("00_thegroundfloor.png", new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
+            }
+            if (!imageCache.containsKey("00_thelowerlevel1.png")) {
+                imageCache.put("00_thelowerlevel1.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel1.png"))));
+            }
+            if (!imageCache.containsKey("00_thelowerlevel2.png")) {
+                imageCache.put("00_thelowerlevel2.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel2.png"))));
+            }
+        }).start();
+
+
     }
 
 
@@ -104,9 +139,11 @@ public class PathfindingController extends Controller implements Initializable {
         findLocationNodeID = (String) Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
+        nodeLines = new HashMap<>();
         nodes = Node.getNodesByFloor(currentFloor);
         edges = Edge.getEdgesByFloor(currentFloor);
         black = new Color(0, 0, 0, 1);
+        red = new Color(1, 0,0,1);
 
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
@@ -165,14 +202,19 @@ public class PathfindingController extends Controller implements Initializable {
 
 
      */
-
-
     public void goBtnClick(ActionEvent actionEvent) {
-        String orgi_nodeID = searchController_origController.getNodeID();
+        String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
-        nodesOnPath = Main.info.getAlgorithm().findPath(orgi_nodeID, dest_nodeID);
+        nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
+        nodesOnPathArray = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
+        pathScrollBar.setMin(1);
+        pathScrollBar.setValue(1);
+        pathScrollBar.setMax(nodesOnPath.size());
+        pathScrollBar.valueProperty().addListener(pathBarScrollListener);
+        pathScrollBar.setVisible(true);
+        pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setVisible(true);
@@ -182,13 +224,71 @@ public class PathfindingController extends Controller implements Initializable {
         colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
+    /**
+     * Allows scroll to work when the scrollbar is scrolled
+     * @author Fay Whittall
+     */
+    ChangeListener pathBarScrollListener = new ChangeListener(){
+        @Override
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+            scroll();
+        }
+    };
 
+    /**
+     * Changes the color of the nodes on the path based on where the scrollbar is located
+     * Right now, if you switch floors, it just changes the ones that should be redrawn to red
+     * @author Fay Whittall
+     */
+    private void scroll(){
+        int oldPosition = pathScroll.getOldPosition();
+        int newPosition = (int) pathScrollBar.getValue();
+        boolean forwards = false;
+        if (oldPosition < newPosition)
+            forwards = true;
+
+        Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+        //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
+        if(newPosition == (int) pathScrollBar.getMax()){
+            generateNodesAndEdges(nodesOnPath, Color.RED);
+        }
+        else{
+            //draw the nodes again red if moving forward, draw them again black if moving backward
+            if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+                if (forwards)
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                else
+                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+            }
+            for(Node n: nodesToRedraw){
+                if(nodeCircles.containsKey(n.getID())){
+                    Circle nodeCircle = nodeCircles.get(n.getID());
+                    if (nodeCircle.getFill().equals(black)){
+                        nodeCircle.setFill(red);
+                    }
+                    else nodeCircle.setFill(black);
+                }
+                if (nodeLines.containsKey(n.getID())){
+                    Line nodeLine = nodeLines.get(n.getID());
+                    if(nodeLine.getStroke().equals(black)){
+                        nodeLine.setStroke(red);
+                    }
+                    else nodeLine.setStroke(black);
+                }
+            }
+        }
+        pathScroll.setOldPosition(newPosition);
+    }
+
+    private void generateNodesAndEdges(LinkedList<Node> nodes) {
+        generateNodesAndEdges(nodes, Color.BLACK);
+    }
 
     /**
      * Draw nodes and edges from a linked list.
      * @param nodes Linked List of nodes to draw from.
      */
-    private void generateNodesAndEdges(LinkedList<Node> nodes) {
+    private void generateNodesAndEdges(LinkedList<Node> nodes, Color c) {
         String prev = null;
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
@@ -200,6 +300,7 @@ public class PathfindingController extends Controller implements Initializable {
                 circle.setCenterX(mapX + n.getX() / mapScale);
                 circle.setCenterY(mapY + n.getY() / mapScale);
                 circle.setRadius(3.0);
+                circle.setFill(c);
                 circle.getProperties().put("node", n);
                 if (prev != null && nodeCircles.containsKey(prev) && ((Node) nodeCircles.get(prev).getProperties().get("node")).getFloor().equals(currentFloor)) {
                     Line line = new Line();
@@ -207,9 +308,10 @@ public class PathfindingController extends Controller implements Initializable {
                     line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
                     line.endXProperty().bind(circle.centerXProperty());
                     line.endYProperty().bind(circle.centerYProperty());
-                    line.setStroke(black);
+                    line.setStroke(c);
                     line.setStrokeWidth(3.0);
                     mapImgPane.getChildren().add(line);
+                    nodeLines.put(n.getID(), line);
                 }
                 mapImgPane.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
@@ -341,17 +443,27 @@ public class PathfindingController extends Controller implements Initializable {
 
         //colorFloorsOnPath(nodesOnPath, currentFloor);
         changeButtonColor(currentFloorButton);
-        findPathImgView.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
+        if (imageCache.containsKey(floorURL)) {
+            findPathImgView.setImage(imageCache.get(floorURL));
+        } else {
+            Image newImage = new Image(String.valueOf(getClass().getResource("/img/" + floorURL)));
+            imageCache.put(floorURL, newImage);
+            findPathImgView.setImage(newImage);
+        }
         findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
 
 
     public void changeFloor(String floor) {
+        changeFloor(floor, Color.BLACK);
+    }
+
+    public void changeFloor(String floor, Color c) {
         currentFloor = floor;
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
         updateFloorImg(floor);
         if (hasPath) {
-            generateNodesAndEdges(nodesOnPath);
+            generateNodesAndEdges(nodesOnPath, c);
         } else {
             displayAllNodes();
         }
