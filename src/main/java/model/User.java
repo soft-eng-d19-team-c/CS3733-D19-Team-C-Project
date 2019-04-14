@@ -13,16 +13,40 @@ public class User {
     private String username;
     private LinkedList<String> permissions;
 
+    /**
+     * @author Ryan LaMarche
+     * Create a user object with NO authentication or permissions
+     * @param username Username
+     */
     public User(String username) {
         this.username = username;
-        this.permissions = new LinkedList<>();
-        String sqlStr = "select USERHASPERMISSIONS.USERNAME, USERPERMISSIONS.PERMISSIONS from USERHASPERMISSIONS LEFT JOIN USERPERMISSIONS ON USERHASPERMISSIONS.PERMISSIONS = USERPERMISSIONS.PERMISSIONS where USERNAME = ?";
+    }
+
+    /**
+     * @author Ryan LaMarche
+     * Create a new authenticated user
+     * @param username username
+     * @param password password in plain text
+     * @throws AuthException invalid username/password combination
+     */
+    public User(String username, String password) throws AuthException {
+        String sqlStr = "select USERS.USERNAME, USERS.PASSWORD, USERPERMISSIONS.PERMISSIONS from USERHASPERMISSIONS LEFT JOIN USERPERMISSIONS ON USERHASPERMISSIONS.PERMISSIONS = USERPERMISSIONS.PERMISSIONS INNER JOIN USERS ON USERHASPERMISSIONS.USERNAME = USERS.USERNAME where USERS.USERNAME = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                this.permissions.add(rs.getString("PERMISSIONS"));
+            if (rs.next()) {    // make sure there is at least one row so we can validate password
+                if (Main.auth.checkPassword(password, rs.getString("PASSWORD"))) {
+                    this.username = username;
+                    this.permissions = new LinkedList<>();
+                    this.permissions.add(rs.getString("PERMISSIONS"));
+                    while (rs.next()) {
+                        this.permissions.add(rs.getString("PERMISSIONS"));
+                    }
+                } else {
+                    throw new AuthException("Incorrect username / password combination.");
+                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,28 +58,16 @@ public class User {
         return username;
     }
 
-    public LinkedList<String> getPermissions() {
-        return this.permissions;
-    }
-
-    public void tryLogin(String username, String password) {
-        String sqlStr = "select * from USERS where USERNAME = ?";
-        try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                String pwd = rs.getString("password");
-                if (password.equals(pwd)) {
-                    Main.user = new User(username);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean checkPermissions(String permission) {
+        permission = permission.toUpperCase();
+        return this.permissions != null && this.permissions.contains(permission);
     }
 
     public void logout() {
-        Main.user = new User("guest");
+        try {
+            Main.user = new User("guest", "guest");
+        } catch (AuthException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package base;
 
+import model.AuthException;
 import model.User;
 
 /**
@@ -12,10 +13,16 @@ public class Main {
     public static Database database;
     public static User user;
     public static ApplicationInformation info;
+    public static AuthenticationManager auth;
     public static void main(String[] args) {
+        auth = new AuthenticationManager();
         database = new Database(false, false);
-        user = new User("staff");
         info = new ApplicationInformation("CHALL007L1");
+        try {
+            user = new User("guest", "guest");
+        } catch (AuthException e) {
+            e.printStackTrace();
+        }
         MainFXML app = new MainFXML();
         app.main(args);
     }

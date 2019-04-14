@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.AuthException;
+import model.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,7 +30,11 @@ public class LoginController extends Controller implements Initializable {
 
     //does not currently actually log you in
     public void loginButtonClick(ActionEvent actionEvent) {
-        Main.user.tryLogin(uname.getText(), password.getText());
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        try {
+            Main.user = new User(uname.getText(), password.getText());
+        } catch (AuthException e) {
+            e.printStackTrace();
+        }
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
     }
 }

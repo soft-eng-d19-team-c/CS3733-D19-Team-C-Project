@@ -2,6 +2,7 @@ package controller;
 
 import base.Main;
 import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
 import javafx.animation.*;
@@ -39,14 +40,15 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
+    @FXML private NavController navController;
     @FXML private JFXTextArea phoneNumberInput;
-    @FXML private Button phoneNumberBtn;
-    @FXML private Button Floor3;
-    @FXML private Button Floor2;
-    @FXML private Button Floor1;
-    @FXML private Button Ground;
-    @FXML private Button L1;
-    @FXML private Button L2;
+    @FXML private JFXButton phoneNumberBtn;
+    @FXML private JFXButton Floor3;
+    @FXML private JFXButton Floor2;
+    @FXML private JFXButton Floor1;
+    @FXML private JFXButton Ground;
+    @FXML private JFXButton L1;
+    @FXML private JFXButton L2;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
 
@@ -75,12 +77,15 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         searchController_destController.refresh();
         searchController_origController.refresh();
         Main.info.getAlgorithm().refresh();
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
+        if (currentFloor == null)
+            currentFloor = Main.info.getKioskLocation().getFloor();
         allButtons.add(Floor3);
         allButtons.add(Floor2);
         allButtons.add(Floor1);
@@ -383,11 +388,11 @@ public class PathfindingController extends Controller implements Initializable {
                 currentFloorButton = Floor3;
                 break;
             case "2":
-                floorURL = "2_NoIcons.png";
+                floorURL = "02_thesecondfloor_withbookablelocations.png";
                 currentFloorButton = Floor2;
                 break;
             case "1":
-                floorURL = "1_NoIcons.png";
+                floorURL = "01_thefirstfloor.png";
                 currentFloorButton = Floor1;
                 break;
             case "G":
@@ -395,11 +400,11 @@ public class PathfindingController extends Controller implements Initializable {
                 currentFloorButton = Ground;
                 break;
             case "L1":
-                floorURL = "L1_NoIcons.png";
+                floorURL = "00_thelowerlevel1.png";
                 currentFloorButton = L1;
                 break;
             case "L2":
-                floorURL = "L2_NoIcons.png";
+                floorURL = "00_thelowerlevel2.png";
                 currentFloorButton = L2;
                 break;
             default:
