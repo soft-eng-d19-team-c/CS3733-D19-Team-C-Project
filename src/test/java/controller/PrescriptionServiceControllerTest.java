@@ -47,7 +47,7 @@ public class PrescriptionServiceControllerTest extends ApplicationTest {
         //pass things into the text fields
         //put the mouse on the submit btn
 //        clickOn(onNode((Node)psc.submitButton), MouseButton.PRIMARY);
-        clickOn(psc.submitButton);
+//        clickOn(psc.submitButton);
         //Query the db
         //assert with a string that we manually made according to our expectation
     }

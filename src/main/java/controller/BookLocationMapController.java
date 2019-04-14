@@ -97,4 +97,8 @@ public class BookLocationMapController extends Controller implements Initializab
     public void bookRoomBtnClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONS);
     }
+
+    public void goCalendarBtnClick(ActionEvent actionEvent) {
+
+    }
 }
