@@ -46,6 +46,9 @@ public class EditMapController extends Controller implements Initializable {
     @FXML
     private ComboBox<String> algosMenu;
 
+    @FXML
+    protected Accordion editNode;
+
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
 
@@ -56,8 +59,22 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Node> allNodes = Node.getHashedNodes();
 
-    VBox editNode = new VBox();
-    TitledPane firstTitledPane = new TitledPane();
+    TitledPane IDTitledPane = new TitledPane();
+    TitledPane XTitledPane = new TitledPane();
+    TitledPane YTitledPane = new TitledPane();
+    TitledPane FloorTitledPane = new TitledPane();
+    TitledPane BuildingTitledPane = new TitledPane();
+    TitledPane NodeTypeTitledPane = new TitledPane();
+    TitledPane ShortTitledPane = new TitledPane();
+    TitledPane LongTitledPane = new TitledPane();
+    VBox IDContent = new VBox();
+    VBox XContent = new VBox();
+    VBox YContent = new VBox();
+    VBox FloorContent = new VBox();
+    VBox BuildingContent = new VBox();
+    VBox NodeTypeContent = new VBox();
+    VBox ShortContent = new VBox();
+    VBox LongContent = new VBox();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -156,20 +173,6 @@ public class EditMapController extends Controller implements Initializable {
         });
         contextMenu.getItems().addAll(nodeID, xcoord, ycoord, floor, building, nodeType, shortName, longName);
 */
-
-        firstTitledPane.setText("Edit Node");
-
-        editNode.getChildren().add(new Label("Node ID"));
-        editNode.getChildren().add(new Label("Xcoord"));
-        editNode.getChildren().add(new Label("Ycoord"));
-        editNode.getChildren().add(new Label("Floor"));
-        editNode.getChildren().add(new Label("Building"));
-        editNode.getChildren().add(new Label("Node Type"));
-        editNode.getChildren().add(new Label("Short Name"));
-        editNode.getChildren().add(new Label("Long Name"));
-
-        firstTitledPane.setContent(editNode);
-        editNode.setVisible(false);
 
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
@@ -600,6 +603,7 @@ public class EditMapController extends Controller implements Initializable {
                 }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
+                editNode.setVisible(true);
                 /*
 
                     LARA PADIR
@@ -613,7 +617,39 @@ public class EditMapController extends Controller implements Initializable {
                     close context menu
                  */
 
+                //editNode.setExpandedPane();
+
+                editNode.getPanes().addAll(IDTitledPane, XTitledPane, YTitledPane, FloorTitledPane, BuildingTitledPane, NodeTypeTitledPane, ShortTitledPane, LongTitledPane);
+                IDContent.getChildren().add(new Label(n.getID()));
+                XContent.getChildren().add(new Label(Integer.toString(n.getX())));
+                YContent.getChildren().add(new Label(Integer.toString(n.getY())));
+                FloorContent.getChildren().add(new Label(n.getFloor()));
+                BuildingContent.getChildren().add(new Label(n.getBuilding()));
+                NodeTypeContent.getChildren().add(new Label(n.getNodeType()));
+                ShortContent.getChildren().add(new Label(n.getShortName()));
+                LongContent.getChildren().add(new Label(n.getLongName()));
+
+
+                IDTitledPane.setText("Node ID");
+                IDTitledPane.setContent(IDContent);
+                XTitledPane.setText("X Coord");
+                XTitledPane.setContent(XContent);
+                YTitledPane.setText("Y Coord");
+                YTitledPane.setContent(YContent);
+                FloorTitledPane.setText("Floor");
+                FloorTitledPane.setContent(FloorContent);
+                BuildingTitledPane.setText("Building");
+                BuildingTitledPane.setContent(BuildingContent);
+                NodeTypeTitledPane.setText("Node Type");
+                NodeTypeTitledPane.setContent(NodeTypeContent);
+                ShortTitledPane.setText("Short Name");
+                ShortTitledPane.setContent(ShortContent);
+                LongTitledPane.setText("Long Name");
+                LongTitledPane.setContent(LongContent);
                 editNode.setVisible(true);
+
+                //after submit set visible back to false
+
                 //HashMap<String, Object> hm = new HashMap<>();
                 //hm.put("node", n);
                 //Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
