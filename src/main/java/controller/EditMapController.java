@@ -62,6 +62,15 @@ public class EditMapController extends Controller implements Initializable {
 
     TitledPane TitledPane = new TitledPane();
     VBox IDContent = new VBox();
+    TextField nodeID = new TextField();
+    TextField xCoord = new TextField();
+    TextField yCoord = new TextField();
+    TextField floor = new TextField();
+    TextField building = new TextField();
+    TextField type = new TextField();
+    TextField shortName = new TextField();
+    TextField longName = new TextField();
+
     Button save = new Button();
 
     @Override
@@ -99,68 +108,28 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
 
-        /*final ContextMenu contextMenu = new ContextMenu();
-        contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent e) {
-               // System.out.println("showing");
-            }
-        });
-        contextMenu.setOnShown(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent e) {
-                //System.out.println("shown");
-            }
-        });
+        editNode.getPanes().addAll(TitledPane);
+        IDContent.getChildren().add(new Label("Node ID: "));
+        IDContent.getChildren().add(nodeID);
+        IDContent.getChildren().add(new Label("X Coord: "));
+        IDContent.getChildren().add(xCoord);
+        IDContent.getChildren().add(new Label("Y Coord: "));
+        IDContent.getChildren().add(yCoord);
+        IDContent.getChildren().add(new Label("Floor: "));
+        IDContent.getChildren().add(floor);
+        IDContent.getChildren().add(new Label("Building: "));
+        IDContent.getChildren().add(building);
+        IDContent.getChildren().add(new Label("Node Type: "));
+        IDContent.getChildren().add(type);
+        IDContent.getChildren().add(new Label("Short Name: "));
+        IDContent.getChildren().add(shortName);
+        IDContent.getChildren().add(new Label("Long Name: "));
+        IDContent.getChildren().add(longName);
+        IDContent.getChildren().add(save);
 
-        MenuItem nodeID = new MenuItem("NodeID");
-        nodeID.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("NodeID");
-            }
-        });
-        MenuItem xcoord = new MenuItem(" Xcoord");
-        xcoord.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Xcoord");
-            }
-        });
-        MenuItem ycoord = new MenuItem(" Ycoord");
-        ycoord.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Ycoord");
-            }
-        });
-        MenuItem floor = new MenuItem(" Floor");
-        floor.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Floor");
-            }
-        });
-        MenuItem building = new MenuItem(" Building");
-        building.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Building");
-            }
-        });
-        MenuItem nodeType = new MenuItem(" Node Type");
-        nodeType.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Node Type");
-            }
-        });
-        MenuItem shortName = new MenuItem(" Short Name");
-        shortName.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Short Name");
-            }
-        });
-        MenuItem longName = new MenuItem(" Long Name");
-        longName.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("Long Name");
-            }
-        });
-        contextMenu.getItems().addAll(nodeID, xcoord, ycoord, floor, building, nodeType, shortName, longName);
-*/
+        TitledPane.setText("Edit Node Data");
+        TitledPane.setContent(IDContent);
+        editNode.setVisible(false);
 
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
@@ -592,44 +561,56 @@ public class EditMapController extends Controller implements Initializable {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
                 editNode.setVisible(true);
-                /*
+                save.setText("Save");
 
-                    LARA PADIR
-
-                    TODO
-                    Here you have the node, just fill in a context menu with its data
-                    and setVisible to true
-
-                    Also do something about saving nodes
-                    node.update()
-                    close context menu
-                 */
-
-                //editNode.setExpandedPane();
-
-                editNode.getPanes().addAll(TitledPane);
-                IDContent.getChildren().add(new Label("Node ID: "));
-                IDContent.getChildren().add(new TextField(n.getID()));
-                IDContent.getChildren().add(new Label("X Coord: "));
-                IDContent.getChildren().add(new TextField(Integer.toString(n.getX())));
-                IDContent.getChildren().add(new Label("Y Coord: "));
-                IDContent.getChildren().add(new TextField(Integer.toString(n.getY())));
-                IDContent.getChildren().add(new Label("Floor: "));
-                IDContent.getChildren().add(new TextField(n.getFloor()));
-                IDContent.getChildren().add(new Label("Building: "));
-                IDContent.getChildren().add(new TextField(n.getBuilding()));
-                IDContent.getChildren().add(new Label("Node Type: "));
-                IDContent.getChildren().add(new TextField(n.getNodeType()));
-                IDContent.getChildren().add(new Label("Short Name: "));
-                IDContent.getChildren().add(new TextField(n.getShortName()));
-                IDContent.getChildren().add(new Label("Long Name: "));
-                IDContent.getChildren().add(new TextField(n.getLongName()));
-                IDContent.getChildren().add(save);
-
-
-                TitledPane.setText("Edit Node Data");
-                TitledPane.setContent(IDContent);
+                nodeID.setText(n.getID());
+                nodeID.setDisable(true);
+                xCoord.setText(Integer.toString(n.getX()));
+                yCoord.setText(Integer.toString(n.getY()));
+                floor.setText(n.getFloor());
+                building.setText(n.getBuilding());
+                type.setText(n.getNodeType());
+                shortName.setText(n.getShortName());
+                longName.setText(n.getLongName());
                 editNode.setVisible(true);
+
+                save.setOnAction(event -> {
+                    editNode.setVisible(false);
+
+                    try {
+                        int X = Integer.parseInt(xCoord.getText());
+                        int Y = Integer.parseInt(yCoord.getText());
+                        n.setX(X);
+                        n.setY(Y);
+                    }
+                    catch (NumberFormatException exp){
+                        return;
+                    }
+
+                    if (strshorterthan255(building.getText())){ n.setBuilding(building.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(floor.getText())){ n.setFloor(floor.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(longName.getText())){ n.setLongName(longName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(shortName.getText())){ n.setShortName(shortName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(type.getText())){ n.setNodeType(type.getText()); } else {
+                        return;
+                    }
+                    int updateflag;
+                    updateflag = n.update();
+                    if (updateflag > 0) {
+                        HashMap<String, Object> hm = new HashMap<>();
+                        hm.put("floor", "L1");
+                        //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
+                    }
+                });
+
 
                 //after submit set visible back to false
 
@@ -640,39 +621,9 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
-    public void saveButtonClick(ActionEvent e) {
-        try {
-            int X = Integer.parseInt(xCoord.getText());
-            int Y = Integer.parseInt(yCoord.getText());
-            nodeData.setX(X);
-            nodeData.setY(Y);
-        }
-        catch (NumberFormatException exp){
-            return;
-        }
 
-        if (strshorterthan255(building.getText())){ nodeData.setBuilding(building.getText()); } else {
-            return;
-        }
-        if (strshorterthan255(floor.getText())){ nodeData.setFloor(floor.getText()); } else {
-            return;
-        }
-        if (strshorterthan255(longName.getText())){ nodeData.setLongName(longName.getText()); } else {
-            return;
-        }
-        if (strshorterthan255(shortName.getText())){ nodeData.setShortName(shortName.getText()); } else {
-            return;
-        }
-        if (strshorterthan255(nodeType.getText())){ nodeData.setNodeType(nodeType.getText()); } else {
-            return;
-        }
-        int updateflag;
-        updateflag = nodeData.update();
-        if (updateflag > 0) {
-            HashMap<String, Object> hm = new HashMap<>();
-            hm.put("floor", "L1");
-            //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
-        }
+    private boolean strshorterthan255 (String str){
+        return (str.length() < 255);
     }
 
     @SuppressWarnings("Duplicates")
