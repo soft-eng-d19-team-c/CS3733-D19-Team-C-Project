@@ -105,6 +105,5 @@
       </JFXTextArea>
        <JFXSlider fx:id="pathScrollBar" layoutX="460.0" layoutY="22.0" prefWidth="1000.0">
        </JFXSlider>
-      <Button fx:id="playButton" layoutX="393.0" layoutY="16.0" mnemonicParsing="false" onAction="#playScroll" text="Play" />
    </children>
 </AnchorPane>

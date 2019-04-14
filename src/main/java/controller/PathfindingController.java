@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
 
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
@@ -48,7 +47,6 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Button Ground;
     @FXML private Button L1;
     @FXML private Button L2;
-    @FXML private Button playButton;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
 
@@ -59,7 +57,6 @@ public class PathfindingController extends Controller implements Initializable {
     private HashMap<String, Circle> nodeCircles;
     private HashMap<String, Line> nodeLines;
     private PathScroll pathScroll;
-    private ExecutorService executorService;
 
     private LinkedList<Button> allButtons = new LinkedList<Button>();
 
@@ -91,7 +88,6 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(L1);
         allButtons.add(L2);
         pathScrollBar.setVisible(false);
-        playButton.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
@@ -184,7 +180,6 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
-        playButton.setVisible(true);
         pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
@@ -193,18 +188,6 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
-    }
-
-    /**
-     * plays through the whole scrollbar sequence
-     * @param e
-     * @author Fay Whittall
-     */
-    public void playScroll(ActionEvent e){
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(250), event -> {
-            scroll();
-        }));
-        timeline.play();
     }
 
     /**
