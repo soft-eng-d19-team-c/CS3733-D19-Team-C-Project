@@ -166,3 +166,10 @@
     -fx-fill: -bwgold;
     -fx-stroke: -bwgold;
 }
+
+.logout-btn{
+    -fx-background-color: -danger;
+    -fx-background-radius: 30;
+    -fx-text-fill: -white;
+    -fx-cursor: hand;
+}
