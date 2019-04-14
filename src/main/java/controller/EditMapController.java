@@ -10,16 +10,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -58,6 +56,9 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Node> allNodes = Node.getHashedNodes();
 
+    VBox editNode = new VBox();
+    TitledPane firstTitledPane = new TitledPane();
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -93,7 +94,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
 
-        final ContextMenu contextMenu = new ContextMenu();
+        /*final ContextMenu contextMenu = new ContextMenu();
         contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent e) {
                // System.out.println("showing");
@@ -154,9 +155,21 @@ public class EditMapController extends Controller implements Initializable {
             }
         });
         contextMenu.getItems().addAll(nodeID, xcoord, ycoord, floor, building, nodeType, shortName, longName);
+*/
 
-        final TextField textField = new TextField("Type Something");
-        textField.setContextMenu(contextMenu);
+        firstTitledPane.setText("Edit Node");
+
+        editNode.getChildren().add(new Label("Node ID"));
+        editNode.getChildren().add(new Label("Xcoord"));
+        editNode.getChildren().add(new Label("Ycoord"));
+        editNode.getChildren().add(new Label("Floor"));
+        editNode.getChildren().add(new Label("Building"));
+        editNode.getChildren().add(new Label("Node Type"));
+        editNode.getChildren().add(new Label("Short Name"));
+        editNode.getChildren().add(new Label("Long Name"));
+
+        firstTitledPane.setContent(editNode);
+        editNode.setVisible(false);
 
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
@@ -598,15 +611,12 @@ public class EditMapController extends Controller implements Initializable {
                     Also do something about saving nodes
                     node.update()
                     close context menu
-
-
-
-
-                    dont do the stuff below
                  */
-                HashMap<String, Object> hm = new HashMap<>();
-                hm.put("node", n);
-                Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
+
+                editNode.setVisible(true);
+                //HashMap<String, Object> hm = new HashMap<>();
+                //hm.put("node", n);
+                //Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
             }
         }
     };
