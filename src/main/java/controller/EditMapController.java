@@ -517,23 +517,6 @@ public class EditMapController extends Controller implements Initializable {
                 }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                /*
-
-                    LARA PADIR
-
-                    TODO
-                    Here you have the node, just fill in a context menu with its data
-                    and setVisible to true
-
-                    Also do something about saving nodes
-                    node.update()
-                    close context menu
-
-
-
-
-                    dont do the stuff below
-                 */
                 HashMap<String, Object> hm = new HashMap<>();
                 hm.put("node", n);
                 Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
