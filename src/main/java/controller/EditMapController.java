@@ -26,6 +26,7 @@ import model.Edge;
 import model.Node;
 
 import java.net.URL;
+import java.sql.Savepoint;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -59,22 +60,9 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Node> allNodes = Node.getHashedNodes();
 
-    TitledPane IDTitledPane = new TitledPane();
-    TitledPane XTitledPane = new TitledPane();
-    TitledPane YTitledPane = new TitledPane();
-    TitledPane FloorTitledPane = new TitledPane();
-    TitledPane BuildingTitledPane = new TitledPane();
-    TitledPane NodeTypeTitledPane = new TitledPane();
-    TitledPane ShortTitledPane = new TitledPane();
-    TitledPane LongTitledPane = new TitledPane();
+    TitledPane TitledPane = new TitledPane();
     VBox IDContent = new VBox();
-    VBox XContent = new VBox();
-    VBox YContent = new VBox();
-    VBox FloorContent = new VBox();
-    VBox BuildingContent = new VBox();
-    VBox NodeTypeContent = new VBox();
-    VBox ShortContent = new VBox();
-    VBox LongContent = new VBox();
+    Button save = new Button();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -619,33 +607,28 @@ public class EditMapController extends Controller implements Initializable {
 
                 //editNode.setExpandedPane();
 
-                editNode.getPanes().addAll(IDTitledPane, XTitledPane, YTitledPane, FloorTitledPane, BuildingTitledPane, NodeTypeTitledPane, ShortTitledPane, LongTitledPane);
-                IDContent.getChildren().add(new Label(n.getID()));
-                XContent.getChildren().add(new Label(Integer.toString(n.getX())));
-                YContent.getChildren().add(new Label(Integer.toString(n.getY())));
-                FloorContent.getChildren().add(new Label(n.getFloor()));
-                BuildingContent.getChildren().add(new Label(n.getBuilding()));
-                NodeTypeContent.getChildren().add(new Label(n.getNodeType()));
-                ShortContent.getChildren().add(new Label(n.getShortName()));
-                LongContent.getChildren().add(new Label(n.getLongName()));
+                editNode.getPanes().addAll(TitledPane);
+                IDContent.getChildren().add(new Label("Node ID: "));
+                IDContent.getChildren().add(new TextField(n.getID()));
+                IDContent.getChildren().add(new Label("X Coord: "));
+                IDContent.getChildren().add(new TextField(Integer.toString(n.getX())));
+                IDContent.getChildren().add(new Label("Y Coord: "));
+                IDContent.getChildren().add(new TextField(Integer.toString(n.getY())));
+                IDContent.getChildren().add(new Label("Floor: "));
+                IDContent.getChildren().add(new TextField(n.getFloor()));
+                IDContent.getChildren().add(new Label("Building: "));
+                IDContent.getChildren().add(new TextField(n.getBuilding()));
+                IDContent.getChildren().add(new Label("Node Type: "));
+                IDContent.getChildren().add(new TextField(n.getNodeType()));
+                IDContent.getChildren().add(new Label("Short Name: "));
+                IDContent.getChildren().add(new TextField(n.getShortName()));
+                IDContent.getChildren().add(new Label("Long Name: "));
+                IDContent.getChildren().add(new TextField(n.getLongName()));
+                IDContent.getChildren().add(save);
 
 
-                IDTitledPane.setText("Node ID");
-                IDTitledPane.setContent(IDContent);
-                XTitledPane.setText("X Coord");
-                XTitledPane.setContent(XContent);
-                YTitledPane.setText("Y Coord");
-                YTitledPane.setContent(YContent);
-                FloorTitledPane.setText("Floor");
-                FloorTitledPane.setContent(FloorContent);
-                BuildingTitledPane.setText("Building");
-                BuildingTitledPane.setContent(BuildingContent);
-                NodeTypeTitledPane.setText("Node Type");
-                NodeTypeTitledPane.setContent(NodeTypeContent);
-                ShortTitledPane.setText("Short Name");
-                ShortTitledPane.setContent(ShortContent);
-                LongTitledPane.setText("Long Name");
-                LongTitledPane.setContent(LongContent);
+                TitledPane.setText("Edit Node Data");
+                TitledPane.setContent(IDContent);
                 editNode.setVisible(true);
 
                 //after submit set visible back to false
@@ -656,6 +639,41 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
     };
+
+    public void saveButtonClick(ActionEvent e) {
+        try {
+            int X = Integer.parseInt(xCoord.getText());
+            int Y = Integer.parseInt(yCoord.getText());
+            nodeData.setX(X);
+            nodeData.setY(Y);
+        }
+        catch (NumberFormatException exp){
+            return;
+        }
+
+        if (strshorterthan255(building.getText())){ nodeData.setBuilding(building.getText()); } else {
+            return;
+        }
+        if (strshorterthan255(floor.getText())){ nodeData.setFloor(floor.getText()); } else {
+            return;
+        }
+        if (strshorterthan255(longName.getText())){ nodeData.setLongName(longName.getText()); } else {
+            return;
+        }
+        if (strshorterthan255(shortName.getText())){ nodeData.setShortName(shortName.getText()); } else {
+            return;
+        }
+        if (strshorterthan255(nodeType.getText())){ nodeData.setNodeType(nodeType.getText()); } else {
+            return;
+        }
+        int updateflag;
+        updateflag = nodeData.update();
+        if (updateflag > 0) {
+            HashMap<String, Object> hm = new HashMap<>();
+            hm.put("floor", "L1");
+            //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
+        }
+    }
 
     @SuppressWarnings("Duplicates")
     EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
