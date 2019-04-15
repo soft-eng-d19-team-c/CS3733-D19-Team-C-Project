@@ -1,18 +1,25 @@
 package model;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class PathScroll {
     Node[] nodesOnPath;
     int oldPosition;
 
-    public PathScroll(Node[] nodesOnPath) {
-        this.nodesOnPath = nodesOnPath;
+    public PathScroll(LinkedList<Node> nodesOnPath) {
+        Collections.reverse(nodesOnPath);
+        this.nodesOnPath = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         this.oldPosition = 0;
     }
 
     public void setOldPosition(int oldPosition) {
         this.oldPosition = oldPosition;
+    }
+
+    public Node[] getNodesOnPath() {
+        return nodesOnPath;
     }
 
     /**

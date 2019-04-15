@@ -28,10 +28,7 @@ import model.PathScroll;
 import model.PathToText;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
@@ -206,7 +203,8 @@ public class PathfindingController extends Controller implements Initializable {
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
-        nodesOnPathArray = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
+        pathScroll = new PathScroll(nodesOnPath);
+        nodesOnPathArray = pathScroll.getNodesOnPath();
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
         pathScrollBar.setMin(1);
@@ -214,7 +212,6 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
-        pathScroll = new PathScroll(nodesOnPathArray);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setVisible(true);

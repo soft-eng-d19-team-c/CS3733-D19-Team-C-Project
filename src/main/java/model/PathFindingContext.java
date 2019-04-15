@@ -5,7 +5,6 @@ import base.Main;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -127,7 +126,6 @@ public class PathFindingContext {
             temp = pathValues.get(temp).getPreviousNode();
             path.add(temp);
         }
-        Collections.reverse(path);
         return path;
     }
 }
