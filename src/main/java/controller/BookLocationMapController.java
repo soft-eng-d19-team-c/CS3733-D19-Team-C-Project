@@ -3,17 +3,20 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import model.BookableLocation;
 import model.Booking;
 
@@ -26,6 +29,9 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class BookLocationMapController extends Controller implements Initializable {
+    @FXML private JFXTextField duration;
+    @FXML private ComboBox<BookableLocation> locationBox;
+    @FXML private Text errorText;
     @FXML private JFXDatePicker datePicker;
     @FXML private JFXTimePicker timePicker;
     @FXML private ImageView mapImgView;
@@ -48,6 +54,7 @@ public class BookLocationMapController extends Controller implements Initializab
         mapImgView.fitHeightProperty().bind(circlePane.heightProperty());
         bookingLocations = BookableLocation.getAllBookingLocations();
         Platform.runLater(() -> inputChanged(null));
+        errorText.setText("");
     }
 
     @SuppressWarnings("Duplicates")
@@ -95,7 +102,29 @@ public class BookLocationMapController extends Controller implements Initializab
     }
 
     public void bookRoomBtnClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONS);
+        //needs to update some sort of schedule saying which rooms are booked for certain times
+        String bookingLocation = locationBox.getValue().getID();
+        LocalDate date = datePicker.getValue();
+        LocalTime localTime = timePicker.getValue();
+        String inputDuration = duration.getText();
+        for (char c : inputDuration.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                errorText.setText("Error: Duration must be a valid number.");
+                return;
+            }
+        }
+        int lengthInMillis = Integer.parseInt(inputDuration) * 60 * 60 * 1000;
+        Calendar cal = Calendar.getInstance();
+        cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
+        Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
+        Timestamp tsEnd = new Timestamp(cal.getTimeInMillis() + lengthInMillis);
+        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user.getUsername(), 0);
+        if(b.hasConflicts()){
+            errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
+        } else {
+            b.insert();
+            Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        }
     }
 
     public void goCalendarBtnClick(ActionEvent actionEvent) {
