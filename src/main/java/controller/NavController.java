@@ -61,7 +61,7 @@ public class NavController extends Controller implements Initializable {
     }
 
     public void adminViewClick(ActionEvent actionEvent) {
-//        Main.screenController.setScreen(EnumScreenType.PATHFINDING);
+        Main.screenController.setScreen(EnumScreenType.EDITMAP);
     }
 
     public void loginButtonClick(ActionEvent actionEvent) {

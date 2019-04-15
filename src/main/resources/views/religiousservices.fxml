@@ -12,7 +12,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReligiousServiceController">
    <children>
        <AnchorPane layoutX="13.0" layoutY="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-           <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
        </AnchorPane>
       <Text layoutX="467.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request a Religious Service">
          <font>
