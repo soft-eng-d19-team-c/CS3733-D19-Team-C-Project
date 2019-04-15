@@ -1,6 +1,6 @@
 ﻿nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 CLASS1,4080,2120,2,Bookable Locations,CLASS,Classroom 1,Classroom 1
-CLASS2,4057,2031,2,Bookable Locations,CLASS,Classroom 2,Classroom 2
+CLASS2,4157,2031,2,Bookable Locations,CLASS,Classroom 2,Classroom 2
 CLASS3,4120,1940,2,Bookable Locations,CLASS,Classroom 3,Classroom 3
 CLASS4,4080,1810,2,Bookable Locations,CLASS,Classroom 4,Classroom 4
 CLASS5,4042,1841,2,Bookable Locations,CLASS,Classroom 5,Classroom 5
