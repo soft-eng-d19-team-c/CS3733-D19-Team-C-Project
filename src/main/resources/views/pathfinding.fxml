@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import java.lang.String?>
@@ -102,5 +103,7 @@
             <Font size="20.0" />
          </font>
       </JFXTextArea>
+       <JFXSlider fx:id="pathScrollBar" layoutX="460.0" layoutY="22.0" prefWidth="1000.0">
+       </JFXSlider>
    </children>
 </AnchorPane>

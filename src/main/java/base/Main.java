@@ -16,7 +16,7 @@ public class Main {
     public static AuthenticationManager auth;
     public static void main(String[] args) {
         auth = new AuthenticationManager();
-        database = new Database(true, false);
+        database = new Database(true, true);
         info = new ApplicationInformation("CHALL007L1");
         try {
             user = new User("guest", "guest");
