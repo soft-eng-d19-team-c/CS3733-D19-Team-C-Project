@@ -14,6 +14,7 @@ public class Main {
     public static User user;
     public static ApplicationInformation info;
     public static AuthenticationManager auth;
+    public static IdleMonitor idleMonitor;
     public static void main(String[] args) {
         auth = new AuthenticationManager();
         database = new Database(true, true);

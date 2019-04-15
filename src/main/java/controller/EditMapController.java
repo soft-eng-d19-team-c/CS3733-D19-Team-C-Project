@@ -50,6 +50,9 @@ public class EditMapController extends Controller implements Initializable {
     @FXML
     protected Accordion editNode;
 
+    @FXML private TextField changeIdleTime;
+    @FXML private Label changeIdleTimeLabel;
+
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
 
@@ -107,7 +110,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
-
+        changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
         IDContent.getChildren().add(new Label("Node ID: "));
@@ -364,6 +367,33 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void setIdleTime(ActionEvent e){
+        String time = changeIdleTime.getText();
+        boolean canSetTime = true;
+        char c;
+        if(time.length() == 0){
+            canSetTime = false;
+        }
+        for(int i = 0; i < time.length(); i++){
+            c = time.charAt(i);
+            if(!((Character.isDigit(c)) || c == ('.'))){
+                canSetTime = false;
+                i = time.length();
+            }
+        }
+        double timeToSet = Double.parseDouble(time);
+        if(timeToSet < 0.1){
+            canSetTime = false;
+        }
+        if(canSetTime){
+            Main.info.setIdleTime(timeToSet);
+            changeIdleTimeLabel.setText("New Idle Time Set");
+        }
+        else{
+            changeIdleTimeLabel.setText("Error: Invalid entry");
+        }
     }
 
     /*
