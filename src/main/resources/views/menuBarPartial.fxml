@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="1920.0" styleClass="blue-boxes" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NavController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="1920.0" styleClass="blue-boxes" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <ImageView fitHeight="135.0" fitWidth="135.0" AnchorPane.rightAnchor="0.0">
@@ -103,7 +103,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Pane fx:id="mapSelectBar" prefHeight="200.0" prefWidth="200.0" styleClass="select-bar">
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="select-bar">
                      <padding>
                         <Insets left="30.0" right="30.0" />
                      </padding>
@@ -111,7 +111,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane fx:id="roomSelectBar" prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <styleClass>
                         <String fx:value="btn-menubar" />
                         <String fx:value="select-bar" />
@@ -123,7 +123,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane fx:id="serviceSelectBar" prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <styleClass>
                         <String fx:value="screen-background" />
                         <String fx:value="select-bar" />
@@ -135,7 +135,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane fx:id="bookSelectBar" prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <styleClass>
                         <String fx:value="screen-background" />
                         <String fx:value="select-bar" />
@@ -147,7 +147,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane fx:id="adminSelectBar" prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <styleClass>
                         <String fx:value="screen-background" />
                         <String fx:value="select-bar" />
@@ -159,7 +159,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Pane>
-                  <Pane fx:id="loginSelectBar" prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <styleClass>
                         <String fx:value="screen-background" />
                         <String fx:value="select-bar" />

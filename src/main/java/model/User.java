@@ -59,7 +59,6 @@ public class User {
     }
 
     public boolean checkPermissions(String permission) {
-        permission = permission.toUpperCase();
         return this.permissions != null && this.permissions.contains(permission);
     }
 

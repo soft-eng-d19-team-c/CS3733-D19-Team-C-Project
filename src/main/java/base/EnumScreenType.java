@@ -7,7 +7,7 @@ public enum EnumScreenType {
     DOWNLOADCSV("/views/download.fxml"),
     DASHBOARD("/views/universalDashboard.fxml"),
     LOGIN("/views/loginScreen.fxml"),
-    PATHFINDING("/views/findpathscreen.fxml"),
+    PATHFINDING("/views/pathfinding.fxml"),
     SEARCHLOCATION("/views/searchLocation.fxml"),
     BOOKLOCATIONS("/views/bookLocation.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
@@ -36,8 +36,7 @@ public enum EnumScreenType {
     GIFTSTORESERVICETABLE("/views/giftStoreRequestTable.fxml"),
     RELIGIOUSSERVICETABLE("/views/religiousRequestTable.fxml"),
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
-    WELCOME("/views/screensaver.fxml"),
-    ABOUT("/views/aboutPage.fxml");
+    WELCOME("/views/screensaver.fxml");
 
     protected String path;
 
