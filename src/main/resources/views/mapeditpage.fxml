@@ -124,6 +124,6 @@
             </Pane>
          </children>
       </VBox>
+      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
    </children>
-   <fx:include fx:id="menu" source="menuBarPartial.fxml" />
 </AnchorPane>
