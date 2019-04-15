@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,7 +46,9 @@ public class EditMapController extends Controller implements Initializable {
     @FXML
     private ComboBox<String> algosMenu;
 
-    @FXML private TextField changeIdletime;
+    @FXML private TextField changeIdleTime;
+    @FXML private Label changeIdleTimeLabel;
+
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -91,6 +94,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+        changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor(currentFloor);
@@ -257,7 +261,29 @@ public class EditMapController extends Controller implements Initializable {
         addEdgeHandler_on = true;
     }
 
-//    public void setIdleTime
+    public void setIdleTime(ActionEvent e){
+        String time = changeIdleTime.getText();
+        boolean canSetTime = true;
+        char c;
+        if(time.length() == 0){
+            canSetTime = false;
+        }
+        for(int i = 0; i < time.length(); i++){
+            c = time.charAt(i);
+            if(!((Character.isDigit(c)) || c == ('.'))){
+                canSetTime = false;
+                i = time.length();
+            }
+        }
+        if(canSetTime){
+            double timeToSet = Double.parseDouble(time);
+            Main.info.setIdleTime(timeToSet);
+            changeIdleTimeLabel.setText("New Idle Time Set");
+        }
+        else{
+           changeIdleTimeLabel.setText("Error: Invalid entry");
+        }
+    }
 
     public void editNodeButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {

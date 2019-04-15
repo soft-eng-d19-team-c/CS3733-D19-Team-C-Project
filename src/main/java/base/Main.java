@@ -17,7 +17,7 @@ public class Main {
     public static IdleMonitor idleMonitor;
     public static void main(String[] args) {
         auth = new AuthenticationManager();
-        database = new Database(true, false);
+        database = new Database(false, false);
         info = new ApplicationInformation("CHALL007L1");
         try {
             user = new User("guest", "guest");
