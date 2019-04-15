@@ -22,11 +22,13 @@ public final class ApplicationInformation {
     public static Dijkstra DIJKSTRA = new Dijkstra();
     public static BreadthFirstSearch BFS = new BreadthFirstSearch();
     public static DepthFirstSearch DFS = new DepthFirstSearch();
+    private EnumSearchType searchType;
 
     public ApplicationInformation(String kioskLocation) {
         this.pathfinding = new PathFindingContext(ASTAR);
         this.kioskLocation = Node.getNodeByID(kioskLocation);
         this.idleTime = 0.5;
+        this.searchType = EnumSearchType.LEVENSHTEIN;
     }
 
     /**
@@ -77,4 +79,9 @@ public final class ApplicationInformation {
     public void setAlgorithm(IPathFind algorithm) {
         this.pathfinding.setAlgorithm(algorithm);
     }
+
+
+    public EnumSearchType getSearchType() {return this.searchType;}
+
+    public void setSearchType(EnumSearchType type) {this.searchType = type;}
 }

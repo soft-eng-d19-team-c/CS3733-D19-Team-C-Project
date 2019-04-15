@@ -10,22 +10,23 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.WindowEvent;
 import model.Edge;
 import model.Node;
 
 import java.net.URL;
+import java.sql.Savepoint;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -46,8 +47,13 @@ public class EditMapController extends Controller implements Initializable {
     @FXML
     private ComboBox<String> algosMenu;
 
+
     @FXML private TextField changeIdleTime;
     @FXML private Label changeIdleTimeLabel;
+
+
+    @FXML
+    protected Accordion editNode;
 
 
     private LinkedList<Edge> edges;
@@ -59,6 +65,19 @@ public class EditMapController extends Controller implements Initializable {
     private String currentFloor;
 
     private HashMap<String, Node> allNodes = Node.getHashedNodes();
+
+    TitledPane TitledPane = new TitledPane();
+    VBox IDContent = new VBox();
+    TextField nodeID = new TextField();
+    TextField xCoord = new TextField();
+    TextField yCoord = new TextField();
+    TextField floor = new TextField();
+    TextField building = new TextField();
+    TextField type = new TextField();
+    TextField shortName = new TextField();
+    TextField longName = new TextField();
+
+    Button save = new Button();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -94,7 +113,34 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+      
         changeIdleTimeLabel.setText("Change Idle Time (minutes)");
+        editNode.getPanes().removeAll(TitledPane);
+        editNode.getPanes().addAll(TitledPane);
+        IDContent.getChildren().add(new Label("Node ID: "));
+        IDContent.getChildren().add(nodeID);
+        IDContent.getChildren().add(new Label("X Coord: "));
+        IDContent.getChildren().add(xCoord);
+        IDContent.getChildren().add(new Label("Y Coord: "));
+        IDContent.getChildren().add(yCoord);
+        IDContent.getChildren().add(new Label("Floor: "));
+        IDContent.getChildren().add(floor);
+        IDContent.getChildren().add(new Label("Building: "));
+        IDContent.getChildren().add(building);
+        IDContent.getChildren().add(new Label("Node Type: "));
+        IDContent.getChildren().add(type);
+        IDContent.getChildren().add(new Label("Short Name: "));
+        IDContent.getChildren().add(shortName);
+        IDContent.getChildren().add(new Label("Long Name: "));
+        IDContent.getChildren().add(longName);
+        IDContent.getChildren().add(save);
+        save.setText("Save");
+
+
+        TitledPane.setText("Edit Node Data");
+        TitledPane.setContent(IDContent);
+        editNode.setVisible(false);
+
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor(currentFloor);
@@ -548,12 +594,61 @@ public class EditMapController extends Controller implements Initializable {
                 }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                HashMap<String, Object> hm = new HashMap<>();
-                hm.put("node", n);
-                Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
+                nodeID.setText(n.getID());
+                nodeID.setDisable(true);
+                xCoord.setText(Integer.toString(n.getX()));
+                yCoord.setText(Integer.toString(n.getY()));
+                floor.setText(n.getFloor());
+                building.setText(n.getBuilding());
+                type.setText(n.getNodeType());
+                shortName.setText(n.getShortName());
+                longName.setText(n.getLongName());
+                editNode.setVisible(true);
+
+                save.setOnAction(event -> {
+                    editNode.setVisible(false);
+
+                    try {
+                        int X = Integer.parseInt(xCoord.getText());
+                        int Y = Integer.parseInt(yCoord.getText());
+                        n.setX(X);
+                        n.setY(Y);
+                    }
+                    catch (NumberFormatException exp){
+                        return;
+                    }
+
+                    if (strshorterthan255(building.getText())){ n.setBuilding(building.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(floor.getText())){ n.setFloor(floor.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(longName.getText())){ n.setLongName(longName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(shortName.getText())){ n.setShortName(shortName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(type.getText())){ n.setNodeType(type.getText()); } else {
+                        return;
+                    }
+                    int updateflag;
+                    updateflag = n.update();
+                    if (updateflag > 0) {
+                        HashMap<String, Object> hm = new HashMap<>();
+                        hm.put("floor", "L1");
+                        //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
+                    }
+                });
             }
         }
     };
+
+
+    private boolean strshorterthan255 (String str){
+        return (str.length() < 255);
+    }
 
     @SuppressWarnings("Duplicates")
     EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
@@ -580,4 +675,6 @@ public class EditMapController extends Controller implements Initializable {
     public void submitButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.DASHBOARD);
     }
+
+
 }
