@@ -336,14 +336,15 @@ public class PathfindingController extends Controller implements Initializable {
 
 
      */
-
+    @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
         mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
-        if (danceBtn.isSelected()) {
+        double mapX = findPathImgView.getLayoutX();
+        double mapY = findPathImgView.getLayoutY();
+        double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+        if (danceBtn.isSelected() && hasPath) {
+            pathScrollBar.setDisable(true);
             Node prev = null;
-            double mapX = findPathImgView.getLayoutX();
-            double mapY = findPathImgView.getLayoutY();
-            double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             for (Node n : nodesOnPath) {
                 if (n.getFloor().equals(currentFloor)) {
                     Circle circle = new Circle();
@@ -381,10 +382,53 @@ public class PathfindingController extends Controller implements Initializable {
             for (Circle c : nodeCircles.values()) {
                 c.toFront();
             }
-        } else {
+        } else if (danceBtn.isSelected() && !hasPath) {
+            for (Node n : nodes) {
+                if (n.getFloor().equals(currentFloor)) {
+                    Circle circle = new Circle();
+                    circle.setCenterX(mapX + n.getX() / mapScale);
+                    circle.setCenterY(mapY + n.getY() / mapScale);
+                    circle.setRadius(3.0 + (new Random().nextDouble() * 3.0));
+                    circle.getProperties().put("node", n);
+                    Color c1 = randomColorGenerator();
+                    Color c2 = randomColorGenerator();
+                    FillTransition ft = new FillTransition(Duration.millis(517), circle, c1, c2);
+                    ft.setAutoReverse(true);
+                    ft.setCycleCount(Animation.INDEFINITE);
+                    ft.play();
+                    mapImgPane.getChildren().add(circle);
+                    nodeCircles.put(n.getID(), circle);
+                }
+
+            }
+            for (Edge e : edges) {
+                if (nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode())) {
+                    Color c1 = randomColorGenerator();
+                    Color c2 = randomColorGenerator();
+                    Line line = new Line();
+                    line.startXProperty().bind(nodeCircles.get(e.getStartNode()).centerXProperty());
+                    line.startYProperty().bind(nodeCircles.get(e.getStartNode()).centerYProperty());
+                    line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
+                    line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
+                    line.setStroke(c1);
+                    line.setStrokeWidth(3.0);
+                    StrokeTransition st = new StrokeTransition(Duration.millis(400), line, c1, c2);
+                    st.setCycleCount(Animation.INDEFINITE);
+                    st.setAutoReverse(true);
+                    st.play();
+                    mapImgPane.getChildren().add(line);
+                }
+            }
+            for (Circle c : nodeCircles.values()) {
+                c.toFront();
+            }
+        } else if (hasPath) {
+            pathScrollBar.setDisable(false);
             generateNodesAndEdges(nodesOnPath);
             pathScroll.setOldPosition(0);
             scroll();
+        } else {
+            displayAllNodes();
         }
     }
 
@@ -469,36 +513,37 @@ public class PathfindingController extends Controller implements Initializable {
         } else {
             displayAllNodes();
         }
+        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("G");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
-        colorFloorsOnPath(nodesOnPath, currentFloor);
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void changeButtonColor(Button button){

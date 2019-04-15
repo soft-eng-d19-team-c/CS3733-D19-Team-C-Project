@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumSearchType;
 import base.Main;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXTextField;
@@ -109,7 +108,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void refresh() {
-        nodes = Node.getNodes();
+        nodes = Node.getSearchableNodes();
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);
