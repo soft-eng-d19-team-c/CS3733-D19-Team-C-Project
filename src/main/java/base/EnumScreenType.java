@@ -9,7 +9,7 @@ public enum EnumScreenType {
     LOGIN("/views/loginScreen.fxml"),
     PATHFINDING("/views/pathfinding.fxml"),
     SEARCHLOCATION("/views/searchLocation.fxml"),
-    BOOKLOCATIONS("/views/bookLocation.fxml"),
+    BOOKLOCATIONS("/views/bookLocationCalendar.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
     // services
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
