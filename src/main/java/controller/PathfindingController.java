@@ -26,6 +26,10 @@ import model.Edge;
 import model.Node;
 import model.PathScroll;
 import model.PathToText;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -70,6 +74,7 @@ public class PathfindingController extends Controller implements Initializable {
     private boolean hasPath;
     private Button currentFloorButton;
     private HashMap<String, Image> imageCache = new HashMap<>();
+    private static final int MIN_PIXELS = 10;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -78,6 +83,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         searchController_destController.refresh();
@@ -156,6 +162,7 @@ public class PathfindingController extends Controller implements Initializable {
             orgSceneX[0] = -1;
             orgSceneY[0] = -1;
             Circle circle = new Circle();
+
             double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             circle.setCenterX(mapX + n.getX() / mapScale);
             circle.setCenterY(mapY + n.getY() / mapScale);
@@ -489,16 +496,161 @@ public class PathfindingController extends Controller implements Initializable {
 
         //colorFloorsOnPath(nodesOnPath, currentFloor);
         changeButtonColor(currentFloorButton);
+
         if (imageCache.containsKey(floorURL)) {
             findPathImgView.setImage(imageCache.get(floorURL));
+            setImageI(imageCache.get(floorURL));
         } else {
             Image newImage = new Image(String.valueOf(getClass().getResource("/img/" + floorURL)));
             imageCache.put(floorURL, newImage);
             findPathImgView.setImage(newImage);
+            setImageI(newImage);
         }
         findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
     }
 
+    private void setImageI(Image image) {
+        findPathImgView.setImage(image);
+
+        //zoom
+        double width = findPathImgView.getImage().getWidth();
+        double height = findPathImgView.getImage().getHeight();
+
+        findPathImgView.setPreserveRatio(true);
+        reset(findPathImgView, width, height);
+
+        ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
+
+        findPathImgView.setOnMousePressed(e -> {
+
+            Point2D mousePress = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
+            mouseDown.set(mousePress);
+        });
+
+        findPathImgView.setOnMouseDragged(e -> {
+            Point2D dragPoint = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
+            shift(findPathImgView, dragPoint.subtract(mouseDown.get()));
+            mouseDown.set(imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY())));
+        });
+
+        findPathImgView.setOnScroll(e -> {
+            double delta = e.getDeltaY();
+            Rectangle2D viewport = findPathImgView.getViewport();
+
+            double scale = clamp(Math.pow(1.01, delta),
+
+                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
+                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
+
+                    // don't scale so that we're bigger than image dimensions:
+                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
+
+            );
+
+            Point2D mouse = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
+
+            double newWidth = viewport.getWidth() * scale;
+            double newHeight = viewport.getHeight() * scale;
+
+            // To keep the visual point under the mouse from moving, we need
+            // (x - newViewportMinX) / (x - currentViewportMinX) = scale
+            // where x is the mouse X coordinate in the image
+
+            // solving this for newViewportMinX gives
+
+            // newViewportMinX = x - (x - currentViewportMinX) * scale
+
+            // we then clamp this value so the image never scrolls out
+            // of the imageview:
+
+            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
+                    0, width - newWidth);
+            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
+                    0, height - newHeight);
+
+            findPathImgView.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
+        });
+
+        findPathImgView.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                reset(findPathImgView, width, height);
+            }
+        });
+
+        findPathImgView.setPreserveRatio(true);
+        //mapImgPane.setCenter(findpathmap);
+
+        findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
+        findPathImgView.fitHeightProperty().bind(mapImgPane.heightProperty());
+    }
+
+    // reset to the top left:
+    private void reset(ImageView imageView, double width, double height) {
+        imageView.setViewport(new Rectangle2D(0, 0, width, height));
+    }
+
+    // shift the viewport of the imageView by the specified delta, clamping so
+// the viewport does not move off the actual image:
+    private void shift(ImageView imageView, Point2D delta) {
+        Rectangle2D viewport = imageView.getViewport();
+
+        double width = imageView.getImage().getWidth() ;
+        double height = imageView.getImage().getHeight() ;
+
+        double maxX = width - viewport.getWidth();
+        double maxY = height - viewport.getHeight();
+
+        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
+        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
+
+        imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+
+    private double clamp(double value, double min, double max) {
+
+        if (value < min)
+            return min;
+        if (value > max)
+            return max;
+        return value;
+    }
+
+    // convert mouse coordinates in the imageView to coordinates in the actual image:
+    private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
+        double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
+        double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
+
+        Rectangle2D viewport = imageView.getViewport();
+        return new Point2D(
+                viewport.getMinX() + xProportion * viewport.getWidth(),
+                viewport.getMinY() + yProportion * viewport.getHeight());
+    }
+
+    private ImageView setImageView(Image image) {
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+
+        double w;
+        double h;
+
+        double ratioX = imageView.getFitWidth() / imageView.getImage().getWidth();
+        double ratioY = imageView.getFitHeight() / imageView.getImage().getHeight();
+
+        double reducCoeff;
+        if(ratioX >= ratioY) {
+            reducCoeff = ratioY;
+        } else {
+            reducCoeff = ratioX;
+        }
+
+        w = imageView.getImage().getWidth() * reducCoeff;
+        h = imageView.getImage().getHeight() * reducCoeff;
+
+        imageView.setX((imageView.getFitWidth() - w) / 2);
+        imageView.setY((imageView.getFitHeight() - h) / 2);
+
+        return imageView;
+    }
 
     public void changeFloor(String floor) {
         changeFloor(floor, Color.BLACK);
