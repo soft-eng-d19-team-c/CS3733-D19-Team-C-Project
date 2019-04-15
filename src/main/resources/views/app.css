@@ -100,6 +100,7 @@
     /* I don't actually think these set the margin correctly*/
     margin-bottom: 30;
     margin-top: 30;
+    -fx-cursor: hand;
 }
 
 .select-bar{
@@ -119,7 +120,17 @@
 }
 
 .floor-select-button{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwblue;
+    -fx-text-fill: -white;
+    -fx-cursor: hand;
+}
 
+.floor-select-button-selected{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwgold;
+    -fx-text-fill: -black;
+    -fx-cursor: hand;
 }
 
 .btn-primary-v2{

@@ -27,9 +27,9 @@ public class MainFXML extends Application {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.WELCOME.getPath())));
             s.setScene(scene);
             Main.screenController = new Facade(s.getScene());
-            Main.idleMonitor = new IdleMonitor(Duration.minutes(Main.info.idleTime),
+            IdleMonitor idleMonitor = new IdleMonitor(Duration.seconds(20),
                     () -> Main.screenController.setScreen(EnumScreenType.WELCOME), true);
-            Main.idleMonitor.register(scene, Event.ANY);
+            idleMonitor.register(scene, Event.ANY);
             s.getIcons().add(new Image("img/icon.png"));
             s.setMaximized(true);
             s.setTitle("BWH Navigation Kiosk");
