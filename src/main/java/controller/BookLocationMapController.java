@@ -159,12 +159,12 @@ public class BookLocationMapController extends Controller implements Initializab
             errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
         } else {
             b.insert();
-            Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+            Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR);
         }
     }
 
     public void goCalendarBtnClick(ActionEvent actionEvent) {
-
+        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR);
     }
 
     private Callback<ListView<BookableLocation>, ListCell<BookableLocation>> locationBoxFactory = new Callback<ListView<BookableLocation>, ListCell<BookableLocation>>() {
