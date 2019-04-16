@@ -22,7 +22,7 @@ public class RobotPOST{
         BufferedReader in = null;
         String result = "";
         try {
-            URL theUrl = new URL("http://ryan-ml.tech/test");
+            URL theUrl = new URL("http://ryan-ml.tech/test:80");
             // build connection
             URLConnection conn = theUrl.openConnection();
             // set request properties
