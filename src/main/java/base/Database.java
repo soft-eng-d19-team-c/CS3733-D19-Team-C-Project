@@ -121,7 +121,7 @@ public final class Database {
             String InternalTransportationServiceRequestTableUINDEX = "create unique index INTERNALTRANSPORTATIONREQUESTS_ID_UINDEX on INTERNALTRANSPORTATIONREQUESTS (ID)";
             String InternalTransportationServiceRequestTablePK = " alter table INTERNALTRANSPORTATIONREQUESTS add constraint INTERNALTRANSPORTATIONREQUESTS_PK primary key (ID)";
             // create interpreter service request
-            String createInterpreterServiceRequestTable = "create table INTERPRETERREQUESTS (ID int generated always as identity, NODEID varchar(255) not null constraint INTERPRETERREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete cascade, DESCRIPTION varchar(2000), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(64) constraint INTERPRETERREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME) on delete cascade)";
+            String createInterpreterServiceRequestTable = "create table INTERPRETERREQUEST (ID int generated always as identity, NODEID varchar(255) not null constraint INTERPRETERREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete cascade, DESCRIPTION varchar(2000), DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(64) constraint INTERPRETERREQUESTS_USERS_USERNAME_fk2 references USERS (USERNAME) on delete cascade)";
             String InterpreterServiceRequestTableUINDEX = "create unique index INTERPRETERREQUESTS_ID_uindex on INTERPRETERREQUESTS (ID)";
             String InterpreterServiceRequestTablePK= " alter table INTERPRETERREQUESTS add constraint INTERPRETERREQUESTS_pk primary key (ID)";
             // external transportation

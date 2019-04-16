@@ -11,12 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import model.BookableLocation;
 import model.Booking;
 
@@ -53,6 +56,9 @@ public class BookLocationMapController extends Controller implements Initializab
         mapImgView.fitWidthProperty().bind(circlePane.widthProperty());
         mapImgView.fitHeightProperty().bind(circlePane.heightProperty());
         bookingLocations = BookableLocation.getAllBookingLocations();
+        locationBox.setItems(bookingLocations);
+        locationBox.setCellFactory(locationBoxFactory);
+        locationBox.setButtonCell(locationBoxFactory.call(null));
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
     }
@@ -102,8 +108,13 @@ public class BookLocationMapController extends Controller implements Initializab
     }
 
     public void bookRoomBtnClick(ActionEvent actionEvent) {
+        if (locationBox.getValue() == null){
+            errorText.setText("Error: Please select a classroom to book.");
+            return;
+        }
         //needs to update some sort of schedule saying which rooms are booked for certain times
         String bookingLocation = locationBox.getValue().getID();
+
         LocalDate date = datePicker.getValue();
         LocalTime localTime = timePicker.getValue();
         String inputDuration = duration.getText();
@@ -130,4 +141,19 @@ public class BookLocationMapController extends Controller implements Initializab
     public void goCalendarBtnClick(ActionEvent actionEvent) {
 
     }
+
+    private Callback<ListView<BookableLocation>, ListCell<BookableLocation>> locationBoxFactory = new Callback<ListView<BookableLocation>, ListCell<BookableLocation>>() {
+        @Override
+        public ListCell<BookableLocation> call(ListView<BookableLocation> param) {
+            return new ListCell<BookableLocation>(){
+                @Override
+                public void updateItem(BookableLocation item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(item!=null && !empty){
+                        setText(item.getTitle());
+                    }
+                }
+            };
+        }
+    };
 }
