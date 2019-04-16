@@ -22,7 +22,7 @@
             <children>
                 <ImageView fitHeight="90.0" fitWidth="90.0" GridPane.halignment="CENTER">
                     <image>
-                        <Image url="@../img/back%20button.png" />
+                        <Image url="@../img/back button.png" />
                     </image>
                 </ImageView>
                 <JFXButton fx:id="homeButton" disable="true" maxHeight="200.0" maxWidth="200.0" onAction="#homeButtonClick" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">

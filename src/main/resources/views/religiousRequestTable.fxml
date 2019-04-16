@@ -6,10 +6,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.image.ImageView?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReligiousServiceRequestsTableController">
     <children>
@@ -25,9 +25,9 @@
                 <String fx:value="btn-primary" />
                 <String fx:value="btn-sm" />
             </styleClass></Button>
-        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="150.0">
             <children>
-                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="View All Service Requests">
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Religious Requests">
                     <font>
                         <Font size="60.0" />
                     </font>
@@ -48,7 +48,6 @@
                 </TableView>
             </children>
         </VBox>
+        <fx:include fx:id="menu" source="menuBarPartial.fxml" />
     </children>
-    <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-    <fx:include fx:id="menu" source="menuBarPartial.fxml" />
 </AnchorPane>
