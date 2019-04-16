@@ -104,4 +104,9 @@ public class BookingController extends Controller implements Initializable {
         }
     };
 
+    public void nextWeekBtnClick(ActionEvent actionEvent) {
+    }
+
+    public void prevWeekBtnClick(ActionEvent actionEvent) {
+    }
 }
