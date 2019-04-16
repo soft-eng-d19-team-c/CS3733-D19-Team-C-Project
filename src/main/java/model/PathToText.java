@@ -10,12 +10,12 @@ import java.util.LinkedList;
 
 import static java.lang.Math.sqrt;
 
-public class PathToText {
+public class PathToText{
     // Converts linked list to a detailed text based path
 
     LinkedList<Node> nodes;
-    StringBuilder robotInstructions = new StringBuilder();
-    public String postMe;
+    StringBuilder robotInstructions = new StringBuilder(); //Collects instructions in robot format
+    static String postMe;   //The message for POST
 
 
     public PathToText(LinkedList<Node> nodes) {
