@@ -9,10 +9,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="screen-background" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
+<?import javafx.scene.image.ImageView?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="screen-background" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
    <children>
-      <VBox layoutX="29.0" layoutY="48.0" prefHeight="1018.0" prefWidth="1126.0" stylesheets="@app.css">
+      <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <!--<Image url="@../img/background.png" />-->
+         </image>
+      </ImageView>
+      <VBox layoutX="29.0" layoutY="48.0" prefHeight="1018.0" prefWidth="1126.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Gift Store Delivery Request">
                <font>
@@ -42,9 +47,9 @@
                <String fx:value="btn-success" />
                <String fx:value="btn-lg" />
             </styleClass>
-            <VBox.margin>
-               <Insets left="50.0" top="300.0" />
-            </VBox.margin>
+               <VBox.margin>
+                  <Insets left="700.0" />
+               </VBox.margin>
          </JFXButton>
          </children>
       </VBox>

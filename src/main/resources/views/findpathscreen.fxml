@@ -6,12 +6,12 @@
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
@@ -167,6 +167,28 @@
                </children>
                <padding>
                   <Insets left="40.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="575.0" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="135.0">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="520.0">
+               <image>
+                  <Image url="@../img/drop down menu.png" />
+               </image>
+            </ImageView>
+            <VBox prefHeight="200.0" prefWidth="520.0">
+               <children>
+                  <Label styleClass="field-question-text" text="Search for  a Location">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <fx:include fx:id="autocompletesearchbar" source="autocompleteSearchBar.fxml" />
+               </children>
+               <padding>
+                  <Insets left="50.0" top="30.0" />
                </padding>
             </VBox>
          </children>

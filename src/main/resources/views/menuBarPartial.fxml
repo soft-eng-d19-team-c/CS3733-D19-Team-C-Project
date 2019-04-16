@@ -14,7 +14,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="1920.0" styleClass="blue-boxes" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NavController">
    <children>
-      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <ImageView fitHeight="135.0" fitWidth="135.0" AnchorPane.rightAnchor="0.0">
          <image>
             <Image url="@../img/icon.png" />
@@ -181,5 +180,6 @@
             </HBox>
          </children>
       </VBox>
+      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
    </children>
 </AnchorPane>
