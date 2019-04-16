@@ -64,7 +64,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Text fx:id="errorText" fill="RED" layoutX="300.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.732421875" />
+      <Text fx:id="errorText" fill="RED" layoutX="300.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.732421875" AnchorPane.leftAnchor="255.0" />
       <fx:include fx:id="nav" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>
