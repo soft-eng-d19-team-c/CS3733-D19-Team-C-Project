@@ -10,9 +10,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServiceRequestsTablesDashboardController">
    <children>
+       <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
+           <image>
+               <!--<Image url="@../img/background.png" />-->
+           </image>
+       </ImageView>
       <fx:include fx:id="menu" source="menuBarPartial.fxml" />
       <Label alignment="CENTER" layoutX="440.0" layoutY="100.0" styleClass="h1" text="View Service Requests" />
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
