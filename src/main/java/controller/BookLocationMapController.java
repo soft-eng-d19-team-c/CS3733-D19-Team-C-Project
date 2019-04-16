@@ -3,6 +3,7 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.application.Platform;
@@ -38,6 +39,7 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class BookLocationMapController extends Controller implements Initializable {
+    @FXML private JFXTextArea description;
     @FXML private JFXTextField duration;
     @FXML private ComboBox<BookableLocation> locationBox;
     @FXML private Text errorText;
@@ -79,6 +81,7 @@ public class BookLocationMapController extends Controller implements Initializab
         cal.set(d.getYear(), d.getMonthValue() - 1, d.getDayOfMonth(), t.getHour(), t.getMinute());
         Timestamp ts = new Timestamp(cal.getTimeInMillis());
         bookings = Booking.getBookingsDuring(ts);
+        String activityDescription = description.getText();
         draw();
     }
 
@@ -151,7 +154,7 @@ public class BookLocationMapController extends Controller implements Initializab
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
         Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
         Timestamp tsEnd = new Timestamp(cal.getTimeInMillis() + lengthInMillis);
-        Booking b = new Booking(bookingLocation, "", tsStart, tsEnd, Main.user.getUsername(), 0);
+        Booking b = new Booking(bookingLocation, description.getText(), tsStart, tsEnd, Main.user.getUsername(), 0);
         if(b.hasConflicts()){
             errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
         } else {
@@ -184,9 +187,6 @@ public class BookLocationMapController extends Controller implements Initializab
         public void handle(MouseEvent me) {
             System.out.println("testing");
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : circlePane.getChildren().subList(1, circlePane.getChildren().size())) {
-                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                }
                 Circle circle = (Circle) me.getTarget();
                 BookableLocation b = (BookableLocation) circle.getProperties().get("BookableLocation");
                 System.out.println("Bookable id: " + b.getTitle());
