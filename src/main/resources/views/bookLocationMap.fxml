@@ -15,9 +15,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
    <children>
-      <Label alignment="CENTER" styleClass="h1" text="Booked Locations" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label alignment="CENTER" text="Booked Locations" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="135.0">
+         <font>
+            <Font size="70.0" />
+         </font></Label>
       <JFXDatePicker fx:id="datePicker" layoutX="51.0" layoutY="263.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="263.0" />
       <JFXTimePicker fx:id="timePicker" layoutX="51.0" layoutY="323.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="323.0" />
       <JFXButton fx:id="bookRoomBtn" layoutX="29.0" layoutY="766.0" onAction="#bookRoomBtnClick" text="BOOK" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="766.0">
@@ -26,9 +30,9 @@
             <String fx:value="btn-primary" />
          </styleClass>
       </JFXButton>
-      <Pane fx:id="circlePane" prefHeight="847.0" prefWidth="1265.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0">
+      <Pane fx:id="circlePane" prefHeight="847.0" prefWidth="1265.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="230.0">
          <children>
-            <ImageView fx:id="mapImgView" fitHeight="786.0" fitWidth="1050.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mapImgView" fitHeight="786.0" fitWidth="1050.0" layoutX="12.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/bookableLocationsMap.jpg" />
                </image>
@@ -51,5 +55,6 @@
          </font>
       </Label>
       <Text fx:id="errorText" fill="RED" layoutX="300.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.732421875" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>
