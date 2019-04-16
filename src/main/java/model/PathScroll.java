@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class PathScroll {
@@ -9,9 +8,11 @@ public class PathScroll {
     int oldPosition;
 
     public PathScroll(LinkedList<Node> nodesOnPath) {
-        Collections.reverse(nodesOnPath);
-        this.nodesOnPath = nodesOnPath.toArray(new Node[nodesOnPath.size()]);
         this.oldPosition = 0;
+        int i = nodesOnPath.size();
+        this.nodesOnPath = new Node[i];
+        for (Node n : nodesOnPath)
+            this.nodesOnPath[--i] = n;
     }
 
     public void setOldPosition(int oldPosition) {
