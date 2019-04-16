@@ -8,13 +8,17 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -22,12 +26,14 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.BookableLocation;
 import model.Booking;
+import model.Node;
 
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -42,6 +48,8 @@ public class BookLocationMapController extends Controller implements Initializab
 
     private LinkedList<Booking> bookings;
     private ObservableList<BookableLocation> bookingLocations;
+    private HashMap<String, Integer> bookingLocationsIndexMap = new HashMap<>();
+    private int bookableLocationId;
 
 
     @Override
@@ -76,6 +84,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @SuppressWarnings("Duplicates")
     private void draw() {
+        bookableLocationId = 0;
         circlePane.getChildren().remove(1, circlePane.getChildren().size());
         // image real size / image display size => scale
         double mapX = mapImgView.getLayoutX();
@@ -85,12 +94,20 @@ public class BookLocationMapController extends Controller implements Initializab
             int x = b.getX();
             int y = b.getY();
             Circle c = new Circle();
+//            c.setOnMouseClicked(event -> {
+//
+//            });
             c.setCenterX(mapX + x / mapScale);
             c.setCenterY(mapY + y / mapScale);
             c.setFill(Color.GREEN);
             c.setRadius(10.0);
+            c.getProperties().put("BookableLocation", b);
+            bookingLocationsIndexMap.put(b.getID(), bookableLocationId);
+            bookableLocationId ++;
+            c.addEventFilter(MouseEvent.MOUSE_PRESSED, selectlocationHandler);
             Tooltip t = new Tooltip(b.getTitle());
             Tooltip.install(c, t);
+            c.setCursor(Cursor.HAND);
             circlePane.getChildren().add(c);
         }
         for (Booking b : bookings) {
@@ -108,6 +125,7 @@ public class BookLocationMapController extends Controller implements Initializab
     }
 
     public void bookRoomBtnClick(ActionEvent actionEvent) {
+        errorText.setText("");
         if (locationBox.getValue() == null){
             errorText.setText("Error: Please select a classroom to book.");
             return;
@@ -123,6 +141,10 @@ public class BookLocationMapController extends Controller implements Initializab
                 errorText.setText("Error: Duration must be a valid number.");
                 return;
             }
+        }
+        if (inputDuration.isEmpty()) {
+            errorText.setText("Error: Duration must not be empty");
+            return;
         }
         int lengthInMillis = Integer.parseInt(inputDuration) * 60 * 60 * 1000;
         Calendar cal = Calendar.getInstance();
@@ -154,6 +176,27 @@ public class BookLocationMapController extends Controller implements Initializab
                     }
                 }
             };
+        }
+    };
+
+    @SuppressWarnings("Duplicates")
+    EventHandler selectlocationHandler = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent me) {
+            System.out.println("testing");
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                for (javafx.scene.Node node : circlePane.getChildren().subList(1, circlePane.getChildren().size())) {
+                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                }
+                Circle circle = (Circle) me.getTarget();
+                BookableLocation b = (BookableLocation) circle.getProperties().get("BookableLocation");
+                System.out.println("Bookable id: " + b.getTitle());
+//                locationBox.getSelectionModel().select(bookingLocationsIndexMap.get(b.getID()));
+                locationBox.setValue(b);
+
+//                HashMap<String, Object> hm = new HashMap<>();
+//                hm.put("node", n);
+//                Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
+            }
         }
     };
 }
