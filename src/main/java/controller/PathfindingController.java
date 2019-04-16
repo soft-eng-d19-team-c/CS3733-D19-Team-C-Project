@@ -510,8 +510,6 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     private void setImageI(Image image) {
-        findPathImgView.setImage(image);
-
         //zoom
         double width = findPathImgView.getImage().getWidth();
         double height = findPathImgView.getImage().getHeight();
@@ -580,8 +578,13 @@ public class PathfindingController extends Controller implements Initializable {
         findPathImgView.setPreserveRatio(true);
         //mapImgPane.setCenter(findpathmap);
 
-        findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
-        findPathImgView.fitHeightProperty().bind(mapImgPane.heightProperty());
+        /*
+            Binding the bounds of the image view to the bounds of the pane is giving
+            all the nodes an offset, but it seems to work fine without this
+            binding so i have commented it out to fix the node position
+         */
+//        findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
+//        findPathImgView.fitHeightProperty().bind(mapImgPane.heightProperty());
     }
 
     // reset to the top left:
