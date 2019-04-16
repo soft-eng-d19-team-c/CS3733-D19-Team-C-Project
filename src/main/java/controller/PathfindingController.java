@@ -74,7 +74,9 @@ public class PathfindingController extends Controller implements Initializable {
     private boolean hasPath;
     private Button currentFloorButton;
     private HashMap<String, Image> imageCache = new HashMap<>();
-    private static final int MIN_PIXELS = 10;
+    private static final int MIN_PIXELS = 1000;
+
+    private double currentZoomLevel = 1;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -545,6 +547,8 @@ public class PathfindingController extends Controller implements Initializable {
 
             );
 
+            currentZoomLevel /= scale;
+
             Point2D mouse = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
 
             double newWidth = viewport.getWidth() * scale;
@@ -567,6 +571,41 @@ public class PathfindingController extends Controller implements Initializable {
                     0, height - newHeight);
 
             findPathImgView.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
+
+            // let's do some math to move and scale the nodes
+
+           double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+
+            for (Circle c : nodeCircles.values()) {
+                c.setScaleX(currentZoomLevel);
+                c.setScaleY(currentZoomLevel);
+
+
+
+//                if (mouse.getX() / mapScale > c.getCenterX()) {
+                    c.setCenterX(c.getCenterX() + (c.getCenterX() - mouse.getX() / mapScale) * scale);
+//                } else {
+//                    c.setCenterX(c.getCenterX() + (c.getCenterX() - mouse.getX() / mapScale * scale);
+//                }
+
+
+
+
+//
+//                if (mouse.getX() / mapScale > c.getCenterX()) {
+//                    c.setCenterX(c.getCenterX() - Math.abs(c.getCenterX() - mouse.getX() / mapScale) * scale);
+//                } else {
+//                    c.setCenterX(c.getCenterX() + Math.abs(c.getCenterX() - mouse.getX() / mapScale) * scale);
+//                }
+
+
+//                c.setCenterX(c.getCenterX() + (scale * mouse.getX()));
+//                c.setCenterY(c.getCenterY() + (scale * mouse.getY()));
+//                c.scaleXProperty().setValue(currentZoomLevel);
+//                c.scaleYProperty().setValue(currentZoomLevel);
+            }
+
+
         });
 
         findPathImgView.setOnMouseClicked(e -> {
@@ -590,6 +629,7 @@ public class PathfindingController extends Controller implements Initializable {
     // reset to the top left:
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
+        currentZoomLevel = 1;
     }
 
     // shift the viewport of the imageView by the specified delta, clamping so
