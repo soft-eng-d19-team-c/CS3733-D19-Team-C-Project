@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import model.ExternalTransportationRequest;
 
 import java.net.URL;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class ExternalTransportationServiceController extends Controller implements Initializable {
+    @FXML private Text errText;
     @FXML private JFXTextArea destinationField;
     @FXML
     private AutocompleteSearchBarController acSearchStartController;
@@ -47,6 +49,10 @@ public class ExternalTransportationServiceController extends Controller implemen
     }
 
     public void saveBtnClick(ActionEvent actionEvent) {
+        if (dateField.getValue() == null || timeField.getValue() == null){
+            errText.setText("ERROR: Please enter the time");
+            return;
+        }
         String pickupLocation = acSearchStartController.getNodeID();
         String dest = destinationField.getText();
         Timestamp dateTimeSubmitted = new Timestamp(System.currentTimeMillis());

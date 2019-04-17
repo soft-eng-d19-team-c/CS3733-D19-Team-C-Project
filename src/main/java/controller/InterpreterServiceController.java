@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import model.InterpreterRequest;
 
 import java.net.URL;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class InterpreterServiceController extends Controller implements Initializable {
+    @FXML private Text errText;
     @FXML private JFXDatePicker dateField;
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController acSearchController;
@@ -47,6 +49,10 @@ public class InterpreterServiceController extends Controller implements Initiali
     //set screen back to the dashboard
     public void saveBtnClick(ActionEvent actionEvent) {
         Timestamp dateTimeRequest = new Timestamp(System.currentTimeMillis());
+        if (dateField.getValue() == null || timeField.getValue() == null){
+            errText.setText("ERROR: Please enter the time");
+            return;
+        }
         LocalDate date = dateField.getValue();
         LocalTime time = timeField.getValue();
         Calendar cal = Calendar.getInstance();
