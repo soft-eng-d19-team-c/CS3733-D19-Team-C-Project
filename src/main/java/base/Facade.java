@@ -44,7 +44,7 @@ public final class Facade {
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
-        this.prevType = EnumScreenType.DASHBOARD;
+        this.prevType = EnumScreenType.PATHFINDING;
         this.backgroundImage = new Image(String.valueOf(getClass().getResource("/img/background.png")));
     }
 
@@ -85,9 +85,6 @@ public final class Facade {
             loadCachedScreen(type);
         } else {
             loadNewScreen(type);
-        }
-        if (type == EnumScreenType.DASHBOARD) {
-            clearHistory();
         }
     }
 
@@ -140,9 +137,9 @@ public final class Facade {
      * Helper function to clear the history Stack of the go back button.
      * @author Ryan LaMarche
      */
-    private void clearHistory() {
+    protected void clearHistory() {
         this.history.clear();
-        this.history.push(EnumScreenType.DASHBOARD);
+        this.history.push(EnumScreenType.PATHFINDING);
     }
 
     /**
@@ -172,4 +169,7 @@ public final class Facade {
         return this.backgroundImage;
     }
 
+    public EnumScreenType getPrevType() {
+        return prevType;
+    }
 }
