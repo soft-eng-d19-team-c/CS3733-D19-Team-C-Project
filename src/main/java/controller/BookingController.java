@@ -37,7 +37,8 @@ public class BookingController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         backgroundImage.setImage(Main.screenController.getBackgroundImage());
-        navController.setActiveTab(NavTypes.BOOKROOM);
+
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         Bookings = getAllBooking();
         datePicker.setValue(LocalDate.now());
 //        bookingAgenda.createDefaultSkin();

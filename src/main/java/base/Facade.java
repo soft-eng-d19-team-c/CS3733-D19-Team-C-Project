@@ -41,6 +41,15 @@ public final class Facade {
     }
 
     /**
+     * gets the primary scene
+     * @author Fay Whittall
+     * @return primary scene
+     */
+    public Scene getPrimaryScene() {
+        return primaryScene;
+    }
+
+    /**
      * Sets screen.
      * @author Ryan LaMarche
      * @param type

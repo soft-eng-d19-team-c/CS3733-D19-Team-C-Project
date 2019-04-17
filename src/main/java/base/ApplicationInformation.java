@@ -59,20 +59,15 @@ public final class ApplicationInformation {
     }
 
     public void setIdleTime(double idleTime) {
-        try{
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.WELCOME.getPath())));
-            Main.idleMonitor.unregister(scene, Event.ANY);
-            this.idleTime = idleTime;
-            Main.idleMonitor = new IdleMonitor(Duration.minutes(idleTime),
-                    () -> {
-                        Main.user.logout();
-                        Main.screenController.clearHistory();
-                        Main.screenController.setScreen(EnumScreenType.WELCOME);
-                    }, true);
-            Main.idleMonitor.register(scene, Event.ANY);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        Main.idleMonitor.unregister(Main.screenController.getPrimaryScene(), Event.ANY);
+        this.idleTime = idleTime;
+        Main.idleMonitor = new IdleMonitor(Duration.minutes(idleTime),
+                () -> {
+            Main.user.logout();
+            Main.screenController.clearHistory();
+            Main.screenController.setScreen(EnumScreenType.WELCOME);
+            }, true);
+        Main.idleMonitor.register(Main.screenController.getPrimaryScene(), Event.ANY);
     }
 
     /**
