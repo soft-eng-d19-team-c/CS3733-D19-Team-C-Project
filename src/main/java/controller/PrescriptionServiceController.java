@@ -2,6 +2,7 @@ package controller;
 
 import base.EnumScreenType;
 import base.Main;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class PrescriptionServiceController extends Controller implements Initializable {
 
+    public JFXButton submitButton;
     @FXML private JFXTextArea patientID;
     @FXML private JFXTextArea prescriptionDescription;
     @FXML private ImageView backgroundimage;
