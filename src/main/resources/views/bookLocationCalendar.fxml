@@ -11,8 +11,8 @@
       <Button fx:id="prevWeek" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#prevWeekBtnClick" text="Previous Week" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="80.0" />
        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
        <AnchorPane layoutX="248.0" layoutY="161.0" prefHeight="1020.0" prefWidth="1426.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="248.0" AnchorPane.topAnchor="180.0" xmlns:fx="http://javafx.com/fxml">
-           <Agenda fx:id="bookingAgenda" layoutX="1.0" layoutY="50.0" prefHeight="986.0" prefWidth="1426.0" />
+           <Agenda fx:id="bookingAgenda" layoutX="1.0" layoutY="50.0" prefHeight="500.0" prefWidth="1426.0" />
        </AnchorPane>
-      <JFXDatePicker fx:id="datePicker" layoutX="248.0" layoutY="103.0" />
+      <JFXDatePicker fx:id="datePicker" onAction="#dateChange" layoutX="248.0" layoutY="103.0" />
    </children>
 </AnchorPane>

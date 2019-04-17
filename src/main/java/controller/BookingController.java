@@ -1,29 +1,17 @@
 package controller;
 
-import base.EnumScreenType;
-import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
-import model.BookableLocation;
 import model.Booking;
 
 import java.net.URL;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -46,7 +34,8 @@ public class BookingController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Bookings = getAllBooking();
         datePicker.setValue(LocalDate.now());
-        bookingAgenda.createDefaultSkin();
+//        bookingAgenda.createDefaultSkin();
+//        bookingAgenda.skin
 
         loadWeekSchedule();
     }
@@ -70,6 +59,15 @@ public class BookingController extends Controller implements Initializable {
             );
         }
 //        bookingAgenda.newAppointmentCallbackProperty().setValue(whatsGoingonThisWeek);
+
+//        bookingAgenda.setLocalDateTimeRangeCallback(new Callback<Agenda.LocalDateTimeRange, Void>() {
+//            @Override
+//            public Void call(Agenda.LocalDateTimeRange param) {
+//                return null;
+//            }
+//        });
+
+
     }
 
     private void getBColor(){
@@ -77,10 +75,14 @@ public class BookingController extends Controller implements Initializable {
     }
 
     public void nextWeekBtnClick(ActionEvent actionEvent) {
-
+        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().plusWeeks(1));
     }
 
     public void prevWeekBtnClick(ActionEvent actionEvent) {
+        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().minusWeeks(1));
+    }
 
+    public void dateChange(ActionEvent actionEvent) {
+        bookingAgenda.setDisplayedLocalDateTime(LocalDate.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(), datePicker.getValue().getDayOfMonth()).atTime(12,00));
     }
 }
