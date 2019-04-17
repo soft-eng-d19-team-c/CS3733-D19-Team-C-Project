@@ -44,6 +44,7 @@ public class BookingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        datePicker.setValue(LocalDate.now());
         bookingAgenda.createDefaultSkin();
         loadWeekSchedule();
     }
@@ -59,9 +60,10 @@ public class BookingController extends Controller implements Initializable {
             bookingAgenda.appointments().add(
                     new Agenda.AppointmentImpl()
                             .withStartTime(calst)
-                            .withEndTime(calft).withDescription(b.getLocation()));
+                            .withEndTime(calft)
+                            .withDescription(b.getLocation() + "\n" + b.getDescription()));
         }
-        bookingAgenda.newAppointmentCallbackProperty().setValue(whatsGoingonThisWeek);
+//        bookingAgenda.newAppointmentCallbackProperty().setValue(whatsGoingonThisWeek);
     }
 
     public void nextWeekBtnClick(ActionEvent actionEvent) {

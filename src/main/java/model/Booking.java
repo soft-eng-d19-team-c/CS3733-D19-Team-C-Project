@@ -57,6 +57,7 @@ public class Booking {
     public String getUsername() {
         return this.userCompletedBy;
     }
+    public String getDescription(){return this.description;}
 
     public BookableLocation getBookedLocation() {
         return bookedLocation;
