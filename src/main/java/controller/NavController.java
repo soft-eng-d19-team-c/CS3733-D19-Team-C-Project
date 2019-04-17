@@ -96,6 +96,7 @@ public class NavController extends Controller implements Initializable {
             case SERVICEREQUESTS:
                 this.serviceSelectBar.setVisible(true);
                 break;
+            case NONE:
             default:
                 // hide all tabs
         }
