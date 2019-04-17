@@ -20,7 +20,7 @@ public class SanitationServiceRequestsTableController extends Controller impleme
     @FXML private TableColumn locationCol;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -39,7 +39,7 @@ public class SanitationServiceRequestsTableController extends Controller impleme
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));

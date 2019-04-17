@@ -21,7 +21,7 @@ public class ITRequestTableController extends Controller implements Initializabl
     @FXML private TableColumn Description;
     @FXML private TableColumn userRequestedBy;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -40,7 +40,7 @@ public class ITRequestTableController extends Controller implements Initializabl
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         userRequestedBy.setCellValueFactory(new PropertyValueFactory("UserRequestedBy"));

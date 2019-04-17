@@ -20,7 +20,7 @@ public class FloristServiceRequestController extends Controller implements Initi
     private AutocompleteSearchBarController acSearchEndController;
     @FXML
     private TextField description;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -33,7 +33,7 @@ public class FloristServiceRequestController extends Controller implements Initi
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         description.setText(null);
     }
 

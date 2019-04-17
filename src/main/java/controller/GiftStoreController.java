@@ -17,7 +17,7 @@ public class GiftStoreController extends Controller implements Initializable {
     @FXML private JFXTextField sender;
     @FXML private JFXTextField type;
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -52,7 +52,7 @@ public class GiftStoreController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
 
     }
 }

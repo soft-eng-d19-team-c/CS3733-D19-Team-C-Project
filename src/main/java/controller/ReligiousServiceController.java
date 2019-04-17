@@ -18,7 +18,7 @@ public class ReligiousServiceController extends Controller implements Initializa
     private AutocompleteSearchBarController autoCompleteTextController;
     @FXML
     private TextArea serviceDescription;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     @Override
@@ -30,7 +30,7 @@ public class ReligiousServiceController extends Controller implements Initializa
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {

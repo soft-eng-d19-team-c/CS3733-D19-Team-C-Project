@@ -23,7 +23,7 @@ public class InterpreterRequestTableController extends Controller implements Ini
     @FXML private TableColumn description;
     @FXML private TableColumn completedBy;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -43,7 +43,7 @@ public class InterpreterRequestTableController extends Controller implements Ini
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         this.location.setCellValueFactory(new PropertyValueFactory("NodeID"));
         time.setCellValueFactory(new PropertyValueFactory("DateTimeRequest"));
         description.setCellValueFactory(new PropertyValueFactory("Description"));

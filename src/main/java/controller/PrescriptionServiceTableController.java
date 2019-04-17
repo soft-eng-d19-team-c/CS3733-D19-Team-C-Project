@@ -26,7 +26,7 @@ public class PrescriptionServiceTableController extends Controller implements In
     @FXML private TableColumn drug;
     @FXML private TableColumn timeOrdered;
     @FXML private TableColumn timeDelivered;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -45,7 +45,7 @@ public class PrescriptionServiceTableController extends Controller implements In
         navController.setActiveTab(NavTypes.ADMINVIEW);
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         ID.setCellValueFactory(new PropertyValueFactory("ID"));
         patientID.setCellValueFactory(new PropertyValueFactory("patientID"));
         requesterID.setCellValueFactory(new PropertyValueFactory("requesterID"));

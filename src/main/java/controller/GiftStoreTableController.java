@@ -23,7 +23,7 @@ public class GiftStoreTableController extends Controller implements Initializabl
     @FXML private TableColumn GiftType;
     @FXML private TableColumn DateTimeSubmitted;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -43,7 +43,7 @@ public class GiftStoreTableController extends Controller implements Initializabl
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("Location"));
         Sender.setCellValueFactory(new PropertyValueFactory("Sender"));
         Recipient.setCellValueFactory(new PropertyValueFactory("Recipient"));

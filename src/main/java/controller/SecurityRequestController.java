@@ -18,7 +18,7 @@ public class SecurityRequestController extends Controller implements Initializab
     @FXML private CheckBox urgentCheckBox;
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
     @FXML
-    private ImageView backgroundImage;
+    private ImageView backgroundimage;
 
     @FXML
     private NavController navController;
@@ -34,7 +34,7 @@ public class SecurityRequestController extends Controller implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view

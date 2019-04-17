@@ -26,7 +26,7 @@ public class InternalTransportationController  extends Controller implements Ini
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -37,7 +37,7 @@ public class InternalTransportationController  extends Controller implements Ini
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         dateField.setValue(null);
         timeField.setValue(null);
         description.setText(null);

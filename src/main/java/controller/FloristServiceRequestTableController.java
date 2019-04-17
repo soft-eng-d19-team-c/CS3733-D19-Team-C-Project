@@ -22,7 +22,7 @@ public class FloristServiceRequestTableController extends Controller implements 
     @FXML private TableColumn dateTimeSubmitted;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -39,7 +39,7 @@ public class FloristServiceRequestTableController extends Controller implements 
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
 
         startNode.setCellValueFactory(new PropertyValueFactory("StartNodeID"));
         endNode.setCellValueFactory(new PropertyValueFactory("EndNodeID"));

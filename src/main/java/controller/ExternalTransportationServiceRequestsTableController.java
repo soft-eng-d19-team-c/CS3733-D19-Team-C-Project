@@ -21,7 +21,7 @@ public class ExternalTransportationServiceRequestsTableController extends Contro
     @FXML private TableColumn locationCol;
     @FXML private TableColumn destination;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     private ObservableList<ExternalTransportationRequest> data;
@@ -35,7 +35,7 @@ public class ExternalTransportationServiceRequestsTableController extends Contro
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         idCol.setCellValueFactory(new PropertyValueFactory("ID"));
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         destination.setCellValueFactory(new PropertyValueFactory("Destination"));

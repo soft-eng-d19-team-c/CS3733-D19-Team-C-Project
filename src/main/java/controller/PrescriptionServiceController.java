@@ -16,7 +16,7 @@ public class PrescriptionServiceController extends Controller implements Initial
 
     @FXML private JFXTextArea patientID;
     @FXML private JFXTextArea prescriptionDescription;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -33,7 +33,7 @@ public class PrescriptionServiceController extends Controller implements Initial
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         patientID.clear();
         prescriptionDescription.clear();
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {

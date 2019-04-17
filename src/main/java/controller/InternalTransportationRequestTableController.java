@@ -24,7 +24,7 @@ public class InternalTransportationRequestTableController extends Controller imp
     @FXML private TableColumn requestedBy;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -44,7 +44,7 @@ public class InternalTransportationRequestTableController extends Controller imp
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.ADMINVIEW);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationFrom.setCellValueFactory(new PropertyValueFactory("NodeID"));
         locationTo.setCellValueFactory(new PropertyValueFactory("NodeIDDest"));
         pickupTime.setCellValueFactory(new PropertyValueFactory("PickUpTime"));

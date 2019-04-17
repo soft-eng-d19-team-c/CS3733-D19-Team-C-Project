@@ -23,7 +23,7 @@ public class InterpreterServiceController extends Controller implements Initiali
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController acSearchController;
     @FXML private JFXTextArea description;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -38,7 +38,7 @@ public class InterpreterServiceController extends Controller implements Initiali
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view

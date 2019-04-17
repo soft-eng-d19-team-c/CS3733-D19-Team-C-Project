@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class ITServiceController extends Controller implements Initializable {
     @FXML private JFXTextArea description;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
@@ -31,7 +31,7 @@ public class ITServiceController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
     }
 

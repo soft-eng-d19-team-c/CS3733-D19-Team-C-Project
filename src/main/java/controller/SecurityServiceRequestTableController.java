@@ -22,7 +22,7 @@ public class SecurityServiceRequestTableController extends Controller implements
     @FXML private TableColumn isUrgent;
     @FXML private TableColumn TimeSubmitted;
     @FXML private TableColumn isCompleted;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML
     private NavController navController;
 
@@ -42,7 +42,7 @@ public class SecurityServiceRequestTableController extends Controller implements
         //like initialize fcn in nodeTable
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         isUrgent.setCellValueFactory(new PropertyValueFactory("IsUrgent"));

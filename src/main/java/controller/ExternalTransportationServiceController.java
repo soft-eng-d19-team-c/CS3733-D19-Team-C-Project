@@ -32,7 +32,7 @@ public class ExternalTransportationServiceController extends Controller implemen
     private JFXDatePicker dateField;
     @FXML
     private JFXTimePicker timeField;
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
 
@@ -46,7 +46,7 @@ public class ExternalTransportationServiceController extends Controller implemen
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         dateField.setValue(null);
         timeField.setValue(null);
         destinationField.setText(null);

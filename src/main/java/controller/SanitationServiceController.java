@@ -18,7 +18,7 @@ public class SanitationServiceController extends Controller implements Initializ
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
-    @FXML private ImageView backgroundImage;
+    @FXML private ImageView backgroundimage;
     @FXML private NavController navController;
 
     //String type, Node location, String description, Date dateTimeSubmitted, Date dateTimeResolved, boolean isComplete, User completedBy, User requestedBy
@@ -31,7 +31,7 @@ public class SanitationServiceController extends Controller implements Initializ
     public void initialize(URL location, ResourceBundle resources) {
 
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view
