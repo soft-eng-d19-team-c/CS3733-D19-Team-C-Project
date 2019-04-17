@@ -30,7 +30,7 @@ public class AdminDashboardController extends Controller implements Initializabl
     }
 
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.SECURITYSERVICETABLE);
+        Main.screenController.setScreen(EnumScreenType.SERVICEREQUESTTABLESDASHBOARD);
     }
 
     public void bookedLocationsButtonClick(ActionEvent actionEvent) {
