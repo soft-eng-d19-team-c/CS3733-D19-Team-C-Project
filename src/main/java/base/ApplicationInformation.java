@@ -64,7 +64,11 @@ public final class ApplicationInformation {
             Main.idleMonitor.unregister(scene, Event.ANY);
             this.idleTime = idleTime;
             Main.idleMonitor = new IdleMonitor(Duration.minutes(idleTime),
-                    () -> Main.screenController.setScreen(EnumScreenType.WELCOME), true);
+                    () -> {
+                        Main.user.logout();
+                        Main.screenController.clearHistory();
+                        Main.screenController.setScreen(EnumScreenType.WELCOME);
+                    }, true);
             Main.idleMonitor.register(scene, Event.ANY);
         }catch (IOException e) {
             e.printStackTrace();

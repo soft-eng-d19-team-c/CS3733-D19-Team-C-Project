@@ -84,7 +84,7 @@
             </font>
         </Text>
         <AnchorPane layoutX="12.0" layoutY="9.0" prefHeight="100.0" prefWidth="210.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" /></AnchorPane>
-        <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+        <fx:include fx:id="nav" source="menuBarPartial.fxml" />
         <Button fx:id="submit" layoutX="814.0" layoutY="838.0" mnemonicParsing="false" onAction="#submitBtnClick" prefHeight="96.0" prefWidth="384.0" text="Submit" AnchorPane.leftAnchor="814.0" AnchorPane.topAnchor="838.0">
             <styleClass>
                 <String fx:value="btn" />

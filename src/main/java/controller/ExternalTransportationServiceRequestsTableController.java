@@ -1,5 +1,6 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.ExternalTransportationRequest;
 import model.SanitationRequest;
 
@@ -19,6 +21,9 @@ public class ExternalTransportationServiceRequestsTableController extends Contro
     @FXML private TableColumn locationCol;
     @FXML private TableColumn destination;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
     private ObservableList<ExternalTransportationRequest> data;
 
     @Override
@@ -28,6 +33,9 @@ public class ExternalTransportationServiceRequestsTableController extends Contro
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         idCol.setCellValueFactory(new PropertyValueFactory("ID"));
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         destination.setCellValueFactory(new PropertyValueFactory("Destination"));

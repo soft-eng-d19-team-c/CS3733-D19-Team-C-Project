@@ -1,5 +1,6 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.InterpreterRequest;
 
 import java.net.URL;
@@ -21,6 +23,9 @@ public class InterpreterRequestTableController extends Controller implements Ini
     @FXML private TableColumn description;
     @FXML private TableColumn completedBy;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -37,6 +42,8 @@ public class InterpreterRequestTableController extends Controller implements Ini
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         this.location.setCellValueFactory(new PropertyValueFactory("NodeID"));
         time.setCellValueFactory(new PropertyValueFactory("DateTimeRequest"));
         description.setCellValueFactory(new PropertyValueFactory("Description"));

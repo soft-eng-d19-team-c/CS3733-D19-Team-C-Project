@@ -56,6 +56,6 @@
             </children>
         </VBox>
         <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-        <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+        <fx:include fx:id="nav" source="menuBarPartial.fxml" />
     </children>
 </AnchorPane>

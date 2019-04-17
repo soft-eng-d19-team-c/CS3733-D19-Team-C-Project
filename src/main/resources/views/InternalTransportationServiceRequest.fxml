@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InternalTransportationController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InternalTransportationController">
    <children>
        <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
            <image>
@@ -21,12 +21,12 @@
            </image>
        </ImageView>
        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1" text="Internal Transportation Service Request" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1" text="Internal Transportation Service Request" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="300.0">
          <children>
              <HBox prefHeight="66.0" prefWidth="262.0" spacing="100.0">
                  <children>
-                  <Label text="To:">
+                  <Label text="To:    ">
                      <font>
                         <Font size="68.0" />
                      </font>
@@ -34,7 +34,7 @@
                      <fx:include fx:id="searchController_dest" source="bigAutoCompleteBar.fxml" />
                    <JFXDatePicker fx:id="dateField">
                      <HBox.margin>
-                        <Insets left="35.0" />
+                        <Insets top="65.0" />
                      </HBox.margin>
                    </JFXDatePicker>
                  </children>
@@ -53,7 +53,10 @@
                      </font>
                   </Label>
                      <fx:include fx:id="searchController_orig" source="bigAutoCompleteBar.fxml" />
-                   <JFXTimePicker fx:id="timeField" />
+                   <JFXTimePicker fx:id="timeField">
+                     <HBox.margin>
+                        <Insets top="65.0" />
+                     </HBox.margin></JFXTimePicker>
                  </children>
                <VBox.margin>
                   <Insets left="450.0" />
@@ -78,6 +81,6 @@
             </Button>
          </children>
       </VBox>
-       <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+       <fx:include fx:id="nav" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>

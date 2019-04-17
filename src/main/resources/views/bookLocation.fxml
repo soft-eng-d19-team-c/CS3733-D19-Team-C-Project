@@ -22,7 +22,7 @@
                <!--<Image url="@../img/background.png" />-->
            </image>
        </ImageView>
-       <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+       <fx:include fx:id="nav" source="menuBarPartial.fxml" />
        <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <GridPane layoutX="865.0" layoutY="495.0" stylesheets="@app.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
         <columnConstraints>

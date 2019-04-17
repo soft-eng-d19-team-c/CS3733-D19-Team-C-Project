@@ -1,11 +1,14 @@
 package controller;
 
 import base.Main;
-import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.FillTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.StrokeTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,9 +31,13 @@ import model.PathScroll;
 import model.PathToText;
 
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
+    public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private ToggleButton danceBtn;
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
@@ -48,6 +55,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXButton L2;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
+    @FXML private Pane searchWrapper;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -77,8 +85,21 @@ public class PathfindingController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
-        searchController_destController.refresh();
+        danceBtn.setSelected(false);
+        phoneNumberInput.setText(null);
+        if (Main.screenController.getData("showSearch") != null && (Boolean) Main.screenController.getData("showSearch")) {
+            searchWrapper.setVisible(true);
+            navController.setActiveTab(NavTypes.FINDROOM);
+        }
+        else {
+            searchWrapper.setVisible(false);
+            navController.setActiveTab(NavTypes.MAP);
+        }
         searchController_origController.refresh();
+        searchController_destController.refresh();
+        searchController_destController.setLocation(null);
+        autocompletesearchbarController.refresh();
+        autocompletesearchbarController.setLocation(null);
         Main.info.getAlgorithm().refresh();
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
@@ -133,7 +154,10 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void displayAllNodes() {
-        findLocationNodeID = (String) Main.screenController.getData("nodeID");
+        /*
+            This was for some other stuff when it was a different page
+         */
+//        findLocationNodeID = (String) Main.screenController.getData("nodeID");
 
         nodeCircles = new HashMap<>();
         nodeLines = new HashMap<>();
@@ -692,7 +716,12 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
-
+    public void searchBtnClick(ActionEvent actionEvent) {
+        findLocationNodeID = autocompletesearchbarController.getNodeID();
+        changeFloor(autocompletesearchbarController.getNodeFloor());
+        displayAllNodes();
+        searchWrapper.setVisible(false);
+    }
 }
 
 

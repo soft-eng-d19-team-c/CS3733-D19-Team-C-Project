@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,7 @@ public class NavController extends Controller implements Initializable {
     @FXML public Pane bookSelectBar;
     @FXML public Pane adminSelectBar;
     @FXML public Pane loginSelectBar;
+    @FXML public JFXButton logoutButton;
 
     private LinkedList<Pane> selectBars;
 
@@ -49,7 +51,9 @@ public class NavController extends Controller implements Initializable {
     }
 
     public void roomSearchButton(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.SEARCHLOCATION);
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("showSearch", true);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING, hm);
     }
 
     public void serviceRequestButton(ActionEvent actionEvent) {
@@ -61,7 +65,7 @@ public class NavController extends Controller implements Initializable {
     }
 
     public void adminViewClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.EDITMAP);
+        Main.screenController.setScreen(EnumScreenType.ADMIN);
     }
 
     public void loginButtonClick(ActionEvent actionEvent) {
@@ -92,15 +96,31 @@ public class NavController extends Controller implements Initializable {
             case SERVICEREQUESTS:
                 this.serviceSelectBar.setVisible(true);
                 break;
+            case NONE:
             default:
-                System.err.println("bad tab");
+                // hide all tabs
         }
-        if (Main.user.checkPermissions("employee") || Main.user.checkPermissions("developer")) {
+        if (Main.user != null && (Main.user.checkPermissions("employee") || Main.user.checkPermissions("developer"))) {
             bookRoom.setVisible(true);
             adminView.setVisible(true);
+            logoutButton.setVisible(true);
+            loginButton.setVisible(false);
         } else {
             bookRoom.setVisible(false);
             adminView.setVisible(false);
+            logoutButton.setVisible(false);
+            loginButton.setVisible(true);
         }
+    }
+
+    public void aboutButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.ABOUT);
+    }
+
+    public void logoutButtonClick(ActionEvent actionEvent) {
+        Main.user.logout();
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("loggedout", true);
+        Main.screenController.setScreen(EnumScreenType.LOGIN, hm);
     }
 }

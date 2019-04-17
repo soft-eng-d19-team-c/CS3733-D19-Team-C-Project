@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.ReligiousService;
 
 import java.net.URL;
@@ -19,8 +21,9 @@ public class ReligiousServiceRequestsTableController extends Controller implemen
     @FXML private TableColumn locationCol;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
-
+    @FXML private ImageView backgroundimage;
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
+    @FXML private NavController navController;
 
     private ObservableList<ReligiousService> data;
 
@@ -34,7 +37,8 @@ public class ReligiousServiceRequestsTableController extends Controller implemen
     public void initialize(URL location, ResourceBundle resources) {
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
-
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         timeSubmitted.setCellValueFactory(new PropertyValueFactory("DateTimeSubmitted"));

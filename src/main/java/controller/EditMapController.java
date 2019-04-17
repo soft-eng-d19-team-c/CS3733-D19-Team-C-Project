@@ -52,6 +52,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @FXML private TextField changeIdleTime;
     @FXML private Label changeIdleTimeLabel;
+    @FXML private NavController navController;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -83,6 +84,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         algosMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
         if (Main.screenController.getData("floor") != null)
@@ -110,7 +112,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
-        changeIdleTimeLabel.setText("Change Idle Time (minutes)");
+        //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
         IDContent.getChildren().add(new Label("Node ID: "));
@@ -673,7 +675,7 @@ public class EditMapController extends Controller implements Initializable {
 
 //a "fake submit" button, to bring you back to the dashboard, appear as if you are saving the page
     public void submitButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 
 

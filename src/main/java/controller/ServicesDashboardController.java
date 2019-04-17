@@ -5,6 +5,7 @@ import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,8 @@ public class ServicesDashboardController extends Controller implements Initializ
 
     @FXML
     private NavController navController;
+    @FXML private ImageView backgroundimage;
+
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -25,7 +28,8 @@ public class ServicesDashboardController extends Controller implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     /**
