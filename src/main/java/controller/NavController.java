@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -49,7 +50,9 @@ public class NavController extends Controller implements Initializable {
     }
 
     public void roomSearchButton(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.SEARCHLOCATION);
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("showSearch", true);
+        Main.screenController.setScreen(EnumScreenType.PATHFINDING, hm);
     }
 
     public void serviceRequestButton(ActionEvent actionEvent) {

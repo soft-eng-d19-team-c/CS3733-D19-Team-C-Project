@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import model.AuthException;
 import model.User;
 
@@ -18,6 +19,7 @@ public class LoginController extends Controller implements Initializable {
     private TextField uname;
     @FXML
     private PasswordField password;
+    @FXML private ImageView backgroundimage;
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -25,7 +27,9 @@ public class LoginController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
+        uname.setText(null);
+        password.setText(null);
     }
 
     //does not currently actually log you in
