@@ -50,7 +50,7 @@
          </children>
       </Pane>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <ComboBox fx:id="locationBox" layoutX="29.0" layoutY="200.0" prefWidth="300.0" promptText="Location" />
+      <ComboBox fx:id="locationBox" layoutX="29.0" layoutY="200.0" prefWidth="300.0" promptText="Location" AnchorPane.leftAnchor="40.0" />
       <JFXTextField fx:id="duration" layoutX="42.0" layoutY="402.0" prefHeight="36.0" prefWidth="350.0" promptText="Enter duaration in hours">
          <font>
             <Font size="20.0" />
