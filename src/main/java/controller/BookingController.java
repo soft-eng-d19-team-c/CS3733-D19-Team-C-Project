@@ -55,7 +55,9 @@ public class BookingController extends Controller implements Initializable {
             LocalDateTime ft = b.getDateToLocal();
             Calendar calst = Calendar.getInstance();
             calst.set(st.getYear(), st.getMonthValue() - 1, st.getDayOfMonth(), st.getHour(), st.getMinute());
+            System.out.println(calst.toString());
             Calendar calft = Calendar.getInstance();
+            System.out.println(calft.toString());
             calft.set(ft.getYear(), ft.getMonthValue() - 1, ft.getDayOfMonth(), ft.getHour(), ft.getMinute());
             bookingAgenda.appointments().add(
                     new Agenda.AppointmentImpl()

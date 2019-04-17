@@ -52,7 +52,7 @@ public class Booking {
         return this.dateTimeEnd.toString();
     }
     public LocalDateTime getDateToLocal() {
-        return this.dateTimeStart.toLocalDateTime();
+        return this.dateTimeEnd.toLocalDateTime();
     }
     public String getUsername() {
         return this.userCompletedBy;
