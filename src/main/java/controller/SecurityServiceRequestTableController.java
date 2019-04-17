@@ -23,6 +23,7 @@ public class SecurityServiceRequestTableController extends Controller implements
     @FXML private TableColumn TimeSubmitted;
     @FXML private TableColumn isCompleted;
     @FXML private ImageView backgroundimage;
+
     @FXML
     private NavController navController;
 
