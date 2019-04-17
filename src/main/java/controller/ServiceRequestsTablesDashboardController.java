@@ -25,7 +25,7 @@ public class ServiceRequestsTablesDashboardController extends Controller impleme
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
 
     }

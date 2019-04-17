@@ -43,7 +43,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        navController.setActiveTab(NavTypes.BOOKROOM);
+        navController.setActiveTab(NavTypes.BOOKROOM);
         datePicker.setValue(LocalDate.now());
         timePicker.setValue(LocalTime.now());
         mapImgView.fitWidthProperty().bind(circlePane.widthProperty());
