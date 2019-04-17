@@ -31,7 +31,7 @@
                         <Font name="System Bold" size="50.0" />
                      </font>
                   </Label>
-                  <fx:include fx:id="acSearch" source="bigAutoCompleteBar.fxml" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <fx:include fx:id="acSearch" source="bigAutoCompleteBar.fxml"/>
                   <Label text="Description">
                      <font>
                         <Font name="System Bold" size="40.0" />
