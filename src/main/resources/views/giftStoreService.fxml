@@ -34,7 +34,7 @@
                   <Font size="30.0" />
                </font>
             </JFXTextField>
-            <Label text="Who is the gift for?">
+            <Label text="Who is sending the gift?">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
