@@ -35,7 +35,7 @@ public class BookingController extends Controller implements Initializable {
     @FXML private Agenda bookingAgenda;
 
     private Callback<Agenda.LocalDateTimeRange, Agenda.Appointment> whatsGoingonThisWeek;
-    private ObservableList<Booking> Bookings = getAllBooking();
+    private ObservableList<Booking> Bookings;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -44,28 +44,36 @@ public class BookingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Bookings = getAllBooking();
         datePicker.setValue(LocalDate.now());
         bookingAgenda.createDefaultSkin();
+
         loadWeekSchedule();
     }
 
     private void loadWeekSchedule(){
+//        bookingAgenda.refresh();
+        bookingAgenda.appointments().remove(0, bookingAgenda.appointments().size());
         for (Booking b : Bookings){
             LocalDateTime st = b.getDateFromLocal();
             LocalDateTime ft = b.getDateToLocal();
             Calendar calst = Calendar.getInstance();
             calst.set(st.getYear(), st.getMonthValue() - 1, st.getDayOfMonth(), st.getHour(), st.getMinute());
-            System.out.println(calst.toString());
             Calendar calft = Calendar.getInstance();
-            System.out.println(calft.toString());
             calft.set(ft.getYear(), ft.getMonthValue() - 1, ft.getDayOfMonth(), ft.getHour(), ft.getMinute());
             bookingAgenda.appointments().add(
                     new Agenda.AppointmentImpl()
                             .withStartTime(calst)
                             .withEndTime(calft)
-                            .withDescription(b.getLocation() + "\n" + b.getDescription()));
+                            .withSummary(b.getDescription())
+                            .withLocation(b.getLocation())
+            );
         }
 //        bookingAgenda.newAppointmentCallbackProperty().setValue(whatsGoingonThisWeek);
+    }
+
+    private void getBColor(){
+
     }
 
     public void nextWeekBtnClick(ActionEvent actionEvent) {
