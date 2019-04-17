@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController extends Controller implements Initializable {
+    @FXML public Label loggedOut;
     @FXML
     private TextField uname;
     @FXML
@@ -35,8 +36,14 @@ public class LoginController extends Controller implements Initializable {
         uname.setText(null);
         password.setText(null);
         badCredentials.setVisible(false);
+        loggedOut.setVisible(false);
 
         navController.setActiveTab(NavTypes.LOGIN);
+
+        if (Main.screenController.getData("loggedout") != null && (Boolean) Main.screenController.getData("loggedout")) {
+            loggedOut.setVisible(true);
+        }
+
     }
 
     //does not currently actually log you in
@@ -44,6 +51,7 @@ public class LoginController extends Controller implements Initializable {
         try {
             Main.user = new User(uname.getText(), password.getText());
         } catch (AuthException e) {
+            loggedOut.setVisible(false);
             badCredentials.setVisible(true);
             return;
         }

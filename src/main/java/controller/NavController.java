@@ -26,6 +26,7 @@ public class NavController extends Controller implements Initializable {
     @FXML public Pane bookSelectBar;
     @FXML public Pane adminSelectBar;
     @FXML public Pane loginSelectBar;
+    @FXML public JFXButton logoutButton;
 
     private LinkedList<Pane> selectBars;
 
@@ -101,13 +102,24 @@ public class NavController extends Controller implements Initializable {
         if (Main.user != null && (Main.user.checkPermissions("employee") || Main.user.checkPermissions("developer"))) {
             bookRoom.setVisible(true);
             adminView.setVisible(true);
+            logoutButton.setVisible(true);
+            loginButton.setVisible(false);
         } else {
             bookRoom.setVisible(false);
             adminView.setVisible(false);
+            logoutButton.setVisible(false);
+            loginButton.setVisible(true);
         }
     }
 
     public void aboutButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.ABOUT);
+    }
+
+    public void logoutButtonClick(ActionEvent actionEvent) {
+        Main.user.logout();
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("loggedout", true);
+        Main.screenController.setScreen(EnumScreenType.LOGIN, hm);
     }
 }

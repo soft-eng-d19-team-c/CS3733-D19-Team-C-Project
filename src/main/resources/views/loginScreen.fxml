@@ -48,6 +48,11 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Label fx:id="loggedOut" text="Success! You have been logged out." textFill="#28a745" visible="false">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
          </children>

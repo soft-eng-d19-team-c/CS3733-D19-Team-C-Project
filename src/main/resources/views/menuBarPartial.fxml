@@ -195,6 +195,6 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton maxWidth="200.0" minWidth="200.0" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
+      <JFXButton fx:id="logoutButton" onAction="#logoutButtonClick" maxWidth="200.0" minWidth="200.0" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
    </children>
 </AnchorPane>
