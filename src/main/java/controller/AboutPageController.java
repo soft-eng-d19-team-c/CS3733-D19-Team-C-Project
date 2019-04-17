@@ -1,5 +1,7 @@
 package controller;
 
+import base.EnumScreenType;
+import base.Main;
 import javafx.fxml.Initializable;
 
 import java.net.URL;

@@ -14,6 +14,8 @@ public class ServiceRequestsTablesDashboardController extends Controller impleme
 
     @FXML
     private NavController navController;
+    @FXML private ImageView backgroundimage;
+
 
 
     @Override
@@ -24,6 +26,7 @@ public class ServiceRequestsTablesDashboardController extends Controller impleme
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
 
     }
 
