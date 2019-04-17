@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
@@ -32,7 +31,9 @@ public class SecurityRequestController extends Controller implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        description.setText(null);
+        urgentCheckBox.setSelected(false);
+        autoCompleteTextController.setLocation(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

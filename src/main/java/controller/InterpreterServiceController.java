@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
@@ -36,7 +35,10 @@ public class InterpreterServiceController extends Controller implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        dateField.setValue(null);
+        timeField.setValue(null);
+        description.setText(null);
+        acSearchController.setLocation(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

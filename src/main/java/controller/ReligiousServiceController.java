@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +27,8 @@ public class ReligiousServiceController extends Controller implements Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        serviceDescription.setText(null);
+        autoCompleteTextController.setLocation(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

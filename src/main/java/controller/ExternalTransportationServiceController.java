@@ -43,11 +43,12 @@ public class ExternalTransportationServiceController extends Controller implemen
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
-        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         dateField.setValue(null);
         timeField.setValue(null);
         destinationField.setText(null);
+        acSearchController.setLocation(null);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         Platform.runLater(() -> {
             double acSearchWidth = formGridPane.getColumnConstraints().get(1).getPercentWidth() / 100 * ((Stage) formGridPane.getScene().getWindow()).getWidth() - 100;
             acSearchController.acTextInput.setPrefWidth(acSearchWidth);

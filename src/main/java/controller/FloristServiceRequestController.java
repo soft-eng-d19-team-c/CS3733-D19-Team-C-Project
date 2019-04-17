@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,10 +30,11 @@ public class FloristServiceRequestController extends Controller implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        acSearchStartController.setLocation(null);
+        acSearchEndController.setLocation(null);
+        description.setText(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
-        description.setText(null);
     }
 
 
