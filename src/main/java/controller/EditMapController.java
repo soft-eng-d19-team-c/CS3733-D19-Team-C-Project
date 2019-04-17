@@ -112,7 +112,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
-        changeIdleTimeLabel.setText("Change Idle Time (minutes)");
+        //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
         IDContent.getChildren().add(new Label("Node ID: "));

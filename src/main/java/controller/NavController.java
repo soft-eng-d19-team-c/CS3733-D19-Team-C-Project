@@ -64,7 +64,7 @@ public class NavController extends Controller implements Initializable {
     }
 
     public void adminViewClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.EDITMAP);
+        Main.screenController.setScreen(EnumScreenType.ADMIN);
     }
 
     public void loginButtonClick(ActionEvent actionEvent) {
@@ -105,5 +105,9 @@ public class NavController extends Controller implements Initializable {
             bookRoom.setVisible(false);
             adminView.setVisible(false);
         }
+    }
+
+    public void aboutButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.ABOUT);
     }
 }

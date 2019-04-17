@@ -103,6 +103,19 @@
     -fx-cursor: hand;
 }
 
+.btn-menulogout{
+    -fx-text-fill: -white;
+    -fx-background-color: -danger;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 22;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    /* I don't actually think these set the margin correctly*/
+    margin-bottom: 30;
+    margin-top: 30;
+    -fx-cursor: hand;
+}
+
 .select-bar{
     -fx-background-color: -bwgold;
     -fx-min-width: 200;
