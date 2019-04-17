@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 public class AdminDashboardController extends Controller implements Initializable {
     @FXML
     private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -22,6 +23,7 @@ public class AdminDashboardController extends Controller implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
         }
 
