@@ -69,6 +69,7 @@ public class BookLocationMapController extends Controller implements Initializab
         locationBox.setItems(bookingLocations);
         locationBox.setCellFactory(locationBoxFactory);
         locationBox.setButtonCell(locationBoxFactory.call(null));
+        duration.setText("");
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
     }
@@ -97,9 +98,6 @@ public class BookLocationMapController extends Controller implements Initializab
             int x = b.getX();
             int y = b.getY();
             Circle c = new Circle();
-//            c.setOnMouseClicked(event -> {
-//
-//            });
             c.setCenterX(mapX + x / mapScale);
             c.setCenterY(mapY + y / mapScale);
             c.setFill(Color.GREEN);
@@ -154,6 +152,10 @@ public class BookLocationMapController extends Controller implements Initializab
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
         Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
         Timestamp tsEnd = new Timestamp(cal.getTimeInMillis() + lengthInMillis);
+        if (tsStart.before(Calendar.getInstance().getTime())){
+            errorText.setText("Error: The time you are trying to book has already past");
+            return;
+        }
         Booking b = new Booking(bookingLocation, description.getText(), tsStart, tsEnd, Main.user.getUsername(), 0);
         if(b.hasConflicts()){
             errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");

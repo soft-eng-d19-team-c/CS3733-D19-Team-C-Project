@@ -76,10 +76,12 @@ public class BookingController extends Controller implements Initializable {
 
     public void nextWeekBtnClick(ActionEvent actionEvent) {
         bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().plusWeeks(1));
+        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
     }
 
     public void prevWeekBtnClick(ActionEvent actionEvent) {
         bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().minusWeeks(1));
+        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
     }
 
     public void dateChange(ActionEvent actionEvent) {
