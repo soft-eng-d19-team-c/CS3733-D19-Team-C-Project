@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumSearchType;
 import base.Main;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXTextField;
@@ -36,7 +35,10 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void setLocation(String nodeID) {
         this.nodeID.setText(nodeID);
-        this.acTextInput.setText("Current Location");
+        if (nodeID != null)
+            this.acTextInput.setText("Current Location");
+        else
+            this.acTextInput.setText("");
     }
 
     @Override
@@ -109,7 +111,8 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void refresh() {
-        nodes = Node.getNodes();
+        nodes = Node.getSearchableNodes();
+        acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);

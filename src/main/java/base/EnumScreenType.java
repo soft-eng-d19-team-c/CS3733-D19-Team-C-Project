@@ -3,7 +3,7 @@ package base;
 public enum EnumScreenType {
     NODETABLE("/views/nodeTable.fxml"),
     NODEEDIT("/views/nodeEdit.fxml"),
-    EDITMAP("/views/editMap.fxml"),
+    EDITMAP("/views/mapeditpage.fxml"),
     DOWNLOADCSV("/views/download.fxml"),
     DASHBOARD("/views/universalDashboard.fxml"),
     LOGIN("/views/loginScreen.fxml"),
@@ -37,7 +37,8 @@ public enum EnumScreenType {
     RELIGIOUSSERVICETABLE("/views/religiousRequestTable.fxml"),
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
     WELCOME("/views/screensaver.fxml"),
-    ABOUT("/views/aboutPage.fxml");
+    ABOUT("/views/aboutPage.fxml"),
+    ADMIN("/views/adminDashboard.fxml");
 
     protected String path;
 

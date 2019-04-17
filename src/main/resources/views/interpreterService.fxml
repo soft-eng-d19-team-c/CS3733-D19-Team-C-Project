@@ -7,84 +7,99 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InterpreterServiceController">
    <children>
-      <Label alignment="CENTER" styleClass="h1" text="Request Interpreter Service" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <GridPane fx:id="formGridPane" styleClass="jfx-primary" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <!--<Image url="@../img/background.png" />-->
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" styleClass="h1" text="Request Interpreter Service" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="300.0">
          <children>
-            <JFXDatePicker fx:id="dateField" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin>
-            </JFXDatePicker>
-            <JFXTimePicker fx:id="timeField" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin>
-            </JFXTimePicker>
-            <fx:include fx:id="acSearch" source="autocompleteSearchBar.fxml" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="236.0" text="Where is the Interpreter Required?" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets bottom="7.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label text="Date &amp; Time" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin>
-            </Label>
-            <JFXButton onAction="#saveBtnClick" text="Submit" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="25.0" />
-               </GridPane.margin>
-               <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btn-success" />
-               </styleClass>
-            </JFXButton>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <VBox prefHeight="200.0" prefWidth="960.0">
                <children>
-                  <Label text="Description">
+                  <Label prefHeight="73.0" prefWidth="1012.0" text="Where is the Interpreter Required?">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="50.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Reminder: our interpreter service is not a multilanguage translator! This service is for patients who have hearing obstacles to understand what the doctor is saying." />
+                  <fx:include fx:id="acSearch" source="bigAutoCompleteBar.fxml"/>
+                  <Label text="Description">
+                     <font>
+                        <Font name="System Bold" size="40.0" />
+                     </font>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </Label>
+                  <JFXTextArea fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Please decribe what is required of the interpreter">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="50.0" />
+                     </VBox.margin></JFXTextArea>
+                  <JFXButton onAction="#saveBtnClick" text="Submit">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-success" />
+                        <String fx:value="btn-lg" />
+                     </styleClass>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Date &amp; Time">
+                     <font>
+                        <Font name="System Bold" size="29.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXDatePicker fx:id="dateField" prefHeight="51.0" prefWidth="233.0">
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </JFXDatePicker>
+                  <JFXTimePicker fx:id="timeField" prefHeight="52.0" prefWidth="232.0">
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </JFXTimePicker>
+                  <Label prefHeight="9.0" prefWidth="760.0" text="Reminder: our interpreter service is not a multilanguage" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="200.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="809.0" text="translator! This service is for patients who have hearing" textAlignment="CENTER">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="45.0" prefWidth="912.0" text="imparements" textAlignment="CENTER">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
          </children>
-      </GridPane>
-      <ImageView fitHeight="400.0" fitWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <image>
-            <Image url="@../img/Translation.png" />
-         </image>
-      </ImageView>
+      </HBox>
    </children>
 </AnchorPane>

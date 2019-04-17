@@ -50,6 +50,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     private LinkedList<Booking> bookings;
     private ObservableList<BookableLocation> bookingLocations;
+    @FXML private NavController navController;
     private HashMap<String, Integer> bookingLocationsIndexMap = new HashMap<>();
     private int bookableLocationId;
 
@@ -61,6 +62,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.BOOKROOM);
         datePicker.setValue(LocalDate.now());
         timePicker.setValue(LocalTime.now());
         mapImgView.fitWidthProperty().bind(circlePane.widthProperty());

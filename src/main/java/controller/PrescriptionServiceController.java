@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.PrescriptionService;
 
 import java.net.URL;
@@ -17,6 +18,10 @@ public class PrescriptionServiceController extends Controller implements Initial
     public JFXButton submitButton;
     @FXML private JFXTextArea patientID;
     @FXML private JFXTextArea prescriptionDescription;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
+
 //    @FXML private JFXButton viewTableButton;
 //    @FXML private JFXTextArea description;
 
@@ -27,8 +32,10 @@ public class PrescriptionServiceController extends Controller implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         patientID.clear();
         prescriptionDescription.clear();
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {
@@ -37,6 +44,6 @@ public class PrescriptionServiceController extends Controller implements Initial
         prescriptionService.insert();
 
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

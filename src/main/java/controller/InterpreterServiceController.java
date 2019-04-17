@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
@@ -8,6 +7,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.InterpreterRequest;
 
 import java.net.URL;
@@ -22,6 +22,8 @@ public class InterpreterServiceController extends Controller implements Initiali
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController acSearchController;
     @FXML private JFXTextArea description;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
 
 
@@ -33,6 +35,12 @@ public class InterpreterServiceController extends Controller implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        dateField.setValue(null);
+        timeField.setValue(null);
+        description.setText(null);
+        acSearchController.setLocation(null);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view
@@ -45,6 +53,6 @@ public class InterpreterServiceController extends Controller implements Initiali
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), time.getHour(), time.getMinute());
         InterpreterRequest interpreterRequest = new InterpreterRequest(acSearchController.getNodeID(), dateTimeRequest, description.getText());
         interpreterRequest.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

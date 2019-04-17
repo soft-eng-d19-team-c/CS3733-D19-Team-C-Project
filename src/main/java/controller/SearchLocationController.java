@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 public class SearchLocationController extends Controller implements Initializable {
     @FXML
     private AutocompleteSearchBarController acTextInputController;
+    @FXML
+    private NavController navController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -22,6 +24,8 @@ public class SearchLocationController extends Controller implements Initializabl
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         acTextInputController.init(location, resources);
+
+        navController.setActiveTab(NavTypes.FINDROOM);
     }
 
 

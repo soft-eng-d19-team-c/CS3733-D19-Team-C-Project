@@ -5,18 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
-
-
-/*
-        TODO
-
-        on logout remember to clear the history stack
- */
-
 
 /**
  * This is the Facade class that is used for passing data between controllers
@@ -30,6 +23,7 @@ public final class Facade {
     private HashMap<String, Object> data;
     private Stack<EnumScreenType> history;
     private EnumScreenType prevType;
+    private Image backgroundImage; // for caching
 
     /**
      * Creates a Facade.
@@ -42,7 +36,8 @@ public final class Facade {
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
-        this.prevType = EnumScreenType.DASHBOARD;
+        this.prevType = EnumScreenType.PATHFINDING;
+        this.backgroundImage = new Image(String.valueOf(getClass().getResource("/img/background.png")));
     }
 
     /**
@@ -82,9 +77,6 @@ public final class Facade {
             loadCachedScreen(type);
         } else {
             loadNewScreen(type);
-        }
-        if (type == EnumScreenType.DASHBOARD) {
-            clearHistory();
         }
     }
 
@@ -137,9 +129,9 @@ public final class Facade {
      * Helper function to clear the history Stack of the go back button.
      * @author Ryan LaMarche
      */
-    private void clearHistory() {
+    protected void clearHistory() {
         this.history.clear();
-        this.history.push(EnumScreenType.DASHBOARD);
+        this.history.push(EnumScreenType.PATHFINDING);
     }
 
     /**
@@ -161,4 +153,15 @@ public final class Facade {
         }
     }
 
+    /**
+     * @author Ryan LaMarche
+     * @return the cached background image
+     */
+    public Image getBackgroundImage() {
+        return this.backgroundImage;
+    }
+
+    public EnumScreenType getPrevType() {
+        return prevType;
+    }
 }
