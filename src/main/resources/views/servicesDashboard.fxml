@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -75,17 +76,6 @@
                </font>
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#securityButtonClick" styleClass="floor-select-button" text="Security" textFill="WHITE" GridPane.columnIndex="2">
-               <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </GridPane.margin>
-               <font>
-                  <Font size="40.0" />
-               </font>
-            </JFXButton>
-            <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#prescriptionButtonClick" styleClass="floor-select-button" text="Prescription" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
                </padding>
@@ -185,6 +175,32 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#prescriptionButtonClick" styleClass="floor-select-button" text="Prescription" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                     </padding>
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#prescriptionAPIButtonClick" styleClass="floor-select-button" text="Prescription API" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                     </padding>
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>
