@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 // This class is for booking rooms in the scheduling system
@@ -43,8 +45,14 @@ public class Booking {
     public String getDateFrom() {
         return this.dateTimeStart.toString();
     }
+    public LocalDateTime getDateFromLocal() {
+        return this.dateTimeStart.toLocalDateTime();
+    }
     public String getDateTo() {
         return this.dateTimeEnd.toString();
+    }
+    public LocalDateTime getDateToLocal() {
+        return this.dateTimeStart.toLocalDateTime();
     }
     public String getUsername() {
         return this.userCompletedBy;
@@ -196,5 +204,20 @@ public class Booking {
 
         return false;
 
+    }
+
+    public static ObservableList<Booking> getAllBooking() {
+        ObservableList<Booking> result = FXCollections.observableArrayList();
+        String str = "SELECT * FROM BOOKINGS";
+        try {
+            Statement stmt = Main.database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(str);
+            while (rs.next()) {
+                result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

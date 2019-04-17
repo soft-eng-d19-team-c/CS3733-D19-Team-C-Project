@@ -81,8 +81,8 @@ public class BookLocationMapController extends Controller implements Initializab
         cal.set(d.getYear(), d.getMonthValue() - 1, d.getDayOfMonth(), t.getHour(), t.getMinute());
         Timestamp ts = new Timestamp(cal.getTimeInMillis());
         bookings = Booking.getBookingsDuring(ts);
-        String activityDescription = description.getText();
         draw();
+        errorText.setText("");
     }
 
     @SuppressWarnings("Duplicates")
