@@ -1,10 +1,12 @@
 package controller;
 
+import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import model.Booking;
@@ -19,6 +21,8 @@ import static model.Booking.getAllBooking;
 
 public class BookingController extends Controller implements Initializable {
 
+    @FXML public ImageView backgroundImage;
+    @FXML public NavController navController;
     @FXML private JFXDatePicker datePicker;
     @FXML private Agenda bookingAgenda;
 
@@ -32,6 +36,8 @@ public class BookingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+        navController.setActiveTab(NavTypes.BOOKROOM);
         Bookings = getAllBooking();
         datePicker.setValue(LocalDate.now());
 //        bookingAgenda.createDefaultSkin();

@@ -121,6 +121,6 @@ public class NavController extends Controller implements Initializable {
         Main.user.logout();
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("loggedout", true);
-        Main.screenController.setScreen(EnumScreenType.LOGIN, hm);
+        Main.screenController.setScreen(EnumScreenType.LOGIN, hm, false);
     }
 }

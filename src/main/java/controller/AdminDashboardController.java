@@ -36,6 +36,6 @@ public class AdminDashboardController extends Controller implements Initializabl
     }
 
     public void bookedLocationsButtonClick(ActionEvent actionEvent) {
-       // Main.screenController.setScreen(EnumScreenType.SCHEDULE); //to Wenjng's schedule
+        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR); //to Wenjng's schedule
     }
 }
