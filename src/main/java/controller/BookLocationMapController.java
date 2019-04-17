@@ -27,7 +27,6 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.BookableLocation;
 import model.Booking;
-import model.Node;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -39,6 +38,7 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class BookLocationMapController extends Controller implements Initializable {
+    public ImageView backgroundImage;
     @FXML private JFXTextArea description;
     @FXML private JFXTextField duration;
     @FXML private ComboBox<BookableLocation> locationBox;
@@ -62,6 +62,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
         navController.setActiveTab(NavTypes.BOOKROOM);
         datePicker.setValue(LocalDate.now());
         timePicker.setValue(LocalTime.now());
