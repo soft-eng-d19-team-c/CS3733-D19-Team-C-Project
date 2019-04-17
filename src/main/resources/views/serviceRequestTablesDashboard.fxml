@@ -18,7 +18,7 @@
                <!--<Image url="@../img/background.png" />-->
            </image>
        </ImageView>
-      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
       <Label alignment="CENTER" layoutX="440.0" layoutY="100.0" prefHeight="150.0" styleClass="h1" text="View Service Requests" AnchorPane.topAnchor="120.0" />
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="275.0">
         <columnConstraints>

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import model.FloristServiceRequest;
 
 import java.net.URL;
@@ -19,6 +20,8 @@ public class FloristServiceRequestController extends Controller implements Initi
     private AutocompleteSearchBarController acSearchEndController;
     @FXML
     private TextField description;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
 
 
     @Override
@@ -28,6 +31,9 @@ public class FloristServiceRequestController extends Controller implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
         description.setText(null);
     }
 

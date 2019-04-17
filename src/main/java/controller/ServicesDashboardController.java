@@ -25,7 +25,7 @@ public class ServicesDashboardController extends Controller implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
     }
 
     /**

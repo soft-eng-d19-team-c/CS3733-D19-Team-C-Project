@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.SanitationRequest;
 
 import java.net.URL;
@@ -18,6 +20,8 @@ public class SanitationServiceRequestsTableController extends Controller impleme
     @FXML private TableColumn locationCol;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -34,6 +38,8 @@ public class SanitationServiceRequestsTableController extends Controller impleme
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         isCompleted.setCellValueFactory(new PropertyValueFactory("IsComplete"));

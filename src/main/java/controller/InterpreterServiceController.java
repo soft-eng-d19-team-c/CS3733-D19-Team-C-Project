@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.InterpreterRequest;
 
 import java.net.URL;
@@ -22,6 +23,8 @@ public class InterpreterServiceController extends Controller implements Initiali
     @FXML private JFXTimePicker timeField;
     @FXML private AutocompleteSearchBarController acSearchController;
     @FXML private JFXTextArea description;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
 
 
 
@@ -33,6 +36,9 @@ public class InterpreterServiceController extends Controller implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view

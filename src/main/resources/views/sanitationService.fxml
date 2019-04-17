@@ -55,6 +55,6 @@
             <Image url="@../img/Sanitation.png" />
          </image>
       </ImageView>
-      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>

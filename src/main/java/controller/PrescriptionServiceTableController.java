@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.PrescriptionService;
 import model.SanitationRequest;
 
@@ -24,6 +26,9 @@ public class PrescriptionServiceTableController extends Controller implements In
     @FXML private TableColumn drug;
     @FXML private TableColumn timeOrdered;
     @FXML private TableColumn timeDelivered;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
+
 
 
     private ObservableList<PrescriptionService> data;
@@ -36,9 +41,11 @@ public class PrescriptionServiceTableController extends Controller implements In
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
-
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
         ID.setCellValueFactory(new PropertyValueFactory("ID"));
         patientID.setCellValueFactory(new PropertyValueFactory("patientID"));
         requesterID.setCellValueFactory(new PropertyValueFactory("requesterID"));

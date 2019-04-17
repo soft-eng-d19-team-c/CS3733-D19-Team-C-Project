@@ -1,5 +1,6 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.InternalTransportationService;
 
 import java.net.URL;
@@ -22,6 +24,9 @@ public class InternalTransportationRequestTableController extends Controller imp
     @FXML private TableColumn requestedBy;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
+
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -38,6 +43,8 @@ public class InternalTransportationRequestTableController extends Controller imp
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
         locationFrom.setCellValueFactory(new PropertyValueFactory("NodeID"));
         locationTo.setCellValueFactory(new PropertyValueFactory("NodeIDDest"));
         pickupTime.setCellValueFactory(new PropertyValueFactory("PickUpTime"));

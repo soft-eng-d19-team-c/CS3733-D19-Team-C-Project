@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.GiftStoreRequest;
 
 import java.net.URL;
@@ -16,6 +17,8 @@ public class GiftStoreController extends Controller implements Initializable {
     @FXML private JFXTextField sender;
     @FXML private JFXTextField type;
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
+    @FXML private ImageView backgroundImage;
+    @FXML private NavController navController;
 
 
     public void submitButtonClick(ActionEvent actionEvent) {
@@ -47,6 +50,9 @@ public class GiftStoreController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundImage.setImage(Main.screenController.getBackgroundImage());
 
     }
 }

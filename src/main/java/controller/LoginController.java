@@ -18,6 +18,8 @@ public class LoginController extends Controller implements Initializable {
     private TextField uname;
     @FXML
     private PasswordField password;
+    @FXML private NavController navController;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -26,6 +28,7 @@ public class LoginController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        navController.setActiveTab(NavTypes.LOGIN);
     }
 
     //does not currently actually log you in
