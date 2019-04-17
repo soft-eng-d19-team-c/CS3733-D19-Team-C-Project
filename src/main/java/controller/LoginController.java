@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import model.AuthException;
 import base.User;
 
@@ -43,6 +44,12 @@ public class LoginController extends Controller implements Initializable {
         if (Main.screenController.getData("loggedout") != null && (Boolean) Main.screenController.getData("loggedout")) {
             loggedOut.setVisible(true);
         }
+
+        password.setOnKeyReleased(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                loginButtonClick(new ActionEvent());
+            }
+        });
 
     }
 
