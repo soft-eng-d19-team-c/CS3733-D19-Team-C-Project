@@ -106,4 +106,8 @@ public class NavController extends Controller implements Initializable {
             adminView.setVisible(false);
         }
     }
+
+    public void aboutButtonClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.ABOUT);
+    }
 }
