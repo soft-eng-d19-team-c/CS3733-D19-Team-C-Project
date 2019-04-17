@@ -57,7 +57,7 @@ public class FloristServiceRequest {
     }
 
     public void insert() {
-        String sqlStr = "insert into FLORISTSERVICEREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?,?)";
+        String sqlStr = "insert into FLORISTREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?,?)";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, this.startNodeID);
@@ -76,7 +76,7 @@ public class FloristServiceRequest {
 
         try {
             Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM FLORISTSERVICEREQUESTS";
+            String str = "SELECT * FROM FLORISTREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -96,7 +96,7 @@ public class FloristServiceRequest {
     }
 
     public boolean resolve() {
-        String str = "UPDATE FLORISTSERVICEREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
+        String str = "UPDATE FLORISTREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());

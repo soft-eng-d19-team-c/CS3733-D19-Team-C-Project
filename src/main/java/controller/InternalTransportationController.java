@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import model.InternalTransportationService;
 
 import java.net.URL;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class InternalTransportationController  extends Controller implements Initializable {
 
+    @FXML private Text errText;
     @FXML private TextArea description;
     @FXML private JFXDatePicker dateField;
     @FXML private JFXTimePicker timeField;
@@ -44,6 +46,10 @@ public class InternalTransportationController  extends Controller implements Ini
 
     }
     public void submitBtnClick(ActionEvent actionEvent) {
+        if (dateField.getValue() == null || timeField.getValue() == null){
+            errText.setText("ERROR: Please enter the time");
+            return;
+        }
         LocalDate date = dateField.getValue();
         LocalTime time = timeField.getValue();
         Calendar cal = Calendar.getInstance();

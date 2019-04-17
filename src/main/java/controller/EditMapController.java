@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -21,12 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.WindowEvent;
 import model.Edge;
 import model.Node;
 
 import java.net.URL;
-import java.sql.Savepoint;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -115,6 +112,7 @@ public class EditMapController extends Controller implements Initializable {
         //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
+        IDContent.getChildren().remove(0, IDContent.getChildren().size());
         IDContent.getChildren().add(new Label("Node ID: "));
         IDContent.getChildren().add(nodeID);
         IDContent.getChildren().add(new Label("X Coord: "));
@@ -137,6 +135,8 @@ public class EditMapController extends Controller implements Initializable {
 
         TitledPane.setText("Edit Node Data");
         TitledPane.setContent(IDContent);
+        if (editNode.getExpandedPane() != null)
+            editNode.getExpandedPane().setExpanded(false);
         editNode.setVisible(false);
 
         Platform.runLater(() -> {
@@ -305,6 +305,7 @@ public class EditMapController extends Controller implements Initializable {
         addEdgeHandler_on = true;
     }
 
+    @SuppressWarnings("Duplicates")
     public void editNodeButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -313,7 +314,7 @@ public class EditMapController extends Controller implements Initializable {
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
-                node.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
                 // add event handler for mouse click on node
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, editNodeHandler);
             }
@@ -587,12 +588,10 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     EventHandler editNodeHandler = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent me) {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
-                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
 
@@ -606,6 +605,7 @@ public class EditMapController extends Controller implements Initializable {
                 shortName.setText(n.getShortName());
                 longName.setText(n.getLongName());
                 editNode.setVisible(true);
+                editNode.setExpandedPane(editNode.getPanes().get(0));
 
                 save.setOnAction(event -> {
                     editNode.setVisible(false);
@@ -635,13 +635,13 @@ public class EditMapController extends Controller implements Initializable {
                     if (strshorterthan255(type.getText())){ n.setNodeType(type.getText()); } else {
                         return;
                     }
-                    int updateflag;
-                    updateflag = n.update();
-                    if (updateflag > 0) {
-                        HashMap<String, Object> hm = new HashMap<>();
-                        hm.put("floor", "L1");
-                        //Main.screenController.setScreen(EnumScreenType.EDITMAP, hm);
+                    n.update();
+                    for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+                        node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                     }
+                    mapImgPane.getScene().setCursor(Cursor.DEFAULT);
                 });
             }
         }
