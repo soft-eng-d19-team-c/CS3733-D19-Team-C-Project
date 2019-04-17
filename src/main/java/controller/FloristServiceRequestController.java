@@ -47,6 +47,6 @@ public class FloristServiceRequestController extends Controller implements Initi
         FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
 
         newServiceRequest.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

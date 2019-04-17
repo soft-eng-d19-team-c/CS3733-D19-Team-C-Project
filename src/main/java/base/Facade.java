@@ -11,14 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
 
-
-/*
-        TODO
-
-        on logout remember to clear the history stack
- */
-
-
 /**
  * This is the Facade class that is used for passing data between controllers
  * as well as switching between screens.

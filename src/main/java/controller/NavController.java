@@ -96,9 +96,9 @@ public class NavController extends Controller implements Initializable {
                 this.serviceSelectBar.setVisible(true);
                 break;
             default:
-                System.err.println("bad tab");
+                // hide all tabs
         }
-        if (Main.user.checkPermissions("employee") || Main.user.checkPermissions("developer")) {
+        if (Main.user != null && (Main.user.checkPermissions("employee") || Main.user.checkPermissions("developer"))) {
             bookRoom.setVisible(true);
             adminView.setVisible(true);
         } else {

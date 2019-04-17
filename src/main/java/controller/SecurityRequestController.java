@@ -43,6 +43,6 @@ public class SecurityRequestController extends Controller implements Initializab
         SecurityRequest securityRequest = new SecurityRequest(urgentCheckBox.isSelected(), autoCompleteTextController.getNodeID(), description.getText());
         securityRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

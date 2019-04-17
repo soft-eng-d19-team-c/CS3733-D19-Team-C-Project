@@ -130,7 +130,7 @@
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
          </children>
       </HBox>
-      <Accordion fx:id="editNode" layoutX="1730.0" layoutY="300.0" visible="fa">
+      <Accordion fx:id="editNode" layoutX="1730.0" layoutY="300.0" visible="false">
       </Accordion>
    </children>
 </AnchorPane>

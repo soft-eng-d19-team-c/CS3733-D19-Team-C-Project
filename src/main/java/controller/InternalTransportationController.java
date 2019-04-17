@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
@@ -10,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import model.InternalTransportationService;
-import model.InterpreterRequest;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -41,6 +39,8 @@ public class InternalTransportationController  extends Controller implements Ini
         dateField.setValue(null);
         timeField.setValue(null);
         description.setText(null);
+        searchController_origController.setLocation(null);
+        searchController_destController.setLocation(null);
 
     }
     public void submitBtnClick(ActionEvent actionEvent) {
@@ -53,7 +53,7 @@ public class InternalTransportationController  extends Controller implements Ini
         InternalTransportationService sr = new InternalTransportationService(searchController_origController.getNodeID(), searchController_destController.getNodeID(), description.getText(), pickUpTime);
         sr.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
 
     }
 

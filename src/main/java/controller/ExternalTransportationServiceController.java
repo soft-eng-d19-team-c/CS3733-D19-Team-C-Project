@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.DateTimeMaker;
 import model.ExternalTransportationRequest;
 
 import java.net.URL;
@@ -67,6 +65,6 @@ public class ExternalTransportationServiceController extends Controller implemen
         Timestamp dateTimePickup = new Timestamp(cal.getTimeInMillis());
         ExternalTransportationRequest sr = new ExternalTransportationRequest(pickupLocation, dest, dateTimeSubmitted, dateTimePickup);
         sr.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

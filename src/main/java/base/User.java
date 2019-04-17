@@ -1,8 +1,8 @@
-package model;
+package base;
 
 //A user of the kiosk system
 
-import base.Main;
+import model.AuthException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +30,7 @@ public class User {
      * @throws AuthException invalid username/password combination
      */
     public User(String username, String password) throws AuthException {
-        String sqlStr = "select USERS.USERNAME, USERS.PASSWORD, USERPERMISSIONS.PERMISSIONS from USERHASPERMISSIONS LEFT JOIN USERPERMISSIONS ON USERHASPERMISSIONS.PERMISSIONS = USERPERMISSIONS.PERMISSIONS INNER JOIN USERS ON USERHASPERMISSIONS.USERNAME = USERS.USERNAME where USERS.USERNAME = ?";
+        String sqlStr = "select USERS.USERNAME, USERS.PASSWORD, USERPERMISSIONS.PERMISSIONS from USERS LEFT JOIN USERHASPERMISSIONS ON USERHASPERMISSIONS.USERNAME = USERS.USERNAME LEFT JOIN USERPERMISSIONS ON USERHASPERMISSIONS.PERMISSIONS = USERPERMISSIONS.PERMISSIONS where USERS.USERNAME = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, username);
@@ -47,6 +47,8 @@ public class User {
                     throw new AuthException("Incorrect username / password combination.");
                 }
 
+            } else {
+                throw new AuthException("Incorrect username / password combination.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,6 +66,7 @@ public class User {
     }
 
     public void logout() {
+        Main.screenController.clearHistory();
         try {
             Main.user = new User("guest", "guest");
         } catch (AuthException e) {

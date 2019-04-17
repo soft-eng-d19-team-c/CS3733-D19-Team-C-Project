@@ -43,6 +43,11 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
+                  <Label fx:id="badCredentials" text="Incorrect username / password" textFill="#dc3545" visible="false">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
          </children>

@@ -1,7 +1,6 @@
 package base;
 
 import model.AuthException;
-import model.User;
 
 /**
  * The Main class of the application that stores the User, Facade, and Database objects.

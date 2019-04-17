@@ -1,11 +1,11 @@
 package model;
 
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Date;
 
 public class FloristServiceRequest {
     private String startNodeID;

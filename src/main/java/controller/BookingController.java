@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -84,7 +83,7 @@ public class BookingController extends Controller implements Initializable {
             errorLabel.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
         } else {
             b.insert();
-            Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+            Main.screenController.goBack();
         }
     }
 

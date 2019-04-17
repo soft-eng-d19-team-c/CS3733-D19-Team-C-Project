@@ -37,7 +37,7 @@ public class ReligiousServiceController extends Controller implements Initializa
         ReligiousService religiousServiceRequest = new ReligiousService(autoCompleteTextController.getNodeID(), serviceDescription.getText());
         religiousServiceRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 
 }

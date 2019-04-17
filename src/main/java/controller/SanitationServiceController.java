@@ -1,9 +1,7 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +27,8 @@ public class SanitationServiceController extends Controller implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        description.setText(null);
+        autoCompleteTextController.setLocation(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
@@ -40,6 +39,6 @@ public class SanitationServiceController extends Controller implements Initializ
         SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
         sanitationRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }
