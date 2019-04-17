@@ -6,5 +6,6 @@ public enum NavTypes {
     BOOKROOM,
     ADMINVIEW,
     LOGIN,
-    SERVICEREQUESTS
+    SERVICEREQUESTS,
+    NONE
 }

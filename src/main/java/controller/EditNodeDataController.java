@@ -30,6 +30,7 @@ public class EditNodeDataController extends Controller implements Initializable 
     private TextField longName;
     @FXML
     private TextField shortName;
+    @FXML private NavController navController;
 
     private Node nodeData;
 
@@ -85,7 +86,7 @@ public class EditNodeDataController extends Controller implements Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeData = (Node) Main.screenController.getData("node");
-        //navController.setActiveTab(NavTypes.ADMINVIEW);
+        navController.setActiveTab(NavTypes.ADMINVIEW);
 
         Platform.runLater(() -> {
             nodeID.setText(nodeData.getID());
