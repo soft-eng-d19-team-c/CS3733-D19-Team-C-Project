@@ -17,7 +17,7 @@
             <!--<Image url="@../img/background.png" />-->
          </image>
       </ImageView>
-      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
       <Label alignment="CENTER" layoutX="-45.0" layoutY="127.0" styleClass="h1" text="Booked Locations" AnchorPane.leftAnchor="-45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="127.0" />
       <JFXDatePicker fx:id="datePicker" onAction="#inputChanged" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
       <JFXTimePicker fx:id="timePicker" onAction="#inputChanged" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="260.0" />
