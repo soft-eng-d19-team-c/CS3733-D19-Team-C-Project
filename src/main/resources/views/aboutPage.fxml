@@ -36,20 +36,20 @@
                   <Insets left="150.0" />
                </VBox.margin>
             </Label>
-            <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="266.0" text="Lead Software Engineer - Ryan LaMarche">
-               <font>
-                  <Font size="32.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="150.0" />
-               </VBox.margin>
-            </Label>
             <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="266.0" text="Team C Members and Positions:">
                <font>
                   <Font size="32.0" />
                </font>
                <VBox.margin>
                   <Insets left="100.0" />
+               </VBox.margin>
+            </Label>
+            <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="266.0" text="Lead Software Engineer - Ryan LaMarche">
+               <font>
+                  <Font size="32.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="150.0" />
                </VBox.margin>
             </Label>
             <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="307.0" text="Assistant Lead Software Engineer - Jacob Tutlis ">

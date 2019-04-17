@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -120,6 +121,21 @@
             </styleClass>
                <VBox.margin>
                   <Insets left="20.0" top="40.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="changeIdleTimeLabel" styleClass="field-question-text" text="Change Idle Time (minutes)">
+               <VBox.margin>
+                  <Insets left="20.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="changeIdleTime">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#setIdleTime" styleClass="btn-success" text="Save Idle Time">
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </Button>
          </children>
