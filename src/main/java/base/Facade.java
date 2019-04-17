@@ -45,7 +45,7 @@ public final class Facade {
      * @author Fay Whittall
      * @return primary scene
      */
-    public Scene getPrimaryScene() {
+    protected Scene getPrimaryScene() {
         return primaryScene;
     }
 

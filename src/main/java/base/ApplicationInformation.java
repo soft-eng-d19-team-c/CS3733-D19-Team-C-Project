@@ -1,12 +1,8 @@
 package base;
 
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.util.Duration;
 import model.*;
-
-import java.io.IOException;
 
 /**
  * This is a class that will be used to store volatile information
@@ -59,6 +55,7 @@ public final class ApplicationInformation {
     }
 
     public void setIdleTime(double idleTime) {
+        Main.idleMonitor.stopMonitoring();
         Main.idleMonitor.unregister(Main.screenController.getPrimaryScene(), Event.ANY);
         this.idleTime = idleTime;
         Main.idleMonitor = new IdleMonitor(Duration.minutes(idleTime),
