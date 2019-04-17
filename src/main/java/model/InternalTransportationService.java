@@ -109,7 +109,7 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERNALTRANSPORTATIONREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, REQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
+        String sqlCmd = "insert into INTERNALTRANSPORTATIONREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, USERREQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 
@@ -134,7 +134,7 @@ public class InternalTransportationService {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
+        String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
             PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -162,11 +162,11 @@ public class InternalTransportationService {
                 String description = rs.getString("description");
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp pickUpTime = rs.getTimestamp("PICKUPTIME");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMECOMPLETED");
                 String nodeID = rs.getString("STARTNODEID");
                 String nodeIDDest = rs.getString("ENDNODEID");
-                User req = new User(rs.getString("REQUESTEDBY"));
-                User comp = new User(rs.getString("COMPLETEDBY"));
+                User req = new User(rs.getString("USERREQUESTEDBY"));
+                User comp = new User(rs.getString("USERCOMPLETEDBY"));
                 InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved, comp, req);
                 requests.add(theServiceRequest);
             }

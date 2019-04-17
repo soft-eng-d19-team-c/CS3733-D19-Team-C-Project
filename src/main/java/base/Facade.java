@@ -41,6 +41,15 @@ public final class Facade {
     }
 
     /**
+     * gets the primary scene
+     * @author Fay Whittall
+     * @return primary scene
+     */
+    protected Scene getPrimaryScene() {
+        return primaryScene;
+    }
+
+    /**
      * Sets screen.
      * @author Ryan LaMarche
      * @param type
@@ -122,7 +131,10 @@ public final class Facade {
      * @param data
      */
     public void goBack(HashMap<String, Object> data) {
-        setScreen(this.history.pop(), data, false);
+        if (this.history.size() > 0)
+            setScreen(this.history.pop(), data, false);
+        else
+            setScreen(EnumScreenType.PATHFINDING, data, false);
     }
 
     /**

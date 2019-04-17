@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import jfxtras.scene.control.agenda.Agenda?>
+
+<AnchorPane prefHeight="959.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookingController">
+   <children>
+       <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="nextWeek" mnemonicParsing="false" onAction="#nextWeekBtnClick" text="Next Week" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="150.0" />
+      <Button fx:id="prevWeek" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#prevWeekBtnClick" text="Previous Week" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="150.0" />
+       <AnchorPane layoutX="248.0" layoutY="161.0" prefHeight="1020.0" prefWidth="1426.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="248.0" AnchorPane.topAnchor="250.0" xmlns:fx="http://javafx.com/fxml">
+           <Agenda fx:id="bookingAgenda" layoutX="1.0" layoutY="50.0" prefHeight="500.0" prefWidth="1426.0" AnchorPane.bottomAnchor="150.0" AnchorPane.topAnchor="0.0" />
+       </AnchorPane>
+      <JFXDatePicker fx:id="datePicker" layoutX="248.0" layoutY="150.0" onAction="#dateChange" />
+       <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+      <Label alignment="CENTER" layoutX="943.0" layoutY="170.0" text="Schedule of Booked Workspaces" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="170.0">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
