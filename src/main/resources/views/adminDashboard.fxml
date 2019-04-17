@@ -25,7 +25,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="editMapButton" onAction="#editMapButtonClick" prefHeight="120.0" prefWidth="500.0" styleClass="floor-select-button" text="Edit Map" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="editMapButton" onAction="#editMapButtonClick" prefHeight="120.0" prefWidth="500.0" styleClass="floor-select-button" text="Edit Map" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" visible="false">
                <font>
                   <Font size="44.0" />
                </font>
