@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.GiftStoreRequest;
 
 import java.net.URL;
@@ -21,6 +23,9 @@ public class GiftStoreTableController extends Controller implements Initializabl
     @FXML private TableColumn GiftType;
     @FXML private TableColumn DateTimeSubmitted;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -37,6 +42,8 @@ public class GiftStoreTableController extends Controller implements Initializabl
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("Location"));
         Sender.setCellValueFactory(new PropertyValueFactory("Sender"));
         Recipient.setCellValueFactory(new PropertyValueFactory("Recipient"));

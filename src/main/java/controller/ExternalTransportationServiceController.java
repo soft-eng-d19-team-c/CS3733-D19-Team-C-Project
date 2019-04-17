@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.DateTimeMaker;
@@ -31,6 +32,10 @@ public class ExternalTransportationServiceController extends Controller implemen
     private JFXDatePicker dateField;
     @FXML
     private JFXTimePicker timeField;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
+
 
 
     @Override
@@ -40,6 +45,8 @@ public class ExternalTransportationServiceController extends Controller implemen
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         dateField.setValue(null);
         timeField.setValue(null);
         destinationField.setText(null);

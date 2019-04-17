@@ -58,6 +58,6 @@
            <!--</styleClass>-->
        <!--</JFXButton>-->
       <TextArea fx:id="serviceDescription" layoutX="172.0" layoutY="603.0" prefHeight="186.0" prefWidth="1428.0" promptText="Please describe what you need." AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="400.0" />
-      <fx:include fx:id="menu" source="menuBarPartial.fxml" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
    </children>
 </AnchorPane>

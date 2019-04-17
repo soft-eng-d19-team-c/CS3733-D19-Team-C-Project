@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import model.ReligiousService;
 
 import java.net.URL;
@@ -17,6 +18,8 @@ public class ReligiousServiceController extends Controller implements Initializa
     private AutocompleteSearchBarController autoCompleteTextController;
     @FXML
     private TextArea serviceDescription;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -25,6 +28,9 @@ public class ReligiousServiceController extends Controller implements Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     public void submitButtonClick(ActionEvent actionEvent) {

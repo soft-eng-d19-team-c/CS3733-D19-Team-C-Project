@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.ITRequest;
 
 import java.net.URL;
@@ -15,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class ITServiceController extends Controller implements Initializable {
     @FXML private JFXTextArea description;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -28,6 +31,8 @@ public class ITServiceController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
     }
 
     //save the service request to the database, to late view

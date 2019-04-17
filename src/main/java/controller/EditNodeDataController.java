@@ -85,6 +85,7 @@ public class EditNodeDataController extends Controller implements Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeData = (Node) Main.screenController.getData("node");
+        //navController.setActiveTab(NavTypes.ADMINVIEW);
 
         Platform.runLater(() -> {
             nodeID.setText(nodeData.getID());

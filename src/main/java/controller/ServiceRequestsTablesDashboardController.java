@@ -3,12 +3,19 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ServiceRequestsTablesDashboardController extends Controller implements Initializable {
+
+    @FXML
+    private NavController navController;
+
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -16,6 +23,7 @@ public class ServiceRequestsTablesDashboardController extends Controller impleme
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
 
     }
 

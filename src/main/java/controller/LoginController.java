@@ -20,6 +20,8 @@ public class LoginController extends Controller implements Initializable {
     @FXML
     private PasswordField password;
     @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -30,6 +32,8 @@ public class LoginController extends Controller implements Initializable {
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
         uname.setText(null);
         password.setText(null);
+
+        navController.setActiveTab(NavTypes.LOGIN);
     }
 
     //does not currently actually log you in

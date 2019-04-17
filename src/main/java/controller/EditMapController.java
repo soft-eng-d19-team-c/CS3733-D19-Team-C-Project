@@ -52,6 +52,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @FXML private TextField changeIdleTime;
     @FXML private Label changeIdleTimeLabel;
+    @FXML private NavController navController;
 
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
@@ -83,6 +84,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         algosMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
         if (Main.screenController.getData("floor") != null)
