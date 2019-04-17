@@ -51,6 +51,12 @@ public class LoginController extends Controller implements Initializable {
             }
         });
 
+        uname.setOnKeyReleased(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                loginButtonClick(new ActionEvent());
+            }
+        });
+
     }
 
     //does not currently actually log you in
