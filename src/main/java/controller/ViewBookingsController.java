@@ -19,6 +19,9 @@ public class ViewBookingsController extends Controller implements Initializable 
     @FXML private TableColumn toColumn;
     @FXML private TableColumn userColumn;
     private ObservableList<Booking> data;
+    @FXML
+    private NavController navController;
+
 
 
 
@@ -29,6 +32,8 @@ public class ViewBookingsController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         locationColumn.setCellValueFactory(new PropertyValueFactory("Location"));
         fromColumn.setCellValueFactory(new PropertyValueFactory("DateFrom"));
         toColumn.setCellValueFactory(new PropertyValueFactory("DateTo"));

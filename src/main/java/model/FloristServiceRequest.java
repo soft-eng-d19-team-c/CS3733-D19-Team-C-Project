@@ -1,11 +1,12 @@
 package model;
 
+import base.Database;
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Date;
 
 public class FloristServiceRequest {
     private String startNodeID;
@@ -57,9 +58,9 @@ public class FloristServiceRequest {
     }
 
     public void insert() {
-        String sqlStr = "insert into FLORISTSERVICEREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?,?)";
+        String sqlStr = "insert into FLORISTREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, this.startNodeID);
             ps.setString(2, this.endNodeID);
             ps.setString(3, this.description);
@@ -75,8 +76,8 @@ public class FloristServiceRequest {
         ObservableList<FloristServiceRequest> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
-            String str = "SELECT * FROM FLORISTSERVICEREQUESTS";
+            Statement stmt = Database.getConnection().createStatement();
+            String str = "SELECT * FROM FLORISTREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
             while(rs.next()) {
@@ -96,9 +97,9 @@ public class FloristServiceRequest {
     }
 
     public boolean resolve() {
-        String str = "UPDATE FLORISTSERVICEREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
+        String str = "UPDATE FLORISTREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());

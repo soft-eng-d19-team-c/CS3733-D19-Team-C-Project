@@ -1,6 +1,8 @@
 package model;
 
+import base.Database;
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -78,7 +80,7 @@ public class ITRequest {
 
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, userCompletedBy.getUsername());
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
@@ -103,7 +105,7 @@ public class ITRequest {
         java.sql.Timestamp sqlSubmitDate = new java.sql.Timestamp(System.currentTimeMillis()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, description);
             ps.setTimestamp(2, sqlSubmitDate);
             ps.setString(3, userRequestedBy.getUsername());
@@ -126,7 +128,7 @@ public class ITRequest {
         ObservableList<ITRequest> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM ITREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -154,7 +156,7 @@ public class ITRequest {
     public boolean resolve() {
         String str = "UPDATE ITREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());

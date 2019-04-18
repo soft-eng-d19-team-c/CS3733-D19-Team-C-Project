@@ -11,3 +11,5 @@ derby.log
 *.lock
 *.iml
 TeamC/
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.properties

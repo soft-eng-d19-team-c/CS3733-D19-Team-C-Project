@@ -1,5 +1,5 @@
 group 'edu.wpi.cs3733-d19.teamC' // replace with your package name
-version '1.1'
+version '1.2'
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -47,8 +47,11 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.14.2.0'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.14.2.0'],
             [group: 'com.twilio.sdk', name: 'twilio', version: '7.36.2'],
+            [group: 'org.jasypt', name: 'jasypt', version: '1.9.2'],
             [group: 'org.testfx', name: 'testfx-core', version: '4.0.15-alpha'],
-            [group: 'org.testfx', name: 'testfx-junit', version: '4.0.15-alpha']
+            [group: 'org.testfx', name: 'testfx-junit', version: '4.0.15-alpha'],
+            [group: 'org.jfxtras', name: 'jfxtras-all', version: '8.0-r6'],
+            files('libs/include.jar')
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -57,6 +60,9 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.14.2.0'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.14.2.0'],
             [group: 'com.twilio.sdk', name: 'twilio', version: '7.36.2'],
+            [group: 'org.jasypt', name: 'jasypt', version: '1.9.2'],
+            [group: 'org.jfxtras', name: 'jfxtras-all', version: '8.0-r6'],
+            files('libs/include.jar')
     )
 }
 

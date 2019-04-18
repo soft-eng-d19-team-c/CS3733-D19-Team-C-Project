@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.ITRequest;
 
 import java.net.URL;
@@ -19,6 +21,8 @@ public class ITRequestTableController extends Controller implements Initializabl
     @FXML private TableColumn Description;
     @FXML private TableColumn userRequestedBy;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -35,6 +39,8 @@ public class ITRequestTableController extends Controller implements Initializabl
         //SANITATIONREQUESTS.getAll(SANITATIONREQUESTS);
         //like initialize fcn in nodeTable
 
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
         locationCol.setCellValueFactory(new PropertyValueFactory("NodeID"));
         Description.setCellValueFactory(new PropertyValueFactory("Description"));
         userRequestedBy.setCellValueFactory(new PropertyValueFactory("UserRequestedBy"));

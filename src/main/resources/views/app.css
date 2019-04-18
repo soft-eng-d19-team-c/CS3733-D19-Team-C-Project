@@ -12,6 +12,9 @@
     -success-dark: #279742;
     -jfx-focus-color: -primary;
     -jfx-default-color: -primary;
+
+    -bwblue:#012d5a; /* Brigham and Women's Dark Blue */
+    -bwgold:#f6bd38; /* BW goldenrod */
 }
 /* utilities */
 .bg-primary {
@@ -75,7 +78,111 @@
 .btn-success:hover,.btn-success:pressed {
     -fx-background-color: -success-dark;
 }
-.screen-background{
-    -fx-background-image: url("../img/Screen Saver@2x.png");
-    -fx-background-size: cover, auto;
+
+/* Quick Note; the Menu Bar is 135 Pixels tall, so always leave that space empty */
+
+.blue-boxes{
+    -fx-background-color: -bwblue;
+}
+
+.white-box{
+    -fx-background-color: -white;
+    -fx-background-radius: 30;
+}
+
+.btn-menubar{
+    -fx-text-fill: -black;
+    -fx-background-color: -white;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 22;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    /* I don't actually think these set the margin correctly*/
+    margin-bottom: 30;
+    margin-top: 30;
+    -fx-cursor: hand;
+}
+
+.btn-menulogout{
+    -fx-text-fill: -white;
+    -fx-background-color: -danger;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 22;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    /* I don't actually think these set the margin correctly*/
+    margin-bottom: 30;
+    margin-top: 30;
+    -fx-cursor: hand;
+}
+
+.select-bar{
+    -fx-background-color: -bwgold;
+    -fx-min-width: 200;
+    -fx-max-width: 200;
+    -fx-background-radius: 30;
+}
+
+.header-text{
+    -fx-font-size: 50;
+    -fx-text-fill: -white;
+}
+.field-question-text{
+    -fx-font-size: 20;
+    -fx-text-fill: -black;
+}
+
+.floor-select-button{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwblue;
+    -fx-text-fill: -white;
+    -fx-cursor: hand;
+}
+
+.floor-select-button-selected{
+    -fx-background-radius: 30;
+    -fx-background-color: -bwgold;
+    -fx-text-fill: -black;
+    -fx-cursor: hand;
+}
+
+.btn-primary-v2{
+    -fx-background-color: -bwgold;
+    -fx-background-radius: 30;
+    -fx-text-fill: -black;
+    -fx-cursor: hand;
+}
+
+/* PATH SLIDER */
+/* Styling the slider track */
+.jfx-slider > .track {
+    /*-fx-background-color: yellow;*/
+}
+
+/* Styling the slider thumb */
+.jfx-slider > .thumb {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the filled track */
+.jfx-slider > .colored-track {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the animated thumb */
+.jfx-slider > .animated-thumb {
+    -fx-background-color: -bwgold;
+}
+
+/* Styling the slider value text inside animated thumb */
+.jfx-slider .slider-value {
+    -fx-fill: -bwgold;
+    -fx-stroke: -bwgold;
+}
+
+.logout-btn{
+    -fx-background-color: -danger;
+    -fx-background-radius: 30;
+    -fx-text-fill: -white;
+    -fx-cursor: hand;
 }

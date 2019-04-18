@@ -1,11 +1,13 @@
 package controller;
 
+import base.Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.FloristServiceRequest;
 
 import java.net.URL;
@@ -20,6 +22,8 @@ public class FloristServiceRequestTableController extends Controller implements 
     @FXML private TableColumn dateTimeSubmitted;
     @FXML private TableColumn Description;
     @FXML private TableColumn isCompleted;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
@@ -33,6 +37,9 @@ public class FloristServiceRequestTableController extends Controller implements 
     //initialize the page with the service requests
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
 
         startNode.setCellValueFactory(new PropertyValueFactory("StartNodeID"));
         endNode.setCellValueFactory(new PropertyValueFactory("EndNodeID"));

@@ -1,6 +1,8 @@
 package model;
 
+import base.Database;
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -87,7 +89,7 @@ public class InternalTransportationService {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
@@ -108,12 +110,12 @@ public class InternalTransportationService {
 
         boolean executed = false;
 
-        String sqlCmd = "insert into INTERNALTRANSPORTATIONREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, REQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
+        String sqlCmd = "insert into INTERNALTRANSPORTATIONREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED, PICKUPTIME, USERREQUESTEDBY) values (?, ?, ?, ?, ?, ?)";
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
@@ -133,9 +135,9 @@ public class InternalTransportationService {
 
     @SuppressWarnings("Duplicates")
     public boolean resolve() {
-        String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
+        String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());
@@ -152,7 +154,7 @@ public class InternalTransportationService {
         ObservableList<InternalTransportationService> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM INTERNALTRANSPORTATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -161,11 +163,11 @@ public class InternalTransportationService {
                 String description = rs.getString("description");
                 Timestamp dateTimeSubmitted = rs.getTimestamp("dateTimeSubmitted");
                 Timestamp pickUpTime = rs.getTimestamp("PICKUPTIME");
-                Timestamp dateTimeResolved = rs.getTimestamp("dateTimeResolved");
+                Timestamp dateTimeResolved = rs.getTimestamp("DATETIMECOMPLETED");
                 String nodeID = rs.getString("STARTNODEID");
                 String nodeIDDest = rs.getString("ENDNODEID");
-                User req = new User(rs.getString("REQUESTEDBY"));
-                User comp = new User(rs.getString("COMPLETEDBY"));
+                User req = new User(rs.getString("USERREQUESTEDBY"));
+                User comp = new User(rs.getString("USERCOMPLETEDBY"));
                 InternalTransportationService theServiceRequest = new InternalTransportationService(ID, nodeID, nodeIDDest, description, dateTimeSubmitted, pickUpTime, dateTimeResolved, comp, req);
                 requests.add(theServiceRequest);
             }

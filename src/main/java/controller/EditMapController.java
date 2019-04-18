@@ -1,6 +1,5 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -10,13 +9,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -44,6 +44,13 @@ public class EditMapController extends Controller implements Initializable {
     @FXML
     private ComboBox<String> algosMenu;
 
+    @FXML
+    protected Accordion editNode;
+
+    @FXML private TextField changeIdleTime;
+    @FXML private Label changeIdleTimeLabel;
+    @FXML private NavController navController;
+
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodes;
 
@@ -54,6 +61,19 @@ public class EditMapController extends Controller implements Initializable {
 
     private HashMap<String, Node> allNodes = Node.getHashedNodes();
 
+    TitledPane TitledPane = new TitledPane();
+    VBox IDContent = new VBox();
+    TextField nodeID = new TextField();
+    TextField xCoord = new TextField();
+    TextField yCoord = new TextField();
+    TextField floor = new TextField();
+    TextField building = new TextField();
+    TextField type = new TextField();
+    TextField shortName = new TextField();
+    TextField longName = new TextField();
+
+    Button save = new Button();
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -61,6 +81,7 @@ public class EditMapController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         algosMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
         if (Main.screenController.getData("floor") != null)
@@ -69,11 +90,7 @@ public class EditMapController extends Controller implements Initializable {
             currentFloor = Main.info.getKioskLocation().getFloor();
         if (currentFloor == null)
             currentFloor = "L1";
-        if (currentFloor.equals("G")) {
-            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
-        } else {
-            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
-        }
+        changeFloor(currentFloor);
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
@@ -88,6 +105,36 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+        //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
+        editNode.getPanes().removeAll(TitledPane);
+        editNode.getPanes().addAll(TitledPane);
+        IDContent.getChildren().remove(0, IDContent.getChildren().size());
+        IDContent.getChildren().add(new Label("Node ID: "));
+        IDContent.getChildren().add(nodeID);
+        IDContent.getChildren().add(new Label("X Coord: "));
+        IDContent.getChildren().add(xCoord);
+        IDContent.getChildren().add(new Label("Y Coord: "));
+        IDContent.getChildren().add(yCoord);
+        IDContent.getChildren().add(new Label("Floor: "));
+        IDContent.getChildren().add(floor);
+        IDContent.getChildren().add(new Label("Building: "));
+        IDContent.getChildren().add(building);
+        IDContent.getChildren().add(new Label("Node Type: "));
+        IDContent.getChildren().add(type);
+        IDContent.getChildren().add(new Label("Short Name: "));
+        IDContent.getChildren().add(shortName);
+        IDContent.getChildren().add(new Label("Long Name: "));
+        IDContent.getChildren().add(longName);
+        IDContent.getChildren().add(save);
+        save.setText("Save");
+
+
+        TitledPane.setText("Edit Node Data");
+        TitledPane.setContent(IDContent);
+        if (editNode.getExpandedPane() != null)
+            editNode.getExpandedPane().setExpanded(false);
+        editNode.setVisible(false);
+
         Platform.runLater(() -> {
             nodeCircles = new HashMap<>();
             nodes = Node.getNodesByFloor(currentFloor);
@@ -99,11 +146,15 @@ public class EditMapController extends Controller implements Initializable {
             floorsMenu.setOnAction((event) -> {
                 nodeCircles.clear();
                 currentFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                changeFloor(currentFloor);
+                /*
                 if (currentFloor.equals("G")) {
                     mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
                 } else {
                     mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
                 }
+
+                 */
                 nodes = Node.getNodesByFloor(currentFloor);
                 edges = Edge.getEdgesByFloor(currentFloor);
                 drawNodes();
@@ -116,6 +167,34 @@ public class EditMapController extends Controller implements Initializable {
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
         });
+    }
+
+    private void changeFloor(String floor) {
+        String floorURL;
+        switch (floor) {
+            case "3":
+                floorURL = "03_thethirdfloor.png";
+                break;
+            case "2":
+                floorURL = "02_thesecondfloor_withbookablelocations.png";
+                break;
+            case "1":
+                floorURL = "01_thefirstfloor.png";
+                break;
+            case "G":
+                floorURL = "00_thegroundfloor.png";
+                break;
+            case "L1":
+                floorURL = "00_thelowerlevel1.png";
+                break;
+            case "L2":
+                floorURL = "00_thelowerlevel2.png";
+                break;
+            default:
+                System.out.println("Error in PathfindingController.updateFloorImg invalid floor");
+                floorURL = "01_thefirstfloor.png";
+        }
+        mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
     }
 
     private void drawNodes() {
@@ -254,6 +333,7 @@ public class EditMapController extends Controller implements Initializable {
         addEdgeHandler_on = true;
     }
 
+    @SuppressWarnings("Duplicates")
     public void editNodeButtonClick(ActionEvent e){
         for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
             if (node.getProperties().containsKey("node")) {
@@ -262,7 +342,7 @@ public class EditMapController extends Controller implements Initializable {
                 node.removeEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeEdgeHandler);
                 node.removeEventFilter(MouseEvent.MOUSE_PRESSED, removeNodeHandler);
-                node.addEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
+                node.removeEventFilter(MouseEvent.MOUSE_PRESSED, addEdgeHandler);
                 // add event handler for mouse click on node
                 node.addEventFilter(MouseEvent.MOUSE_PRESSED, editNodeHandler);
             }
@@ -318,6 +398,33 @@ public class EditMapController extends Controller implements Initializable {
             }
         }
         mapImgPane.getScene().setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void setIdleTime(ActionEvent e){
+        String time = changeIdleTime.getText();
+        boolean canSetTime = true;
+        char c;
+        if(time.length() == 0){
+            canSetTime = false;
+        }
+        for(int i = 0; i < time.length(); i++){
+            c = time.charAt(i);
+            if(!((Character.isDigit(c)) || c == ('.'))){
+                canSetTime = false;
+                i = time.length();
+            }
+        }
+        double timeToSet = Double.parseDouble(time);
+        if(timeToSet < 0.1){
+            canSetTime = false;
+        }
+        if(canSetTime){
+            Main.info.setIdleTime(timeToSet);
+            changeIdleTimeLabel.setText("New Idle Time Set");
+        }
+        else{
+            changeIdleTimeLabel.setText("Error: Invalid entry");
+        }
     }
 
     /*
@@ -509,20 +616,69 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     EventHandler editNodeHandler = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent me) {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
-                for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
-                    node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-                }
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                HashMap<String, Object> hm = new HashMap<>();
-                hm.put("node", n);
-                Main.screenController.setScreen(EnumScreenType.NODEEDIT, hm);
+
+                nodeID.setText(n.getID());
+                nodeID.setDisable(true);
+                xCoord.setText(Integer.toString(n.getX()));
+                yCoord.setText(Integer.toString(n.getY()));
+                floor.setText(n.getFloor());
+                building.setText(n.getBuilding());
+                type.setText(n.getNodeType());
+                shortName.setText(n.getShortName());
+                longName.setText(n.getLongName());
+                editNode.setVisible(true);
+                editNode.setExpandedPane(editNode.getPanes().get(0));
+
+                save.setOnAction(event -> {
+                    editNode.setVisible(false);
+
+                    try {
+                        int X = Integer.parseInt(xCoord.getText());
+                        int Y = Integer.parseInt(yCoord.getText());
+                        n.setX(X);
+                        n.setY(Y);
+                    }
+                    catch (NumberFormatException exp){
+                        return;
+                    }
+
+                    if (strshorterthan255(building.getText())){ n.setBuilding(building.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(floor.getText())){ n.setFloor(floor.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(longName.getText())){ n.setLongName(longName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(shortName.getText())){ n.setShortName(shortName.getText()); } else {
+                        return;
+                    }
+                    if (strshorterthan255(type.getText())){ n.setNodeType(type.getText()); } else {
+                        return;
+                    }
+                    for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
+                        node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
+                        node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
+                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
+                    }
+                    mapImgPane.getScene().setCursor(Cursor.DEFAULT);
+                    n.update();
+                });
             }
         }
     };
+
+
+    private boolean strshorterthan255 (String str){
+        return (str.length() < 255);
+    }
 
     @SuppressWarnings("Duplicates")
     EventHandler setKioskNodeHandler = new EventHandler<MouseEvent>() {
@@ -547,6 +703,8 @@ public class EditMapController extends Controller implements Initializable {
 
 //a "fake submit" button, to bring you back to the dashboard, appear as if you are saving the page
     public void submitButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
+
+
 }

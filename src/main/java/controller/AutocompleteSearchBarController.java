@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
+import model.LevenshteinDistance;
 import model.Node;
 
 import java.net.URL;
@@ -34,7 +35,10 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void setLocation(String nodeID) {
         this.nodeID.setText(nodeID);
-        this.acTextInput.setText("Current Location");
+        if (nodeID != null)
+            this.acTextInput.setText("Current Location");
+        else
+            this.acTextInput.setText("");
     }
 
     @Override
@@ -70,15 +74,35 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             nodeID.setText(event.getObject().getID());
             this.nodeFloor = event.getObject().getFloor();
         });
+
+
+
+
+
         // listen for changes to text field and filter results
-        acTextInput.textProperty().addListener(observable -> {
-            acSuggestions.filter(string -> string.getLongName().toLowerCase().contains(acTextInput.getText().toLowerCase()));
-            if (acSuggestions.getFilteredSuggestions().isEmpty() || acTextInput.getText().isEmpty()) {
-                acSuggestions.hide();
-            } else {
-                acSuggestions.show(acTextInput);
-            }
-        });
+        switch (Main.info.getSearchType()) {
+            case LEVENSHTEIN:
+                acTextInput.textProperty().addListener(observable -> {
+                    acSuggestions.filter(string -> LevenshteinDistance.calculate(string.getShortName().toLowerCase(), acTextInput.getText().toLowerCase()) < Main.info.getSearchType().getTolerance());
+                    if (acSuggestions.getFilteredSuggestions().isEmpty() || acTextInput.getText().isEmpty()) {
+                        acSuggestions.hide();
+                    } else {
+                        acSuggestions.show(acTextInput);
+                    }
+                });
+                break;
+            case COMPARISON:
+            default:
+                acTextInput.textProperty().addListener(observable -> {
+                    acSuggestions.filter(string -> string.getLongName().toLowerCase().contains(acTextInput.getText().toLowerCase()));
+                    if (acSuggestions.getFilteredSuggestions().isEmpty() || acTextInput.getText().isEmpty()) {
+                        acSuggestions.hide();
+                    } else {
+                        acSuggestions.show(acTextInput);
+                    }
+                });
+
+        }
     }
 
     @Override
@@ -87,7 +111,8 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void refresh() {
-        nodes = Node.getNodes();
+        nodes = Node.getSearchableNodes();
+        acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);

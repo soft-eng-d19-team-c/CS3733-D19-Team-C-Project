@@ -6,12 +6,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ITRequestTableController">
     <children>
+        <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <!--<Image url="@../img/background.png" />-->
+            </image>
+        </ImageView>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="980.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1710.0" AnchorPane.topAnchor="0.0" />
         <Button fx:id="resolveRequest" layoutX="438.0" layoutY="359.0" maxHeight="52.0" maxWidth="182.0" mnemonicParsing="false" onAction="#revolveRequestButtonClicked" prefHeight="52.0" prefWidth="182.0" text="Resolve Request" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
             <styleClass>
@@ -19,9 +25,9 @@
                 <String fx:value="btn-primary" />
                 <String fx:value="btn-sm" />
             </styleClass></Button>
-        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="150.0">
             <children>
-                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="View All Service Requests">
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="IT Requests">
                     <font>
                         <Font size="60.0" />
                     </font>
@@ -42,6 +48,6 @@
                 </TableView>
             </children>
         </VBox>
+        <fx:include fx:id="nav" source="menuBarPartial.fxml" />
     </children>
-    <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
 </AnchorPane>

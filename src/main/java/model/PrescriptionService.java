@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,7 +53,7 @@ public class PrescriptionService {
         String sqlCmd = "insert into PRESCRIPTIONREQUESTS (PATIENTID, USERSUBMITTEDBY, DRUG, DATETIMESUBMITTED) values (?,?,?,?)";
 //        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, patientID);
             ps.setString(2, userSubmittedBy);
             ps.setString(3, drug);
@@ -76,7 +77,7 @@ public class PrescriptionService {
         ObservableList<PrescriptionService> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM PRESCRIPTIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
@@ -130,7 +131,7 @@ public class PrescriptionService {
     public boolean resolve() {
         String str = "UPDATE PRESCRIPTIONREQUESTS SET USERCOMPLETEDBY = ?, DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setString(1, Main.user.getUsername());
             ps.setTimestamp(2, ts);

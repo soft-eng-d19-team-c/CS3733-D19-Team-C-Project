@@ -1,6 +1,8 @@
 package model;
 
+import base.Database;
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -66,7 +68,7 @@ public class SanitationRequest {
 
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
             ps.setDate(4, sqlStartDate);
@@ -90,7 +92,7 @@ public class SanitationRequest {
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
             ps.setDate(3, sqlSubmitDate);
@@ -113,7 +115,7 @@ public class SanitationRequest {
         ObservableList<SanitationRequest> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM SANITATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -143,7 +145,7 @@ public class SanitationRequest {
     public boolean resolve() {
         String str = "UPDATE SANITATIONREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());

@@ -3,13 +3,13 @@ package base;
 public enum EnumScreenType {
     NODETABLE("/views/nodeTable.fxml"),
     NODEEDIT("/views/nodeEdit.fxml"),
-    EDITMAP("/views/editMap.fxml"),
+    EDITMAP("/views/mapeditpage.fxml"),
     DOWNLOADCSV("/views/download.fxml"),
     DASHBOARD("/views/universalDashboard.fxml"),
     LOGIN("/views/loginScreen.fxml"),
-    PATHFINDING("/views/pathfinding.fxml"),
+    PATHFINDING("/views/findpathscreen.fxml"),
     SEARCHLOCATION("/views/searchLocation.fxml"),
-    BOOKLOCATIONS("/views/bookLocation.fxml"),
+    BOOKLOCATIONSCALENDAR("/views/bookLocationCalendar.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
     // services
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
@@ -36,7 +36,9 @@ public enum EnumScreenType {
     GIFTSTORESERVICETABLE("/views/giftStoreRequestTable.fxml"),
     RELIGIOUSSERVICETABLE("/views/religiousRequestTable.fxml"),
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
-    WELCOME("/views/screensaver.fxml");
+    WELCOME("/views/screensaver.fxml"),
+    ABOUT("/views/aboutPage.fxml"),
+    ADMIN("/views/adminDashboard.fxml");
 
     protected String path;
 

@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,7 @@ public class NodeDataTable {
     public ObservableList<Node> getAllNodeData() {
         this.nodeData = FXCollections.observableArrayList();
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM NODES";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -41,7 +42,7 @@ public class NodeDataTable {
         try {
             //Statement stmt = connection.createStatement();
             String str = "SELECT * FROM NODES WHERE NODEID = ?";
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
             if (rs.next())

@@ -1,5 +1,7 @@
 package base;
 
+import javafx.event.Event;
+import javafx.util.Duration;
 import model.*;
 
 /**
@@ -11,14 +13,17 @@ import model.*;
 public final class ApplicationInformation {
     Node kioskLocation;
     PathFindingContext pathfinding;
+    double idleTime;
     public static AStar ASTAR = new AStar();
     public static Dijkstra DIJKSTRA = new Dijkstra();
     public static BreadthFirstSearch BFS = new BreadthFirstSearch();
     public static DepthFirstSearch DFS = new DepthFirstSearch();
+    private EnumSearchType searchType;
 
     public ApplicationInformation(String kioskLocation) {
         this.pathfinding = new PathFindingContext(ASTAR);
         this.kioskLocation = Node.getNodeByID(kioskLocation);
+        this.searchType = EnumSearchType.LEVENSHTEIN;
     }
 
     /**
@@ -49,6 +54,19 @@ public final class ApplicationInformation {
         this.kioskLocation = Node.getNodeByID(newLocation);
     }
 
+    public void setIdleTime(double idleTime) {
+        Main.idleMonitor.stopMonitoring();
+        Main.idleMonitor.unregister(Main.screenController.getPrimaryScene(), Event.ANY);
+        this.idleTime = idleTime;
+        Main.idleMonitor = new IdleMonitor(Duration.minutes(idleTime),
+                () -> {
+            Main.user.logout();
+            Main.screenController.clearHistory();
+            Main.screenController.setScreen(EnumScreenType.WELCOME);
+            }, true);
+        Main.idleMonitor.register(Main.screenController.getPrimaryScene(), Event.ANY);
+    }
+
     /**
      *
      * @param algorithm One of ApplicationInformation.ASTAR, ApplicationInformation.DIJKSTRAS, ...
@@ -56,4 +74,9 @@ public final class ApplicationInformation {
     public void setAlgorithm(IPathFind algorithm) {
         this.pathfinding.setAlgorithm(algorithm);
     }
+
+
+    public EnumSearchType getSearchType() {return this.searchType;}
+
+    public void setSearchType(EnumSearchType type) {this.searchType = type;}
 }

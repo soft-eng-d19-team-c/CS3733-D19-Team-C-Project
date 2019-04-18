@@ -1,6 +1,8 @@
 package model;
 
+import base.Database;
 import base.Main;
+import base.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -83,7 +85,7 @@ public class InterpreterRequest {
     public boolean insert(){
         String sqlCmd = "insert into INTERPRETERREQUESTS (NODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.description);
             ps.setTimestamp(3, this.dateTimeRequest);
@@ -107,7 +109,7 @@ public class InterpreterRequest {
         java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeRequest.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.description);
             ps.setTimestamp(3, this.dateTimeRequest);
@@ -128,7 +130,7 @@ public class InterpreterRequest {
     public static ObservableList<InterpreterRequest> getAllServiceRequests() {
         ObservableList<InterpreterRequest> requests =  FXCollections.observableArrayList();
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM INTERPRETERREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
             while(rs.next()) {
@@ -156,7 +158,7 @@ public class InterpreterRequest {
     public boolean resolve() {
         String str = "UPDATE INTERPRETERREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setString(2, Main.user.getUsername());

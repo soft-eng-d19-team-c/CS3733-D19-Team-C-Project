@@ -1,11 +1,11 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import model.FloristServiceRequest;
 
 import java.net.URL;
@@ -19,6 +19,8 @@ public class FloristServiceRequestController extends Controller implements Initi
     private AutocompleteSearchBarController acSearchEndController;
     @FXML
     private TextField description;
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
 
     @Override
@@ -28,7 +30,11 @@ public class FloristServiceRequestController extends Controller implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        acSearchStartController.setLocation(null);
+        acSearchEndController.setLocation(null);
         description.setText(null);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
 
@@ -41,6 +47,6 @@ public class FloristServiceRequestController extends Controller implements Initi
         FloristServiceRequest newServiceRequest = new FloristServiceRequest(startNodeID, endNodeID, desc, dateTimeSubmitted);
 
         newServiceRequest.insert();
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

@@ -1,6 +1,6 @@
 package base;
 
-import model.User;
+import model.AuthException;
 
 /**
  * The Main class of the application that stores the User, Facade, and Database objects.
@@ -9,13 +9,18 @@ import model.User;
  */
 public class Main {
     public static Facade screenController;
-    public static Database database;
     public static User user;
     public static ApplicationInformation info;
+    public static AuthenticationManager auth;
+    public static IdleMonitor idleMonitor;
     public static void main(String[] args) {
-        database = new Database(true, false);
-        user = new User("staff");
+        auth = new AuthenticationManager();
         info = new ApplicationInformation("CHALL007L1");
+        try {
+            user = new User("guest", "guest");
+        } catch (AuthException e) {
+            e.printStackTrace();
+        }
         MainFXML app = new MainFXML();
         app.main(args);
     }

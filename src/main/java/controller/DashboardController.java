@@ -3,13 +3,18 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class DashboardController extends Controller implements Initializable {
+    @FXML
+    private ImageView backgroundimage;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -18,6 +23,7 @@ public class DashboardController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     public void serviceRequestButtonClick(ActionEvent actionEvent) {
@@ -43,7 +49,7 @@ public class DashboardController extends Controller implements Initializable {
     }
 
     public void bookRoomButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONS);
+        Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR);
     }
 
     public void editMapButtonClick(ActionEvent actionEvent) {

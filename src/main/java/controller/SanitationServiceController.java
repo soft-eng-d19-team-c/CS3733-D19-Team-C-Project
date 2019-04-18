@@ -1,12 +1,11 @@
 package controller;
 
-import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import model.SanitationRequest;
 
 import java.net.URL;
@@ -17,7 +16,8 @@ public class SanitationServiceController extends Controller implements Initializ
 
     @FXML private AutocompleteSearchBarController autoCompleteTextController;
 
-
+    @FXML private ImageView backgroundimage;
+    @FXML private NavController navController;
 
     //String type, Node location, String description, Date dateTimeSubmitted, Date dateTimeResolved, boolean isComplete, User completedBy, User requestedBy
     @Override
@@ -27,6 +27,10 @@ public class SanitationServiceController extends Controller implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        description.setText(null);
+        autoCompleteTextController.setLocation(null);
+        navController.setActiveTab(NavTypes.SERVICEREQUESTS);
+        backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
 
     //save the service request to the database, to late view
@@ -35,6 +39,6 @@ public class SanitationServiceController extends Controller implements Initializ
         SanitationRequest sanitationRequest = new SanitationRequest(autoCompleteTextController.getNodeID(), description.getText());
         sanitationRequest.insert();
 
-        Main.screenController.setScreen(EnumScreenType.DASHBOARD);
+        Main.screenController.goBack();
     }
 }

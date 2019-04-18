@@ -8,10 +8,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class PathToText {
+import static java.lang.Math.sqrt;
+
+public class PathToText{
     // Converts linked list to a detailed text based path
 
     LinkedList<Node> nodes;
+    StringBuilder robotInstructions = new StringBuilder(); //Collects instructions in robot format
+    static String postMe;   //The message for POST
+
 
     public PathToText(LinkedList<Node> nodes) {
         this.nodes = nodes;
@@ -35,7 +40,7 @@ public class PathToText {
 
         return textPath.toString();
         */
-
+        String strRobotInstructions;
         StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
         Collections.reverse(Arrays.asList(nodesArray));
@@ -60,22 +65,42 @@ public class PathToText {
 
                 switch (dir) {
                     case LEFT:
-                        textPath.append("Take a left at " + curr.getLongName() + "\n");
+                        textPath.append("Take a left at " + curr.getLongName());
+                        robotInstructions.append('L');
                         break;
                     case RIGHT:
-                        textPath.append("Take a right at " + curr.getLongName() + "\n");
+                        textPath.append("Take a right at " + curr.getLongName());
+                        robotInstructions.append('R');
                         break;
                     case STRAIGHT:
-                        textPath.append("Continue straight past " + curr.getLongName() + "\n");
+                        textPath.append("Continue straight past " + curr.getLongName());
+                        robotInstructions.append('S');
                         break;
                     default:
                         System.err.println("Default case in direction switch");
                 }
+
+                robotInstructions.append(',');
+
+                // 3ft = 8px
+                double distance = findEuclideanDistance(curr, next) * 3 / 8;
+
+                textPath.append(String.format(" distance: %.0fft\n", distance));
+
+
+                double inches = distance / 12.0;
+                int robotInches = (int) inches;
+                robotInstructions.append(robotInches);
+                robotInstructions.append(',');
+
+
             }
         }
 
         textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
 
+        strRobotInstructions = robotInstructions.toString();
+        postMe = strRobotInstructions.substring(0, strRobotInstructions.length() - 1); //Get rid of the last extra comma
 //        System.out.println(textPath.toString());
 
         return textPath.toString();
@@ -104,6 +129,21 @@ public class PathToText {
 
     public String getDetailedPath(){
         return getDetailedPath(nodes);
+    }
+
+    @SuppressWarnings("Duplicates")
+    //also used to find the predicted cost to the end
+    private double findEuclideanDistance(Node a, Node b) {
+
+        int aX = a.getX();
+        int aY = a.getY();
+        int bX = b.getX();
+        int bY = b.getY();
+
+        int xDistance = aX - bX;
+        int yDistance = aY - bY;
+        int distSquared = (xDistance * xDistance) + (yDistance * yDistance);
+        return sqrt(distSquared);
     }
 
 

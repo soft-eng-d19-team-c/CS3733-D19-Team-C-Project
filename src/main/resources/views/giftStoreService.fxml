@@ -5,42 +5,60 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="screen-background" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="screen-background" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GiftStoreController">
    <children>
-      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <ImageView fitHeight="366.0" fitWidth="400.0" layoutX="1812.0" layoutY="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1934.0" layoutX="160.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../img/Gift Store.png" />
+            <!--<Image url="@../img/background.png" />-->
          </image>
       </ImageView>
-      <VBox layoutX="910.0" layoutY="440.0" prefHeight="200.0" prefWidth="100.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="29.0" layoutY="48.0" prefHeight="1018.0" prefWidth="1126.0" stylesheets="@app.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Gift Store Delivery Request">
                <font>
                   <Font size="100.0" />
                </font>
             </Label>
+            <Label text="Who is the gift being sent to?">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
             <JFXTextField fx:id="recipient" focusColor="#a84040" promptText="Recipient">
                <font>
-                  <Font size="50.0" />
+                  <Font size="30.0" />
                </font>
             </JFXTextField>
+            <Label text="Who is sending the gift?">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
             <JFXTextField fx:id="sender" focusColor="#a84040" promptText="Sender">
                <font>
-                  <Font size="50.0" />
+                  <Font size="30.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="type" focusColor="#a84040" maxWidth="1.7976931348623157E308" prefHeight="88.0" prefWidth="1321.0" promptText="Gift" VBox.vgrow="ALWAYS">
+            <Label text="What is the gift?">
                <font>
-                  <Font size="50.0" />
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="type" focusColor="#a84040" maxWidth="1.7976931348623157E308" prefHeight="88.0" prefWidth="1321.0" promptText="Gift Description" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="30.0" />
                </font>
             </JFXTextField>
+            <Label text="Location">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
             <fx:include fx:id="autoCompleteText" source="bigAutoCompleteBar.fxml" />
            <VBox />
          <JFXButton fx:id="submitButton" onAction="#submitButtonClick" stylesheets="@app.css" text="Submit">
@@ -49,12 +67,14 @@
                <String fx:value="btn-success" />
                <String fx:value="btn-lg" />
             </styleClass>
-            <VBox.margin>
-               <Insets left="50.0" top="300.0" />
-            </VBox.margin>
+               <VBox.margin>
+                  <Insets left="700.0" />
+               </VBox.margin>
          </JFXButton>
          </children>
       </VBox>
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+      <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
    </children>
-   <fx:include source="backandhomebuttonpartial.fxml" fx:id="Buttons"/>
+
 </AnchorPane>

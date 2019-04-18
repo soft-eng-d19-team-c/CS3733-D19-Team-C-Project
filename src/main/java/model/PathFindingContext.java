@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 
 import java.sql.ResultSet;
@@ -64,7 +65,7 @@ public class PathFindingContext {
         this.adjacencyList.clear();
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(getMeNodesAndEdges);
             while (rs.next()) {
                 String nodeID = rs.getString("NODEID");
@@ -126,7 +127,6 @@ public class PathFindingContext {
             temp = pathValues.get(temp).getPreviousNode();
             path.add(temp);
         }
-
         return path;
     }
 }
