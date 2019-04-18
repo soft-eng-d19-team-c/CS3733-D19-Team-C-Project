@@ -1,4 +1,5 @@
 package model;
+import base.Database;
 import base.Main;
 import base.User;
 import javafx.collections.FXCollections;
@@ -60,7 +61,7 @@ public class ReligiousService {
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime());
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
@@ -85,7 +86,7 @@ public class ReligiousService {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, nodeID);
             ps.setString(2, description);
             ps.setTimestamp(3, ts);
@@ -115,7 +116,7 @@ public class ReligiousService {
         ObservableList<ReligiousService> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM RELIGIOUSSERVICEREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -149,7 +150,7 @@ public class ReligiousService {
     public boolean resolve() {
         String str = "UPDATE RELIGIOUSSERVICEREQUESTS SET TIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());

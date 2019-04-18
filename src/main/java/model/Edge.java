@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class Edge {
         LinkedList<Edge> edges = new LinkedList<>();
         String sqlStmt = "SELECT DISTINCT EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM EDGES INNER JOIN NODES ON EDGES.STARTNODE = NODES.NODEID OR EDGES.ENDNODE = NODES.NODEID WHERE NODES.FLOOR='"+floor+"'";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);
             while (rs.next()) {
                 String edgeID = rs.getString("EDGEID");
@@ -75,7 +76,7 @@ public class Edge {
         LinkedList<Edge> edges = new LinkedList<>();
         String sqlStmt = "SELECT * FROM EDGES";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);
             while (rs.next()) {
                 String edgeID = rs.getString("EDGEID");
@@ -92,7 +93,7 @@ public class Edge {
     public boolean insert() {
         String str = "INSERT INTO EDGES (EDGEID, STARTNODE, ENDNODE) VALUES(?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1, this.getEdgeId());
             ps.setString(2, this.getStartNode());
             ps.setString(3, this.getEndNode());
@@ -106,7 +107,7 @@ public class Edge {
     public boolean remove() {
         String str = "DELETE FROM EDGES WHERE EDGEID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1, this.getEdgeId());
             ps.executeUpdate();
             return true;

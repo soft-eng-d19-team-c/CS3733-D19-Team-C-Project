@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import base.User;
 import javafx.collections.FXCollections;
@@ -38,7 +39,7 @@ public class ExternalTransportationRequest {
     public static ObservableList<ExternalTransportationRequest> getAllServiceRequests() {
         ObservableList<ExternalTransportationRequest> requests =  FXCollections.observableArrayList();
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM EXTERNALTRANSPORTATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -66,7 +67,7 @@ public class ExternalTransportationRequest {
     public void insert() {
         String sqlStr = "insert into EXTERNALTRANSPORTATIONREQUESTS (NODEID, DESTINATION, DATETIMESUBMITTED, PICKUPTIME) values (?,?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.destination);
             ps.setTimestamp(3, this.dateTimeSubmitted);
@@ -128,7 +129,7 @@ public class ExternalTransportationRequest {
     public boolean resolve() {
         String str = "UPDATE EXTERNALTRANSPORTATIONREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setString(2, Main.user.getUsername());

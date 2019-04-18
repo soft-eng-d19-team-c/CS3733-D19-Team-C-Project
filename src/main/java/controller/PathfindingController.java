@@ -95,6 +95,7 @@ public class PathfindingController extends Controller implements Initializable {
             searchWrapper.setVisible(false);
             navController.setActiveTab(NavTypes.MAP);
         }
+        findLocationNodeID = null;
         searchController_origController.refresh();
         searchController_destController.refresh();
         searchController_destController.setLocation(null);
@@ -480,7 +481,7 @@ public class PathfindingController extends Controller implements Initializable {
         String floorURL;
         switch (floor) {
             case "3":
-                floorURL = "3_NoIcons.png";
+                floorURL = "03_thethirdfloor.png";
                 currentFloorButton = Floor3;
                 break;
             case "2":

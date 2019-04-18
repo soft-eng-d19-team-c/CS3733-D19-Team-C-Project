@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,7 @@ public class SecurityRequest {
         java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setBoolean(1, isUrgent);
             ps.setString(2, nodeID);
             ps.setString(3, description);
@@ -86,7 +87,7 @@ public class SecurityRequest {
         String username = Main.user.getUsername();
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setBoolean(1, isUrgent);
             ps.setString(2, nodeID);
             ps.setString(3, description);
@@ -111,7 +112,7 @@ public class SecurityRequest {
         ObservableList<SecurityRequest> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM SECURITYREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -154,7 +155,7 @@ public class SecurityRequest {
     public boolean resolve() {
         String str = "UPDATE SECURITYREQUESTS SET DATETIMECOMPLETED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             String username = Main.user.getUsername();
             ps.setTimestamp(1, ts);

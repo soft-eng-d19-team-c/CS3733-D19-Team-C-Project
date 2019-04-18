@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import base.User;
 import javafx.collections.FXCollections;
@@ -59,7 +60,7 @@ public class FloristServiceRequest {
     public void insert() {
         String sqlStr = "insert into FLORISTREQUESTS (STARTNODEID, ENDNODEID, DESCRIPTION, DATETIMESUBMITTED) values (?,?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, this.startNodeID);
             ps.setString(2, this.endNodeID);
             ps.setString(3, this.description);
@@ -75,7 +76,7 @@ public class FloristServiceRequest {
         ObservableList<FloristServiceRequest> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM FLORISTREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 
@@ -98,7 +99,7 @@ public class FloristServiceRequest {
     public boolean resolve() {
         String str = "UPDATE FLORISTREQUESTS SET DATETIMERESOLVED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());

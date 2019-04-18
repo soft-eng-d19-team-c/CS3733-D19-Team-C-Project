@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 
 import java.sql.PreparedStatement;
@@ -25,7 +26,7 @@ public class Node {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES where NODETYPE <> 'HALL'";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);
             while (rs.next()) {
                 String nodeID = rs.getString("NODEID");
@@ -174,7 +175,7 @@ public class Node {
             //Statement stmt = connection.createStatement();
             String str = "UPDATE NODES SET XCOORD = ?, YCOORD = ?, FLOOR = ?, " +
                     "BUILDING = ?, NODETYPE = ?,   LONGNAME = ?, SHORTNAME = ? WHERE NODEID = ?";
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setInt(1, this.getX());
             ps.setInt(2, this.getY());
             ps.setString(3, this.getFloor());
@@ -198,7 +199,7 @@ public class Node {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES WHERE FLOOR = '" + floor + "'";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);
             while (rs.next()) {
                 String nodeID = rs.getString("NODEID");
@@ -222,7 +223,7 @@ public class Node {
         LinkedList<Node> nodes = new LinkedList<>();
         String sqlStmt = "SELECT * FROM NODES";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);
             while (rs.next()) {
                 String nodeID = rs.getString("NODEID");
@@ -257,7 +258,7 @@ public class Node {
         Node result = null;
         String sqlStmt = "SELECT * FROM NODES WHERE NODEID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStmt);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStmt);
             ps.setString(1,nodeID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -303,7 +304,7 @@ public class Node {
     public boolean insert() {
         String str = "INSERT INTO NODES (NODEID, XCOORD, YCOORD, FLOOR) VALUES(?,?,?,?)";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1, this.getID());
             ps.setInt(2, this.getX());
             ps.setInt(3, this.getY());
@@ -318,7 +319,7 @@ public class Node {
     public boolean remove() {
         String str = "DELETE FROM NODES WHERE NODEID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1, this.getID());
             ps.executeUpdate();
             return true;

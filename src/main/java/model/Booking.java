@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,7 +69,7 @@ public class Booking {
         ObservableList<Booking> result = FXCollections.observableArrayList();
         String str = "SELECT * FROM BOOKINGS LEFT JOIN USERS AS E ON BOOKINGS.USERCOMPLETEDBY = E.USERNAME";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
                 result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));
@@ -83,7 +84,7 @@ public class Booking {
         LinkedList<Booking> result = new LinkedList<>();
         String sqlStr = "select BOOKINGS.ID, LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY, B.ID AS B_ID, TYPE, TITLE, XCOORD, YCOORD from BOOKINGS LEFT JOIN BOOKINGLOCATIONS AS B ON BOOKINGS.LOCATION = B.ID where DATETIMESTART < ? and DATETIMEEND > ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setTimestamp(1,time);
             ps.setTimestamp(2,time);
             ResultSet rs = ps.executeQuery();
@@ -118,7 +119,7 @@ public class Booking {
         LinkedList<Booking> result = new LinkedList<>();
         String str = "SELECT * FROM BOOKINGS WHERE LOCATION = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             ps.setString(1,bookableLocationTitle);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -166,7 +167,7 @@ public class Booking {
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, location);
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
@@ -189,7 +190,7 @@ public class Booking {
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(dateTimeEnd.getTime()); //because ps.setDate takes an sql.date, not a util.date
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, location);
             ps.setString(2, description);
             ps.setTimestamp(3, sqlStartDate);
@@ -211,7 +212,7 @@ public class Booking {
         ObservableList<Booking> result = FXCollections.observableArrayList();
         String str = "SELECT * FROM BOOKINGS";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
                 result.add(new Booking(rs.getString("LOCATION"), rs.getString("DESCRIPTION"), rs.getTimestamp("DATETIMESTART"), rs.getTimestamp("DATETIMEEND"), rs.getString("USERCOMPLETEDBY"), rs.getInt("ID")));

@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,7 +67,7 @@ public class BookableLocation {
         ObservableList<BookableLocation> result = FXCollections.observableArrayList();
         String str = "SELECT * FROM BOOKINGLOCATIONS";
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
                 result.add(new BookableLocation(rs.getString("ID"), rs.getString("type"), rs.getString("title"), rs.getInt("XCOORD"), rs.getInt("YCOORD")));

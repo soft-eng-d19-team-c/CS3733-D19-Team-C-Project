@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import base.User;
 import javafx.collections.FXCollections;
@@ -88,7 +89,7 @@ public class InternalTransportationService {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
@@ -114,7 +115,7 @@ public class InternalTransportationService {
 
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlCmd);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd);
             ps.setString(1, this.nodeID);
             ps.setString(2, this.nodeIDDest);
             ps.setString(3, this.description);
@@ -136,7 +137,7 @@ public class InternalTransportationService {
     public boolean resolve() {
         String str = "UPDATE INTERNALTRANSPORTATIONREQUESTS SET DATETIMECOMPLETED = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setInt(2, this.getID());
@@ -153,7 +154,7 @@ public class InternalTransportationService {
         ObservableList<InternalTransportationService> requests =  FXCollections.observableArrayList();
 
         try {
-            Statement stmt = Main.database.getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String str = "SELECT * FROM INTERNALTRANSPORTATIONREQUESTS";
             ResultSet rs = stmt.executeQuery(str);
 

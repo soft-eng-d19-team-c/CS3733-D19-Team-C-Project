@@ -32,7 +32,7 @@ public class User {
     public User(String username, String password) throws AuthException {
         String sqlStr = "select USERS.USERNAME, USERS.PASSWORD, USERPERMISSIONS.PERMISSIONS from USERS LEFT JOIN USERHASPERMISSIONS ON USERHASPERMISSIONS.USERNAME = USERS.USERNAME LEFT JOIN USERPERMISSIONS ON USERHASPERMISSIONS.PERMISSIONS = USERPERMISSIONS.PERMISSIONS where USERS.USERNAME = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {    // make sure there is at least one row so we can validate password

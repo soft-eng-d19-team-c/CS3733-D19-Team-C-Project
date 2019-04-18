@@ -1,5 +1,6 @@
 package model;
 
+import base.Database;
 import base.Main;
 import base.User;
 import javafx.collections.FXCollections;
@@ -65,7 +66,7 @@ public class GiftStoreRequest {
     public void insert(){
             String sqlStr = "insert into createGiftStoreRequests (recipient, sender, location, gifttype, datetimesubmitted) Values (?, ?, ?, ?, ?)";
             try {
-                    PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+                    PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
                     ps.setString(1, this.recipient);
                     ps.setString(2, this.sender);
                     ps.setString(3, this.location);
@@ -84,7 +85,7 @@ public class GiftStoreRequest {
             ObservableList<GiftStoreRequest> requests =  FXCollections.observableArrayList();
 
             try {
-                    Statement stmt = Main.database.getConnection().createStatement();
+                    Statement stmt = Database.getConnection().createStatement();
                     String str = "SELECT * FROM createGiftStoreRequests";
                     ResultSet rs = stmt.executeQuery(str);
 
@@ -110,7 +111,7 @@ public class GiftStoreRequest {
     public boolean resolve() {
         String str = "UPDATE createGiftStoreRequests SET DATETIMERESOLVED = ?, USERCOMPLETEDBY = ? WHERE ID = ?";
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(str);
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(1, ts);
             ps.setString(2, Main.user.getUsername());

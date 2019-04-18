@@ -24,7 +24,7 @@ public class GiftStoreRequestTest {
         String sqlStr = "insert into createGiftStoreRequests (recipient, sender, location, gifttype, datetimesubmitted) Values (?, ?, ?, ?, ?)";
 
         try {
-            PreparedStatement ps = Main.database.getConnection().prepareStatement(sqlStr);
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlStr);
             ps.setString(1, "TestRecip");
             ps.setString(2, "TestSend");
             ps.setString(3, "TestL");

@@ -90,11 +90,7 @@ public class EditMapController extends Controller implements Initializable {
             currentFloor = Main.info.getKioskLocation().getFloor();
         if (currentFloor == null)
             currentFloor = "L1";
-        if (currentFloor.equals("G")) {
-            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
-        } else {
-            mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
-        }
+        changeFloor(currentFloor);
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2",
@@ -150,11 +146,15 @@ public class EditMapController extends Controller implements Initializable {
             floorsMenu.setOnAction((event) -> {
                 nodeCircles.clear();
                 currentFloor = floorsMenu.getSelectionModel().getSelectedItem();
+                changeFloor(currentFloor);
+                /*
                 if (currentFloor.equals("G")) {
                     mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/00_thegroundfloor.png"))));
                 } else {
                     mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + currentFloor + "_NoIcons.png"))));
                 }
+
+                 */
                 nodes = Node.getNodesByFloor(currentFloor);
                 edges = Edge.getEdgesByFloor(currentFloor);
                 drawNodes();
@@ -167,6 +167,34 @@ public class EditMapController extends Controller implements Initializable {
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
         });
+    }
+
+    private void changeFloor(String floor) {
+        String floorURL;
+        switch (floor) {
+            case "3":
+                floorURL = "03_thethirdfloor.png";
+                break;
+            case "2":
+                floorURL = "02_thesecondfloor_withbookablelocations.png";
+                break;
+            case "1":
+                floorURL = "01_thefirstfloor.png";
+                break;
+            case "G":
+                floorURL = "00_thegroundfloor.png";
+                break;
+            case "L1":
+                floorURL = "00_thelowerlevel1.png";
+                break;
+            case "L2":
+                floorURL = "00_thelowerlevel2.png";
+                break;
+            default:
+                System.out.println("Error in PathfindingController.updateFloorImg invalid floor");
+                floorURL = "01_thefirstfloor.png";
+        }
+        mapImg.setImage(new Image(String.valueOf(getClass().getResource("/img/" + floorURL))));
     }
 
     private void drawNodes() {
@@ -635,13 +663,13 @@ public class EditMapController extends Controller implements Initializable {
                     if (strshorterthan255(type.getText())){ n.setNodeType(type.getText()); } else {
                         return;
                     }
-                    n.update();
                     for (javafx.scene.Node node : mapImgPane.getChildren().subList(1, mapImgPane.getChildren().size())) {
                         node.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
                         node.addEventFilter(MouseEvent.MOUSE_DRAGGED, dragNodeHandler);
                         node.addEventFilter(MouseEvent.MOUSE_RELEASED, undragNodeHandler);
                     }
                     mapImgPane.getScene().setCursor(Cursor.DEFAULT);
+                    n.update();
                 });
             }
         }
