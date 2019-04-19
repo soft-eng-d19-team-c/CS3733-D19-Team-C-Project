@@ -228,6 +228,10 @@ public class PathfindingController extends Controller implements Initializable {
 
      */
     public void goBtnClick(ActionEvent actionEvent) {
+        makePath();
+    }
+
+    public void makePath(){
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
@@ -383,6 +387,7 @@ public class PathfindingController extends Controller implements Initializable {
             Main.info.getAlgorithm().setHandicap(true);
         }
         else Main.info.getAlgorithm().setHandicap(false);
+        makePath();
     }
 
     /*
