@@ -30,6 +30,7 @@ import model.Node;
 import model.PathScroll;
 import model.PathToText;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,6 +40,7 @@ import java.util.ResourceBundle;
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private ToggleButton danceBtn;
+    @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
     @FXML private Pane mapImgPane;
@@ -101,6 +103,7 @@ public class PathfindingController extends Controller implements Initializable {
         searchController_destController.setLocation(null);
         autocompletesearchbarController.refresh();
         autocompletesearchbarController.setLocation(null);
+        handicapBtn.setSelected(false);
         Main.info.getAlgorithm().refresh();
         hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
@@ -351,6 +354,12 @@ public class PathfindingController extends Controller implements Initializable {
         pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
     }
 
+    public void handicapBtnClick(ActionEvent e){
+        if(handicapBtn.isSelected()){
+            Main.info.getAlgorithm().setHandicap(true);
+        }
+        else Main.info.getAlgorithm().setHandicap(false);
+    }
 
     /*
 

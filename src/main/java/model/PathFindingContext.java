@@ -1,7 +1,6 @@
 package model;
 
 import base.Database;
-import base.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +37,11 @@ public class PathFindingContext {
         this.refresh();
     }
 
+    public void setHandicap(boolean handicap) {
+        isHandicap = handicap;
+        this.refresh();
+    }
+
     public String getAlgorithmName() {
         return this.algorithm.getAlgorithmName();
     }
@@ -63,6 +67,9 @@ public class PathFindingContext {
         respectively.
          */
         this.adjacencyList.clear();
+//        if(true){
+//            getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
+//        }
         String getMeNodesAndEdges = "SELECT DISTINCT NODES.NODEID, NODES.XCOORD, NODES.YCOORD, NODES.FLOOR, NODES.BUILDING, NODES.NODETYPE, NODES.LONGNAME, NODES.SHORTNAME, EDGES.EDGEID, EDGES.STARTNODE, EDGES.ENDNODE FROM NODES LEFT JOIN EDGES ON NODES.NODEID=EDGES.STARTNODE OR NODES.NODEID = EDGES.ENDNODE";
         try {
             Statement stmt = Database.getConnection().createStatement();
