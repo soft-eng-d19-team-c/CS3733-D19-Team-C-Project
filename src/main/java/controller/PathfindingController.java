@@ -265,13 +265,13 @@ public class PathfindingController extends Controller implements Initializable {
      * Right now, if you switch floors, it just changes the ones that should be redrawn to red
      * @author Fay Whittall
      */
+    @SuppressWarnings("Duplicates")
     private void scroll(){
         int oldPosition = pathScroll.getOldPosition();
         int newPosition = (int) pathScrollBar.getValue();
         boolean forwards = false;
         if (oldPosition < newPosition)
             forwards = true;
-
         Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
         //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
         if(newPosition == (int) pathScrollBar.getMax()){
@@ -280,10 +280,34 @@ public class PathfindingController extends Controller implements Initializable {
         else{
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                if (forwards)
+                if (forwards){
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
-                else
+                    for(int i = 0; i < oldPosition; i++){
+                        Node n = nodesOnPathArray[i];
+                        if(n.getFloor().equals(currentFloor)){
+                            Circle nodeCircle = nodeCircles.get(n.getID());
+                            nodeCircle.setFill(red);
+                            if (nodeLines.containsKey(n.getID())){
+                                Line nodeLine = nodeLines.get(n.getID());
+                                nodeLine.setStroke(red);
+                            }
+                        }
+                    }
+                }
+                else{
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+                    for(int i = nodesOnPathArray.length - 1; i > newPosition; i--){
+                        Node n = nodesOnPathArray[i];
+                        if(n.getFloor().equals(currentFloor)){
+                            Circle nodeCircle = nodeCircles.get(n.getID());
+                            nodeCircle.setFill(black);
+                            if (nodeLines.containsKey(n.getID())){
+                                Line nodeLine = nodeLines.get(n.getID());
+                                nodeLine.setStroke(black);
+                            }
+                        }
+                    }
+                }
             }
             for(Node n: nodesToRedraw){
                 if(nodeCircles.containsKey(n.getID())){
