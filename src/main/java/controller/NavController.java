@@ -3,12 +3,19 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -30,6 +37,12 @@ public class NavController extends Controller implements Initializable {
 
     private LinkedList<Pane> selectBars;
 
+    // clock
+    private int hour;
+    private int minute;
+    private int second;
+    @FXML private Label time; // TODO add this to FXML
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -44,6 +57,21 @@ public class NavController extends Controller implements Initializable {
         selectBars.add(bookSelectBar);
         selectBars.add(adminSelectBar);
         selectBars.add(loginSelectBar);
+
+        Platform.runLater(() -> {
+            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                second = LocalDateTime.now().getSecond();
+                minute = LocalDateTime.now().getMinute();
+                hour = LocalDateTime.now().getHour();
+                time.setText(hour + ":" + (minute) + ":" + second);
+            }),
+                new KeyFrame(Duration.seconds(1))
+            );
+            clock.setCycleCount(Animation.INDEFINITE);
+            clock.play();
+        });
+
+
     }
 
     public void mapButtonClick(ActionEvent actionEvent) {
