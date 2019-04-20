@@ -1,7 +1,6 @@
 package model;
 
 import base.Database;
-import base.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +35,10 @@ public class PathFindingContext {
         this.adjacencyList = new HashMap<>();
         this.nodesList = new HashMap<>();
         this.refresh();
+    }
+
+    public void setHandicap(boolean handicap) {
+        isHandicap = handicap;
     }
 
     public String getAlgorithmName() {

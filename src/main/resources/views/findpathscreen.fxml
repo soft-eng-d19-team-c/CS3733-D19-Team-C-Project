@@ -67,14 +67,20 @@
                   </VBox>
                </children>
             </Pane>
-            <JFXToggleButton fx:id="danceBtn" onAction="#dancePartyBtnClick" text="Dance Party?" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </JFXToggleButton>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <JFXToggleButton fx:id="handicapBtn" onAction="#handicapBtnClick" text="Handicap Accessible" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <JFXToggleButton fx:id="danceBtn" onAction="#dancePartyBtnClick" text="Dance Party?" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXToggleButton>
+               </children>
+            </HBox>
             <JFXSlider fx:id="pathScrollBar">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
