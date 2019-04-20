@@ -387,7 +387,9 @@ public class PathfindingController extends Controller implements Initializable {
             Main.info.getAlgorithm().setHandicap(true);
         }
         else Main.info.getAlgorithm().setHandicap(false);
-        makePath();
+        if(hasPath){
+            makePath();
+        }
     }
 
     /*
@@ -692,7 +694,7 @@ public class PathfindingController extends Controller implements Initializable {
                     case "1":
                         Floor1.setStyle("-fx-background-color: -primary");
                         break;
-                    case "Ground":
+                    case "G":
                         Ground.setStyle("-fx-background-color: -primary");
                         break;
                     case "L1":
@@ -715,7 +717,7 @@ public class PathfindingController extends Controller implements Initializable {
                         case "1":
                             Floor1.setStyle("-fx-background-color: -secondary");
                             break;
-                        case "Ground":
+                        case "G":
                             Ground.setStyle("-fx-background-color: -secondary");
                             break;
                         case "L1":
@@ -740,7 +742,7 @@ public class PathfindingController extends Controller implements Initializable {
                 case "1":
                     Floor1.setStyle("-fx-background-color: -success");
                     break;
-                case "Ground":
+                case "G":
                     Ground.setStyle("-fx-background-color: -success");
                     break;
                 case "L1":

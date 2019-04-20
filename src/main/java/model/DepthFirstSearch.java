@@ -53,6 +53,7 @@ public class DepthFirstSearch implements IPathFind {
                     PathValue path = pathValues.get(n);
                     //prevents any stairs from being searched for
                     if(isHandicap &&
+                            currentNode.getNodeType().equals("STAI") &&
                             n.getNodeType().equals("STAI") &&
                             n != startNode  &&
                             n != endNode){
