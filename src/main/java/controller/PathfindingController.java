@@ -128,8 +128,8 @@ public class PathfindingController extends Controller implements Initializable {
              */
 
         new Thread(() -> {
-            if (!imageCache.containsKey("3_NoIcons.png")) {
-                imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
+            if (!imageCache.containsKey("03_thethirdfloor.png")) {
+                imageCache.put("03_thethirdfloor.png", new Image(String.valueOf(getClass().getResource("/img/03_thethirdfloor.png"))));
             }
             if (!imageCache.containsKey("02_thesecondfloor_withbookablelocations.png")) {
                 imageCache.put("02_thesecondfloor_withbookablelocations.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor_withbookablelocations.png"))));
