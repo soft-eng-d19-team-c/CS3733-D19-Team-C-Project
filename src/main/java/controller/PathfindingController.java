@@ -47,6 +47,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private NavController navController;
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private JFXButton phoneNumberBtn;
+    @FXML private JFXButton clearBtn;
     @FXML private JFXButton Floor3;
     @FXML private JFXButton Floor2;
     @FXML private JFXButton Floor1;
@@ -113,6 +114,7 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(L1);
         allButtons.add(L2);
         pathScrollBar.setVisible(false);
+        clearBtn.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         Platform.runLater(() -> {
@@ -237,13 +239,23 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
+        clearBtn.setVisible(true);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
-        danceBtn.setVisible(true);
+        danceBtn.setSelected(false);
         hasPath = true;
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
+    }
+
+    public void clearBtnClick(ActionEvent e){
+        pathScrollBar.setVisible(false);
+        pathScrollBar.setDisable(false);
+        clearBtn.setVisible(false);
+        displayAllNodes();
+        hasPath = false;
+        danceBtn.setSelected(false);
     }
 
     /**
