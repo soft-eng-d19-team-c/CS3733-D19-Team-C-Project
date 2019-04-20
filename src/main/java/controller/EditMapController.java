@@ -118,7 +118,7 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DFS.getAlgorithmName());
         ObservableList<String> differentSearches = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
-                        "Levensthein Distance",
+                        "Levenshtein Distance",
                                 "Simple Comparison");
         //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
@@ -191,7 +191,7 @@ public class EditMapController extends Controller implements Initializable {
                 changeTolerance.valueChangingProperty().removeListener(changeToleranceListener);
             }
             else{
-                searchesMenu.setValue("Levensthein Distance");
+                searchesMenu.setValue("Levenshtein Distance");
                 changeTolerance.setVisible(true);
                 toleranceLabel.setVisible(true);
                 toleranceWordLabel.setVisible(true);
@@ -503,7 +503,7 @@ public class EditMapController extends Controller implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             switch (searchesMenu.getValue()){
-                case "Levensthein Distance":
+                case "Levenshtein Distance":
                     Main.info.setSearchType(EnumSearchType.LEVENSHTEIN);
                     changeTolerance.setVisible(true);
                     toleranceLabel.setVisible(true);
