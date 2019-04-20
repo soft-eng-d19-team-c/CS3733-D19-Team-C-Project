@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumSearchType;
 import base.Main;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -45,9 +46,13 @@ public class EditMapController extends Controller implements Initializable {
     private ComboBox<String> algosMenu;
 
     @FXML
+    private ComboBox<String> searchesMenu;
+
+    @FXML
     protected Accordion editNode;
 
     @FXML private TextField changeIdleTime;
+    @FXML private TextField changeTolerance;
     @FXML private Label changeIdleTimeLabel;
     @FXML private NavController navController;
 
@@ -83,6 +88,7 @@ public class EditMapController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.ADMINVIEW);
         algosMenu.setOnAction(null);
+        searchesMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
         if (Main.screenController.getData("floor") != null)
             currentFloor = (String) Main.screenController.getData("floor");
@@ -105,6 +111,10 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+        ObservableList<String> differentSearches = //set the dropdown in the fxml
+                FXCollections.observableArrayList(
+                        "Levensthein Distance",
+                                "Simple Comparison");
         //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
@@ -166,6 +176,16 @@ public class EditMapController extends Controller implements Initializable {
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
+            searchesMenu.setItems(differentSearches);
+            if(Main.info.getSearchType().equals(EnumSearchType.COMPARISON)){
+                searchesMenu.setValue("Simple Comparison");
+                changeTolerance.setDisable(true);
+            }
+            else{
+                searchesMenu.setValue("Levensthein Distance");
+                changeTolerance.setDisable(false);
+            }
+            searchesMenu.setOnAction(changeSearchHandler);
         });
     }
 
@@ -451,6 +471,22 @@ public class EditMapController extends Controller implements Initializable {
                     break;
                 case "Depth First Search":
                     Main.info.setAlgorithm(Main.info.DFS);
+                    break;
+            }
+        }
+    };
+
+    EventHandler<ActionEvent> changeSearchHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            switch (searchesMenu.getValue()){
+                case "Levensthein Distance":
+                    Main.info.setSearchType(EnumSearchType.LEVENSHTEIN);
+                    changeTolerance.setDisable(false);
+                    break;
+                case "Simple Comparison":
+                    Main.info.setSearchType(EnumSearchType.COMPARISON);
+                    changeTolerance.setDisable(true);
                     break;
             }
         }
