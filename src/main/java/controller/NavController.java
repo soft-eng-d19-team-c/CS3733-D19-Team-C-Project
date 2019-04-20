@@ -40,8 +40,7 @@ public class NavController extends Controller implements Initializable {
     // clock
     private int hour;
     private int minute;
-    private int second;
-    @FXML private Label time; // TODO add this to FXML
+    @FXML private Label clock;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -59,16 +58,18 @@ public class NavController extends Controller implements Initializable {
         selectBars.add(loginSelectBar);
 
         Platform.runLater(() -> {
-            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-                second = LocalDateTime.now().getSecond();
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 minute = LocalDateTime.now().getMinute();
                 hour = LocalDateTime.now().getHour();
-                time.setText(hour + ":" + (minute) + ":" + second);
+                String suffix = hour < 12 ? " am" : " pm";
+                hour %= 12;
+                hour = hour == 0 ? 12 : hour;
+                this.clock.setText(hour + ":" + (minute) + suffix);
             }),
                 new KeyFrame(Duration.seconds(1))
             );
-            clock.setCycleCount(Animation.INDEFINITE);
-            clock.play();
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
         });
 
 
