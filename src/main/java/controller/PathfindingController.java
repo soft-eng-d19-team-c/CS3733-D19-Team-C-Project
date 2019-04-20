@@ -202,21 +202,28 @@ public class PathfindingController extends Controller implements Initializable {
                 mapImgPane.getChildren().add(line);
             }
         }
-
         if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
-            Circle foundNode = nodeCircles.get(findLocationNodeID);
-
-            foundNode.setRadius(6.0);
-            foundNode.setFill(Color.ORANGERED);
-            foundNode.toFront();
-
-            ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
-            st.setByX(1.2);
-            st.setByY(1.2);
-            st.setCycleCount(Animation.INDEFINITE);
-            st.setAutoReverse(true);
-            st.play();
+            showFoundNode(nodeCircles.get(findLocationNodeID), Color.ORANGERED);
         }
+        else if(nodeCircles.containsKey(Main.info.getKioskLocation().getID())){
+            showFoundNode(nodeCircles.get(Main.info.getKioskLocation().getID()), Color.GREEN);
+        }
+    }
+
+    /**
+     * shows the node that has been found as a flashing red dot
+     * @param foundNode
+     */
+    public void showFoundNode(Circle foundNode, Color color){
+        foundNode.setRadius(6.0);
+        foundNode.setFill(color);
+        foundNode.toFront();
+        ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
+        st.setByX(1.2);
+        st.setByY(1.2);
+        st.setCycleCount(Animation.INDEFINITE);
+        st.setAutoReverse(true);
+        st.play();
     }
 
 
