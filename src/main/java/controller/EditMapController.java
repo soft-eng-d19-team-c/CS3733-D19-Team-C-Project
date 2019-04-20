@@ -2,7 +2,10 @@ package controller;
 
 import base.EnumSearchType;
 import base.Main;
+import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,8 +55,10 @@ public class EditMapController extends Controller implements Initializable {
     protected Accordion editNode;
 
     @FXML private TextField changeIdleTime;
-    @FXML private TextField changeTolerance;
+    @FXML private JFXSlider changeTolerance;
     @FXML private Label changeIdleTimeLabel;
+    @FXML private Label toleranceLabel;
+    @FXML private Label toleranceWordLabel;
     @FXML private NavController navController;
 
     private LinkedList<Edge> edges;
@@ -179,13 +184,27 @@ public class EditMapController extends Controller implements Initializable {
             searchesMenu.setItems(differentSearches);
             if(Main.info.getSearchType().equals(EnumSearchType.COMPARISON)){
                 searchesMenu.setValue("Simple Comparison");
-                changeTolerance.setDisable(true);
+                changeTolerance.setVisible(false);
+                toleranceLabel.setVisible(false);
+                toleranceWordLabel.setVisible(false);
+                changeTolerance.valueProperty().removeListener(changeToleranceLabelListener);
+                changeTolerance.valueChangingProperty().removeListener(changeToleranceListener);
             }
             else{
                 searchesMenu.setValue("Levensthein Distance");
-                changeTolerance.setDisable(false);
+                changeTolerance.setVisible(true);
+                toleranceLabel.setVisible(true);
+                toleranceWordLabel.setVisible(true);
+                //toleranceLabel changes AS you scroll
+                changeTolerance.valueProperty().addListener(changeToleranceLabelListener);
+                //actual tolernace changes once the scrollbar is released
+                changeTolerance.valueChangingProperty().addListener(changeToleranceListener);
             }
             searchesMenu.setOnAction(changeSearchHandler);
+            changeTolerance.setMin(1);
+            changeTolerance.setValue(Main.info.getSearchType().getTolerance());
+            changeTolerance.setMax(15);
+            toleranceLabel.setText(Integer.toString(Main.info.getSearchType().getTolerance()));
         });
     }
 
@@ -476,19 +495,47 @@ public class EditMapController extends Controller implements Initializable {
         }
     };
 
+    /**
+     * changes the search type, enables and disables the tolerance selection
+     * @author Fay Whittall
+     */
     EventHandler<ActionEvent> changeSearchHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
             switch (searchesMenu.getValue()){
                 case "Levensthein Distance":
                     Main.info.setSearchType(EnumSearchType.LEVENSHTEIN);
-                    changeTolerance.setDisable(false);
+                    changeTolerance.setVisible(true);
+                    toleranceLabel.setVisible(true);
+                    toleranceWordLabel.setVisible(true);
+                    //toleranceLabel changes AS you scroll
+                    changeTolerance.valueProperty().addListener(changeToleranceLabelListener);
+                    //actual tolernace changes once the scrollbar is released
+                    changeTolerance.valueChangingProperty().addListener(changeToleranceListener);
                     break;
                 case "Simple Comparison":
                     Main.info.setSearchType(EnumSearchType.COMPARISON);
-                    changeTolerance.setDisable(true);
+                    changeTolerance.setVisible(false);
+                    toleranceLabel.setVisible(false);
+                    toleranceWordLabel.setVisible(false);
+                    changeTolerance.valueProperty().removeListener(changeToleranceLabelListener);
+                    changeTolerance.valueChangingProperty().removeListener(changeToleranceListener);
                     break;
             }
+        }
+    };
+
+    ChangeListener changeToleranceListener = new ChangeListener(){
+        @Override
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+            Main.info.getSearchType().setTolerance((int) changeTolerance.getValue());
+        }
+    };
+
+    ChangeListener changeToleranceLabelListener = new ChangeListener(){
+        @Override
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+            toleranceLabel.setText(Integer.toString((int) changeTolerance.getValue()));
         }
     };
 

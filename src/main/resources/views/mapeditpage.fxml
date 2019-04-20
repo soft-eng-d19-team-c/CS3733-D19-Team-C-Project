@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXSlider?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -123,11 +125,16 @@
                   <Insets left="20.0" top="20.0" />
                </VBox.margin>
             </ComboBox>
-            <TextField fx:id="changeTolerance">
+            <JFXSlider fx:id="changeTolerance" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" snapToTicks="true">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="10.0" />
-               </VBox.margin>
-            </TextField>
+                  <Insets top="20.0" />
+               </VBox.margin></JFXSlider>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="toleranceWordLabel" text="Tolerance: " />
+                  <Label fx:id="toleranceLabel" />
+               </children>
+            </HBox>
             <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClick" prefHeight="31.0" prefWidth="115.0" text="Save">
                <styleClass>
                <String fx:value="btn" />

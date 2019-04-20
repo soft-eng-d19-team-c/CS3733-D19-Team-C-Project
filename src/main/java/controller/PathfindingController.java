@@ -232,8 +232,8 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPathArray = pathScroll.getNodesOnPath();
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
-        pathScrollBar.setMin(1);
-        pathScrollBar.setValue(1);
+        pathScrollBar.setMin(0);
+        pathScrollBar.setValue(0);
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
