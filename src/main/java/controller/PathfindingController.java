@@ -84,6 +84,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         danceBtn.setSelected(false);
@@ -675,7 +676,7 @@ public class PathfindingController extends Controller implements Initializable {
                 case "1":
                     Floor1.setStyle("-fx-background-color: -primary");
                     break;
-                case "Ground":
+                case "G":
                     Ground.setStyle("-fx-background-color: -primary");
                     break;
                 case "L1":
@@ -698,7 +699,7 @@ public class PathfindingController extends Controller implements Initializable {
             case "1":
                 Floor1.setStyle("-fx-background-color: -success");
                 break;
-            case "Ground":
+            case "G":
                 Ground.setStyle("-fx-background-color: -success");
                 break;
             case "L1":

@@ -197,6 +197,6 @@
          </children>
       </Pane>
       <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
-      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="12:55 pm" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="45.0" />
+      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="45.0" />
    </children>
 </AnchorPane>
