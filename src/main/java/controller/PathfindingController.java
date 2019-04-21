@@ -126,10 +126,9 @@ public class PathfindingController extends Controller implements Initializable {
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+            nodesOnPath = new LinkedList<>();
             setHasPath(false);
         });
-
-
             /*
                 Load images into the cache with MULTITEHRADING
              */
@@ -760,7 +759,7 @@ public class PathfindingController extends Controller implements Initializable {
             case "1":
                 Floor1.setStyle("-fx-background-color: -success");
                 break;
-            case "Ground":
+            case "G":
                 Ground.setStyle("-fx-background-color: -success");
                 break;
             case "L1":
