@@ -796,6 +796,7 @@ public class PathfindingController extends Controller implements Initializable {
             }
             else {
                 c.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeClickPathfindHandler);
+                c.setCursor(Cursor.HAND);
             }
         }
     }
