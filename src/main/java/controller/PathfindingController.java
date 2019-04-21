@@ -110,7 +110,6 @@ public class PathfindingController extends Controller implements Initializable {
         autocompletesearchbarController.setLocation(null);
         handicapBtn.setSelected(false);
         Main.info.getAlgorithm().refresh();
-        hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
         if (currentFloor == null)
             currentFloor = Main.info.getKioskLocation().getFloor();
@@ -127,6 +126,7 @@ public class PathfindingController extends Controller implements Initializable {
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+            setHasPath(false);
         });
 
 
@@ -156,6 +156,17 @@ public class PathfindingController extends Controller implements Initializable {
         }).start();
 
 
+    }
+
+    /**
+     * adds and removes the event filter on the modes depending on if there is a path on the screen
+     * @param b true or false
+     * @author Fay Whittall
+     */
+    private void setHasPath(boolean b){
+        if(b) hasPath = true;
+        else hasPath = false;
+        setClickPathFind();
     }
 
 
@@ -194,6 +205,7 @@ public class PathfindingController extends Controller implements Initializable {
             circle.setFill(black);
             mapImgPane.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
+            circle.getProperties().put("node", n);
         }
         for (Edge e : edges) {
             if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
@@ -259,8 +271,7 @@ public class PathfindingController extends Controller implements Initializable {
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
-        hasPath = true;
-        setClickPathFind();
+        setHasPath(true);
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
@@ -271,8 +282,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setDisable(false);
         clearBtn.setVisible(false);
         displayAllNodes();
-        hasPath = false;
-        setClickPathFind();
+        setHasPath(false);
         nodesOnPath.clear();
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
@@ -797,10 +807,12 @@ public class PathfindingController extends Controller implements Initializable {
      */
     EventHandler nodeClickPathfindHandler = new EventHandler<MouseEvent>(){
         public void handle(javafx.scene.input.MouseEvent me){
-            Circle circle = (Circle) me.getTarget();
-            Node n = (Node) circle.getProperties().get("node");
-            searchController_destController.setLocation(n.getID());
-            makePath();
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = (Circle) me.getTarget();
+                Node n = (Node) circle.getProperties().get("node");
+                searchController_destController.setLocation(n.getID());
+                makePath();
+            }
         }
     };
 }
