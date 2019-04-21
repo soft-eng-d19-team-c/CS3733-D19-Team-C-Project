@@ -815,6 +815,14 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
     };
+
+    public void setStartBtnClick(ActionEvent e){
+
+    }
+
+    public void setGoBtnClick(ActionEvent e){
+
+    }
 }
 
 

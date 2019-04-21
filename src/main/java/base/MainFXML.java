@@ -27,7 +27,7 @@ public class MainFXML extends Application {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.WELCOME.getPath())));
             s.setScene(scene);
             Main.screenController = new Facade(s.getScene());
-            Main.idleMonitor = new IdleMonitor(Duration.seconds(30),
+            Main.idleMonitor = new IdleMonitor(Duration.minutes(5),
                 () -> {
                     Main.user.logout();
                     Main.screenController.clearHistory();
