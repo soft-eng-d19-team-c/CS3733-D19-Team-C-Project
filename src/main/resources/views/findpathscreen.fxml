@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,14 +14,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
-      <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <ImageView fx:id="findPathImgView" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
+      <GesturePane fx:id="mapImgPane" layoutX="561.0" layoutY="135.0" onScroll="#scrolling" prefHeight="946.0" prefWidth="1360.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="561.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="135.0">
+         <content>
+            <Group id="Group" fx:id="rootGroup">
+               <ImageView fx:id="findPathImgView" fitHeight="1015.0" fitWidth="1577.0" layoutX="-14.0" pickOnBounds="true" preserveRatio="true" />
+            </Group>
+         </content>
+      </GesturePane>
       <Pane layoutX="114.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="0.0" />
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="150.0">
          <children>
@@ -46,20 +50,20 @@
                               <Insets top="-15.0" />
                            </VBox.margin></Label>
                         <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                        <HBox prefHeight="44.0" prefWidth="214.0" spacing="20.0">
                            <children>
-                              <JFXButton fx:id="goBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="GO">
+                              <JFXButton fx:id="goBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefHeight="49.0" prefWidth="164.0" styleClass="btn-primary-v2" text="GO">
                               <font>
                                  <Font size="20.0" />
                               </font>
                            </JFXButton>
-                              <JFXButton fx:id="clearBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#clearBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="Clear">
+                              <JFXButton fx:id="clearBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#clearBtnClick" prefHeight="44.0" prefWidth="156.0" styleClass="btn-primary-v2" text="Clear">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </JFXButton>
                            </children>
-                        </HBox>
+                          </HBox>
                      </children>
                      <padding>
                         <Insets left="50.0" right="150.0" />
@@ -159,23 +163,23 @@
                </padding>
             </VBox>
          </children></Pane>
-      <Pane prefHeight="200.0" prefWidth="400.0" styleClass="white-box" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="55.0">
+      <Pane prefHeight="207.0" prefWidth="400.0" styleClass="white-box" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="55.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="400.0">
+            <VBox prefHeight="207.0" prefWidth="400.0">
                <children>
                   <Label styleClass="field-question-text" text="Send Directions to your Phone">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXTextArea fx:id="phoneNumberInput">
+                  <JFXTextArea fx:id="phoneNumberInput" prefHeight="96.0" prefWidth="360.0">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="30.0" right="40.0" />
                      </VBox.margin>
                   </JFXTextArea>
-                  <JFXButton fx:id="phoneNumberBtn" alignment="CENTER" onAction="#sendTextClick" styleClass="btn-primary-v2" text="Send Text">
+                  <JFXButton fx:id="phoneNumberBtn" alignment="CENTER" onAction="#sendTextClick" prefHeight="41.0" prefWidth="123.0" styleClass="btn-primary-v2" text="Send Text">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </JFXButton>
                </children>

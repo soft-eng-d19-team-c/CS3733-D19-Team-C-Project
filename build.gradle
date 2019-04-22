@@ -51,7 +51,8 @@ dependencies {
             [group: 'org.testfx', name: 'testfx-core', version: '4.0.15-alpha'],
             [group: 'org.testfx', name: 'testfx-junit', version: '4.0.15-alpha'],
             [group: 'org.jfxtras', name: 'jfxtras-all', version: '8.0-r6'],
-            files('libs/include.jar')
+            files('libs/include.jar'),
+            files('libs/gesturefx-0.3.0.jar')
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -62,7 +63,8 @@ dependencies {
             [group: 'com.twilio.sdk', name: 'twilio', version: '7.36.2'],
             [group: 'org.jasypt', name: 'jasypt', version: '1.9.2'],
             [group: 'org.jfxtras', name: 'jfxtras-all', version: '8.0-r6'],
-            files('libs/include.jar')
+            files('libs/include.jar'),
+            files('libs/gesturefx-0.3.0.jar')
     )
 }
 
