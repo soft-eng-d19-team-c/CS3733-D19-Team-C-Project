@@ -177,14 +177,8 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
-        //TODO This line is not working. Please send help
-        mapImgPane.getChildren().remove(2, (mapImgPane.getChildren().size()));
+        clearMap();
 
-        //bug testing
-        for (javafx.scene.Node n : mapImgPane.getChildren()){
-            int idx = mapImgPane.getChildren().indexOf(n);
-            System.out.println(idx);
-        }
 
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
@@ -264,12 +258,7 @@ public class PathfindingController extends Controller implements Initializable {
             Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY())/mapScale) - imgHeight);
             Gif.toFront();
             Gif.setVisible(true);
-            int idx = mapImgPane.getChildren().indexOf(Gif);
-            System.out.println(Gif.isVisible());
-            System.out.println(idx);
-
-        }
-        else{
+        } else {
             Gif.setVisible(false);
         }
     }
@@ -405,7 +394,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
-        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
+        clearMap();
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -459,7 +448,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
-        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
+        clearMap();
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -627,7 +616,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
-        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
+        clearMap();
         Gif.toFront();
         updateFloorImg(floor);
         if (hasPath) {
@@ -806,6 +795,16 @@ public class PathfindingController extends Controller implements Initializable {
         changeFloor(autocompletesearchbarController.getNodeFloor());
         displayAllNodes();
         searchWrapper.setVisible(false);
+    }
+
+    /**
+     * helper method to clear the map image view of everything except for the map image and the gif.
+     * @author Ryan LaMarche
+     */
+    private void clearMap() {
+        Gif.toBack();
+        mapImgPane.getChildren().remove(2, mapImgPane.getChildren().size());
+        Gif.toFront();
     }
 }
 
