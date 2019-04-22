@@ -42,6 +42,15 @@ public class PathToText{
         */
         String strRobotInstructions;
         StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
+        StringBuilder floor4Text = new StringBuilder();
+        StringBuilder floor3Text = new StringBuilder();
+        StringBuilder floor2Text = new StringBuilder();
+        StringBuilder floor1Text = new StringBuilder();
+        StringBuilder groundText = new StringBuilder();
+        StringBuilder l1Text = new StringBuilder();
+        StringBuilder l2Text = new StringBuilder();
+
+
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
         Collections.reverse(Arrays.asList(nodesArray));
         Node prev, curr, next;
@@ -49,12 +58,33 @@ public class PathToText{
             prev = nodesArray[i - 1];
             curr = nodesArray[i];
             next = nodesArray[i + 1];
+            String currentFloor = curr.getFloor();
+            String nextFloor = next.getFloor();
 
-            if (!curr.getFloor().equals(next.getFloor())) {
+            if (!currentFloor.equals(nextFloor)) {
                 if (curr.getFloorNumber() > next.getFloorNumber()) {
                     textPath.append("Go down a floor at " + curr.getLongName() + "\n");
+
+                    switch (currentFloor){
+                        case ("4"): return floor4Text.toString();
+                        case ("3"): return floor3Text.toString();
+                        case ("2"): return floor2Text.toString();
+                        case ("1"): return floor1Text.toString();
+                        case ("G"): return groundText.toString();
+                        case ("L1"): return l1Text.toString();
+                        case ("L2"): return l2Text.toString();
+                    }
                 } else {
                     textPath.append("Go up a floor at " + curr.getLongName() + "\n");
+                    switch (currentFloor){
+                        case ("4"): return floor4Text.toString();
+                        case ("3"): return floor3Text.toString();
+                        case ("2"): return floor2Text.toString();
+                        case ("1"): return floor1Text.toString();
+                        case ("G"): return groundText.toString();
+                        case ("L1"): return l1Text.toString();
+                        case ("L2"): return l2Text.toString();
+                    }
                 }
             } else {
 
@@ -65,15 +95,60 @@ public class PathToText{
 
                 switch (dir) {
                     case LEFT:
-                        textPath.append("Take a left at " + curr.getLongName());
+                        switch (currentFloor){
+                            case ("4"): floor4Text.append("Take a left at " + curr.getLongName());
+                            break;
+                            case ("3"):floor3Text.append("Take a left at " + curr.getLongName());
+                                break;
+                            case ("2"): floor2Text.append("Take a left at " + curr.getLongName());
+                                break;
+                            case ("1"): floor1Text.append("Take a left at " + curr.getLongName());
+                                break;
+                            case ("G"): groundText.append("Take a left at " + curr.getLongName());
+                                break;
+                            case ("L1"): l1Text.append("Take a left at " + curr.getLongName());
+                                break;
+                            case ("L2"): l2Text.append("Take a left at " + curr.getLongName());
+                                break;
+                        }
                         robotInstructions.append('L');
                         break;
                     case RIGHT:
-                        textPath.append("Take a right at " + curr.getLongName());
+                        switch (currentFloor){
+                            case ("4"): floor4Text.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("3"):floor3Text.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("2"): floor2Text.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("1"): floor1Text.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("G"): groundText.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("L1"): l1Text.append("Take a right at " + curr.getLongName());
+                                break;
+                            case ("L2"): l2Text.append("Take a right at " + curr.getLongName());
+                                break;
+                        }
                         robotInstructions.append('R');
                         break;
                     case STRAIGHT:
-                        textPath.append("Continue straight past " + curr.getLongName());
+                        switch (currentFloor){
+                            case ("4"): floor4Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("3"):floor3Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("2"): floor2Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("1"): floor1Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("G"): groundText.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("L1"): l1Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                            case ("L2"): l2Text.append("Continue straight past " + curr.getLongName());
+                                break;
+                        }
                         robotInstructions.append('S');
                         break;
                     default:
@@ -95,15 +170,33 @@ public class PathToText{
 
 
             }
-        }
+            if(listOfNodes.getFirst().getFloor().equals(currentFloor)){
+                switch (currentFloor){
+                    case "4": floor4Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return floor4Text.toString();
+                    case "3": floor3Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return floor3Text.toString();
+                    case "2": floor2Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return floor2Text.toString();
+                    case "1": floor1Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return floor1Text.toString();
+                    case "G": groundText.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return groundText.toString();
+                    case "L1": l1Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return l1Text.toString();
+                    case "L2": l2Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+                        return l2Text.toString();
+                }
+            }
 
-        textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+        }
 
         strRobotInstructions = robotInstructions.toString();
         postMe = strRobotInstructions.substring(0, strRobotInstructions.length() - 1); //Get rid of the last extra comma
 //        System.out.println(textPath.toString());
 
-        return textPath.toString();
+        //return textPath.toString();
+
 
 
 

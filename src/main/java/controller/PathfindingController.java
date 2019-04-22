@@ -95,6 +95,15 @@ public class PathfindingController extends Controller implements Initializable {
     VBox GroundContent = new VBox();
     VBox L1Content = new VBox();
     VBox L2Content = new VBox();
+    TextField floor4Text = new TextField();
+    Label floor3Text = new Label();
+    Label floor2Text = new Label();
+    Label floor1Text = new Label();
+    Label groundText = new Label();
+    Label l1Text = new Label();
+    Label l2Text = new Label();
+
+
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -171,13 +180,13 @@ public class PathfindingController extends Controller implements Initializable {
 
         addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         addText.getPanes().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        Floor4Content.getChildren().add(new Label(""));
-        Floor3Content.getChildren().add(new Label(""));
-        Floor2Content.getChildren().add(new Label(""));
-        Floor1Content.getChildren().add(new Label(""));
-        GroundContent.getChildren().add(new Label(""));
-        L1Content.getChildren().add(new Label(""));
-        L2Content.getChildren().add(new Label(""));
+        Floor4Content.getChildren().add("");
+        Floor3Content.getChildren().add(floor3Text);
+        Floor2Content.getChildren().add(floor2Text);
+        Floor1Content.getChildren().add(floor1Text);
+        GroundContent.getChildren().add(groundText);
+        L1Content.getChildren().add(l1Text);
+        L2Content.getChildren().add(l2Text);
 
         floor4.setText("Floor 4");
         floor4.setContent(Floor4Content);
@@ -301,7 +310,48 @@ public class PathfindingController extends Controller implements Initializable {
         danceBtn.setSelected(false);
         hasPath = true;
         PathToText pathToText = new PathToText(nodesOnPath);
-        pathText.setText(pathToText.getDetailedPath());
+        //pathText.setText(pathToText.getDetailedPath());
+
+        //might be able to do this in the colors fcn??
+        LinkedList<String> textFloors = new LinkedList<>();
+
+        for (int i = 0; i < nodesOnPath.size(); i++) {
+            String floor = nodesOnPath.get(i).getFloor();
+            if (textFloors.size() < 7) {
+                if (!textFloors.contains(floor)) {
+                    textFloors.add(floor);
+                }
+            }
+        }
+
+        for (int i = 0; i < textFloors.size(); i++) {
+            String floor = textFloors.get(i);
+            switch (floor) {
+                case "4":
+                    floor4Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "3":
+                    floor3Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "2":
+                    floor2Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "1":
+                    floor1Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "G":
+                    groundText.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "L1":
+                    l1Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+                case "L2":
+                    l2Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    break;
+            }
+        }
+        //later check if its on the current node/path change the color of the text
+
         colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
@@ -749,7 +799,7 @@ public class PathfindingController extends Controller implements Initializable {
 
         for (int i = 0; i < node_onPath.size(); i++) {
             String floor = node_onPath.get(i).getFloor();
-            if (allFloors.size() < 6) {
+            if (allFloors.size() < 7) {
                 if (!allFloors.contains(floor)) {
                     allFloors.add(floor);
                 }
