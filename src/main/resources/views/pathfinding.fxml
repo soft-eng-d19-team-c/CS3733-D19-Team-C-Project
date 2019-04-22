@@ -45,6 +45,10 @@
             <String fx:value="btn-primary" />
          </styleClass>
       </Button>
+       <Button fx:id="Floor4" layoutX="393.0" layoutY="87.0" mnemonicParsing="false" onAction="#floor4BtnClick" styleClass="bg-secondary" stylesheets="@../../../../out/production/resources/views/app.css" text="Floor 4" textAlignment="CENTER">
+           <opaqueInsets>
+               <Insets bottom="10.0" />
+           </opaqueInsets></Button>
        <Button fx:id="Floor3" layoutX="393.0" layoutY="127.0" mnemonicParsing="false" onAction="#floor3BtnClick" styleClass="bg-secondary" stylesheets="@../../../../out/production/resources/views/app.css" text="Floor 3" textAlignment="CENTER">
          <opaqueInsets>
             <Insets bottom="10.0" />
@@ -105,5 +109,6 @@
       </JFXTextArea>
        <JFXSlider fx:id="pathScrollBar" layoutX="460.0" layoutY="22.0" prefWidth="1000.0">
        </JFXSlider>
+      <Button layoutX="393.0" layoutY="88.0" mnemonicParsing="false" styleClass="bg-secondary" stylesheets="@app.css" text="Floor 4" />
    </children>
 </AnchorPane>
