@@ -2,31 +2,40 @@ package controller;
 
 import base.Main;
 import com.jfoenix.controls.JFXAutoCompletePopup;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class AutocompleteSearchBarController extends Controller implements Initializable {
-    @FXML
-    JFXTextField acTextInput;
-    @FXML
-    private JFXTextField nodeID;
+    @FXML JFXTextField acTextInput;
+    @FXML private JFXTextField nodeID;
+    @FXML private HBox dropdowns;
+    @FXML private ComboBox floors;
+    @FXML private ComboBox types;
 
     private JFXAutoCompletePopup<Node> acSuggestions = new JFXAutoCompletePopup<>();
-
     private LinkedList<Node> nodes;
-
     private String nodeFloor;
+    private boolean dropDownsOpen;
+    private HashMap<String, String> floorTranslator;
+    private HashMap<String, String> typeTranslator;
 
     public String getNodeID() {
         return nodeID.getText();
@@ -107,6 +116,11 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             nodeID.setText(event.getObject().getID());
             this.nodeFloor = event.getObject().getFloor();
         });
+        dropDownsOpen = false;
+        ObservableList<String> differentFloors = //set the dropdown in the fxml
+                FXCollections.observableArrayList(
+                        "L2", "L1", "Ground", "1", "2", "3", "4");
+        floors.setItems(differentFloors);
         setSearchMethod();
     }
 
@@ -125,5 +139,18 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         this.setLocation(Main.info.getKioskLocation().getID());
         this.nodeFloor = Main.info.getKioskLocation().getFloor();
         setSearchMethod();
+    }
+
+    public void setDropDownsOpen(){
+        if(dropDownsOpen){
+            dropdowns.setVisible(false);
+        }
+        else{
+            dropdowns.setVisible(true);
+        }
+    }
+
+    public void filterBtnClick(ActionEvent e){
+        setDropDownsOpen();
     }
 }

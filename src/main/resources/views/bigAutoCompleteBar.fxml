@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="32.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutocompleteSearchBarController">
+<AnchorPane prefHeight="151.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutocompleteSearchBarController">
     <children>
-        <VBox prefHeight="30.0" prefWidth="582.0">
-            <JFXTextField fx:id="acTextInput" prefHeight="65.0" prefWidth="582.0" promptText="Search for a location...">
-            <font>
-               <Font size="47.0" />
-            </font></JFXTextField>
+        <VBox prefHeight="151.0" prefWidth="665.0">
+         <HBox prefHeight="101.0" prefWidth="666.0">
+            <children>
+                  <JFXTextField fx:id="acTextInput" prefHeight="65.0" prefWidth="582.0" promptText="Search for a location...">
+                  <font>
+                     <Font size="47.0" />
+                  </font>
+               </JFXTextField>
+                <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="150.0" text="Filter">
+                    <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-primary-v2" />
+                        <String fx:value="btn-sm" />
+                    </styleClass>
+                </JFXButton>
+            </children>
+         </HBox>
             <JFXTextField fx:id="nodeID" visible="false" AnchorPane.topAnchor="30.0" />
+            <HBox fx:id="dropdowns" prefHeight="104.0" prefWidth="394.0">
+                <children>
+                    <ComboBox fx:id="floors" prefWidth="150.0" promptText="Floor" />
+                    <ComboBox fx:id="types" prefWidth="150.0" promptText="Type" />
+                </children>
+            </HBox>
         </VBox>
     </children>
 </AnchorPane>
