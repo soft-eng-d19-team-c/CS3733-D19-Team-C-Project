@@ -40,8 +40,10 @@ import java.util.ResourceBundle;
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private ToggleButton danceBtn;
+    @FXML private ToggleButton pacmanBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
+    @FXML private ImageView Gif;
     @FXML private AnchorPane findPathView;
     @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
@@ -118,6 +120,7 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(L1);
         allButtons.add(L2);
         pathScrollBar.setVisible(false);
+        Gif.setVisible(false);
         clearBtn.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
@@ -241,6 +244,15 @@ public class PathfindingController extends Controller implements Initializable {
         makePath();
     }
 
+    public void pacmanBtnClick(ActionEvent actionEvent) {
+        if (pacmanBtn.isSelected()) {
+            Gif.setVisible(true);
+        }
+        else{
+            Gif.setVisible(false);
+        }
+    }
+
     public void makePath(){
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
@@ -267,6 +279,7 @@ public class PathfindingController extends Controller implements Initializable {
     public void clearBtnClick(ActionEvent e){
         pathScrollBar.setVisible(false);
         pathScrollBar.setDisable(false);
+        Gif.setVisible(false);
         clearBtn.setVisible(false);
         displayAllNodes();
         hasPath = false;
@@ -295,6 +308,8 @@ public class PathfindingController extends Controller implements Initializable {
     private void scroll(){
         int oldPosition = pathScroll.getOldPosition();
         int newPosition = (int) pathScrollBar.getValue();
+        /*Gif.setX(nodesOnPathArray[newPosition].getX());
+        Gif.setY(nodesOnPathArray[newPosition].getY());*/
         boolean forwards = false;
         if (oldPosition < newPosition)
             forwards = true;

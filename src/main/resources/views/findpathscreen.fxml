@@ -69,12 +69,17 @@
             </Pane>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXToggleButton fx:id="handicapBtn" onAction="#handicapBtnClick" text="Handicap Accessible" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
+                  <JFXToggleButton fx:id="handicapBtn" onAction="#handicapBtnClick" prefHeight="64.0" prefWidth="193.0" text="Handicap" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </JFXToggleButton>
                   <JFXToggleButton fx:id="danceBtn" onAction="#dancePartyBtnClick" text="Dance Party?" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <JFXToggleButton fx:id="pacmanBtn" layoutX="272.0" layoutY="10.0" onAction="#pacmanBtnClick" text="Pac-Man" textFill="WHITE" toggleColor="#f6bd38" toggleLineColor="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -212,5 +217,10 @@
             </VBox>
          </children>
       </Pane>
+      <ImageView fx:id="Gif" fitHeight="64.0" fitWidth="69.0" layoutX="596.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Downloads/1School/PacMan.gif" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
