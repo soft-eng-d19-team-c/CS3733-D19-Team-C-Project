@@ -182,20 +182,32 @@
          </children>
       </VBox>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <Pane prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="150.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/aboutIconBlueWhite.png" />
-               </image>
-            </ImageView>
-            <JFXButton fx:id="aboutButton" layoutX="20.0" layoutY="35.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#aboutButtonClick" prefHeight="50.0" prefWidth="50.0" text=" ">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+            <Pane prefHeight="100.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/aboutIconBlueWhite.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="aboutButton" layoutX="20.0" layoutY="35.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#aboutButtonClick" prefHeight="50.0" prefWidth="50.0" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </Pane>
+            <JFXButton fx:id="feedbackBtn" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#feedbackBtnClick" styleClass="btn-feedback" text="Feedback" textOverrun="CLIP">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <padding>
+                  <Insets bottom="30.0" top="30.0" />
+               </padding>
             </JFXButton>
          </children>
-      </Pane>
+      </VBox>
       <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
       <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="45.0" />
    </children>

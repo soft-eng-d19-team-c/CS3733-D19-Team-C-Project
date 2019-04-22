@@ -36,9 +36,12 @@ public enum EnumScreenType {
     GIFTSTORESERVICETABLE("/views/giftStoreRequestTable.fxml"),
     RELIGIOUSSERVICETABLE("/views/religiousRequestTable.fxml"),
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
+    //
     WELCOME("/views/screensaver.fxml"),
     ABOUT("/views/aboutPage.fxml"),
-    ADMIN("/views/adminDashboard.fxml");
+    ADMIN("/views/adminDashboard.fxml"),
+    FEEDBACK("/views/feedback.fxml"),
+    FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml");
 
     protected String path;
 

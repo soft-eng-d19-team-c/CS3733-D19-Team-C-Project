@@ -186,3 +186,14 @@
     -fx-text-fill: -white;
     -fx-cursor: hand;
 }
+
+.btn-feedback{
+    -fx-text-fill: -black;
+    -fx-background-color: -white;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 18;
+    -fx-min-width: 100;
+    -fx-max-width: 200;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}

@@ -66,7 +66,7 @@ public final class Database {
         String DatabaseStateTablePK = "alter table DATABASESTATE add constraint DATABASESTATE_pk primary key (ID)";
 
         Statement tableStmt = null;
-        boolean importStuff = false;
+        boolean importStuff = true;
         try {
             tableStmt = this.connection.createStatement();
             // create nodes and edges first
@@ -74,8 +74,8 @@ public final class Database {
             tableStmt.executeUpdate(DatabaseStateTableUINDEX);
             tableStmt.executeUpdate(DatabaseStateTablePK);
         } catch (SQLException e1) {
-            if (!e1.getSQLState().equals("X0Y32")) {
-                importStuff = true;
+            if (e1.getSQLState().equals("X0Y32")) {
+                importStuff = false;
             }
         }
 
@@ -176,7 +176,10 @@ public final class Database {
                 String giftStoreRequestsTableUINDEX = "create unique index GIFTSTOREREQUESTS_ID_uindex on GIFTSTOREREQUESTS (ID)";
                 String giftStoreRequestTablePK = "alter table GIFTSTOREREQUESTS add constraint GIFTSTOREREQUESTS_pk primary key (ID)";
 
-
+                // feedback
+                String createFeedbackTable = "create table feedback(ID int generated always as identity,level int not null, DATETIMESUBMITTED timestamp)";
+                String feedbackTableUINDEX = "create unique index feedback_ID_uindex on feedback (ID)";
+                String feedbackTablePK = "alter table feedback add constraint feedback_pk primary key (ID)";
 
                 try {
                     // create nodes and edges first
@@ -233,6 +236,10 @@ public final class Database {
                     tableStmt.executeUpdate(createPrescriptionServiceTable);
                     tableStmt.executeUpdate(PrescriptionUINDEX);
                     tableStmt.executeUpdate(PrescriptionTablePK);
+                    // feedback
+                    tableStmt.executeUpdate(createFeedbackTable);
+                    tableStmt.executeUpdate(feedbackTableUINDEX);
+                    tableStmt.executeUpdate(feedbackTablePK);
                 } catch (SQLException e) {
                     if (e.getSQLState().equals("X0Y32")) {
                         // table exists

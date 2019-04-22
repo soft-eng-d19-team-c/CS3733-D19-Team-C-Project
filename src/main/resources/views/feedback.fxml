@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FeedbackController">
+   <children>
+      <Label style="-fx-alignment: center;" styleClass="h1" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
+         <children>
+            <JFXButton onAction="#goodBtnClick" text="Good" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+                  <String fx:value="btn-success" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton onAction="#okBtnClick" text="OK" HBox.hgrow="ALWAYS">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+                  <String fx:value="btn-secondary" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton onAction="#badBtnClick" text="Bad" HBox.hgrow="ALWAYS">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+                  <String fx:value="btn-danger" />
+               </styleClass>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets left="400.0" right="400.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>
