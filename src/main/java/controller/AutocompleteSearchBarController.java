@@ -2,7 +2,6 @@ package controller;
 
 import base.Main;
 import com.jfoenix.controls.JFXAutoCompletePopup;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,10 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
-import model.SearchParameters;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -35,7 +32,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     private LinkedList<Node> nodes;
     private String nodeFloor;
     private boolean dropDownsOpen;
-    private SearchParameters searchParameters;
 
     public String getNodeID() {
         return nodeID.getText();
@@ -136,11 +132,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
                         "Conference Rooms",
                         "All Locations");
         floors.setItems(differentFloors);
-        floors.setValue("Any Floor");
         types.setItems(differentTypes);
-        types.setValue("All Locations");
-        this.searchParameters = new SearchParameters();
-        setSearchMethod();
     }
 
     @Override
@@ -150,15 +142,25 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void refresh() {
         nodes = Node.getSearchableNodes();
+        setNodeSearchList(nodes);
+        this.setLocation(Main.info.getKioskLocation().getID());
+        this.nodeFloor = Main.info.getKioskLocation().getFloor();
+        setDropDownsOpen(true); //switches to the opposite - so dropdowns will be closed
+        setSearchMethod();
+        floors.setValue("Any Floor");
+        types.setValue("All Locations");
+    }
+
+    /**
+     * pulled from refresh: sets acSuggestions to suggest the filtered list
+     * @param nodes
+     */
+    private void setNodeSearchList(LinkedList<Node> nodes){
         acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
         for (Node n : nodes) {
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);
         }
-        this.setLocation(Main.info.getKioskLocation().getID());
-        this.nodeFloor = Main.info.getKioskLocation().getFloor();
-        setDropDownsOpen(true); //switches to the opposite - so dropdowns will be closed
-        setSearchMethod();
     }
 
     /**
@@ -195,10 +197,12 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void floorBoxClick(ActionEvent e){
-        searchParameters.setFloor((String) floors.getValue());
+        LinkedList<Node> filteredNodes = Main.searchParameters.setFloor((String) floors.getValue(), nodes);
+        setNodeSearchList(filteredNodes);
     }
 
     public void typeBoxClick(ActionEvent e){
-        searchParameters.setType((String) types.getValue());
+        LinkedList<Node> filteredNodes = Main.searchParameters.setType((String) types.getValue(), nodes);
+        setNodeSearchList(filteredNodes);
     }
 }
