@@ -30,8 +30,8 @@
             <JFXTextField fx:id="nodeID" visible="false" AnchorPane.topAnchor="30.0" />
             <HBox fx:id="dropdowns" prefHeight="104.0" prefWidth="394.0">
                 <children>
-                    <ComboBox fx:id="floors" prefWidth="150.0" promptText="Floor" />
-                    <ComboBox fx:id="types" prefWidth="150.0" promptText="Type" />
+                    <ComboBox fx:id="floors" onAction="#floorBoxClick" prefWidth="150.0" promptText="Floor" />
+                    <ComboBox fx:id="types" onAction="#typeBoxClick" prefWidth="150.0" promptText="Type" />
                 </children>
             </HBox>
         </VBox>

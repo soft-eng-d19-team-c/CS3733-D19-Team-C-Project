@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
+import model.SearchParameters;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     private LinkedList<Node> nodes;
     private String nodeFloor;
     private boolean dropDownsOpen;
-    private HashMap<String, String> typeTranslator;
+    private SearchParameters searchParameters;
 
     public String getNodeID() {
         return nodeID.getText();
@@ -119,7 +120,26 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
                         "L2", "L1", "Ground", "1", "2", "3", "4", "Any Floor");
+        ObservableList<String> differentTypes = //set the dropdown in the fxml
+                FXCollections.observableArrayList(
+                        "Departments",
+                        "Restrooms",
+                        "Food",
+                        "Services",
+                        "Information",
+                        "Elevators",
+                        "Stairs",
+                        "Exits",
+                        "Labs",
+                        "Workspaces",
+                        "Classrooms",
+                        "Conference Rooms",
+                        "All Locations");
         floors.setItems(differentFloors);
+        floors.setValue("Any Floor");
+        types.setItems(differentTypes);
+        types.setValue("All Locations");
+        this.searchParameters = new SearchParameters();
         setSearchMethod();
     }
 
@@ -172,5 +192,13 @@ public class AutocompleteSearchBarController extends Controller implements Initi
      */
     public void filterBtnClick(ActionEvent e){
         setDropDownsOpen();
+    }
+
+    public void floorBoxClick(ActionEvent e){
+        searchParameters.setFloor((String) floors.getValue());
+    }
+
+    public void typeBoxClick(ActionEvent e){
+        searchParameters.setType((String) types.getValue());
     }
 }
