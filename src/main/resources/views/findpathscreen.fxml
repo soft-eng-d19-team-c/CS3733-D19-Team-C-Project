@@ -98,14 +98,16 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXTextArea fx:id="pathText" editable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="540.0">
-                           <VBox.margin>
-                              <Insets right="50.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="50.0" />
-                           </padding>
-                        </JFXTextArea>
+                        <Accordion fx:id="addText" layoutX="100.0" layoutY="900.0" visible="true" AnchorPane.rightAnchor="50.0">
+                        </Accordion>
+                        <!--<JFXTextArea fx:id="pathText" editable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="540.0">-->
+                           <!--<VBox.margin>-->
+                              <!--<Insets right="50.0" />-->
+                           <!--</VBox.margin>-->
+                           <!--<padding>-->
+                              <!--<Insets right="50.0" />-->
+                           <!--</padding>-->
+                        <!--</JFXTextArea>-->
                      </children>
                      <padding>
                         <Insets left="50.0" right="50.0" />
@@ -213,7 +215,5 @@
             </VBox>
          </children>
       </Pane>
-      <Accordion fx:id="addText" layoutX="0.0" layoutY="300.0" visible="false" AnchorPane.rightAnchor="50.0">
-      </Accordion>
    </children>
 </AnchorPane>

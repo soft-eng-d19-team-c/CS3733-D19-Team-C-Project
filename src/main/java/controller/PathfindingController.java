@@ -81,7 +81,13 @@ public class PathfindingController extends Controller implements Initializable {
     private Button currentFloorButton;
     private HashMap<String, Image> imageCache = new HashMap<>();
 
-    javafx.scene.control.TitledPane TitledPane = new TitledPane();
+    javafx.scene.control.TitledPane floor4 = new TitledPane();
+    javafx.scene.control.TitledPane floor3 = new TitledPane();
+    javafx.scene.control.TitledPane floor2 = new TitledPane();
+    javafx.scene.control.TitledPane floor1 = new TitledPane();
+    javafx.scene.control.TitledPane ground = new TitledPane();
+    javafx.scene.control.TitledPane l1 = new TitledPane();
+    javafx.scene.control.TitledPane l2 = new TitledPane();
     VBox Floor4Content = new VBox();
     VBox Floor3Content = new VBox();
     VBox Floor2Content = new VBox();
@@ -99,7 +105,7 @@ public class PathfindingController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
-        pathText.setText(null);
+//         pathText.setText(null);
         danceBtn.setSelected(false);
         phoneNumberInput.setText(null);
         if (Main.screenController.getData("showSearch") != null && (Boolean) Main.screenController.getData("showSearch")) {
@@ -163,9 +169,30 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }).start();
 
-        addText.getPanes().removeAll(TitledPane);
-        addText.getPanes().addAll(TitledPane);
-        Floor4Content.getChildren().add(new Label("Floor 4"));
+        addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+        addText.getPanes().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+        Floor4Content.getChildren().add(new Label(""));
+        Floor3Content.getChildren().add(new Label(""));
+        Floor2Content.getChildren().add(new Label(""));
+        Floor1Content.getChildren().add(new Label(""));
+        GroundContent.getChildren().add(new Label(""));
+        L1Content.getChildren().add(new Label(""));
+        L2Content.getChildren().add(new Label(""));
+
+        floor4.setText("Floor 4");
+        floor4.setContent(Floor4Content);
+        floor3.setText("Floor 3");
+        floor3.setContent(Floor3Content);
+        floor2.setText("Floor 2");
+        floor2.setContent(Floor2Content);
+        floor1.setText("Floor 1");
+        floor1.setContent(Floor1Content);
+        ground.setText("Ground");
+        ground.setContent(GroundContent);
+        l1.setText("L1");
+        l1.setContent(L1Content);
+        l2.setText("L2");
+        l2.setContent(L2Content);
 
     }
 
