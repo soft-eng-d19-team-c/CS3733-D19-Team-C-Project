@@ -93,6 +93,8 @@ public class PathfindingController extends Controller implements Initializable {
         pathText.setText(null);
         danceBtn.setSelected(false);
         pacmanBtn.setSelected(false);
+        pacmanBtn.setVisible(false);
+        danceBtn.setDisable(false);
         phoneNumberInput.setText(null);
         if (Main.screenController.getData("showSearch") != null && (Boolean) Main.screenController.getData("showSearch")) {
             searchWrapper.setVisible(true);
@@ -235,6 +237,9 @@ public class PathfindingController extends Controller implements Initializable {
         st.play();
     }
 
+    //TODO Stop found node
+    //Copy top but take out animation
+
 
     /*
 
@@ -249,6 +254,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void pacmanBtnClick(ActionEvent actionEvent) {
         if (pacmanBtn.isSelected()) {
+            danceBtn.setDisable(true);
             double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             double mapX = findPathImgView.getLayoutX();
             double mapY = findPathImgView.getLayoutY();
@@ -260,6 +266,7 @@ public class PathfindingController extends Controller implements Initializable {
             Gif.setVisible(true);
         } else {
             Gif.setVisible(false);
+            danceBtn.setDisable(false);
         }
     }
 
@@ -277,6 +284,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
         clearBtn.setVisible(true);
+        pacmanBtn.setVisible(true);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
@@ -291,7 +299,9 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setVisible(false);
         pathScrollBar.setDisable(false);
         Gif.setVisible(false);
+        danceBtn.setDisable(false);
         clearBtn.setVisible(false);
+        pacmanBtn.setVisible(false);
         displayAllNodes();
         hasPath = false;
         nodesOnPath.clear();
