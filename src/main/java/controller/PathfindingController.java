@@ -817,6 +817,23 @@ public class PathfindingController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
+                if(me.getX() < 1205 && me.getY() < 565){
+                    System.out.println(me.getX() + "" +  me.getY());
+                    nodePopUpPane.relocate(me.getX(), me.getY());
+                }
+                if(me.getX() >= 1205 && me.getY() < 565){
+                    System.out.println(me.getX() + "" +  me.getY());
+                    nodePopUpPane.relocate(me.getX() - 438, me.getY());
+                }
+                if(me.getX() < 1205 && me.getY() >= 565){
+                    System.out.println(me.getX() + "" +  me.getY());
+                    nodePopUpPane.relocate(me.getX(), me.getY() - 115);
+                }
+                else{
+                    System.out.println(me.getX() + "" +  me.getY());
+                    nodePopUpPane.relocate(me.getX() - 438, me.getY() - 115);
+                }
+                nodePopUpPane.relocate(0, 0);
                 nodePopUpPane.setVisible(true);
                 popUpLongName.setText(n.getLongName());
                 setStartBtn.setOnAction((event) -> {
@@ -826,22 +843,22 @@ public class PathfindingController extends Controller implements Initializable {
                     searchController_destController.setLocation(n);
                     makePath();
                 });
-                pathfindingScreen.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
-                setStartBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
-                goFromNodeBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+//                pathfindingScreen.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+//                setStartBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+//                goFromNodeBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
                 nodePopUpPane.toFront();
             }
         }
     };
 
-    EventHandler nodePopUpRemoveHandler = new EventHandler<MouseEvent>(){
-        public void handle(javafx.scene.input.MouseEvent me){
-            if (me.getButton().equals(MouseButton.PRIMARY)) {
-                nodePopUpPane.setVisible(false);
-                pathfindingScreen.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
-            }
-        }
-    };
+//    EventHandler nodePopUpRemoveHandler = new EventHandler<MouseEvent>(){
+//        public void handle(javafx.scene.input.MouseEvent me){
+//            if (me.getButton().equals(MouseButton.PRIMARY)) {
+//                nodePopUpPane.setVisible(false);
+//                pathfindingScreen.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+//            }
+//        }
+//    };
 }
 
 
