@@ -92,6 +92,7 @@ public class PathfindingController extends Controller implements Initializable {
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         danceBtn.setSelected(false);
+        pacmanBtn.setSelected(false);
         phoneNumberInput.setText(null);
         if (Main.screenController.getData("showSearch") != null && (Boolean) Main.screenController.getData("showSearch")) {
             searchWrapper.setVisible(true);
@@ -176,7 +177,15 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        //TODO This line is not working. Please send help
+        mapImgPane.getChildren().remove(2, (mapImgPane.getChildren().size()));
+
+        //bug testing
+        for (javafx.scene.Node n : mapImgPane.getChildren()){
+            int idx = mapImgPane.getChildren().indexOf(n);
+            System.out.println(idx);
+        }
+
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
 
@@ -246,7 +255,19 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void pacmanBtnClick(ActionEvent actionEvent) {
         if (pacmanBtn.isSelected()) {
+            double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+            double mapX = findPathImgView.getLayoutX();
+            double mapY = findPathImgView.getLayoutY();
+            double imgWidth = (Gif.getFitWidth()/2);
+            double imgHeight = (Gif.getFitHeight()/2);
+            Gif.setLayoutX(((mapX + Main.info.getKioskLocation().getX())/mapScale) - imgWidth);
+            Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY())/mapScale) - imgHeight);
+            Gif.toFront();
             Gif.setVisible(true);
+            int idx = mapImgPane.getChildren().indexOf(Gif);
+            System.out.println(Gif.isVisible());
+            System.out.println(idx);
+
         }
         else{
             Gif.setVisible(false);
@@ -270,6 +291,7 @@ public class PathfindingController extends Controller implements Initializable {
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
+        pacmanBtn.setSelected(false);
         hasPath = true;
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
@@ -383,7 +405,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -437,7 +459,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -605,7 +627,8 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        mapImgPane.getChildren().remove(1, (mapImgPane.getChildren().size() - 1));
+        Gif.toFront();
         updateFloorImg(floor);
         if (hasPath) {
             generateNodesAndEdges(nodesOnPath, c);
