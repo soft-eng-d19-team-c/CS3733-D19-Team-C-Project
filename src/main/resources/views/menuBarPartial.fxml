@@ -32,7 +32,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                   <JFXButton fx:id="roomSearch" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#roomSearchButton" styleClass="btn-menubar" text="Search for a Room" textOverrun="CLIP">
@@ -43,7 +43,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                   <JFXButton fx:id="serviceRequest" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#serviceRequestButton" styleClass="btn-menubar" text="Request A Service" textOverrun="CLIP">
@@ -54,7 +54,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                   <JFXButton fx:id="bookRoom" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#bookRoomClick" styleClass="btn-menubar" text="Book a Room" textOverrun="CLIP">
@@ -65,7 +65,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                   <JFXButton fx:id="adminView" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#adminViewClick" styleClass="btn-menubar" text="Employee View" textOverrun="CLIP">
@@ -76,7 +76,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                   <JFXButton fx:id="loginButton" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#loginButtonClick" styleClass="btn-menubar" text="Employee Login" textOverrun="CLIP">
@@ -87,7 +87,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" top="30.0" />
+                        <Insets bottom="10.0" top="50.0" />
                      </padding>
                   </JFXButton>
                </children>
@@ -182,12 +182,12 @@
          </children>
       </VBox>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <FontAwesomeIconView glyphName="MAP" size="30" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="10.0" />
-      <FontAwesomeIconView glyphName="SEARCH" size="30" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="10.0" />
-      <FontAwesomeIconView glyphName="BELL" size="30" AnchorPane.leftAnchor="835.0" AnchorPane.topAnchor="10.0" />
-      <FontAwesomeIconView glyphName="CALENDAR" size="30" AnchorPane.leftAnchor="1050.0" AnchorPane.topAnchor="10.0" />
-      <FontAwesomeIconView glyphName="EDIT" size="30" AnchorPane.leftAnchor="1275.0" AnchorPane.topAnchor="10.0" />
-      <FontAwesomeIconView glyphName="USER" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="MAP" size="30" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView glyphName="SEARCH" size="30" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView glyphName="BELL" glyphStyle="f88c" size="30" AnchorPane.leftAnchor="835.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView glyphName="CALENDAR_ALT" size="30" AnchorPane.leftAnchor="1050.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView glyphName="USER" size="30" AnchorPane.leftAnchor="1275.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView glyphName="SIGN_IN" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
       <Pane prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
@@ -202,6 +202,10 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
+      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0">
+         <padding>
+            <Insets bottom="10.0" top="50.0" />
+         </padding></JFXButton>
+      <FontAwesomeIconView glyphName="SIGN_IN" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
    </children>
 </AnchorPane>
