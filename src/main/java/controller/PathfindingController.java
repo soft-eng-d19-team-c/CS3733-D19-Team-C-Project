@@ -817,23 +817,18 @@ public class PathfindingController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-//                if(me.getX() < 1205 && me.getY() < 565){
-//                    System.out.println(me.getX() + "" +  me.getY());
-//                    nodePopUpPane.relocate(me.getX(), me.getY());
-//                }
-//                if(me.getX() >= 1205 && me.getY() < 565){
-//                    System.out.println(me.getX() + "" +  me.getY());
-//                    nodePopUpPane.relocate(me.getX() - 438, me.getY());
-//                }
-//                if(me.getX() < 1205 && me.getY() >= 565){
-//                    System.out.println(me.getX() + "" +  me.getY());
-//                    nodePopUpPane.relocate(me.getX(), me.getY() - 115);
-//                }
-//                else{
-//                    System.out.println(me.getX() + "" +  me.getY());
-//                    nodePopUpPane.relocate(me.getX() - 438, me.getY() - 115);
-//                }
-//                nodePopUpPane.relocate(0, 0);
+                if(n.getX() < 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() + 50);
+                }
+                else if(n.getX() >= 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() + 50);
+                }
+                else if(n.getX() < 2500 && n.getY() >= 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() - 115 + 50);
+                }
+                else{
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() - 115 + 50);
+                }
                 nodePopUpPane.setVisible(true);
                 popUpLongName.setText(n.getLongName());
                 setStartBtn.setOnAction((event) -> {
