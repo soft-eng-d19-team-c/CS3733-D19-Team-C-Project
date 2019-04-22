@@ -85,26 +85,19 @@ public class PathfindingController extends Controller implements Initializable {
     private HashMap<String, Image> imageCache = new HashMap<>();
 
     javafx.scene.control.TitledPane floor4 = new TitledPane();
+
     javafx.scene.control.TitledPane floor3 = new TitledPane();
+
     javafx.scene.control.TitledPane floor2 = new TitledPane();
+
     javafx.scene.control.TitledPane floor1 = new TitledPane();
+
     javafx.scene.control.TitledPane ground = new TitledPane();
+
     javafx.scene.control.TitledPane l1 = new TitledPane();
+
     javafx.scene.control.TitledPane l2 = new TitledPane();
-    VBox Floor4Content = new VBox();
-    VBox Floor3Content = new VBox();
-    VBox Floor2Content = new VBox();
-    VBox Floor1Content = new VBox();
-    VBox GroundContent = new VBox();
-    VBox L1Content = new VBox();
-    VBox L2Content = new VBox();
-    Label floor4Text = new Label("Floor 4");
-    Label floor3Text = new Label("Floor 3");
-    Label floor2Text = new Label("Floor 2");
-    Label floor1Text = new Label("Floor 1");
-    Label groundText = new Label(" Ground Floor");
-    Label l1Text = new Label("L1");
-    Label l2Text = new Label("L2");
+
 
 
 
@@ -187,23 +180,7 @@ public class PathfindingController extends Controller implements Initializable {
         root.getChildren().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         Scene scene = new Scene(root, 300, 200);
 
-/*
-        floor4Text.setPadding(new Insets(20, 10, 10, 10));
-        floor3Text.setPadding(new Insets(20, 10, 10, 10));
-        floor2.setPadding(new Insets(20, 10, 10, 10));
-        floor1.setPadding(new Insets(20, 10, 10, 10));
-        ground.setPadding(new Insets(20, 10, 10, 10));
-        l1.setPadding(new Insets(20, 10, 10, 10));
-        l2.setPadding(new Insets(20, 10, 10, 10));*/
         addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        addText.getPanes().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        floor4.setText("Floor 4");
-        floor3.setText("Floor 3");
-        floor2.setText("Floor 2");
-        floor1.setText("Floor 1");
-        ground.setText("Ground");
-        l1.setText("L1");
-        l2.setText("L2");
     }
 
 
@@ -293,6 +270,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void makePath(){
+        addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
@@ -326,56 +304,90 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
 
+
         for (int i = 0; i < textFloors.size(); i++) {
             String floor = textFloors.get(i);
             System.out.println(floor);
             switch (floor) {
                 case "4":
-                    System.out.println("4");
+                   // System.out.println("4");
+                    VBox Floor4Content = new VBox();
+                    Label floor4Text = new Label("Floor 4");
+                    addText.getPanes().add(floor4);
+                    floor4.setText("Floor 4");
                     floor4Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    Floor4Content.getChildren().add(floor4Text);
+                    floor4.setContent(Floor4Content);
                     break;
                 case "3":
-                    System.out.println("3");
+                   // System.out.println("3");
+                    VBox Floor3Content = new VBox();
+                    Label floor3Text = new Label("Floor 3");
+                    addText.getPanes().add(floor3);
+                    floor4.setText("Floor 3");
                     floor3Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    Floor3Content.getChildren().add(floor3Text);
+                    floor3.setContent(Floor3Content);
                     break;
                 case "2":
-                    System.out.println("2");
+                    //System.out.println("2");
+                    VBox Floor2Content = new VBox();
+                    Label floor2Text = new Label("Floor 2");
+                    addText.getPanes().add(floor2);
+                    floor4.setText("Floor 2");
                     floor2Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    Floor2Content.getChildren().add(floor2Text);
+                    floor2.setContent(Floor2Content);
                     break;
                 case "1":
-                    System.out.println("1");
+                    //System.out.println("1");
+                    VBox Floor1Content = new VBox();
+                    Label floor1Text = new Label("Floor 1");
+                    addText.getPanes().add(floor1);
+                    floor4.setText("Floor 1");
                     floor1Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    Floor1Content.getChildren().add(floor1Text);
+                    floor1.setContent(Floor1Content);
                     break;
                 case "G":
-                    System.out.println("g");
+                    //System.out.println("g");
+                    VBox GroundContent = new VBox();
+                    Label groundText = new Label(" Ground Floor");
+                    addText.getPanes().add(ground);
+                    floor4.setText("Ground Floor");
                     groundText.setText(pathToText.getDetailedPath(nodesOnPath));
+                    GroundContent.getChildren().add(groundText);
+                    ground.setContent(GroundContent);
                     break;
                 case "L1":
-                    System.out.println("l1");
+                    VBox L1Content = new VBox();
+                    Label l1Text = new Label("L1");
+                    addText.getPanes().add(l1);
+                    floor4.setText("L1");
+                    //System.out.println("l1");
                     l1Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    L1Content.getChildren().add(l1Text);
+                    l1.setContent(L1Content);
                     break;
                 case "L2":
-                    System.out.println("l2");
+                    //System.out.println("l2");
+                    VBox L2Content = new VBox();
+                    Label l2Text = new Label("L2");
+                    addText.getPanes().add(l2);
+                    floor4.setText("L2");
                     l2Text.setText(pathToText.getDetailedPath(nodesOnPath));
+                    L2Content.getChildren().add(l2Text);
+                    l2.setContent(L2Content);
                     break;
 
 
             }
-            Floor4Content.getChildren().add(floor4Text);
-            Floor3Content.getChildren().add(floor3Text);
-            Floor2Content.getChildren().add(floor2Text);
-            Floor1Content.getChildren().add(floor1Text);
-            GroundContent.getChildren().add(groundText);
-            L1Content.getChildren().add(l1Text);
-            L2Content.getChildren().add(l2Text);
 
-            floor4.setContent(Floor4Content);
-            floor3.setContent(Floor3Content);
-            floor2.setContent(Floor2Content);
-            floor1.setContent(Floor1Content);
-            ground.setContent(GroundContent);
-            l1.setContent(L1Content);
-            l2.setContent(L2Content);
+
+
+
+
+
         }
         //later check if its on the current node/path change the color of the text
 

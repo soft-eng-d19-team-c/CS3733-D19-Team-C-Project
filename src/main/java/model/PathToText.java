@@ -66,24 +66,38 @@ public class PathToText{
                     textPath.append("Go down a floor at " + curr.getLongName() + "\n");
 
                     switch (currentFloor){
-                        case ("4"): return floor4Text.toString();
-                        case ("3"): return floor3Text.toString();
-                        case ("2"): return floor2Text.toString();
-                        case ("1"): return floor1Text.toString();
-                        case ("G"): return groundText.toString();
-                        case ("L1"): return l1Text.toString();
-                        case ("L2"): return l2Text.toString();
+                        case ("4"): floor4Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return floor4Text.toString();
+                        case ("3"): floor3Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return floor3Text.toString();
+                        case ("2"): floor2Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return floor2Text.toString();
+                        case ("1"): floor1Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return floor1Text.toString();
+                        case ("G"): groundText.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return groundText.toString();
+                        case ("L1"): l1Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return l1Text.toString();
+                        case ("L2"): l2Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            return l2Text.toString();
                     }
                 } else {
                     textPath.append("Go up a floor at " + curr.getLongName() + "\n");
                     switch (currentFloor){
-                        case ("4"): return floor4Text.toString();
-                        case ("3"): return floor3Text.toString();
-                        case ("2"): return floor2Text.toString();
-                        case ("1"): return floor1Text.toString();
-                        case ("G"): return groundText.toString();
-                        case ("L1"): return l1Text.toString();
-                        case ("L2"): return l2Text.toString();
+                        case ("4"): floor4Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return floor4Text.toString();
+                        case ("3"): floor3Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return floor3Text.toString();
+                        case ("2"): floor2Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return floor2Text.toString();
+                        case ("1"): floor1Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return floor1Text.toString();
+                        case ("G"): groundText.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return groundText.toString();
+                        case ("L1"): l1Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return l1Text.toString();
+                        case ("L2"): l2Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            return l2Text.toString();
                     }
                 }
             } else {
@@ -111,6 +125,7 @@ public class PathToText{
                             case ("L2"): l2Text.append("Take a left at " + curr.getLongName());
                                 break;
                         }
+                        textPath.append("Take a left at " + curr.getLongName());
                         robotInstructions.append('L');
                         break;
                     case RIGHT:
@@ -130,6 +145,7 @@ public class PathToText{
                             case ("L2"): l2Text.append("Take a right at " + curr.getLongName());
                                 break;
                         }
+                        textPath.append("Take a right at " + curr.getLongName());
                         robotInstructions.append('R');
                         break;
                     case STRAIGHT:
@@ -149,6 +165,7 @@ public class PathToText{
                             case ("L2"): l2Text.append("Continue straight past " + curr.getLongName());
                                 break;
                         }
+                        textPath.append("Continue straight past " + curr.getLongName());
                         robotInstructions.append('S');
                         break;
                     default:
@@ -161,6 +178,22 @@ public class PathToText{
                 double distance = findEuclideanDistance(curr, next) * 3 / 8;
 
                 textPath.append(String.format(" distance: %.0fft\n", distance));
+                switch (currentFloor){
+                    case ("4"): floor4Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("3"):floor3Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("2"): floor2Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("1"): floor1Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("G"): groundText.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("L1"): l1Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                    case ("L2"): l2Text.append(String.format(" distance: %.0fft\n", distance));
+                        break;
+                }
 
 
                 double inches = distance / 12.0;
@@ -187,6 +220,7 @@ public class PathToText{
                     case "L2": l2Text.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
                         return l2Text.toString();
                 }
+                textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
             }
 
         }
