@@ -96,6 +96,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         danceBtn.setSelected(false);
@@ -141,8 +142,8 @@ public class PathfindingController extends Controller implements Initializable {
              */
 
         new Thread(() -> {
-            if (!imageCache.containsKey("3_NoIcons.png")) {
-                imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
+            if (!imageCache.containsKey("03_thethirdfloor.png")) {
+                imageCache.put("03_thethirdfloor.png", new Image(String.valueOf(getClass().getResource("/img/03_thethirdfloor.png"))));
             }
             if (!imageCache.containsKey("02_thesecondfloor_withbookablelocations.png")) {
                 imageCache.put("02_thesecondfloor_withbookablelocations.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor_withbookablelocations.png"))));
@@ -268,8 +269,8 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPathArray = pathScroll.getNodesOnPath();
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
-        pathScrollBar.setMin(1);
-        pathScrollBar.setValue(1);
+        pathScrollBar.setMin(0);
+        pathScrollBar.setValue(0);
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);

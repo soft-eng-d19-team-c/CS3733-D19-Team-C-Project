@@ -4,6 +4,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -195,6 +196,7 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton fx:id="logoutButton" onAction="#logoutButtonClick" maxWidth="200.0" minWidth="200.0" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
+      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="45.0" />
    </children>
 </AnchorPane>
