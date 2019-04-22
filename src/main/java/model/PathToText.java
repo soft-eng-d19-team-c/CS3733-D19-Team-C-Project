@@ -88,7 +88,7 @@ public class PathToText{
                 textPath.append(String.format(" distance: %.0fft\n", distance));
 
 
-                double inches = distance / 12.0;
+                double inches = distance * 12.0;
                 int robotInches = (int) inches;
                 robotInstructions.append(robotInches);
                 robotInstructions.append(',');
