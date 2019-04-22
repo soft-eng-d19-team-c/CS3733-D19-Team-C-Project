@@ -39,6 +39,7 @@ import java.util.ResourceBundle;
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private ToggleButton danceBtn;
+    @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
     @FXML private Pane mapImgPane;
@@ -47,6 +48,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private NavController navController;
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private JFXButton phoneNumberBtn;
+    @FXML private JFXButton clearBtn;
     @FXML private JFXButton Floor4;
     @FXML private JFXButton Floor3;
     @FXML private JFXButton Floor2;
@@ -230,6 +232,10 @@ public class PathfindingController extends Controller implements Initializable {
 
      */
     public void goBtnClick(ActionEvent actionEvent) {
+        makePath();
+    }
+
+    public void makePath(){
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
@@ -237,19 +243,32 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPathArray = pathScroll.getNodesOnPath();
         Node startNode = Node.getNodeByID(searchController_origController.getNodeID());
         changeFloor(startNode.getFloor());
-        pathScrollBar.setMin(1);
-        pathScrollBar.setValue(1);
+        pathScrollBar.setMin(0);
+        pathScrollBar.setValue(0);
         pathScrollBar.setMax(nodesOnPath.size());
         pathScrollBar.valueProperty().addListener(pathBarScrollListener);
         pathScrollBar.setVisible(true);
+        clearBtn.setVisible(true);
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
-        danceBtn.setVisible(true);
+        danceBtn.setSelected(false);
         hasPath = true;
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
     }
+
+    public void clearBtnClick(ActionEvent e){
+        pathScrollBar.setVisible(false);
+        pathScrollBar.setDisable(false);
+        clearBtn.setVisible(false);
+        displayAllNodes();
+        hasPath = false;
+        nodesOnPath.clear();
+        danceBtn.setSelected(false);
+        colorFloorsOnPath(nodesOnPath, currentFloor);
+    }
+
 
     /**
      * Allows scroll to work when the scrollbar is scrolled
@@ -354,6 +373,16 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(nodesOnPath);
         String path = pathToText.getDetailedPath();
         pathToText.SmsSender(path, new PhoneNumber("+1" + phoneNumber));
+    }
+
+    public void handicapBtnClick(ActionEvent e){
+        if(handicapBtn.isSelected()){
+            Main.info.getAlgorithm().setHandicap(true);
+        }
+        else Main.info.getAlgorithm().setHandicap(false);
+        if(hasPath){
+            makePath();
+        }
     }
 
 
@@ -669,8 +698,6 @@ public class PathfindingController extends Controller implements Initializable {
                 }
             }
 
-//        System.out.println(allFloors);
-
             for (int i = 0; i < allFloors.size(); i++) {
                 String floor = allFloors.get(i);
                 switch (floor) {
@@ -698,7 +725,6 @@ public class PathfindingController extends Controller implements Initializable {
                 }
 
                 if ((!(floor.equals(currentFloor))) && (!(allFloors.contains(floor)))) {
-                    System.out.println(floor);
                     switch (floor) {
                         case "4":
                             Floor4.setStyle("-fx-background-color: -secondary");
@@ -726,7 +752,6 @@ public class PathfindingController extends Controller implements Initializable {
 
             }
 
-            System.out.println(currentFloor);
             switch (currentFloor) {
                 case "4":
                     Floor4.setStyle("-fx-background-color: -success");
@@ -760,12 +785,6 @@ public class PathfindingController extends Controller implements Initializable {
         changeFloor(autocompletesearchbarController.getNodeFloor());
         displayAllNodes();
         searchWrapper.setVisible(false);
-    }
-
-    public void handicapBtnClick(ActionEvent actionEvent) {
-    }
-
-    public void clearBtnClick(ActionEvent actionEvent) {
     }
 }
 
