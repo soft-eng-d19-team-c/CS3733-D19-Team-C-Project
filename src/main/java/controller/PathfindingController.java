@@ -89,7 +89,6 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mapImgPane.centreOn(new Point2D(42, 42));
         nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
@@ -775,7 +774,6 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void scrolling(ScrollEvent scrollEvent) {
-
         zoomGroup.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
                 Point2D pivotOnTarget = mapImgPane.targetPointAt(new Point2D(e.getX(), e.getY()))
