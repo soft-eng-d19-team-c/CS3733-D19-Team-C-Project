@@ -24,7 +24,7 @@ public class Node {
     @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getSearchableNodes() {
         LinkedList<Node> nodes = new LinkedList<>();
-        String sqlStmt = "SELECT * FROM NODES where NODETYPE <> 'HALL'";
+        String sqlStmt = "SELECT * FROM NODES where NODETYPE <> 'HALL' AND NODETYPE <> 'BOOKHALL'";
         try {
             Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);

@@ -34,7 +34,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     private LinkedList<Node> nodes;
     private String nodeFloor;
     private boolean dropDownsOpen;
-    private HashMap<String, String> floorTranslator;
     private HashMap<String, String> typeTranslator;
 
     public String getNodeID() {
@@ -119,7 +118,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         dropDownsOpen = false;
         ObservableList<String> differentFloors = //set the dropdown in the fxml
                 FXCollections.observableArrayList(
-                        "L2", "L1", "Ground", "1", "2", "3", "4");
+                        "L2", "L1", "Ground", "1", "2", "3", "4", "Any Floor");
         floors.setItems(differentFloors);
         setSearchMethod();
     }
@@ -138,18 +137,39 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         }
         this.setLocation(Main.info.getKioskLocation().getID());
         this.nodeFloor = Main.info.getKioskLocation().getFloor();
+        setDropDownsOpen(true); //switches to the opposite - so dropdowns will be closed
         setSearchMethod();
     }
 
-    public void setDropDownsOpen(){
-        if(dropDownsOpen){
+    /**
+     * sets the dropdown to the opposite of b
+     * @param b
+     * @author Fay Whittall
+     */
+    public void setDropDownsOpen(boolean b){
+        if(b){
             dropdowns.setVisible(false);
+            dropDownsOpen = false;
         }
         else{
             dropdowns.setVisible(true);
+            dropDownsOpen = true;
         }
     }
 
+    /**
+     * switches the dropdown variable from true to false
+     * @author Fay Whittall
+     */
+    public void setDropDownsOpen(){
+        setDropDownsOpen(dropDownsOpen);
+    }
+
+    /**
+     * opens and closes the dropdowns
+     * @param e
+     * @author Fay Whittall
+     */
     public void filterBtnClick(ActionEvent e){
         setDropDownsOpen();
     }

@@ -23,7 +23,6 @@
                     <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="btn-primary-v2" />
-                        <String fx:value="btn-sm" />
                     </styleClass>
                 </JFXButton>
             </children>

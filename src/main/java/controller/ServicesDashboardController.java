@@ -1,9 +1,9 @@
 package controller;
 
-import api.ServiceException;
+//import api.ServiceException;
 import base.EnumScreenType;
 import base.Main;
-import base.PrescriptionRequestAPI;
+//import base.PrescriptionRequestAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,12 +89,12 @@ public class ServicesDashboardController extends Controller implements Initializ
     }
 
     public void prescriptionAPIButtonClick(ActionEvent actionEvent) {
-        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
-        try {
-            api.run(0,0,1920,1080,null,null,null);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+//        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
+//        try {
+//            api.run(0,0,1920,1080,null,null,null);
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
