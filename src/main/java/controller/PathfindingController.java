@@ -25,10 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import model.Edge;
-import model.Node;
-import model.PathScroll;
-import model.PathToText;
+import model.*;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -56,6 +53,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML private JFXButton robotButton;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -722,6 +720,10 @@ public class PathfindingController extends Controller implements Initializable {
         changeFloor(autocompletesearchbarController.getNodeFloor());
         displayAllNodes();
         searchWrapper.setVisible(false);
+    }
+
+    public void robotButtonClick(ActionEvent actionEvent){
+        RobotPOST.doPost();
     }
 }
 
