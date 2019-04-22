@@ -161,8 +161,20 @@ public final class Facade {
      * @author Ryan LaMarche
      */
     private Parent loadCachedScreen(EnumScreenType type) {
+        return loadCachedScreen(type, true);
+    }
+
+
+        /**
+         * Loads the Parent of a cached FXML page and initializes its controller.
+         * @param type
+         * @author Ryan LaMarche
+         */
+    private Parent loadCachedScreen(EnumScreenType type, boolean doInit) {
         ScreenCacheMachine temp = this.cacheMachine.get(type);
-        temp.getController().init(temp.getLocation(), temp.getResources());
+        if(doInit){
+            temp.getController().init(temp.getLocation(), temp.getResources());
+        }
         return temp.getParent();
     }
 
@@ -181,9 +193,9 @@ public final class Facade {
      */
     public void goBack(HashMap<String, Object> data) {
         if (this.history.size() > 0)
-            setScreen(this.history.pop(), data, false);
+            loadCachedScreen(this.history.pop(), false);
         else
-            setScreen(EnumScreenType.PATHFINDING, data, false);
+            loadCachedScreen(EnumScreenType.PATHFINDING, false);
     }
 
     /**
