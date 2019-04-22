@@ -52,7 +52,7 @@ public class GiftStoreController extends Controller implements Initializable {
         recipient.setText(null);
         sender.setText(null);
         type.setText(null);
-        autoCompleteTextController.setLocation(null);
+        autoCompleteTextController.setLocation((String) null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
 

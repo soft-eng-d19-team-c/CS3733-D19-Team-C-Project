@@ -29,7 +29,7 @@ public class ITServiceController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         description.setText(null);
-        autoCompleteTextController.setLocation(null);
+        autoCompleteTextController.setLocation((String) null);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
     }

@@ -30,8 +30,8 @@ public class FloristServiceRequestController extends Controller implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        acSearchStartController.setLocation(null);
-        acSearchEndController.setLocation(null);
+        acSearchStartController.setLocation((String) null);
+        acSearchEndController.setLocation((String) null);
         description.setText(null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
