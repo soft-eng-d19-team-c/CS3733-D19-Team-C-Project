@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -23,7 +24,7 @@
          <children>
             <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXButton fx:id="mapButton" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#mapButtonClick" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
+                  <JFXButton fx:id="mapButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#mapButtonClick" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -181,6 +182,12 @@
          </children>
       </VBox>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
+      <FontAwesomeIconView glyphName="MAP" size="30" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="SEARCH" size="30" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="BELL" size="30" AnchorPane.leftAnchor="835.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="CALENDAR" size="30" AnchorPane.leftAnchor="1050.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="EDIT" size="30" AnchorPane.leftAnchor="1275.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="USER" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="10.0" />
       <Pane prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
@@ -195,6 +202,6 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton fx:id="logoutButton" onAction="#logoutButtonClick" maxWidth="200.0" minWidth="200.0" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
+      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
    </children>
 </AnchorPane>
