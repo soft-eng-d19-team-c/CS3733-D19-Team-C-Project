@@ -827,6 +827,9 @@ public class PathfindingController extends Controller implements Initializable {
                     makePath();
                 });
                 pathfindingScreen.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                setStartBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                goFromNodeBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                nodePopUpPane.toFront();
             }
         }
     };
