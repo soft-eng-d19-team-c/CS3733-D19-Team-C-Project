@@ -62,6 +62,7 @@ dependencies {
             [group: 'com.twilio.sdk', name: 'twilio', version: '7.36.2'],
             [group: 'org.jasypt', name: 'jasypt', version: '1.9.2'],
             [group: 'org.jfxtras', name: 'jfxtras-all', version: '8.0-r6'],
+            [group: 'org.hibernate', name: 'hibernate-core', version: '4.3.1.Final'],
             files('libs/include.jar')
     )
 }

@@ -1,97 +1,225 @@
 package controller;
 
-import base.Main;
-import com.jfoenix.controls.JFXDatePicker;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
-import javafx.util.Callback;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import jfxtras.scene.control.CalendarPicker;
+import jfxtras.scene.control.LocalTimeTextField;
 import jfxtras.scene.control.agenda.Agenda;
-import model.Booking;
+import model.BookingCalendar;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import static model.Booking.getAllBooking;
-
 public class BookingController extends Controller implements Initializable {
-
-    @FXML public ImageView backgroundImage;
-    @FXML public NavController navController;
-    @FXML private JFXDatePicker datePicker;
-    @FXML private Agenda bookingAgenda;
-
-    private Callback<Agenda.LocalDateTimeRange, Agenda.Appointment> whatsGoingonThisWeek;
-    private ObservableList<Booking> Bookings;
-
-    @Override
+//    @FXML public ImageView backgroundImage;
+//    @FXML public NavController navController;
+//    @FXML private JFXDatePicker datePicker;
+//    @FXML private Agenda bookingAgenda;
+//    private Callback<Agenda.LocalDateTimeRange, Agenda.Appointment> whatsGoingonThisWeek;
+//    private ObservableList<Booking> Bookings;
+//    @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
     }
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        backgroundImage.setImage(Main.screenController.getBackgroundImage());
+//        navController.setActiveTab(NavTypes.ADMINVIEW);
+//        Bookings = getAllBooking();
+//        datePicker.setValue(LocalDate.now());
+//        loadWeekSchedule();
+//    }
+//    private void loadWeekSchedule(){
+//        bookingAgenda.appointments().remove(0, bookingAgenda.appointments().size());
+//        for (Booking b : Bookings){
+//            LocalDateTime st = b.getDateFromLocal();
+//            LocalDateTime ft = b.getDateToLocal();
+//            Calendar calst = Calendar.getInstance();
+//            calst.set(st.getYear(), st.getMonthValue() - 1, st.getDayOfMonth(), st.getHour(), st.getMinute());
+//            Calendar calft = Calendar.getInstance();
+//            calft.set(ft.getYear(), ft.getMonthValue() - 1, ft.getDayOfMonth(), ft.getHour(), ft.getMinute());
+//            bookingAgenda.appointments().add(
+//                    new Agenda.AppointmentImpl()
+//                            .withStartTime(calst)
+//                            .withEndTime(calft)
+//                            .withSummary(b.getDescription())
+//                            .withLocation(b.getLocation())
+//            );
+//        }
+//    }
+//    private void getBColor(){ }
+//    public void nextWeekBtnClick(ActionEvent actionEvent) {
+//        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().plusWeeks(1));
+//        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
+//    }
+//    public void prevWeekBtnClick(ActionEvent actionEvent) {
+//        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().minusWeeks(1));
+//        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
+//    }
+//    public void dateChange(ActionEvent actionEvent) {
+//        bookingAgenda.setDisplayedLocalDateTime(LocalDate.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(), datePicker.getValue().getDayOfMonth()).atTime(12,00));
+//    }
 
+
+
+    BookingCalendar appointmentModel = new BookingCalendar();
+    @FXML
+    private Agenda agenda;
+    @FXML
+    private CalendarPicker calendar;
+    @FXML
+    private LocalTimeTextField startTime;
+    @FXML
+    private LocalTimeTextField endTime;
+    @FXML
+    private TextArea description;
+    private BookingCalendar.Appointment selectedAppointment;
+
+    @FXML
+    void addAppointment(ActionEvent event) {
+        int id;
+        Date selected = calendar.getCalendar().getTime();
+        LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Agenda.AppointmentImplLocal newAppointment = new BookingCalendar().new Appointment()
+                .withStartLocalDateTime(startTime.getLocalTime().atDate(date))
+                .withEndLocalDateTime(endTime.getLocalTime().atDate(date))
+                .withDescription(description.getText())
+                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+
+        id = appointmentModel.addNewAppointment(newAppointment);
+
+        BookingCalendar.Appointment a = (BookingCalendar.Appointment)newAppointment;
+        a.setId(id);
+
+        agenda.appointments().add(a);
+        agenda.refresh();
+
+        updateAppointment();
+
+    }
+
+    @FXML
+    void deleteAppointment(ActionEvent event) {
+
+        System.out.println(selectedAppointment.getId());
+        appointmentModel.deleteAppointment(selectedAppointment.getId());
+        updateAgenda();
+        agenda.refresh();
+
+    }
+
+    @FXML
+    void updateAppointment(ActionEvent event) {
+        Date selected;
+        if( calendar.getCalendar()==null){
+            selected = Date.from(selectedAppointment.getStartLocalDateTime().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        }else {
+            selected = calendar.getCalendar().getTime();
+        }
+        LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        selectedAppointment.setStartLocalDateTime(startTime.getLocalTime().atDate(date));
+        selectedAppointment.setEndLocalDateTime(endTime.getLocalTime().atDate(date));
+        selectedAppointment.setDescription(description.getText());
+        appointmentModel.updateAppointment(selectedAppointment);
+        updateAgenda();
+        agenda.refresh();
+
+
+
+    }
+
+
+    private void updateAppointment() {
+
+
+
+    }
+
+    private void updateAgenda(){;
+        agenda.localDateTimeRangeCallbackProperty().set(param -> {
+
+
+                    List<BookingCalendar.Appointment> list = appointmentModel.getAppointments(param.getStartLocalDateTime(), param.getEndLocalDateTime());
+                    agenda.appointments().clear();
+                    agenda.appointments().addAll(list);
+                    return null;
+                }
+
+        );
+
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        backgroundImage.setImage(Main.screenController.getBackgroundImage());
 
-        navController.setActiveTab(NavTypes.ADMINVIEW);
-        Bookings = getAllBooking();
-        datePicker.setValue(LocalDate.now());
-//        bookingAgenda.createDefaultSkin();
-//        bookingAgenda.skin
+        try {
+            updateAgenda();
+        }catch (Exception e){
+            e.printStackTrace();
 
-        loadWeekSchedule();
-    }
-
-    private void loadWeekSchedule(){
-//        bookingAgenda.refresh();
-        bookingAgenda.appointments().remove(0, bookingAgenda.appointments().size());
-        for (Booking b : Bookings){
-            LocalDateTime st = b.getDateFromLocal();
-            LocalDateTime ft = b.getDateToLocal();
-            Calendar calst = Calendar.getInstance();
-            calst.set(st.getYear(), st.getMonthValue() - 1, st.getDayOfMonth(), st.getHour(), st.getMinute());
-            Calendar calft = Calendar.getInstance();
-            calft.set(ft.getYear(), ft.getMonthValue() - 1, ft.getDayOfMonth(), ft.getHour(), ft.getMinute());
-            bookingAgenda.appointments().add(
-                    new Agenda.AppointmentImpl()
-                            .withStartTime(calst)
-                            .withEndTime(calft)
-                            .withSummary(b.getDescription())
-                            .withLocation(b.getLocation())
-            );
         }
-//        bookingAgenda.newAppointmentCallbackProperty().setValue(whatsGoingonThisWeek);
 
-//        bookingAgenda.setLocalDateTimeRangeCallback(new Callback<Agenda.LocalDateTimeRange, Void>() {
-//            @Override
-//            public Void call(Agenda.LocalDateTimeRange param) {
-//                return null;
-//            }
-//        });
+        agenda.setAllowDragging(true);
+        agenda.setAllowResize(true);
+        agenda.newAppointmentCallbackProperty().set((localDateTimeRange) -> {
+            Agenda.AppointmentImplLocal appointmentImplLocal = new BookingCalendar().new Appointment()
+                    .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
+                    .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
 
+
+            int id = appointmentModel.addNewAppointment(appointmentImplLocal);
+
+            BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
+            a.setId(id);
+
+            return a;
+
+        });
+
+
+        calendar.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+
+            Date cal = calendar.getCalendar().getTime();
+            LocalDate ld = cal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            LocalTime lt = LocalTime.NOON;
+
+            agenda.setDisplayedLocalDateTime(LocalDateTime.of(ld, lt));
+
+            updateAgenda();
+
+
+        });
+
+        agenda.appointmentChangedCallbackProperty().set(param ->{
+
+
+                    appointmentModel.updateAppointment((BookingCalendar.Appointment)param);
+                    return null;
+                }
+        );
+
+        agenda.actionCallbackProperty().set(param ->
+                {
+                    selectedAppointment = (BookingCalendar.Appointment)param;
+                    startTime.setLocalTime(selectedAppointment.getStartLocalDateTime().toLocalTime());
+                    endTime.setLocalTime(selectedAppointment.getEndLocalDateTime().toLocalTime());
+                    description.setText(selectedAppointment.getDescription());
+                    return null;
+                }
+        );
 
     }
 
-    private void getBColor(){
-
-    }
-
-    public void nextWeekBtnClick(ActionEvent actionEvent) {
-        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().plusWeeks(1));
-        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
-    }
-
-    public void prevWeekBtnClick(ActionEvent actionEvent) {
-        bookingAgenda.setDisplayedLocalDateTime(bookingAgenda.getDisplayedLocalDateTime().minusWeeks(1));
-        datePicker.setValue(bookingAgenda.getDisplayedLocalDateTime().toLocalDate());
-    }
-
-    public void dateChange(ActionEvent actionEvent) {
-        bookingAgenda.setDisplayedLocalDateTime(LocalDate.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(), datePicker.getValue().getDayOfMonth()).atTime(12,00));
-    }
 }
