@@ -66,7 +66,7 @@ public final class Database {
         String DatabaseStateTablePK = "alter table DATABASESTATE add constraint DATABASESTATE_pk primary key (ID)";
 
         Statement tableStmt = null;
-        boolean importStuff = false;
+        boolean importStuff = true;
         try {
             tableStmt = this.connection.createStatement();
             // create nodes and edges first
@@ -74,8 +74,8 @@ public final class Database {
             tableStmt.executeUpdate(DatabaseStateTableUINDEX);
             tableStmt.executeUpdate(DatabaseStateTablePK);
         } catch (SQLException e1) {
-            if (!e1.getSQLState().equals("X0Y32")) {
-                importStuff = true;
+            if (e1.getSQLState().equals("X0Y32")) {
+                importStuff = false;
             }
         }
 
