@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
+import javafx.scene.control.Label;
 import model.Edge;
 import model.Node;
 import model.PathScroll;
@@ -95,7 +96,7 @@ public class PathfindingController extends Controller implements Initializable {
     VBox GroundContent = new VBox();
     VBox L1Content = new VBox();
     VBox L2Content = new VBox();
-    TextField floor4Text = new TextField();
+    Label floor4Text = new Label();
     Label floor3Text = new Label();
     Label floor2Text = new Label();
     Label floor1Text = new Label();
@@ -180,7 +181,7 @@ public class PathfindingController extends Controller implements Initializable {
 
         addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         addText.getPanes().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        Floor4Content.getChildren().add("");
+        Floor4Content.getChildren().add("ada");
         Floor3Content.getChildren().add(floor3Text);
         Floor2Content.getChildren().add(floor2Text);
         Floor1Content.getChildren().add(floor1Text);
@@ -328,24 +329,31 @@ public class PathfindingController extends Controller implements Initializable {
             String floor = textFloors.get(i);
             switch (floor) {
                 case "4":
+                    System.out.println("4");
                     floor4Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "3":
+                    System.out.println("3");
                     floor3Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "2":
+                    System.out.println("2");
                     floor2Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "1":
+                    System.out.println("1");
                     floor1Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "G":
+                    System.out.println("g");
                     groundText.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "L1":
+                    System.out.println("l1");
                     l1Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
                 case "L2":
+                    System.out.println("l2");
                     l2Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     break;
             }
