@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -42,6 +43,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
     @FXML private Pane mapImgPane;
+    @FXML private Group zoomGroup;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
     @FXML private NavController navController;
@@ -83,7 +85,6 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         searchController_destController.refresh();
@@ -151,7 +152,7 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
 
@@ -168,7 +169,7 @@ public class PathfindingController extends Controller implements Initializable {
             circle.setCenterY(mapY + n.getY() / mapScale);
             circle.setRadius(3.0);
             circle.setFill(black);
-            mapImgPane.getChildren().add(circle);
+            zoomGroup.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
         }
         for (Edge e : edges) {
@@ -181,7 +182,7 @@ public class PathfindingController extends Controller implements Initializable {
                 line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
                 line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
                 line.setStroke(black);
-                mapImgPane.getChildren().add(line);
+                zoomGroup.getChildren().add(line);
             }
         }
 
@@ -300,7 +301,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -317,10 +318,10 @@ public class PathfindingController extends Controller implements Initializable {
                     line.endYProperty().bind(circle.centerYProperty());
                     line.setStroke(c);
                     line.setStrokeWidth(3.0);
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                     nodeLines.put(n.getID(), line);
                 }
-                mapImgPane.getChildren().add(circle);
+                zoomGroup.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
             } else {
@@ -345,7 +346,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -379,9 +380,9 @@ public class PathfindingController extends Controller implements Initializable {
                         st.setCycleCount(Animation.INDEFINITE);
                         st.setAutoReverse(true);
                         st.play();
-                        mapImgPane.getChildren().add(line);
+                        zoomGroup.getChildren().add(line);
                     }
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
                 prev = n;
@@ -403,7 +404,7 @@ public class PathfindingController extends Controller implements Initializable {
                     ft.setAutoReverse(true);
                     ft.setCycleCount(Animation.INDEFINITE);
                     ft.play();
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
 
@@ -423,7 +424,7 @@ public class PathfindingController extends Controller implements Initializable {
                     st.setCycleCount(Animation.INDEFINITE);
                     st.setAutoReverse(true);
                     st.play();
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                 }
             }
             for (Circle c : nodeCircles.values()) {
@@ -498,12 +499,10 @@ public class PathfindingController extends Controller implements Initializable {
         changeButtonColor(currentFloorButton);
 
         if (imageCache.containsKey(floorURL)) {
-            findPathImgView.setImage(imageCache.get(floorURL));
             setImageI(imageCache.get(floorURL));
         } else {
             Image newImage = new Image(String.valueOf(getClass().getResource("/img/" + floorURL)));
             imageCache.put(floorURL, newImage);
-            findPathImgView.setImage(newImage);
             setImageI(newImage);
         }
         findPathImgView.fitWidthProperty().bind(mapImgPane.widthProperty());
@@ -521,19 +520,19 @@ public class PathfindingController extends Controller implements Initializable {
 
         ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
 
-        findPathImgView.setOnMousePressed(e -> {
+        zoomGroup.setOnMousePressed(e -> {
 
             Point2D mousePress = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
             mouseDown.set(mousePress);
         });
 
-        findPathImgView.setOnMouseDragged(e -> {
+        zoomGroup.setOnMouseDragged(e -> {
             Point2D dragPoint = imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY()));
             shift(findPathImgView, dragPoint.subtract(mouseDown.get()));
             mouseDown.set(imageViewToImage(findPathImgView, new Point2D(e.getX(), e.getY())));
         });
 
-        findPathImgView.setOnScroll(e -> {
+        zoomGroup.setOnScroll(e -> {
             double delta = e.getDeltaY();
             Rectangle2D viewport = findPathImgView.getViewport();
 
@@ -571,7 +570,7 @@ public class PathfindingController extends Controller implements Initializable {
             findPathImgView.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
         });
 
-        findPathImgView.setOnMouseClicked(e -> {
+        zoomGroup.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 reset(findPathImgView, width, height);
             }
@@ -658,7 +657,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         updateFloorImg(floor);
         if (hasPath) {
             generateNodesAndEdges(nodesOnPath, c);

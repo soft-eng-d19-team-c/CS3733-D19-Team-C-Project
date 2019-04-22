@@ -11,13 +11,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.Group?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
-            <ImageView fx:id="findPathImgView" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
+            <Group id="Group" fx:id="zoomGroup">
+               <ImageView fx:id="findPathImgView" fitHeight="1015.0" fitWidth="1577.0" layoutX="-14.0" pickOnBounds="true" preserveRatio="true" />
+            </Group>
          </children>
       </Pane>
       <Pane layoutX="114.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="0.0" />
@@ -50,8 +52,9 @@
                               <Font size="20.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="-20.0" />
-                           </VBox.margin></JFXButton>
+                              <Insets bottom="100.0" top="-20.0" />
+                           </VBox.margin>
+                        </JFXButton>
                      </children>
                      <padding>
                         <Insets left="50.0" right="150.0" />
