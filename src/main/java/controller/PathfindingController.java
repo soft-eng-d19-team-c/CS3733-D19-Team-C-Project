@@ -723,7 +723,11 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void robotButtonClick(ActionEvent actionEvent){
-        RobotPOST.doPost();
+        try {
+            RobotPOST.doPost();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
