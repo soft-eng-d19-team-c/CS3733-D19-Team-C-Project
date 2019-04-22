@@ -15,12 +15,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -59,6 +59,8 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML
+    protected Accordion addText;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -78,6 +80,15 @@ public class PathfindingController extends Controller implements Initializable {
     private boolean hasPath;
     private Button currentFloorButton;
     private HashMap<String, Image> imageCache = new HashMap<>();
+
+    javafx.scene.control.TitledPane TitledPane = new TitledPane();
+    VBox Floor4Content = new VBox();
+    VBox Floor3Content = new VBox();
+    VBox Floor2Content = new VBox();
+    VBox Floor1Content = new VBox();
+    VBox GroundContent = new VBox();
+    VBox L1Content = new VBox();
+    VBox L2Content = new VBox();
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -152,6 +163,9 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }).start();
 
+        addText.getPanes().removeAll(TitledPane);
+        addText.getPanes().addAll(TitledPane);
+        Floor4Content.getChildren().add(new Label("Floor 4"));
 
     }
 

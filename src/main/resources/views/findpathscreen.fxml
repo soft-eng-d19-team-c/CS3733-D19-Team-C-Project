@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Accordion?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
@@ -212,5 +213,7 @@
             </VBox>
          </children>
       </Pane>
+      <Accordion fx:id="addText" layoutX="0.0" layoutY="300.0" visible="false" AnchorPane.rightAnchor="50.0">
+      </Accordion>
    </children>
 </AnchorPane>
