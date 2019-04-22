@@ -175,6 +175,9 @@ public final class Facade {
         if(doInit){
             temp.getController().init(temp.getLocation(), temp.getResources());
         }
+        else{
+            temp.getController();
+        }
         return temp.getParent();
     }
 
