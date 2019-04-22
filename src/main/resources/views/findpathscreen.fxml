@@ -20,7 +20,7 @@
    <children>
       <GesturePane fx:id="mapImgPane" layoutX="561.0" layoutY="135.0" onScroll="#scrolling" prefHeight="946.0" prefWidth="1360.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="561.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="135.0">
          <content>
-            <Group id="Group" fx:id="rootGroup">
+            <Group id="Group" fx:id="zoomGroup">
                <ImageView fx:id="findPathImgView" fitHeight="1015.0" fitWidth="1577.0" layoutX="-14.0" pickOnBounds="true" preserveRatio="true" />
             </Group>
          </content>
@@ -42,7 +42,7 @@
                      <children>
                         <Label styleClass="field-question-text" text="Where are you?">
                            <VBox.margin>
-                              <Insets top="3.0" />
+                              <Insets top="6.0" />
                            </VBox.margin></Label>
                         <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
                         <Label styleClass="field-question-text" text="Where do you want to go?">
@@ -63,6 +63,9 @@
                                  </font>
                               </JFXButton>
                            </children>
+                           <VBox.margin>
+                              <Insets top="-13.0" />
+                           </VBox.margin>
                           </HBox>
                      </children>
                      <padding>
@@ -124,37 +127,37 @@
                <children>
                   <Label styleClass="field-question-text" text="Floor">
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="13.0" />
                      </VBox.margin>
                   </Label>
                   <JFXButton fx:id="Floor3" contentDisplay="CENTER" onAction="#floor3BtnClick" styleClass="floor-select-button" text="     3     ">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="Floor2" contentDisplay="CENTER" onAction="#floor2BtnClick" styleClass="floor-select-button" text="     2     ">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="Floor1" contentDisplay="CENTER" onAction="#floor1BtnClick" styleClass="floor-select-button" text="     1     ">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="Ground" contentDisplay="CENTER" onAction="#groundBtnClick" styleClass="floor-select-button" text="Ground">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="L1" contentDisplay="CENTER" onAction="#L1BtnClick" styleClass="floor-select-button" text="    L1    ">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                   <JFXButton fx:id="L2" contentDisplay="CENTER" onAction="#L2BtnClick" styleClass="floor-select-button" text="    L2    ">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
                   </JFXButton>
                </children>
