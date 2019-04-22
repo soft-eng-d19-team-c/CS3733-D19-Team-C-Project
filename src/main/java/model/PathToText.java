@@ -42,6 +42,8 @@ public class PathToText{
         */
         String strRobotInstructions;
         StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
+
+        //for individual floors text directions
         StringBuilder floor4Text = new StringBuilder();
         StringBuilder floor3Text = new StringBuilder();
         StringBuilder floor2Text = new StringBuilder();
@@ -64,13 +66,14 @@ public class PathToText{
             if (!currentFloor.equals(nextFloor)) {
                 if (curr.getFloorNumber() > next.getFloorNumber()) {
                     textPath.append("Go down a floor at " + curr.getLongName() + "\n");
-
+                    System.out.println(currentFloor);
                     switch (currentFloor){
                         case ("4"): floor4Text.append("Go down a floor at " + curr.getLongName() + "\n");
                             return floor4Text.toString();
                         case ("3"): floor3Text.append("Go down a floor at " + curr.getLongName() + "\n");
                             return floor3Text.toString();
                         case ("2"): floor2Text.append("Go down a floor at " + curr.getLongName() + "\n");
+                            System.out.println(floor2Text);
                             return floor2Text.toString();
                         case ("1"): floor1Text.append("Go down a floor at " + curr.getLongName() + "\n");
                             return floor1Text.toString();
@@ -89,6 +92,7 @@ public class PathToText{
                         case ("3"): floor3Text.append("Go up a floor at " + curr.getLongName() + "\n");
                             return floor3Text.toString();
                         case ("2"): floor2Text.append("Go up a floor at " + curr.getLongName() + "\n");
+                            System.out.println(floor2Text);
                             return floor2Text.toString();
                         case ("1"): floor1Text.append("Go up a floor at " + curr.getLongName() + "\n");
                             return floor1Text.toString();
