@@ -182,12 +182,12 @@
          </children>
       </VBox>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <FontAwesomeIconView glyphName="MAP" size="30" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView glyphName="SEARCH" size="30" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView glyphName="BELL" glyphStyle="f88c" size="30" AnchorPane.leftAnchor="835.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView glyphName="CALENDAR_ALT" size="30" AnchorPane.leftAnchor="1050.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView glyphName="USER" size="30" AnchorPane.leftAnchor="1275.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView glyphName="SIGN_IN" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="mapIcon" glyphName="MAP" size="30" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="searchIcon" glyphName="SEARCH" size="30" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="serviceIcon" glyphName="BELL" glyphStyle="f88c" size="30" AnchorPane.leftAnchor="835.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="bookIcon" glyphName="CALENDAR_ALT" size="30" AnchorPane.leftAnchor="1050.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="userIcon" glyphName="USER" size="30" AnchorPane.leftAnchor="1275.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="loginIcon" glyphName="SIGN_IN" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
       <Pane prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
@@ -206,6 +206,6 @@
          <padding>
             <Insets bottom="10.0" top="50.0" />
          </padding></JFXButton>
-      <FontAwesomeIconView glyphName="SIGN_IN" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="logoutIcon" glyphName="SIGN_OUT" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
    </children>
 </AnchorPane>

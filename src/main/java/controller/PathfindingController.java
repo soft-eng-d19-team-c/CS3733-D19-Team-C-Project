@@ -60,6 +60,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
 
+
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodesOnPath;
