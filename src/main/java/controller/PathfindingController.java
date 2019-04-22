@@ -324,7 +324,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox Floor3Content = new VBox();
                     Label floor3Text = new Label("Floor 3");
                     addText.getPanes().add(floor3);
-                    floor4.setText("Floor 3");
+                    floor3.setText("Floor 3");
                     floor3Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     Floor3Content.getChildren().add(floor3Text);
                     floor3.setContent(Floor3Content);
@@ -334,7 +334,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox Floor2Content = new VBox();
                     Label floor2Text = new Label("Floor 2");
                     addText.getPanes().add(floor2);
-                    floor4.setText("Floor 2");
+                    floor2.setText("Floor 2");
                     floor2Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     Floor2Content.getChildren().add(floor2Text);
                     floor2.setContent(Floor2Content);
@@ -344,7 +344,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox Floor1Content = new VBox();
                     Label floor1Text = new Label("Floor 1");
                     addText.getPanes().add(floor1);
-                    floor4.setText("Floor 1");
+                    floor1.setText("Floor 1");
                     floor1Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     Floor1Content.getChildren().add(floor1Text);
                     floor1.setContent(Floor1Content);
@@ -354,7 +354,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox GroundContent = new VBox();
                     Label groundText = new Label(" Ground Floor");
                     addText.getPanes().add(ground);
-                    floor4.setText("Ground Floor");
+                    ground.setText("Ground Floor");
                     groundText.setText(pathToText.getDetailedPath(nodesOnPath));
                     GroundContent.getChildren().add(groundText);
                     ground.setContent(GroundContent);
@@ -363,7 +363,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox L1Content = new VBox();
                     Label l1Text = new Label("L1");
                     addText.getPanes().add(l1);
-                    floor4.setText("L1");
+                    l1.setText("L1");
                     //System.out.println("l1");
                     l1Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     L1Content.getChildren().add(l1Text);
@@ -374,7 +374,7 @@ public class PathfindingController extends Controller implements Initializable {
                     VBox L2Content = new VBox();
                     Label l2Text = new Label("L2");
                     addText.getPanes().add(l2);
-                    floor4.setText("L2");
+                    l2.setText("L2");
                     l2Text.setText(pathToText.getDetailedPath(nodesOnPath));
                     L2Content.getChildren().add(l2Text);
                     l2.setContent(L2Content);
@@ -483,6 +483,24 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
         pathScroll.setOldPosition(newPosition);
+
+        switch (currentFloor){
+            case "4": addText.setExpandedPane(floor4);
+                break;
+            case "3": addText.setExpandedPane(floor3);
+                break;
+            case "2": addText.setExpandedPane(floor2);
+                break;
+            case "1": addText.setExpandedPane(floor1);
+                break;
+            case "G": addText.setExpandedPane(ground);
+                break;
+            case "L1": addText.setExpandedPane(l1);
+                break;
+            case "L2": addText.setExpandedPane(l2);
+                break;
+
+        }
     }
 
     private void generateNodesAndEdges(LinkedList<Node> nodes) {
