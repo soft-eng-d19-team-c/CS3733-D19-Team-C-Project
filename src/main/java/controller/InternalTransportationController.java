@@ -41,8 +41,8 @@ public class InternalTransportationController  extends Controller implements Ini
         dateField.setValue(null);
         timeField.setValue(null);
         description.setText(null);
-        searchController_origController.setLocation(null);
-        searchController_destController.setLocation(null);
+        searchController_origController.setLocation((String) null);
+        searchController_destController.setLocation((String) null);
 
     }
     public void submitBtnClick(ActionEvent actionEvent) {

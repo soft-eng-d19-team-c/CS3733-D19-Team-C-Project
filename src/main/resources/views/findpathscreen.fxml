@@ -14,29 +14,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
+<AnchorPane fx:id="pathfindingScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PathfindingController">
    <children>
       <Pane fx:id="mapImgPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
             <ImageView fx:id="findPathImgView" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" />
-            <Pane fx:id="nodePopUpPane" layoutX="363.0" layoutY="328.0" prefHeight="91.0" prefWidth="340.0">
+            <Pane fx:id="nodePopUpPane" layoutX="469.0" layoutY="391.0" prefHeight="91.0" prefWidth="340.0">
                <children>
                   <VBox layoutX="58.0" prefHeight="200.0" prefWidth="500.0" spacing="20.0">
-                      <children>
-                      <Label styleClass="field-question-text" />
+                     <children>
+                        <Label fx:id="popUpLongName" styleClass="field-question-text" />
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                                   <JFXButton fx:id="setStartBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#setStartBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="Start Here">
-                                       <font>
-                                           <Font size="20.0" />
-                                       </font>
-                                   </JFXButton>
-                                   <JFXButton fx:id="goFromNodeBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#setGoBtnClick" prefWidth="150.0" styleClass="btn-primary-v2" text="Go Here">
-                                       <font>
-                                           <Font size="20.0" />
-                                       </font>
-                                   </JFXButton>
-                           </children></HBox>
+                              <JFXButton fx:id="setStartBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Start Here">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton fx:id="goFromNodeBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Go Here">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>

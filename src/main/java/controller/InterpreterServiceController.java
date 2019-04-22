@@ -40,7 +40,7 @@ public class InterpreterServiceController extends Controller implements Initiali
         dateField.setValue(null);
         timeField.setValue(null);
         description.setText(null);
-        acSearchController.setLocation(null);
+        acSearchController.setLocation((String) null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

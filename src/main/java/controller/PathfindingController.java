@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,6 +44,7 @@ import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
+    @FXML private AnchorPane pathfindingScreen;
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
@@ -60,9 +62,13 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXButton Ground;
     @FXML private JFXButton L1;
     @FXML private JFXButton L2;
+    @FXML private JFXButton setStartBtn;
+    @FXML private JFXButton goFromNodeBtn;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML private Pane nodePopUpPane;
+    @FXML private Label popUpLongName;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -105,9 +111,9 @@ public class PathfindingController extends Controller implements Initializable {
         findLocationNodeID = null;
         searchController_origController.refresh();
         searchController_destController.refresh();
-        searchController_destController.setLocation(null);
+        searchController_destController.setLocation((String) null);
         autocompletesearchbarController.refresh();
-        autocompletesearchbarController.setLocation(null);
+        autocompletesearchbarController.setLocation((String) null);
         handicapBtn.setSelected(false);
         Main.info.getAlgorithm().refresh();
         currentFloor = (String) Main.screenController.getData("floor");
@@ -123,6 +129,7 @@ public class PathfindingController extends Controller implements Initializable {
         clearBtn.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
+        nodePopUpPane.setVisible(false);
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
@@ -810,19 +817,28 @@ public class PathfindingController extends Controller implements Initializable {
             if (me.getButton().equals(MouseButton.PRIMARY)) {
                 Circle circle = (Circle) me.getTarget();
                 Node n = (Node) circle.getProperties().get("node");
-                searchController_destController.setLocation(n.getID());
-                makePath();
+                nodePopUpPane.setVisible(true);
+                popUpLongName.setText(n.getLongName());
+                setStartBtn.setOnAction((event) -> {
+                    searchController_origController.setLocation(n);
+                });
+                goFromNodeBtn.setOnAction((event) -> {
+                    searchController_destController.setLocation(n);
+                    makePath();
+                });
+                pathfindingScreen.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
             }
         }
     };
 
-    public void setStartBtnClick(ActionEvent e){
-
-    }
-
-    public void setGoBtnClick(ActionEvent e){
-
-    }
+    EventHandler nodePopUpRemoveHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                nodePopUpPane.setVisible(false);
+                pathfindingScreen.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+            }
+        }
+    };
 }
 
 

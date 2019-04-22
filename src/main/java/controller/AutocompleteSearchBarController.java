@@ -35,12 +35,18 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void setLocation(String nodeID) {
         this.nodeID.setText(nodeID);
-        if (nodeID == Main.info.getKioskLocation().getID())
+        if (nodeID != null)
             this.acTextInput.setText("Current Location");
-        else if (nodeID == null)
-            this.acTextInput.setText("");
         else
-            this.acTextInput.setText(Node.getNodeByID(nodeID).getLongName());
+            this.acTextInput.setText("");
+    }
+
+    public void setLocation(Node node){
+        this.nodeID.setText(node.getID());
+        if(node != null)
+            this.acTextInput.setText(node.getShortName());
+        else
+            this.acTextInput.setText("");
     }
 
     @Override
