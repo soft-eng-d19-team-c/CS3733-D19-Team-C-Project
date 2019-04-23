@@ -101,7 +101,13 @@ public final class Database {
                 String createEdgesTable = "create table EDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint EDGES_NODES_STARTNODE_fk references NODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint EDGES_NODES_ENDNODE_fk references NODES (NODEID) on update no action on delete cascade)";
                 String EdgesTableUINDEX = "create unique index EDGES_EDGEID_uindex	on EDGES (EDGEID)";
                 String EdgesTablePK = "alter table EDGES add constraint EDGES_pk primary key (EDGEID)";
+
+               /* //create Fuller Nodes table
+                String createFullerNodesTable = "create table FULLERNODES (NODEID varchar(255) not null, XCOORD int, YCOORD int, BUILDING varchar(255), LONGNAME varchar(255), SHORTNAME varchar(255))";
+                String FullerNodesTableUINDEX = "create unique index FULLERNODES_NODEID_uindex on FULLERNODES (NODEID)";
+                String FullerNodesTablePK = "alter table FULLERNODES add constraint FULLERNODES_pk primary key (NODEID)";*/
             /*
+
                     USER STUFF
              */
                 // create users table
@@ -175,6 +181,7 @@ public final class Database {
                 String createGiftStoreRequestsTable = "create table GIFTSTOREREQUESTS(ID int generated always as identity, NODEID varchar(255) not null constraint GIFTSTOREREQUESTS_NODES_NODEID_fk references NODES (NODEID) on delete no action, DATETIMESUBMITTED timestamp, DATETIMECOMPLETED timestamp, USERCOMPLETEDBY varchar(64) constraint GIFTSTOREREQUESTS_USERS_USERNAME_fk references USERS (USERNAME) on update no action on delete cascade, TYPE varchar(255), SENDER varchar(255), RECIPIENT varchar(255))";
                 String giftStoreRequestsTableUINDEX = "create unique index GIFTSTOREREQUESTS_ID_uindex on GIFTSTOREREQUESTS (ID)";
                 String giftStoreRequestTablePK = "alter table GIFTSTOREREQUESTS add constraint GIFTSTOREREQUESTS_pk primary key (ID)";
+
 
 
 
