@@ -317,10 +317,10 @@ public class PathfindingController extends Controller implements Initializable {
             double endX = (((dest.getX())/mapScale) - imgHeight);
             double endY = (((dest.getY())/mapScale) - imgWidth);
 
-           line.setStartX(startX);
-           line.setStartY(startY);
-           line.setEndX(endX);
-           line.setEndY(endY);
+           line.setStartX(startX - 525);
+           line.setStartY(startY - 220);
+           line.setEndX(endX - 525);
+           line.setEndY(endY - 220);
 
             path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             animations.getChildren().add(path);
