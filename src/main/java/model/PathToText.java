@@ -3,9 +3,6 @@ package model;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import sun.awt.image.ImageWatched;
-
-import javax.xml.soap.Text;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -63,7 +60,7 @@ public class PathToText{
                 floorStrings.add(new StringBuilder());
             }
         }
-        System.out.println(floorStrings.size());
+//        System.out.println(floorStrings.size());
 
         floorStrings.get(0).append("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         int floorNum =0;
@@ -90,7 +87,7 @@ public class PathToText{
                         floorNum++;
                     }
                 } else {
-                    System.out.println(floorNum);
+//                    System.out.println(floorNum);
                     if(curr.getFloor().equals(next.getFloor())){
                         Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
                         Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
@@ -151,7 +148,7 @@ public class PathToText{
         for(int k=0; k < floorStrings.size(); k++){
             textsByFloor.add(floorStrings.get(k).toString());
         }
-        System.out.println(allSwitches);
+//        System.out.println(allSwitches);
         return new TextInfo(textsByFloor, allSwitches);
 
 //return textPath.toString();
