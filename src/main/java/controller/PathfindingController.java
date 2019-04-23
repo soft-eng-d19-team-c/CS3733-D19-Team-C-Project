@@ -5,10 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.StrokeTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,35 +29,56 @@ import model.PathToText;
 
 import javax.swing.*;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
-    @FXML private ToggleButton danceBtn;
-    @FXML private ToggleButton pacmanBtn;
-    @FXML private ToggleButton handicapBtn;
-    @FXML private ImageView findPathImgView;
-    @FXML private ImageView Gif;
-    @FXML private AnchorPane findPathView;
-    @FXML private Pane mapImgPane;
-    @FXML private AutocompleteSearchBarController searchController_origController;
-    @FXML private AutocompleteSearchBarController searchController_destController;
-    @FXML private NavController navController;
-    @FXML private JFXTextArea phoneNumberInput;
-    @FXML private JFXButton phoneNumberBtn;
-    @FXML private JFXButton clearBtn;
-    @FXML private JFXButton Floor3;
-    @FXML private JFXButton Floor2;
-    @FXML private JFXButton Floor1;
-    @FXML private JFXButton Ground;
-    @FXML private JFXButton L1;
-    @FXML private JFXButton L2;
-    @FXML private JFXTextArea pathText;
-    @FXML private JFXSlider pathScrollBar;
-    @FXML private Pane searchWrapper;
+    @FXML
+    private ToggleButton danceBtn;
+    @FXML
+    private ToggleButton pacmanBtn;
+    @FXML
+    private ToggleButton handicapBtn;
+    @FXML
+    private ImageView findPathImgView;
+    @FXML
+    private ImageView Gif;
+    @FXML
+    private AnchorPane findPathView;
+    @FXML
+    private Pane mapImgPane;
+    @FXML
+    private AutocompleteSearchBarController searchController_origController;
+    @FXML
+    private AutocompleteSearchBarController searchController_destController;
+    @FXML
+    private NavController navController;
+    @FXML
+    private JFXTextArea phoneNumberInput;
+    @FXML
+    private JFXButton phoneNumberBtn;
+    @FXML
+    private JFXButton clearBtn;
+    @FXML
+    private JFXButton Floor3;
+    @FXML
+    private JFXButton Floor2;
+    @FXML
+    private JFXButton Floor1;
+    @FXML
+    private JFXButton Ground;
+    @FXML
+    private JFXButton L1;
+    @FXML
+    private JFXButton L2;
+    @FXML
+    private JFXButton playBtn;
+    @FXML
+    private JFXTextArea pathText;
+    @FXML
+    private JFXSlider pathScrollBar;
+    @FXML
+    private Pane searchWrapper;
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -95,12 +113,12 @@ public class PathfindingController extends Controller implements Initializable {
         pacmanBtn.setSelected(false);
         pacmanBtn.setVisible(false);
         danceBtn.setDisable(false);
+        playBtn.setVisible(false);
         phoneNumberInput.setText(null);
         if (Main.screenController.getData("showSearch") != null && (Boolean) Main.screenController.getData("showSearch")) {
             searchWrapper.setVisible(true);
             navController.setActiveTab(NavTypes.FINDROOM);
-        }
-        else {
+        } else {
             searchWrapper.setVisible(false);
             navController.setActiveTab(NavTypes.MAP);
         }
@@ -177,7 +195,7 @@ public class PathfindingController extends Controller implements Initializable {
         nodes = Node.getNodesByFloor(currentFloor);
         edges = Edge.getEdgesByFloor(currentFloor);
         black = new Color(0, 0, 0, 1);
-        red = new Color(1, 0,0,1);
+        red = new Color(1, 0, 0, 1);
 
         clearMap();
 
@@ -215,17 +233,17 @@ public class PathfindingController extends Controller implements Initializable {
         }
         if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
             showFoundNode(nodeCircles.get(findLocationNodeID), Color.ORANGERED);
-        }
-        else if(nodeCircles.containsKey(Main.info.getKioskLocation().getID())){
+        } else if (nodeCircles.containsKey(Main.info.getKioskLocation().getID())) {
             showFoundNode(nodeCircles.get(Main.info.getKioskLocation().getID()), Color.GREEN);
         }
     }
 
     /**
      * shows the node that has been found as a flashing red dot
+     *
      * @param foundNode
      */
-    public void showFoundNode(Circle foundNode, Color color){
+    public void showFoundNode(Circle foundNode, Color color) {
         foundNode.setRadius(6.0);
         foundNode.setFill(color);
         foundNode.toFront();
@@ -258,17 +276,62 @@ public class PathfindingController extends Controller implements Initializable {
             double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             double mapX = findPathImgView.getLayoutX();
             double mapY = findPathImgView.getLayoutY();
-            double imgWidth = (Gif.getFitWidth()/2);
-            double imgHeight = (Gif.getFitHeight()/2);
-            Gif.setLayoutX(((mapX + Main.info.getKioskLocation().getX())/mapScale) - imgWidth);
-            Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY())/mapScale) - imgHeight);
+            double imgWidth = (Gif.getFitWidth() / 2);
+            double imgHeight = (Gif.getFitHeight() / 2);
+            Gif.setLayoutX(((mapX + Main.info.getKioskLocation().getX()) / mapScale) - imgWidth);
+            Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY()) / mapScale) - imgHeight);
             Gif.toFront();
             Gif.setVisible(true);
+            playBtn.setVisible(true);
         } else {
             Gif.setVisible(false);
+            playBtn.setVisible(false);
             danceBtn.setDisable(false);
         }
     }
+
+    //nodesOnPathArray
+    public void playBtnClick(ActionEvent actionEvent) {
+        double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+        double mapX = findPathImgView.getLayoutX();
+        double mapY = findPathImgView.getLayoutY();
+        double imgWidth = (Gif.getFitWidth() / 2);
+        double imgHeight = (Gif.getFitHeight() / 2);
+
+        SequentialTransition animations = new SequentialTransition();
+
+
+        for(int i = 0; i < nodesOnPathArray.length - 1; i++){
+
+            PathTransition path = new PathTransition();
+            Line line = new Line();
+            path.setNode(Gif);
+            path.setPath(line);
+            path.setDuration(Duration.millis(200));
+
+            Node start = nodesOnPathArray[i];
+            Node dest = nodesOnPathArray[i + 1];
+
+            double startX = ((start.getX()/mapScale)- imgHeight);
+            double startY = (((start.getY())/mapScale ) - imgWidth);
+            double endX = (((dest.getX())/mapScale) - imgHeight);
+            double endY = (((dest.getY())/mapScale) - imgWidth);
+
+           line.setStartX(startX);
+           line.setStartY(startY);
+           line.setEndX(endX);
+           line.setEndY(endY);
+
+            path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            animations.getChildren().add(path);
+
+        }
+
+        animations.play();
+
+
+    }
+
 
     public void makePath(){
         String orig_nodeID = searchController_origController.getNodeID();
