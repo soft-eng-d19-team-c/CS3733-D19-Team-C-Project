@@ -94,6 +94,8 @@ public class SearchParameters {
     }
 
     private LinkedList<Node> filterByFloor(LinkedList<Node> nodes){
+        if (this.floor == null)
+            return nodes;
         if(this.floor.equals("Any Floor"))
             return nodes;
         LinkedList<Node> filteredNodes = new LinkedList<>();

@@ -168,6 +168,10 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void setNodesBoxItems(LinkedList<Node> nodes){
+        if (nodes == null){
+            return;
+        }
+
         ObservableList<String> longNames = FXCollections.observableArrayList();
         for(Node n: nodes){
             longNames.add(n.getLongName());
@@ -214,12 +218,17 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void floorBoxClick(ActionEvent e){
         searchParameters.setFloor((String) floors.getValue());
-        setNodesBoxItems(searchParameters.filter(nodes));
+        if (nodes != null) {
+            setNodesBoxItems(searchParameters.filter(nodes));
+        }
     }
 
     public void typeBoxClick(ActionEvent e){
         searchParameters.setType((String) types.getValue());
-        setNodesBoxItems(searchParameters.filter(nodes));
+        System.out.println((String) types.getValue());
+        if (nodes != null) {
+            setNodesBoxItems(searchParameters.filter(nodes));
+        }
     }
 
     public void nodesBoxClick(ActionEvent e){
@@ -229,4 +238,5 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             setLocation(n);
         }
     }
+
 }
