@@ -50,6 +50,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void setLocation(Node node){
+        this.nodeFloor = node.getFloor();
         this.nodeID.setText(node.getID());
         if(node != null)
             this.acTextInput.setText(node.getShortName());
@@ -213,6 +214,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
      * @author Fay Whittall
      */
     public void filterBtnClick(ActionEvent e){
+
         setDropDownsOpen();
     }
 
