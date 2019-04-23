@@ -235,7 +235,7 @@
             </VBox>
          </children>
       </Pane>
-      <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="btn-primary-v2" text="GO GO ROBOT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
+      <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="btn-primary-v2" text="SEND TO ROBOT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
          <font>
             <Font size="24.0" />
          </font>

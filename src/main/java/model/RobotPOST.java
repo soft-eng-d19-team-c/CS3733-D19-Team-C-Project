@@ -30,7 +30,7 @@ public class RobotPOST{
     public static void doPost() throws Exception {
 
         String postData = PathToText.postMe; //Gets the directions from path to text
-        String url = "http://172.20.10.2/";
+        String url = "http://192.168.43.192/";
 
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(url);
