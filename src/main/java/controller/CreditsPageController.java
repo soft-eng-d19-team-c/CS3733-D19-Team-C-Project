@@ -1,15 +1,11 @@
 package controller;
 
-import base.EnumScreenType;
-import base.Main;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AboutPageController extends Controller implements Initializable {
+public class CreditsPageController extends Controller implements Initializable {
     @FXML
     private NavController navController;
 
@@ -23,7 +19,4 @@ public class AboutPageController extends Controller implements Initializable {
         navController.setActiveTab(NavTypes.NONE);
     }
 
-    public void creditsBtnClick(ActionEvent e){
-        Main.screenController.setScreen(EnumScreenType.CREDITS);
-    }
 }

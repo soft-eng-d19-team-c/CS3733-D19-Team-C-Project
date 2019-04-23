@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreditsPageController">
+    <children>
+        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="150.0">
+            <children>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="438.0" stylesheets="@app.css" text="Credits">
+                    <font>
+                        <Font size="40.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="285.0" text="APIs Used from other Teams:">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="417.0" text="Team B: Emergency Request">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="266.0" text="Team G: Floral Request">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="266.0" text="Team L: Gift Store Request">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="307.0" text="Other APIs used:">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="405.0" text="Twilio">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="405.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="361.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="285.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="295.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="383.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="383.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </Label>
+                <Label alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="489.0" text="Thank you to Brigham and Women's Faulkner Hospital representative, ">
+                    <font>
+                        <Font size="45.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" top="50.0" />
+                    </VBox.margin>
+                </Label>
+                <Label text="Andrew Shinn, for their time and input. The Brigham and Women’s Hospital">
+                    <font>
+                        <Font size="45.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+                <Label text="maps and data used in this application are copyrighted and provided">
+                    <font>
+                        <Font size="45.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+                <Label text="for the sole use of educational purposes.">
+                    <font>
+                        <Font size="45.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="100.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+        <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+    </children>
+</AnchorPane>
