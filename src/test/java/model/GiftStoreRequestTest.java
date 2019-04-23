@@ -19,7 +19,6 @@ public class GiftStoreRequestTest {
 
     @Before
     public void setUp() throws Exception {
-        //db = new Database();
 
         String sqlStr = "insert into createGiftStoreRequests (recipient, sender, location, gifttype, datetimesubmitted) Values (?, ?, ?, ?, ?)";
 
