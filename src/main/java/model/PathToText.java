@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import static java.lang.Math.floor;
 import static java.lang.Math.sqrt;
 
 public class PathToText{
@@ -46,6 +47,7 @@ public class PathToText{
         String strRobotInstructions;
         //StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         LinkedList<StringBuilder> floorStrings = new LinkedList<>();
+        floorStrings.add(new StringBuilder());
         LinkedList<String> allSwitches = new LinkedList<>();
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
         Collections.reverse(Arrays.asList(nodesArray));
@@ -61,10 +63,11 @@ public class PathToText{
                 floorStrings.add(new StringBuilder());
             }
         }
-        //System.out.println(floorStrings);
+        System.out.println(floorStrings.size());
 
         floorStrings.get(0).append("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         int floorNum =0;
+        allSwitches.add(nodesArray[1].getFloor());
 
         for (int i = 1; i < nodesArray.length - 1; i++) {
             //System.out.println("in 2nd loop");
@@ -76,18 +79,18 @@ public class PathToText{
                 //System.out.println(floorStrings.get(floorNum).toString());
 
                 if (!curr.getFloor().equals(next.getFloor())) {
-                    floorNum++;
-                    allSwitches.add(curr.getFloor());
+                    allSwitches.add(next.getFloor());
                     if (curr.getFloorNumber() > next.getFloorNumber()) {
                         //textPath.append("Go down a floor at " + curr.getLongName() + "\n");
                         floorStrings.get(floorNum).append("Go down a floor at " + curr.getLongName() + "\n");
-
+                        floorNum++;
                     } else {
                         //textPath.append("Go up a floor at " + curr.getLongName() + "\n");
                         floorStrings.get(floorNum).append("Go up a floor at " + curr.getLongName() + "\n");
+                        floorNum++;
                     }
                 } else {
-
+                    System.out.println(floorNum);
                     if(curr.getFloor().equals(next.getFloor())){
                         Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
                         Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
@@ -138,17 +141,17 @@ public class PathToText{
 
         }
 
-        //textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+        floorStrings.get(floorNum).append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
 
         strRobotInstructions = robotInstructions.toString();
         postMe = strRobotInstructions.substring(0, strRobotInstructions.length() - 1); //Get rid of the last extra comma
 //        System.out.println(textPath.toString());
 
         LinkedList<String> textsByFloor = new LinkedList<>();
-        for(int k=0; k <= floorStrings.size(); k++){
+        for(int k=0; k < floorStrings.size(); k++){
             textsByFloor.add(floorStrings.get(k).toString());
         }
-
+        System.out.println(allSwitches);
         return new TextInfo(textsByFloor, allSwitches);
 
 //return textPath.toString();
