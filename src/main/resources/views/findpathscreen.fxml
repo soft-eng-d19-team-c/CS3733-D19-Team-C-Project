@@ -148,11 +148,16 @@
          <children>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="270.0" prefWidth="130.0">
                <children>
-                  <Label styleClass="field-question-text" text="Floor">
+                  <!--<Label styleClass="field-question-text" text="Floor">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="10.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</Label>-->
+                  <JFXButton fx:id="Floor4" contentDisplay="CENTER" onAction="#floor4BtnClick" styleClass="floor-select-button" text="     4     ">
                      <VBox.margin>
-                        <Insets left="13.0" />
+                        <Insets left="7.0" top="5.0" />
                      </VBox.margin>
-                  </Label>
+                  </JFXButton>
                   <JFXButton fx:id="Floor3" contentDisplay="CENTER" onAction="#floor3BtnClick" styleClass="floor-select-button" text="     3     ">
                      <VBox.margin>
                         <Insets left="7.0" top="5.0" />
