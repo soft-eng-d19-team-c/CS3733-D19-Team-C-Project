@@ -136,8 +136,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             if (n.getLongName() != null)
                 acSuggestions.getSuggestions().add(n);
         }
-        this.setLocation(Main.info.getKioskLocation().getID());
-        this.nodeFloor = Main.info.getKioskLocation().getFloor();
         setSearchMethod();
     }
 }

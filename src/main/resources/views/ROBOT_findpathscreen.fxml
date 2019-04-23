@@ -237,7 +237,6 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <fx:include fx:id="autocompletesearchbar" source="autocompleteSearchBar.fxml" />
                   <JFXButton fx:id="searchBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Search">
                      <font>
                         <Font size="20.0" />

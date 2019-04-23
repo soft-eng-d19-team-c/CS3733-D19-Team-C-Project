@@ -35,7 +35,6 @@ import java.util.ResourceBundle;
 
 
 public class ROBOTPathfindingController extends Controller implements Initializable {
-    public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private AnchorPane pathfindingScreen;
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
@@ -99,13 +98,14 @@ public class ROBOTPathfindingController extends Controller implements Initializa
     @Override
     @SuppressWarnings("Duplicates")
     public void initialize(URL location, ResourceBundle resources) {
+        findPathImgView.setImage(new Image(String.valueOf(getClass().getResource("/img/FullerMap.png"))));
         navController.setActiveTab(NavTypes.MAP);
         searchController_origController.refreshForRobots();
         searchController_destController.refreshForRobots();
-        Main.info.getAlgorithm().refreshForRobots();
         Platform.runLater(() -> {
             displayAllNodes();
             nodesOnPath = new LinkedList<>();
+            Main.info.getAlgorithm().refreshForRobots();
         });
     }
 
@@ -121,8 +121,8 @@ public class ROBOTPathfindingController extends Controller implements Initializa
 
         nodeCircles = new HashMap<>();
         nodeLines = new HashMap<>();
-        nodes = Node.getNodesByFloor(currentFloor);
-        edges = Edge.getEdgesByFloor(currentFloor);
+        nodes = Node.getSearchableRobotNodes();
+        edges = Edge.getEdgesForRobot();
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
