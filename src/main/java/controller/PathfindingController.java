@@ -5,10 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.StrokeTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,12 +13,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +36,7 @@ import model.Edge;
 import model.Node;
 import model.PathScroll;
 import model.PathToText;
+import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -48,8 +50,11 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
+    @FXML private AnchorPane findPathView;
+    @FXML private Group zoomGroup;
+    @FXML private GesturePane mapImgPane;
     @FXML private VBox findPathBar;
-    @FXML private Pane mapImgPane;
+//    @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
     @FXML private NavController navController;
@@ -194,7 +199,7 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
 
@@ -208,9 +213,9 @@ public class PathfindingController extends Controller implements Initializable {
             double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             circle.setCenterX(mapX + n.getX() / mapScale);
             circle.setCenterY(mapY + n.getY() / mapScale);
-            circle.setRadius(3.0);
+            circle.setRadius(4.2);
             circle.setFill(black);
-            mapImgPane.getChildren().add(circle);
+            zoomGroup.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
             circle.getProperties().put("node", n);
         }
@@ -224,7 +229,9 @@ public class PathfindingController extends Controller implements Initializable {
                 line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
                 line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
                 line.setStroke(black);
-                mapImgPane.getChildren().add(line);
+                line.setMouseTransparent(true);
+                zoomGroup.getChildren().add(line);
+
             }
         }
         if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
@@ -388,7 +395,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -405,10 +412,10 @@ public class PathfindingController extends Controller implements Initializable {
                     line.endYProperty().bind(circle.centerYProperty());
                     line.setStroke(c);
                     line.setStrokeWidth(3.0);
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                     nodeLines.put(n.getID(), line);
                 }
-                mapImgPane.getChildren().add(circle);
+                zoomGroup.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
             } else {
@@ -442,7 +449,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -476,9 +483,9 @@ public class PathfindingController extends Controller implements Initializable {
                         st.setCycleCount(Animation.INDEFINITE);
                         st.setAutoReverse(true);
                         st.play();
-                        mapImgPane.getChildren().add(line);
+                        zoomGroup.getChildren().add(line);
                     }
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
                 prev = n;
@@ -500,7 +507,7 @@ public class PathfindingController extends Controller implements Initializable {
                     ft.setAutoReverse(true);
                     ft.setCycleCount(Animation.INDEFINITE);
                     ft.play();
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
 
@@ -520,7 +527,7 @@ public class PathfindingController extends Controller implements Initializable {
                     st.setCycleCount(Animation.INDEFINITE);
                     st.setAutoReverse(true);
                     st.play();
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                 }
             }
             for (Circle c : nodeCircles.values()) {
@@ -605,7 +612,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         updateFloorImg(floor);
         if (hasPath) {
             generateNodesAndEdges(nodesOnPath, c);
@@ -856,6 +863,19 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
     };
+
+    public void scrolling(ScrollEvent scrollEvent) {
+        zoomGroup.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+                Point2D pivotOnTarget = mapImgPane.targetPointAt(new Point2D(e.getX(), e.getY()))
+                        .orElse(mapImgPane.targetPointAtViewportCentre());
+                // increment of scale makes more sense exponentially instead of linearly
+                mapImgPane.animate(Duration.millis(200))
+                        .interpolateWith(Interpolator.EASE_BOTH)
+                        .zoomBy(mapImgPane.getCurrentScale(), pivotOnTarget);
+            }
+        });
+    }
 }
 
 
