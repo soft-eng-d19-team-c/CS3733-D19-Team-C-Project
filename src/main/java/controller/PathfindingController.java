@@ -293,9 +293,8 @@ public class PathfindingController extends Controller implements Initializable {
             Node start = nodesOnPathArray[i];
             Node dest = nodesOnPathArray[i + 1];
 
-           if(i != 0) {
-               path.setOnFinished(event -> nodeCircles.get(start).setFill(Color.PINK));
-           }
+            path.setOnFinished(event -> nodeCircles.get(start).setFill(Color.PINK));
+
 
             double startX = ((start.getX()/mapScale)- imgHeight);
             double startY = (((start.getY())/mapScale ) - imgWidth);
