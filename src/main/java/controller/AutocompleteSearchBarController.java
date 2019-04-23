@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
+import model.SearchParameters;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -32,6 +33,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     private LinkedList<Node> nodes;
     private String nodeFloor;
     private boolean dropDownsOpen;
+    private SearchParameters searchParameters;
 
     public String getNodeID() {
         return nodeID.getText();
@@ -88,9 +90,10 @@ public class AutocompleteSearchBarController extends Controller implements Initi
              to set our own custom value for the ListCell to whatever we want it to be.
              We then listen for changes to the text field and populate with results containing
              the search bar text.
-             When the item is selcted, we have an event listener for this so we can do whatever
-             we want with the selcted Node (like get its ID and such).
+             When the item is selected, we have an event listener for this so we can do whatever
+             we want with the selected Node (like get its ID and such).
          */
+        searchParameters = new SearchParameters();
         refresh();
         acSuggestions.setSuggestionsCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
             @Override
@@ -142,6 +145,8 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void refresh() {
         nodes = Node.getSearchableNodes();
+        searchParameters.setType("All Locations");
+        searchParameters.setType("Any Floor");
         setNodeSearchList(nodes);
         this.setLocation(Main.info.getKioskLocation().getID());
         this.nodeFloor = Main.info.getKioskLocation().getFloor();
@@ -197,12 +202,13 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     }
 
     public void floorBoxClick(ActionEvent e){
-        LinkedList<Node> filteredNodes = Main.searchParameters.setFloor((String) floors.getValue(), nodes);
+        searchParameters.setFloor((String) floors.getValue());
+        LinkedList<Node> filteredNodes = searchParameters.filter(nodes);
         setNodeSearchList(filteredNodes);
     }
 
     public void typeBoxClick(ActionEvent e){
-        LinkedList<Node> filteredNodes = Main.searchParameters.setType((String) types.getValue(), nodes);
-        setNodeSearchList(filteredNodes);
-    }
+        searchParameters.setType((String) types.getValue());
+        LinkedList<Node> filteredNodes = searchParameters.filter(nodes);
+        setNodeSearchList(filteredNodes);    }
 }

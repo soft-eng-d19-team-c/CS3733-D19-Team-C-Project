@@ -13,7 +13,6 @@ public class Main {
     public static ApplicationInformation info;
     public static AuthenticationManager auth;
     public static IdleMonitor idleMonitor;
-    public static SearchParameters searchParameters;
     public static void main(String[] args) {
         auth = new AuthenticationManager();
         info = new ApplicationInformation("CHALL007L1");
@@ -22,7 +21,6 @@ public class Main {
         } catch (AuthException e) {
             e.printStackTrace();
         }
-        searchParameters = new SearchParameters();
         MainFXML.main(args);
     }
 }

@@ -1,21 +1,19 @@
-package base;
-
-import model.Node;
+package model;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public final class SearchParameters {
+public class SearchParameters {
     private String floor;
     private LinkedList<String> type;
     private HashMap<String, LinkedList<String>> typeTranslator;
-    private HashMap<LinkedList<String>, LinkedList<Node>> listCache; //holds all of the lists of nodes for faster access
 
     /**
      * the constructor. creates the type translator and the list cache
      */
     public SearchParameters() {
-        this.listCache = new HashMap<>();
+        this.floor = "Any Floor";
+        this.floor = null;
         this.typeTranslator = new HashMap<>();
         //create linked lists
         LinkedList<String> deptLL = new LinkedList<>();
@@ -61,30 +59,27 @@ public final class SearchParameters {
         typeTranslator.put("All Locations", null);
     }
 
+
     /**
      * sets the floor, returns the filtered list of nodes
      * @param floor
-     * @param nodes
      * @return the list of nodes with the given filters
      * @author Fay Whittall
      */
-    public LinkedList<Node> setFloor(String floor, LinkedList<Node> nodes) {
+    public void setFloor(String floor) {
         this.floor = floor;
         if(floor.equals("Ground"))
             this.floor = "G";
-        return filter(nodes);
     }
 
     /**
      * sets the type, returns the filtered list of nodes
      * @param type
-     * @param nodes
      * @return the list of nodes with the given filters
      * @author Fay Whittall
      */
-    public LinkedList<Node> setType(String type, LinkedList<Node> nodes) {
+    public void setType(String type) {
         this.type = typeTranslator.get(type);
-        return filter(nodes);
     }
 
     /**
@@ -94,43 +89,34 @@ public final class SearchParameters {
      * @author Fay Whittall
      */
     public LinkedList<Node> filter(LinkedList<Node> nodes){
-        LinkedList<String> key = new LinkedList<>();
-        key.add(this.floor);
-        if(this.type != null){
-            for(String t: this.type){
-                key.add(t);
-            }
-        }
-        if(listCache.containsKey(key)){
-            return listCache.get(key);
-        }
-        else{
-            LinkedList<Node> filteredNodes = filterByFloor(filterByType(nodes));
-            listCache.put(key, filteredNodes);
-            return filteredNodes;
-        }
+        LinkedList<Node> filteredNodes = filterByFloor(filterByType(nodes));
+        return filteredNodes;
     }
 
-    public LinkedList<Node> filterByFloor(LinkedList<Node> nodes){
+    private LinkedList<Node> filterByFloor(LinkedList<Node> nodes){
         if(this.floor.equals("Any Floor"))
             return nodes;
         LinkedList<Node> filteredNodes = new LinkedList<>();
+        int i = 0;
         for(Node n : nodes){
             if(n.getFloor().equals(this.floor)){
                 filteredNodes.add(n);
             }
+            i++;
         }
         return filteredNodes;
     }
 
-    public LinkedList<Node> filterByType(LinkedList<Node> nodes){
+    private LinkedList<Node> filterByType(LinkedList<Node> nodes){
         if(this.type == null)
             return nodes;
         LinkedList<Node> filteredNodes = new LinkedList<>();
+        int i = 0;
         for(Node n : nodes){
             if(this.type.contains(n.getNodeType())){
                 filteredNodes.add(n);
             }
+            i++;
         }
         return filteredNodes;
     }
