@@ -32,7 +32,7 @@
                   <ComboBox fx:id="types" onAction="#typeBoxClick" prefWidth="150.0" promptText="Type" />
                </children>
             </HBox>
-            <ComboBox fx:id="nodesBox" prefWidth="300.0" promptText="Nodes" />
+            <ComboBox fx:id="nodesBox" onAction="#nodesBoxClick" prefWidth="300.0" promptText="Nodes" />
          </children>
       </VBox>
    </children>
