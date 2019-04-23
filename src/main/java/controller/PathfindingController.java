@@ -324,8 +324,14 @@ public class PathfindingController extends Controller implements Initializable {
            line.setEndY(endY - 220);
 
             path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            animations.getChildren().add(path);
 
+            // change floor stuff here
+            if (!start.getFloor().equals(dest.getFloor())) {
+                path.setOnFinished(event -> changeFloor(dest.getFloor()));
+            }
+
+
+            animations.getChildren().add(path);
         }
 
         animations.play();
