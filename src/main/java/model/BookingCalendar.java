@@ -1,6 +1,8 @@
 package model;
 
 import base.Database;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import jfxtras.scene.control.agenda.Agenda;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookingCalendar {
     private static class UserSession {
@@ -24,25 +29,25 @@ public class BookingCalendar {
             return session;
         }
     }
-    @Entity
-    @Access(AccessType.FIELD)
-    @Table(name = "Appointment")
-    private class AppointmentEntity {
-        @Id
-        @GeneratedValue
-        private int id;
-        private Timestamp startTime;
-        private Timestamp endTime;
-        String description;
-        public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
-        public String getDescription() { return description; }
-        public void setDescription(String description) { this.description = description; }
-        public Timestamp getStartTime() { return startTime; }
-        public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
-        public Timestamp getEndTime() { return endTime; }
-        public void setEndTime(Timestamp endTime) { this.endTime = endTime; }
-    }
+//    @Entity
+//    @Access(AccessType.FIELD)
+//    @Table(name = "Appointment")
+//    private class AppointmentEntity {
+//        @Id
+//        @GeneratedValue
+//        private int id;
+//        private Timestamp startTime;
+//        private Timestamp endTime;
+//        String description;
+//        public int getId() { return id; }
+//        public void setId(int id) { this.id = id; }
+//        public String getDescription() { return description; }
+//        public void setDescription(String description) { this.description = description; }
+//        public Timestamp getStartTime() { return startTime; }
+//        public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
+//        public Timestamp getEndTime() { return endTime; }
+//        public void setEndTime(Timestamp endTime) { this.endTime = endTime; }
+//    }
     public class Appointment extends Agenda.AppointmentImplLocal{
         private int id;
         public int getId() {
@@ -64,7 +69,6 @@ public class BookingCalendar {
 //        session.getTransaction().commit();
 //        //returns generated id value
 //        return appointmentEntity.getId();
-        boolean executed = false;
         String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND)  values (?,?,?,?)";
         ResultSet rs;
         int ID = -1;
@@ -74,7 +78,7 @@ public class BookingCalendar {
             ps.setString(2, newAppointment.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
             ps.setTimestamp(4, Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
-            executed = ps.execute(); //returns a boolean
+            boolean executed = ps.execute(); //returns a boolean
             System.out.println("New Appointment.insert " + executed);
             rs = ps.getGeneratedKeys();
             while(rs.next()) {
@@ -86,52 +90,65 @@ public class BookingCalendar {
         }
         return ID;
     }
-//    private List<AppointmentEntity> getAppointmentEntities(LocalDateTime startTime, LocalDateTime endTime){
-//        String hql = "FROM AppointmentEntity a where a.startTime between :startTime and :endTime";
-//        Query query = session.createQuery(hql);
-//        query.setParameter("startTime",Timestamp.valueOf(startTime));
-//        query.setParameter("endTime",Timestamp.valueOf(endTime));
-//        List results = query.list();
-//        return results;
-//    }
-//    public List<Appointment> getAppointments(LocalDateTime startTime,LocalDateTime endTime){
-//        List<AppointmentEntity> entityList =getAppointmentEntities(startTime,endTime);
-//        List<Appointment> appointmentList = new ArrayList<>();
-//        for(AppointmentEntity entity:entityList){
-//            Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
-//                    .withStartLocalDateTime(entity.getStartTime().toLocalDateTime())
-//                    .withEndLocalDateTime(entity.getEndTime().toLocalDateTime())
-//                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
-//            appointmentImplLocal.setDescription(entity.getDescription());
-//            Appointment appointment = (Appointment)appointmentImplLocal;
-//            appointment.setId(entity.getId());
-//            appointmentList.add(appointment);
-//        }
-//        return appointmentList;
-//    }
-    public void deleteAppointment(int id){
-        AppointmentEntity entity = (AppointmentEntity)session.get(AppointmentEntity.class,id);
-        session.beginTransaction();
-        session.delete(entity);
-        session.getTransaction().commit();
-    }
-    public void updateAppointment(Appointment newAppointment) {
-        AppointmentEntity entity = (AppointmentEntity)session.get(AppointmentEntity.class,newAppointment.getId());
-        entity.setStartTime(Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
-        entity.setEndTime(Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
-        entity.setDescription(newAppointment.getDescription());
-        if(entity==null)
-            System.out.println("NULL");
-        else{
-            System.out.println(entity.getId() + entity.getStartTime().toLocalDateTime().toLocalDate().toString());
-        }
-        System.out.println(newAppointment.toString());
+    public List<Appointment> getAppointments(LocalDateTime startTime, LocalDateTime endTime){
+        List<Appointment> result = FXCollections.observableArrayList();
+        String hql = "SELECT * FROM BOOKINGS WHERE DATETIMESTART > ? AND DATETIMEEND < ?";
+        ResultSet rs;
         try {
-            session.beginTransaction();
-            session.update(entity);
-            session.getTransaction().commit();
-        }catch (Exception e){
+            PreparedStatement ps = Database.getConnection().prepareStatement(hql);
+            ps.setTimestamp(1, Timestamp.valueOf(startTime));
+            ps.setTimestamp(2, Timestamp.valueOf(endTime));
+            rs = ps.executeQuery(hql);
+            while(rs.next()) {
+                Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
+                        .withLocation(rs.getString("LOCATION"))
+                        .withDescription(rs.getString("DESCRIPTION"))
+                        .withStartLocalDateTime(rs.getTimestamp("DATETIMESTART").toLocalDateTime())
+                        .withEndLocalDateTime(rs.getTimestamp("DATETIMEEND").toLocalDateTime())
+                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+                Appointment appointment = (Appointment)appointmentImplLocal;
+                appointment.setId(rs.getInt("ID"));
+                result.add(appointment);
+            }
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+    public void deleteAppointment(int id){
+        String dql = "DELETE FROM BOOKINGS WHERE ID = ?";
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement(dql);
+            ps.setInt(1, id);
+            boolean executed = ps.execute(); //returns a boolean
+            System.out.println("delete" + id + "from Bookings" + executed);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        AppointmentEntity entity = (AppointmentEntity)session.get(AppointmentEntity.class,id);
+//        session.beginTransaction();
+//        session.delete(entity);
+//        session.getTransaction().commit();
+    }
+    public void updateAppointment(Appointment newAppointment) {
+//        AppointmentEntity entity = (AppointmentEntity)session.get(AppointmentEntity.class,newAppointment.getId());
+//        entity.setStartTime(Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
+//        entity.setEndTime(Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
+//        entity.setDescription(newAppointment.getDescription());
+//        if(entity==null)
+//            System.out.println("NULL");
+//        else{
+//            System.out.println(entity.getId() + entity.getStartTime().toLocalDateTime().toLocalDate().toString());
+//        }
+//        System.out.println(newAppointment.toString());
+//        try {
+//            session.beginTransaction();
+//            session.update(entity);
+//            session.getTransaction().commit();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 }

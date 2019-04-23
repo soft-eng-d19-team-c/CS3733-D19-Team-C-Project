@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookingController extends Controller implements Initializable {
-    BookingCalendar appointmentModel = new BookingCalendar();
+    BookingCalendar bookingCalendar = new BookingCalendar();
     @FXML private ComboBox locationBox;
     @FXML private Agenda agenda;
     @FXML private CalendarPicker calendar;
@@ -90,13 +90,15 @@ public class BookingController extends Controller implements Initializable {
         int id;
         Date selected = calendar.getCalendar().getTime();
         LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        BookableLocation b = (BookableLocation) locationBox.getValue();
+        String location_s = b.getID();
         Agenda.AppointmentImplLocal newAppointment = new BookingCalendar().new Appointment()
                 .withStartLocalDateTime(startTime.getLocalTime().atDate(date))
                 .withEndLocalDateTime(endTime.getLocalTime().atDate(date))
                 .withDescription(description.getText())
-                .withLocation(locationBox.getValue().getID())
+                .withLocation(location_s)
                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
-        id = appointmentModel.addNewAppointment(newAppointment);
+        id = bookingCalendar.addNewAppointment(newAppointment);
         BookingCalendar.Appointment a = (BookingCalendar.Appointment)newAppointment;
         a.setId(id);
         agenda.appointments().add(a);
@@ -107,7 +109,7 @@ public class BookingController extends Controller implements Initializable {
     @FXML
     void deleteAppointment(ActionEvent event) {
         System.out.println(selectedAppointment.getId());
-        appointmentModel.deleteAppointment(selectedAppointment.getId());
+        bookingCalendar.deleteAppointment(selectedAppointment.getId());
         updateAgenda();
         agenda.refresh();
     }
@@ -124,7 +126,7 @@ public class BookingController extends Controller implements Initializable {
         selectedAppointment.setStartLocalDateTime(startTime.getLocalTime().atDate(date));
         selectedAppointment.setEndLocalDateTime(endTime.getLocalTime().atDate(date));
         selectedAppointment.setDescription(description.getText());
-        appointmentModel.updateAppointment(selectedAppointment);
+        bookingCalendar.updateAppointment(selectedAppointment);
         updateAgenda();
         agenda.refresh();
     }
@@ -133,7 +135,7 @@ public class BookingController extends Controller implements Initializable {
 
     private void updateAgenda(){;
         agenda.localDateTimeRangeCallbackProperty().set(param -> {
-             List<BookingCalendar.Appointment> list = appointmentModel.getAppointments(param.getStartLocalDateTime(), param.getEndLocalDateTime());
+             List<BookingCalendar.Appointment> list = bookingCalendar.getAppointments(param.getStartLocalDateTime(), param.getEndLocalDateTime());
                     agenda.appointments().clear();
                     agenda.appointments().addAll(list);
                     return null;
@@ -158,7 +160,7 @@ public class BookingController extends Controller implements Initializable {
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
                     .withLocation(location_s)
                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
-            int id = appointmentModel.addNewAppointment(appointmentImplLocal);
+            int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
             a.setId(id);
             return a;
@@ -171,7 +173,7 @@ public class BookingController extends Controller implements Initializable {
             updateAgenda();
         });
         agenda.appointmentChangedCallbackProperty().set(param ->{
-                    appointmentModel.updateAppointment((BookingCalendar.Appointment)param);
+                    bookingCalendar.updateAppointment((BookingCalendar.Appointment)param);
                     return null;
                 }
         );
