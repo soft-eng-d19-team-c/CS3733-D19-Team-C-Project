@@ -103,12 +103,12 @@ public final class Database {
                 String EdgesTablePK = "alter table EDGES add constraint EDGES_pk primary key (EDGEID)";
 
                 //create Fuller Nodes table
-                String createFullerNodesTable = "create table FULLERNODES (NODEID varchar(255) not null, XCOORD int, YCOORD int, BUILDING varchar(255), LONGNAME varchar(255), SHORTNAME varchar(255))";
+                String createFullerNodesTable = "create table FULLERNODES (NODEID varchar(255) not null, XCOORD int, YCOORD int, FLOOR varchar(255), BUILDING varchar(255), NODETYPE varchar(255), LONGNAME varchar(255), SHORTNAME varchar(255))";
                 String FullerNodesTableUINDEX = "create unique index FULLERNODES_NODEID_uindex on FULLERNODES (NODEID)";
                 String FullerNodesTablePK = "alter table FULLERNODES add constraint FULLERNODES_pk primary key (NODEID)";
 
                 //create Fuller edges table
-                String createFullerEdgesTable = "create table FULLEREDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_STARTNODE_fk references FULLERNODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_ENDNODE_fk references NODES (NODEID) on update no action on delete cascade)";
+                String createFullerEdgesTable = "create table FULLEREDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_STARTNODE_fk references FULLERNODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_ENDNODE_fk references FULLERNODES (NODEID) on update no action on delete cascade)";
                 String FullerEdgesTableUINDEX = "create unique index FULLEREDGES_EDGEID_uindex	on FULLEREDGES (EDGEID)";
                 String FullerEdgesTablePK = "alter table FULLEREDGES add constraint FULLEREDGES_pk primary key (EDGEID)";
             /*
@@ -322,7 +322,6 @@ public final class Database {
             csvFile = getClass().getResource("/data/fuller_nodes.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
-                br.readLine(); // throw away header
                 while ((line = br.readLine()) != null) {
                     String[] nodeData = line.split(cvsSplitBy); // split by comma
                     // get fields
@@ -469,7 +468,6 @@ public final class Database {
             csvFile = getClass().getResource("/data/fuller_edges.csv");
             try {
                 br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
-                br.readLine(); // throw away header
                 while ((line = br.readLine()) != null) {
                     String[] edgeData = line.split(cvsSplitBy); // split by comma
                     // get fields
