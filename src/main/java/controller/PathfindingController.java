@@ -136,6 +136,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         nodePopUpPane.setVisible(false);
+        removeAllLabels();
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
@@ -401,10 +402,7 @@ public class PathfindingController extends Controller implements Initializable {
         for (int i = 0; i < allLabels.size(); i++) {
             allLabels.get(i).getLabel().setVisible(false); // Hide everything
         }
-        for (int i = 0; i < allLabels.size();) {
-            allLabels.remove(i); //remove it from the list
-            i++; //increment i after it has removed 1
-        }
+        allLabels.clear();
     }
 
     /**
@@ -412,7 +410,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     private void createScrollBarLabels(){
         //First Remove ALL of the labels that exist from previous path finds
-        if (allLabels.size() != 0){
+        if (allLabels.size() > 0){
             removeAllLabels();
         }
         // now add New ones
