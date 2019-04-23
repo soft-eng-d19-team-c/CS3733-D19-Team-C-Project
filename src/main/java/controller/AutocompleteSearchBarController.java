@@ -225,7 +225,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void typeBoxClick(ActionEvent e){
         searchParameters.setType((String) types.getValue());
-        System.out.println((String) types.getValue());
         if (nodes != null) {
             setNodesBoxItems(searchParameters.filter(nodes));
         }
