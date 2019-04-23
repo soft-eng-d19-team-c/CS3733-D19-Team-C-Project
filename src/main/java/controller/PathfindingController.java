@@ -297,8 +297,9 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void makePath(){
-        //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+
         addText.getPanes().remove(0, allPanes.size());
+        allPanes.clear();
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
@@ -355,6 +356,7 @@ public class PathfindingController extends Controller implements Initializable {
         colorFloorsOnPath(nodesOnPath, currentFloor);
         removeAllLabels();
         addText.getPanes().remove(0, allPanes.size());
+        allPanes.clear();
     }
 
     /**
