@@ -272,9 +272,6 @@ public class PathfindingController extends Controller implements Initializable {
 
         SequentialTransition animations = new SequentialTransition();
 
-        if(animations.getChildren().size() > 0){
-            changeFloor(nodesOnPathArray[0].getFloor());
-        }
         for(int i = 0; i < nodesOnPathArray.length - 1; i++){
 
             /*
@@ -282,13 +279,10 @@ public class PathfindingController extends Controller implements Initializable {
                  We probably just want to do this once for the first floor before we even start this loop ya know?
              */
 
-          /*  if(i != 0){
-                Node prev = nodesOnPathArray[i - 1];
-                Circle nodeCircle = nodeCircles.get(prev.getID());
-                if (nodeCircle.getFill().equals(black)){
-                    nodeCircle.setFill(red);
-                }
-            }*/
+
+            if(animations.getChildren().size() > 0){
+                changeFloor(nodesOnPathArray[0].getFloor());
+            }
 
             PathTransition path = new PathTransition();
             Line line = new Line();
@@ -298,6 +292,10 @@ public class PathfindingController extends Controller implements Initializable {
 
             Node start = nodesOnPathArray[i];
             Node dest = nodesOnPathArray[i + 1];
+
+           if(i != 0) {
+               path.setOnFinished(event -> nodeCircles.get(start).setFill(Color.PINK));
+           }
 
             double startX = ((start.getX()/mapScale)- imgHeight);
             double startY = (((start.getY())/mapScale ) - imgWidth);
@@ -334,22 +332,14 @@ public class PathfindingController extends Controller implements Initializable {
 
         animations.getChildren().get(animations.getChildren().size() - 1).setOnFinished(event -> {
             Gif.setVisible(false);
-            playBtn.setVisible(false);
             danceBtn.setDisable(false);
+            pathScrollBar.setDisable(false);
+            playBtn.setDisable(false);
         });
 
         playBtn.setDisable(true);
 
         animations.play();
-//
-//        if(animations.getStatus() == Animation.Status.RUNNING){
-//            playBtn.setDisable(true);
-//        }
-//        else {
-//            Gif.setVisible(false);
-//            playBtn.setVisible(false);
-//            danceBtn.setDisable(false);
-//        }
     }
 
 
@@ -383,6 +373,7 @@ public class PathfindingController extends Controller implements Initializable {
         Gif.setVisible(false);
         danceBtn.setDisable(false);
         clearBtn.setVisible(false);
+        playBtn.setVisible(false);
         displayAllNodes();
         hasPath = false;
         nodesOnPath.clear();
