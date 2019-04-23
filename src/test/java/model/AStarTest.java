@@ -26,7 +26,7 @@ public class AStarTest {
     @SuppressWarnings("Duplicates")
     @Before
     public void setUp() throws Exception {
-        db = new Database(false, false);
+
 
 
         this.adjacencyList = new HashMap<>();

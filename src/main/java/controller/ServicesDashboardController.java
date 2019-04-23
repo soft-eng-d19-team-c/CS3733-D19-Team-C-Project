@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -85,20 +84,10 @@ public class ServicesDashboardController extends Controller implements Initializ
     public void prescriptionButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.PRESCRIPTIONSERVICE);
     }
-//
-//    public void prescriptionAPIButtonClick(ActionEvent actionEvent) {
-//        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
-//        try {
-//            api.run(0,0,1920,1080,null,null,null);
-//        } catch (ServiceException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-    public void apiButtonClick(ActionEvent actionEvent){
+    public void apiButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.APIS);
     }
-
     /**
      * Routing method for IT.
      * @author Ryan LaMarche
