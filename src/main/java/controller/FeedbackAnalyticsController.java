@@ -18,8 +18,6 @@ import java.util.ResourceBundle;
 public class FeedbackAnalyticsController extends Controller implements Initializable {
     @FXML private AnchorPane anchorP;
 
-    private ObservableList<PieChart.Data> pieChartData;
-
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location,resources);
