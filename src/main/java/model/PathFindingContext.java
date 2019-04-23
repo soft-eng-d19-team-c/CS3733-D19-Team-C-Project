@@ -132,4 +132,48 @@ public class PathFindingContext {
         }
         return path;
     }
+
+    @SuppressWarnings("Duplicates")
+    public void refreshForRobots() {
+        /*
+        This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
+        using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These
+        are used in the A* algorithm and are saved in this class as nodesList and adjacencyList,
+        respectively.
+         */
+        this.adjacencyList.clear();
+        String getMeNodesAndEdges = "SELECT DISTINCT FULLERNODES.NODEID, FULLERNODES.XCOORD, FULLERNODES.YCOORD, FULLERNODES.FLOOR, FULLERNODES.BUILDING, FULLERNODES.NODETYPE, FULLERNODES.LONGNAME, FULLERNODES.SHORTNAME, FULLEREDGES.EDGEID, FULLEREDGES.STARTNODE, FULLEREDGES.ENDNODE FROM FULLERNODES LEFT JOIN FULLEREDGES ON FULLERNODES.NODEID=FULLEREDGES.STARTNODE OR FULLERNODES.NODEID = FULLEREDGES.ENDNODE";
+        try {
+            Statement stmt = Database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(getMeNodesAndEdges);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String type = rs.getString("NODETYPE");
+                String longName = rs.getString("LONGNAME");
+                String shortName= rs.getString("SHORTNAME");
+                this.nodesList.put(rs.getString("NODEID"), new Node(nodeID, x, y, floor, building, type, longName, shortName));
+                String edgeID = rs.getString("EDGEID");
+                String startNodeID = rs.getString("STARTNODE");
+                String endNodeID = rs.getString("ENDNODE");
+                Edge newEdge;
+                if (nodeID.equals(startNodeID))
+                    newEdge = new Edge(edgeID, startNodeID, endNodeID);
+                else
+                    newEdge = new Edge(edgeID, endNodeID, startNodeID);
+                if (this.adjacencyList.containsKey(nodeID)) {
+                    this.adjacencyList.get(nodeID).add(newEdge);
+                } else {
+                    LinkedList<Edge> newEdgeList = new LinkedList<>();
+                    newEdgeList.add(newEdge);
+                    this.adjacencyList.put(nodeID, newEdgeList);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

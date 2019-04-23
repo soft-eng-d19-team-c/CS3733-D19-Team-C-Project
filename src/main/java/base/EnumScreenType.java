@@ -39,7 +39,8 @@ public enum EnumScreenType {
     WELCOME("/views/screensaver.fxml"),
     ABOUT("/views/aboutPage.fxml"),
     ADMIN("/views/adminDashboard.fxml"),
-    APIS("/views/apiDashboard.fxml");
+    APIS("/views/apiDashboard.fxml"),
+    PATHFINDINGROBOT("/views/ROBOT_findpathscreen.fxml");
 
     protected String path;
 
