@@ -208,5 +208,6 @@
             <Insets bottom="10.0" top="50.0" />
          </padding></JFXButton>
       <FontAwesomeIconView fx:id="logoutIcon" glyphName="SIGN_OUT" size="30" AnchorPane.leftAnchor="1495.0" AnchorPane.topAnchor="25.0" />
+      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="20.0" />
    </children>
 </AnchorPane>
