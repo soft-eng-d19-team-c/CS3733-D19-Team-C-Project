@@ -43,7 +43,7 @@ public class ExternalTransportationServiceController extends Controller implemen
         dateField.setValue(null);
         timeField.setValue(null);
         destinationField.setText(null);
-        acSearchStartController.setLocation(null);
+        acSearchStartController.setLocation((String) null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

@@ -51,6 +51,14 @@ public abstract class AStarOrDijkstra implements IPathFind{
                     }
 
                     PathValue path = pathValues.get(n);
+                    //prevents any stairs from being searched for
+                    if(isHandicap &&
+                            currentNode.getNodeType().equals("STAI") &&
+                            n.getNodeType().equals("STAI") &&
+                            n != startNode  &&
+                            n != endNode){
+                            path.setVisited(true);
+                        }
                     if (!path.visited()) {
                         addPathToQueue(path, currentPathValue, queue, currentNode, endNode); //how the paths are added has been moved to AStar and Dijkstra
                     }

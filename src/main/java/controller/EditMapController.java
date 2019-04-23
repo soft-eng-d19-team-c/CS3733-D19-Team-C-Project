@@ -1,7 +1,11 @@
 package controller;
 
+import base.EnumSearchType;
 import base.Main;
+import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,10 +49,16 @@ public class EditMapController extends Controller implements Initializable {
     private ComboBox<String> algosMenu;
 
     @FXML
+    private ComboBox<String> searchesMenu;
+
+    @FXML
     protected Accordion editNode;
 
     @FXML private TextField changeIdleTime;
+    @FXML private JFXSlider changeTolerance;
     @FXML private Label changeIdleTimeLabel;
+    @FXML private Label toleranceLabel;
+    @FXML private Label toleranceWordLabel;
     @FXML private NavController navController;
 
     private LinkedList<Edge> edges;
@@ -83,6 +93,7 @@ public class EditMapController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.ADMINVIEW);
         algosMenu.setOnAction(null);
+        searchesMenu.setOnAction(null);
         floorsMenu.setOnAction(null);
         if (Main.screenController.getData("floor") != null)
             currentFloor = (String) Main.screenController.getData("floor");
@@ -105,6 +116,10 @@ public class EditMapController extends Controller implements Initializable {
                         Main.info.DIJKSTRA.getAlgorithmName(),
                         Main.info.BFS.getAlgorithmName(),
                         Main.info.DFS.getAlgorithmName());
+        ObservableList<String> differentSearches = //set the dropdown in the fxml
+                FXCollections.observableArrayList(
+                        "Levenshtein Distance",
+                                "Simple Comparison");
         //changeIdleTimeLabel.setText("Change Idle Time (minutes)");
         editNode.getPanes().removeAll(TitledPane);
         editNode.getPanes().addAll(TitledPane);
@@ -166,6 +181,30 @@ public class EditMapController extends Controller implements Initializable {
             algosMenu.setItems(differentAlgorithms);
             algosMenu.setValue(Main.info.getAlgorithm().getAlgorithmName());
             algosMenu.setOnAction(changeAlgorithmHandler);
+            searchesMenu.setItems(differentSearches);
+            if(Main.info.getSearchType().equals(EnumSearchType.COMPARISON)){
+                searchesMenu.setValue("Simple Comparison");
+                changeTolerance.setVisible(false);
+                toleranceLabel.setVisible(false);
+                toleranceWordLabel.setVisible(false);
+                changeTolerance.valueProperty().removeListener(changeToleranceLabelListener);
+                changeTolerance.valueChangingProperty().removeListener(changeToleranceListener);
+            }
+            else{
+                searchesMenu.setValue("Levenshtein Distance");
+                changeTolerance.setVisible(true);
+                toleranceLabel.setVisible(true);
+                toleranceWordLabel.setVisible(true);
+                //toleranceLabel changes AS you scroll
+                changeTolerance.valueProperty().addListener(changeToleranceLabelListener);
+                //actual tolernace changes once the scrollbar is released
+                changeTolerance.valueChangingProperty().addListener(changeToleranceListener);
+            }
+            searchesMenu.setOnAction(changeSearchHandler);
+            changeTolerance.setMin(1);
+            changeTolerance.setValue(Main.info.getSearchType().getTolerance());
+            changeTolerance.setMax(15);
+            toleranceLabel.setText(Integer.toString(Main.info.getSearchType().getTolerance()));
         });
     }
 
@@ -453,6 +492,50 @@ public class EditMapController extends Controller implements Initializable {
                     Main.info.setAlgorithm(Main.info.DFS);
                     break;
             }
+        }
+    };
+
+    /**
+     * changes the search type, enables and disables the tolerance selection
+     * @author Fay Whittall
+     */
+    EventHandler<ActionEvent> changeSearchHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            switch (searchesMenu.getValue()){
+                case "Levenshtein Distance":
+                    Main.info.setSearchType(EnumSearchType.LEVENSHTEIN);
+                    changeTolerance.setVisible(true);
+                    toleranceLabel.setVisible(true);
+                    toleranceWordLabel.setVisible(true);
+                    //toleranceLabel changes AS you scroll
+                    changeTolerance.valueProperty().addListener(changeToleranceLabelListener);
+                    //actual tolernace changes once the scrollbar is released
+                    changeTolerance.valueChangingProperty().addListener(changeToleranceListener);
+                    break;
+                case "Simple Comparison":
+                    Main.info.setSearchType(EnumSearchType.COMPARISON);
+                    changeTolerance.setVisible(false);
+                    toleranceLabel.setVisible(false);
+                    toleranceWordLabel.setVisible(false);
+                    changeTolerance.valueProperty().removeListener(changeToleranceLabelListener);
+                    changeTolerance.valueChangingProperty().removeListener(changeToleranceListener);
+                    break;
+            }
+        }
+    };
+
+    ChangeListener changeToleranceListener = new ChangeListener(){
+        @Override
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+            Main.info.getSearchType().setTolerance((int) changeTolerance.getValue());
+        }
+    };
+
+    ChangeListener changeToleranceLabelListener = new ChangeListener(){
+        @Override
+        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+            toleranceLabel.setText(Integer.toString((int) changeTolerance.getValue()));
         }
     };
 
