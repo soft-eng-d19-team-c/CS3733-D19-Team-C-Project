@@ -499,7 +499,7 @@ public class PathfindingController extends Controller implements Initializable {
         PathToText pathToText = new PathToText(nodesOnPath);
         TextInfo pathsByFloor = pathToText.getDetailedPath();
         StringBuilder path = new StringBuilder();
-        for(int i=0; i <= pathsByFloor.getNumberOfAccordions(); i++){
+        for(int i=0; i < pathsByFloor.getNumberOfAccordions(); i++){
             path.append(pathsByFloor.getFloorStrings().get(i));
         }
         pathToText.SmsSender(path.toString(), new PhoneNumber("+1" + phoneNumber));
