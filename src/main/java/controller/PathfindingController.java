@@ -324,15 +324,32 @@ public class PathfindingController extends Controller implements Initializable {
 
             animations.getChildren().add(path);
         }
-        animations.play();
-        if(animations.getStatus() == Animation.Status.RUNNING){
-            playBtn.setDisable(true);
-        }
-        else {
+
+        /*
+            TODO We can do something like this to get the last child of the animation sequence
+                and set its "onFinishedEvent" to re-enable all the stuff. Then, right before
+                we play the animation we disable the stuff we want to disable. Then we play the
+                animation.
+         */
+
+        animations.getChildren().get(animations.getChildren().size() - 1).setOnFinished(event -> {
             Gif.setVisible(false);
             playBtn.setVisible(false);
             danceBtn.setDisable(false);
-        }
+        });
+
+        playBtn.setDisable(true);
+
+        animations.play();
+//
+//        if(animations.getStatus() == Animation.Status.RUNNING){
+//            playBtn.setDisable(true);
+//        }
+//        else {
+//            Gif.setVisible(false);
+//            playBtn.setVisible(false);
+//            danceBtn.setDisable(false);
+//        }
     }
 
 
