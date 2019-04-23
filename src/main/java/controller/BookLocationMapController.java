@@ -28,6 +28,7 @@ import javafx.util.Callback;
 import model.BookableLocation;
 import model.Booking;
 
+import java.awt.print.Book;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -62,6 +63,20 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*
+        get list of what work zones are open for the next minute
+        rand() < .25
+        book locations
+        display
+
+        a.    Continue to add functionality to the room scheduler
+b.    For the flexible workspaces in green, create a visual simulation that shows which spaces are currently occupied or available. The workspace usage should change randomly over time, and be fast enough to be noticeable during a presentation but not so fast that it looks like a computer game.
+
+Alternatively, for those teams who chose to do scheduling of the workspaces instead of a real-time simulation, the following rules will pertain:
+i.    You can choose to implement either a single desk or bank of desks being scheduled, but not an entire zone
+ii.    Workspaces cannot be scheduled for use more than 15 minutes in the future. In other words, workspaces are to be used effectively as a first-come, first-served basis.
+         */
+
         backgroundImage.setImage(Main.screenController.getBackgroundImage());
         navController.setActiveTab(NavTypes.BOOKROOM);
         datePicker.setValue(LocalDate.now());
@@ -204,4 +219,25 @@ public class BookLocationMapController extends Controller implements Initializab
             }
         }
     };
+
+
+    private void bookRandomDesks(){
+        LinkedList<BookableLocation> desks = new LinkedList<>();
+
+        // get all desks
+        for (BookableLocation b : bookingLocations){
+            if (b.getType().equals("DESK") || b.getType().equals("BANK")){
+                desks.add(b);
+            }
+        }
+
+        // Create random bookings
+        for (BookableLocation b : desks){
+            // 40% chance of booking a desk
+            if (Math.random() < 0.40){
+
+            }
+        }
+
+    }
 }
