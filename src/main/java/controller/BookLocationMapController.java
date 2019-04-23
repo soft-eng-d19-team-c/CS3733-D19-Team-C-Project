@@ -37,10 +37,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 public class BookLocationMapController extends Controller implements Initializable {
     public ImageView backgroundImage;
+    @FXML private JFXTimePicker Duration;
     @FXML private JFXTextArea description;
-    @FXML private JFXTextField duration;
     @FXML private ComboBox<BookableLocation> locationBox;
     @FXML private Text errorText;
     @FXML private JFXDatePicker datePicker;
@@ -72,7 +75,8 @@ public class BookLocationMapController extends Controller implements Initializab
         locationBox.setItems(bookingLocations);
         locationBox.setCellFactory(locationBoxFactory);
         locationBox.setButtonCell(locationBoxFactory.call(null));
-        duration.setText("");
+        Duration.set24HourView(true);
+        Duration.setValue(LocalTime.parse("00:00:00"));
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
     }
@@ -139,18 +143,15 @@ public class BookLocationMapController extends Controller implements Initializab
 
         LocalDate date = datePicker.getValue();
         LocalTime localTime = timePicker.getValue();
-        String inputDuration = duration.getText();
-        for (char c : inputDuration.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                errorText.setText("Error: Duration must be a valid number.");
-                return;
-            }
-        }
-        if (inputDuration.isEmpty()) {
+        LocalTime inputDuration = Duration.getValue();
+        LocalTime helper = LocalTime.parse("00:00:00");
+        helper.until(inputDuration, HOURS);
+
+        if (Duration.getValue() == null) {
             errorText.setText("Error: Duration must not be empty");
             return;
         }
-        int lengthInMillis = Integer.parseInt(inputDuration) * 60 * 60 * 1000;
+        int lengthInMillis = (int)helper.until(inputDuration, HOURS) * 60 * 60 * 1000;
         Calendar cal = Calendar.getInstance();
         cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
         Timestamp tsStart = new Timestamp(cal.getTimeInMillis());

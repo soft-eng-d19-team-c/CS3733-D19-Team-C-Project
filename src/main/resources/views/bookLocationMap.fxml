@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -15,11 +14,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
    <children>
       <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1450.0" AnchorPane.topAnchor="0.0" />
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="white-box" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="150.0" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="white-box" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <JFXTimePicker fx:id="Duration" layoutX="28.0" layoutY="268.0" onAction="#inputChanged" />
+            <Label layoutX="28.0" layoutY="244.0" text="Duration" />
+         </children></Pane>
       <Label alignment="CENTER" text="Booked Locations" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="135.0">
          <font>
             <Font size="60.0" />
@@ -51,10 +54,6 @@
       </Pane>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
       <ComboBox fx:id="locationBox" layoutX="29.0" layoutY="200.0" prefWidth="300.0" promptText="Location" AnchorPane.leftAnchor="40.0" />
-      <JFXTextField fx:id="duration" layoutX="42.0" layoutY="402.0" prefHeight="36.0" prefWidth="350.0" promptText="Enter duaration in hours">
-         <font>
-            <Font size="20.0" />
-         </font></JFXTextField>
       <JFXTextArea fx:id="description" layoutX="29.0" layoutY="514.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="202.0" prefWidth="412.0" promptText="Enter your activity here">
          <font>
             <Font size="20.0" />
