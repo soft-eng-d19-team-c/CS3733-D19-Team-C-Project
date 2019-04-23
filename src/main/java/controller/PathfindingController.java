@@ -13,9 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +33,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.*;
 import net.kurobako.gesturefx.GesturePane;
+import javafx.scene.control.ScrollBar;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -71,6 +74,8 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private Label popUpLongName;
     @FXML
     protected Accordion addText;
+    ScrollPane scroll=new ScrollPane();
+
 
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
@@ -92,21 +97,6 @@ public class PathfindingController extends Controller implements Initializable {
     private HashMap<String, Image> imageCache = new HashMap<>();
 
     LinkedList<TitledPane> allPanes = new LinkedList<>();
-/*
-    javafx.scene.control.TitledPane floor4 = new TitledPane();
-
-    javafx.scene.control.TitledPane floor3 = new TitledPane();
-
-    javafx.scene.control.TitledPane floor2 = new TitledPane();
-
-    javafx.scene.control.TitledPane floor1 = new TitledPane();
-
-    javafx.scene.control.TitledPane ground = new TitledPane();
-
-    javafx.scene.control.TitledPane l1 = new TitledPane();
-
-    javafx.scene.control.TitledPane l2 = new TitledPane();
-*/
 
 
 
@@ -304,7 +294,9 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     public void makePath(){
-        //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+
+
+        addText.getPanes().remove(0,addText.getPanes().size());
 
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
@@ -341,8 +333,11 @@ public class PathfindingController extends Controller implements Initializable {
                 text.setText(pathsByFloor.getFloorStrings().get(i));
                 tp.setText("Floor " + pathsByFloor.getCurrentFloors().get(i));
                 content.getChildren().add(text);
+                scroll.setPrefHeight(addText.getHeight());
+                //scroll.setMin(10);
+                //scroll.setMax(100);
                 tp.setContent(content);
-
+                //tp.setContent(scroll);
             }
         }else{
             System.out.println("Error");
