@@ -19,7 +19,7 @@
                      <Font size="47.0" />
                   </font>
                </JFXTextField>
-                <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="150.0" text="Filter">
+                <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="150.0" text="Dropdown">
                     <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="btn-primary-v2" />
@@ -34,6 +34,7 @@
                     <ComboBox fx:id="types" onAction="#typeBoxClick" prefWidth="150.0" promptText="Type" />
                 </children>
             </HBox>
+            <ComboBox fx:id="nodesBox" onAction="#nodesBoxClick" prefWidth="300.0" promptText="Nodes" />
         </VBox>
     </children>
 </AnchorPane>

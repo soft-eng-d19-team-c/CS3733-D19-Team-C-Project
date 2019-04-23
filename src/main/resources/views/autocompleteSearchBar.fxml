@@ -17,7 +17,7 @@
                <children>
                    <JFXTextField fx:id="acTextInput" prefHeight="32.0" prefWidth="276.0" promptText="Search for a location...">
       </JFXTextField>
-                   <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="50.0" text="Filter">
+                   <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="100.0" text="Dropdown">
                        <styleClass>
                            <String fx:value="btn" />
                            <String fx:value="btn-primary-v2" />
@@ -32,6 +32,7 @@
                   <ComboBox fx:id="types" onAction="#typeBoxClick" prefWidth="150.0" promptText="Type" />
                </children>
             </HBox>
+            <ComboBox fx:id="nodesBox" prefWidth="300.0" promptText="Nodes" />
          </children>
       </VBox>
    </children>

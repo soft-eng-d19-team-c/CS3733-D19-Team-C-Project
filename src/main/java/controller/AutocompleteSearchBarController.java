@@ -19,8 +19,7 @@ import model.Node;
 import model.SearchParameters;
 
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AutocompleteSearchBarController extends Controller implements Initializable {
     @FXML JFXTextField acTextInput;
@@ -28,12 +27,14 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     @FXML private HBox dropdowns;
     @FXML private ComboBox floors;
     @FXML private ComboBox types;
+    @FXML private ComboBox nodesBox;
 
     private JFXAutoCompletePopup<Node> acSuggestions = new JFXAutoCompletePopup<>();
     private LinkedList<Node> nodes;
     private String nodeFloor;
     private boolean dropDownsOpen;
     private SearchParameters searchParameters;
+    private HashMap<String, Node> longNameTranslator;
 
     public String getNodeID() {
         return nodeID.getText();
@@ -95,6 +96,11 @@ public class AutocompleteSearchBarController extends Controller implements Initi
          */
         searchParameters = new SearchParameters();
         refresh();
+        longNameTranslator = new HashMap<>();
+        //make the translator
+        for (Node n : nodes) {
+           longNameTranslator.put(n.getLongName(), n);
+        }
         acSuggestions.setSuggestionsCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
             @Override
             public ListCell<Node> call(ListView<Node> param) {
@@ -145,27 +151,28 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void refresh() {
         nodes = Node.getSearchableNodes();
+        acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
+        for (Node n : nodes) {
+            if (n.getLongName() != null)
+                acSuggestions.getSuggestions().add(n);
+        }
         searchParameters.setType("All Locations");
         searchParameters.setType("Any Floor");
-        setNodeSearchList(nodes);
         this.setLocation(Main.info.getKioskLocation().getID());
         this.nodeFloor = Main.info.getKioskLocation().getFloor();
         setDropDownsOpen(true); //switches to the opposite - so dropdowns will be closed
         setSearchMethod();
         floors.setValue("Any Floor");
         types.setValue("All Locations");
+        setNodesBoxItems(nodes);
     }
 
-    /**
-     * pulled from refresh: sets acSuggestions to suggest the filtered list
-     * @param nodes
-     */
-    private void setNodeSearchList(LinkedList<Node> nodes){
-        acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
-        for (Node n : nodes) {
-            if (n.getLongName() != null)
-                acSuggestions.getSuggestions().add(n);
+    public void setNodesBoxItems(LinkedList<Node> nodes){
+        ObservableList<String> longNames = FXCollections.observableArrayList();
+        for(Node n: nodes){
+            longNames.add(n.getLongName());
         }
+        nodesBox.setItems(longNames);
     }
 
     /**
@@ -176,10 +183,14 @@ public class AutocompleteSearchBarController extends Controller implements Initi
     public void setDropDownsOpen(boolean b){
         if(b){
             dropdowns.setVisible(false);
+            acTextInput.setDisable(false);
+            nodesBox.setVisible(false);
             dropDownsOpen = false;
         }
         else{
             dropdowns.setVisible(true);
+            acTextInput.setDisable(true);
+            nodesBox.setVisible(true);
             dropDownsOpen = true;
         }
     }
@@ -203,12 +214,19 @@ public class AutocompleteSearchBarController extends Controller implements Initi
 
     public void floorBoxClick(ActionEvent e){
         searchParameters.setFloor((String) floors.getValue());
-        LinkedList<Node> filteredNodes = searchParameters.filter(nodes);
-        setNodeSearchList(filteredNodes);
+        setNodesBoxItems(searchParameters.filter(nodes));
     }
 
     public void typeBoxClick(ActionEvent e){
         searchParameters.setType((String) types.getValue());
-        LinkedList<Node> filteredNodes = searchParameters.filter(nodes);
-        setNodeSearchList(filteredNodes);    }
+        setNodesBoxItems(searchParameters.filter(nodes));
+    }
+
+    public void nodesBoxClick(ActionEvent e){
+        if(longNameTranslator.containsKey(nodesBox.getValue())){
+            Node n = longNameTranslator.get(nodesBox.getValue());
+            setDropDownsOpen();
+            setLocation(n);
+        }
+    }
 }
