@@ -300,6 +300,7 @@ public class PathfindingController extends Controller implements Initializable {
 
         SequentialTransition animations = new SequentialTransition();
 
+        //Make an animation per each floor
 
         for(int i = 0; i < nodesOnPathArray.length - 1; i++){
 
