@@ -33,7 +33,7 @@ public class SecurityRequestController extends Controller implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         description.setText(null);
         urgentCheckBox.setSelected(false);
-        autoCompleteTextController.setLocation(null);
+        autoCompleteTextController.setLocation((String) null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }
