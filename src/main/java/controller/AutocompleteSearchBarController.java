@@ -41,6 +41,14 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             this.acTextInput.setText("");
     }
 
+    public void setLocation(Node node){
+        this.nodeID.setText(node.getID());
+        if(node != null)
+            this.acTextInput.setText(node.getShortName());
+        else
+            this.acTextInput.setText("");
+    }
+
     private void setSearchMethod(){
         switch (Main.info.getSearchType()) {
             case LEVENSHTEIN:

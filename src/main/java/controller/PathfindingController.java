@@ -13,14 +13,20 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -30,7 +36,6 @@ import model.Node;
 import model.PathScroll;
 import model.PathToText;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,10 +44,11 @@ import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
+    @FXML private AnchorPane pathfindingScreen;
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
-    @FXML private AnchorPane findPathView;
+    @FXML private VBox findPathBar;
     @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
@@ -56,9 +62,13 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXButton Ground;
     @FXML private JFXButton L1;
     @FXML private JFXButton L2;
+    @FXML private JFXButton setStartBtn;
+    @FXML private JFXButton goFromNodeBtn;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML private Pane nodePopUpPane;
+    @FXML private Label popUpLongName;
 
 
     private LinkedList<Node> nodes;
@@ -87,6 +97,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
         pathText.setText(null);
         danceBtn.setSelected(false);
@@ -102,12 +113,11 @@ public class PathfindingController extends Controller implements Initializable {
         findLocationNodeID = null;
         searchController_origController.refresh();
         searchController_destController.refresh();
-        searchController_destController.setLocation(null);
+        searchController_destController.setLocation((String) null);
         autocompletesearchbarController.refresh();
-        autocompletesearchbarController.setLocation(null);
+        autocompletesearchbarController.setLocation((String) null);
         handicapBtn.setSelected(false);
         Main.info.getAlgorithm().refresh();
-        hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
         if (currentFloor == null)
             currentFloor = Main.info.getKioskLocation().getFloor();
@@ -121,12 +131,13 @@ public class PathfindingController extends Controller implements Initializable {
         clearBtn.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
+        nodePopUpPane.setVisible(false);
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+            nodesOnPath = new LinkedList<>();
+            setHasPath(false);
         });
-
-
             /*
                 Load images into the cache with MULTITEHRADING
              */
@@ -153,6 +164,17 @@ public class PathfindingController extends Controller implements Initializable {
         }).start();
 
 
+    }
+
+    /**
+     * adds and removes the event filter on the modes depending on if there is a path on the screen
+     * @param b true or false
+     * @author Fay Whittall
+     */
+    private void setHasPath(boolean b){
+        if(b) hasPath = true;
+        else hasPath = false;
+        setClickPathFind();
     }
 
 
@@ -191,6 +213,7 @@ public class PathfindingController extends Controller implements Initializable {
             circle.setFill(black);
             mapImgPane.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
+            circle.getProperties().put("node", n);
         }
         for (Edge e : edges) {
             if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
@@ -228,8 +251,6 @@ public class PathfindingController extends Controller implements Initializable {
         st.setAutoReverse(true);
         st.play();
     }
-
-
     /*
 
 
@@ -258,7 +279,7 @@ public class PathfindingController extends Controller implements Initializable {
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
-        hasPath = true;
+        setHasPath(true);
         PathToText pathToText = new PathToText(nodesOnPath);
         pathText.setText(pathToText.getDetailedPath());
         colorFloorsOnPath(nodesOnPath, currentFloor);
@@ -269,7 +290,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setDisable(false);
         clearBtn.setVisible(false);
         displayAllNodes();
-        hasPath = false;
+        setHasPath(false);
         nodesOnPath.clear();
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
@@ -524,10 +545,6 @@ public class PathfindingController extends Controller implements Initializable {
         Color color = new Color(r, g, b, 1);
         return color;
     }
-
-
-
-
     /*
 
 
@@ -535,7 +552,6 @@ public class PathfindingController extends Controller implements Initializable {
 
 
      */
-
     public void updateFloorImg(String floor) {
         if (floor.equals("Ground")){
             floor = "G";
@@ -598,6 +614,7 @@ public class PathfindingController extends Controller implements Initializable {
             displayAllNodes();
         }
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        setClickPathFind();
     }
 
     public void floor3BtnClick(ActionEvent actionEvent) {
@@ -751,7 +768,7 @@ public class PathfindingController extends Controller implements Initializable {
             case "1":
                 Floor1.setStyle("-fx-background-color: -success");
                 break;
-            case "Ground":
+            case "G":
                 Ground.setStyle("-fx-background-color: -success");
                 break;
             case "L1":
@@ -769,6 +786,77 @@ public class PathfindingController extends Controller implements Initializable {
         displayAllNodes();
         searchWrapper.setVisible(false);
     }
+    /*
+
+    CLICK TO FIND PATH
+
+
+     */
+
+    /**
+     * Adds and removes the event filter
+     * @author Fay Whittall
+     */
+    public void setClickPathFind(){
+        for(Node n : nodes){
+            Circle c = nodeCircles.get(n.getID());
+            if(hasPath){
+                c.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodeClickPathfindHandler);
+            }
+            else {
+                c.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeClickPathfindHandler);
+                c.setCursor(Cursor.HAND);
+            }
+        }
+    }
+
+    /**
+     * Allows for pathfinding just by clicking on a node
+     * @author Fay Whittall
+     */
+    EventHandler nodeClickPathfindHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = (Circle) me.getTarget();
+                Node n = (Node) circle.getProperties().get("node");
+                if(n.getX() < 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() + 50);
+                }
+                else if(n.getX() >= 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() + 50);
+                }
+                else if(n.getX() < 2500 && n.getY() >= 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() - 115 + 50);
+                }
+                else{
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() - 115 + 50);
+                }
+                nodePopUpPane.setVisible(true);
+                popUpLongName.setText(n.getLongName());
+                setStartBtn.setOnAction((event) -> {
+                    searchController_origController.setLocation(n);
+                });
+                goFromNodeBtn.setOnAction((event) -> {
+                    searchController_destController.setLocation(n);
+                    makePath();
+                });
+                mapImgPane.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                findPathBar.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                setStartBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                goFromNodeBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                nodePopUpPane.toFront();
+            }
+        }
+    };
+
+    EventHandler nodePopUpRemoveHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                nodePopUpPane.setVisible(false);
+                pathfindingScreen.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+            }
+        }
+    };
 }
 
 
