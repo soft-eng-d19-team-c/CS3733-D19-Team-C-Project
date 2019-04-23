@@ -392,6 +392,10 @@ public class PathfindingController extends Controller implements Initializable {
         pathScroll.setOldPosition(newPosition);
     }
 
+
+    /**
+     * Kyle
+     */
     private void removeAllLabels(){
         //labelAnchor.getChildren().remove(0, allLabels.size()); // remove it from the parent
         for (int i = 0; i < allLabels.size(); i++) {
@@ -404,7 +408,7 @@ public class PathfindingController extends Controller implements Initializable {
     }
 
     /**
-     *
+     * Kyle
      */
     private void createScrollBarLabels(){
         //First Remove ALL of the labels that exist from previous path finds
