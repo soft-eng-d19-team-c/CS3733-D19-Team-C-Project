@@ -102,6 +102,8 @@ public class ROBOTPathfindingController extends Controller implements Initializa
         navController.setActiveTab(NavTypes.MAP);
         searchController_origController.refreshForRobots();
         searchController_destController.refreshForRobots();
+        searchController_origController.setLocation((String) null);
+        searchController_destController.setLocation((String) null);
         Platform.runLater(() -> {
             displayAllNodes();
             nodesOnPath = new LinkedList<>();
@@ -195,6 +197,7 @@ public class ROBOTPathfindingController extends Controller implements Initializa
         if (orig_nodeID == null || dest_nodeID == null)
             return;
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
+        System.out.println(nodesOnPath.toString());
         generateNodesAndEdges(nodesOnPath);
     }
 
@@ -214,14 +217,13 @@ public class ROBOTPathfindingController extends Controller implements Initializa
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         for (Node n : nodes) {
-            if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
                 circle.setCenterX(mapX + n.getX() / mapScale);
                 circle.setCenterY(mapY + n.getY() / mapScale);
-                circle.setRadius(3.0);
+                circle.setRadius(5.0);
                 circle.setFill(c);
                 circle.getProperties().put("node", n);
-                if (prev != null && nodeCircles.containsKey(prev) && ((Node) nodeCircles.get(prev).getProperties().get("node")).getFloor().equals(currentFloor)) {
+                if (prev != null) {
                     Line line = new Line();
                     line.startXProperty().bind(nodeCircles.get(prev).centerXProperty());
                     line.startYProperty().bind(nodeCircles.get(prev).centerYProperty());
@@ -235,9 +237,6 @@ public class ROBOTPathfindingController extends Controller implements Initializa
                 zoomGroup.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
-            } else {
-                prev = null;
-            }
         }
     }
 
