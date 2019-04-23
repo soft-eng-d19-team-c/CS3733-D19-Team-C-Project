@@ -258,6 +258,12 @@ public class PathfindingController extends Controller implements Initializable {
 
     //nodesOnPathArray
     public void playBtnClick(ActionEvent actionEvent) {
+
+        for (Circle c : nodeCircles.values()) {
+            c.setFill(Color.BLACK);
+            c.setRadius(10);
+        }
+
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         double imgWidth = (Gif.getFitWidth() / 2);
         double imgHeight = (Gif.getFitHeight() / 2);
@@ -272,17 +278,12 @@ public class PathfindingController extends Controller implements Initializable {
 
         SequentialTransition animations = new SequentialTransition();
 
+        changeFloor(nodesOnPathArray[0].getFloor());
+
+        Node start;
+        Node dest= nodesOnPathArray[1];
+
         for(int i = 0; i < nodesOnPathArray.length - 1; i++){
-
-            /*
-                TODO This doesn't need to happen in the for loop.
-                 We probably just want to do this once for the first floor before we even start this loop ya know?
-             */
-
-
-            if(animations.getChildren().size() > 0){
-                changeFloor(nodesOnPathArray[0].getFloor());
-            }
 
             PathTransition path = new PathTransition();
             Line line = new Line();
@@ -290,10 +291,22 @@ public class PathfindingController extends Controller implements Initializable {
             path.setPath(line);
             path.setDuration(Duration.millis(200));
 
-            Node start = nodesOnPathArray[i];
-            Node dest = nodesOnPathArray[i + 1];
+            start = nodesOnPathArray[i];
+            dest = nodesOnPathArray[i + 1];
 
-            path.setOnFinished(event -> nodeCircles.get(start).setFill(Color.PINK));
+
+            Node l_start = start;
+            Node l_dest = dest;
+
+
+            path.setOnFinished(event -> {
+                Circle c = nodeCircles.get(l_start.getID());
+                Circle c2 = nodeCircles.get(l_dest.getID());
+                if (c != null)
+                    c.setFill(Color.GOLDENROD);
+                if (c2 != null)
+                    c2.setFill(Color.GOLDENROD);
+            });
 
 
             double startX = ((start.getX()/mapScale)- imgHeight);
@@ -310,7 +323,7 @@ public class PathfindingController extends Controller implements Initializable {
 
             // change floor stuff here
             if (!start.getFloor().equals(dest.getFloor())) {
-                path.setOnFinished(event -> changeFloor(dest.getFloor()));
+                path.setOnFinished(event -> changeFloor(l_dest.getFloor()));
             }
 
             /*if(i == (nodesOnPathArray.length -1)){
@@ -329,11 +342,23 @@ public class PathfindingController extends Controller implements Initializable {
                 animation.
          */
 
+        Node l2_dest = dest;
         animations.getChildren().get(animations.getChildren().size() - 1).setOnFinished(event -> {
-            Gif.setVisible(false);
-            danceBtn.setDisable(false);
-            pathScrollBar.setDisable(false);
-            playBtn.setDisable(false);
+            if (!l2_dest.getFloor().equals(currentFloor)) {
+                changeFloor(l2_dest.getFloor());
+            }
+            nodeCircles.get(l2_dest.getID()).setFill(Color.DARKSEAGREEN);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1247);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Gif.setVisible(false);
+                danceBtn.setDisable(false);
+                pathScrollBar.setDisable(false);
+                playBtn.setDisable(false);
+            }).start();
         });
 
         playBtn.setDisable(true);
