@@ -1,6 +1,7 @@
 package model;
 
 import base.Database;
+import base.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,6 +123,16 @@ public class PathFindingContext {
 
     //this creates the path found by dijkstra or a star as a Linked List of Nodes using the PathValue objects
     private LinkedList<Node> createPath(Node goalNode, Node endNode, HashMap<Node, PathValue> pathValues) {
+
+        /**
+         * Database statistics stuff
+         */
+        new PathAnalytics(endNode.getID(), goalNode.getID(), Main.info.getAlgorithm().getAlgorithmName());
+
+
+        /**
+         * pathfinding stuff
+         */
         LinkedList<Node> path = new LinkedList<>();
         Node temp = goalNode;
         path.add(temp);

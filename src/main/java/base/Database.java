@@ -181,6 +181,16 @@ public final class Database {
                 String feedbackTableUINDEX = "create unique index feedback_ID_uindex on feedback (ID)";
                 String feedbackTablePK = "alter table feedback add constraint feedback_pk primary key (ID)";
 
+                // paths
+                String createPathsTable = "create table paths(ID int generated always as identity,startNodeID varchar(255) constraint paths_NODES_NODEID_fk references NODES, endNodeID varchar(255) constraint paths_NODES_NODEID_fk_2 references NODES, algorithm varchar(255), count int)";
+                String pathsTableUINDEX = "create unique index paths_ID_uindex on paths (ID)";
+                String pathsTablePK = "alter table paths add constraint paths_pk primary key (ID)";
+
+                // searched nodes
+                String createSearchesTable = "create table searches(NODEID varchar(255) not null constraint searches_NODES_NODEID_fk references NODES, count int)";
+                String searchesTableUINDEX = "create unique index searches_NODEID_uindex on searches (NODEID)";
+                String searchesTablePK = "alter table searches add constraint searches_pk primary key (NODEID)";
+
                 try {
                     // create nodes and edges first
                     tableStmt.executeUpdate(createNodesTable);
@@ -240,6 +250,14 @@ public final class Database {
                     tableStmt.executeUpdate(createFeedbackTable);
                     tableStmt.executeUpdate(feedbackTableUINDEX);
                     tableStmt.executeUpdate(feedbackTablePK);
+                    // paths
+                    tableStmt.executeUpdate(createPathsTable);
+                    tableStmt.executeUpdate(pathsTableUINDEX);
+                    tableStmt.executeUpdate(pathsTablePK);
+                    // searches
+                    tableStmt.executeUpdate(createSearchesTable);
+                    tableStmt.executeUpdate(searchesTableUINDEX);
+                    tableStmt.executeUpdate(searchesTablePK);
                 } catch (SQLException e) {
                     if (e.getSQLState().equals("X0Y32")) {
                         // table exists

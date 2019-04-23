@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
+import model.SearchAnalytics;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -98,6 +99,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             acTextInput.setText(event.getObject().getShortName());
             nodeID.setText(event.getObject().getID());
             this.nodeFloor = event.getObject().getFloor();
+            new SearchAnalytics(event.getObject().getID());
         });
         setSearchMethod();
     }
