@@ -165,6 +165,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         setSearchMethod();
         floors.setValue("Any Floor");
         types.setValue("All Locations");
+        nodesBox.setValue("Nodes");
         setNodesBoxItems(nodes);
     }
 
