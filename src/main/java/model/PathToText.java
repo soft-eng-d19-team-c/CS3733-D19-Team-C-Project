@@ -5,6 +5,7 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import sun.awt.image.ImageWatched;
 
+import javax.xml.soap.Text;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -23,7 +24,7 @@ public class PathToText{
         this.nodes = nodes;
     }
 
-    public LinkedList<String> getDetailedPath(LinkedList<Node> listOfNodes){
+    public TextInfo getDetailedPath(LinkedList<Node> listOfNodes){
         /*
         StringBuilder textPath = new StringBuilder();
         //get start
@@ -43,8 +44,9 @@ public class PathToText{
         */
         //System.out.println("in fcn");
         String strRobotInstructions;
-        StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
+        //StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         LinkedList<StringBuilder> floorStrings = new LinkedList<>();
+        LinkedList<String> allSwitches = new LinkedList<>();
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
         Collections.reverse(Arrays.asList(nodesArray));
         Node prev, curr, next;
@@ -59,7 +61,10 @@ public class PathToText{
                 floorStrings.add(new StringBuilder());
             }
         }
-        System.out.println(floorStrings);
+        //System.out.println(floorStrings);
+
+        floorStrings.get(0).append("Starting at " + listOfNodes.getLast().getLongName() + "\n");
+        int floorNum =0;
 
         for (int i = 1; i < nodesArray.length - 1; i++) {
             //System.out.println("in 2nd loop");
@@ -67,22 +72,23 @@ public class PathToText{
             curr = nodesArray[i];
             next = nodesArray[i + 1];
 
-            for(int j =0; j <= floorStrings.size(); j++){
-                System.out.println("looping through floor");
+           // for(int j =0; j <= floorStrings.size(); j++){
+                //System.out.println(floorStrings.get(floorNum).toString());
 
                 if (!curr.getFloor().equals(next.getFloor())) {
-                    System.out.println(curr.getFloor());
+                    floorNum++;
+                    allSwitches.add(curr.getFloor());
                     if (curr.getFloorNumber() > next.getFloorNumber()) {
                         //textPath.append("Go down a floor at " + curr.getLongName() + "\n");
-                        floorStrings.get(j).append("Go down a floor at " + curr.getLongName() + "\n");
+                        floorStrings.get(floorNum).append("Go down a floor at " + curr.getLongName() + "\n");
 
                     } else {
                         //textPath.append("Go up a floor at " + curr.getLongName() + "\n");
-                        floorStrings.get(j).append("Go up a floor at " + curr.getLongName() + "\n");
+                        floorStrings.get(floorNum).append("Go up a floor at " + curr.getLongName() + "\n");
                     }
                 } else {
 
-                    while(curr.getFloor().equals(next.getFloor())){
+                    if(curr.getFloor().equals(next.getFloor())){
                         Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
                         Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
 
@@ -91,17 +97,17 @@ public class PathToText{
                         switch (dir) {
                             case LEFT:
                                 //textPath.append("Take a left at " + curr.getLongName());
-                                floorStrings.get(j).append("Take a left at " + curr.getLongName());
+                                floorStrings.get(floorNum).append("Take a left at " + curr.getLongName());
                                 robotInstructions.append('L');
                                 break;
                             case RIGHT:
                                 //textPath.append("Take a right at " + curr.getLongName());
-                                floorStrings.get(j).append("Take a right at " + curr.getLongName());
+                                floorStrings.get(floorNum).append("Take a right at " + curr.getLongName());
                                 robotInstructions.append('R');
                                 break;
                             case STRAIGHT:
                                 //textPath.append("Continue straight past " + curr.getLongName());
-                                floorStrings.get(j).append("Continue straight past " + curr.getLongName());
+                                floorStrings.get(floorNum).append("Continue straight past " + curr.getLongName());
                                 robotInstructions.append('S');
                                 break;
                             default:
@@ -114,7 +120,7 @@ public class PathToText{
                         double distance = findEuclideanDistance(curr, next) * 3 / 8;
 
                         //textPath.append(String.format(" distance: %.0fft\n", distance));
-                        floorStrings.get(j).append(String.format(" distance: %.0fft\n", distance));
+                        floorStrings.get(floorNum).append(String.format(" distance: %.0fft\n", distance));
 
 
                         double inches = distance / 12.0;
@@ -123,9 +129,9 @@ public class PathToText{
                         robotInstructions.append(',');
 
 
-                    };
+                    }
                 }
-            }
+            //}
 
 
 
@@ -142,7 +148,8 @@ public class PathToText{
         for(int k=0; k <= floorStrings.size(); k++){
             textsByFloor.add(floorStrings.get(k).toString());
         }
-        return textsByFloor;
+
+        return new TextInfo(textsByFloor, allSwitches);
 
 //return textPath.toString();
 
@@ -166,7 +173,7 @@ public class PathToText{
             System.out.println(message.getSid());
     }
 
-    public LinkedList<String> getDetailedPath(){
+    public TextInfo getDetailedPath(){
         return getDetailedPath(nodes);
     }
 

@@ -28,10 +28,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
-import model.Edge;
-import model.Node;
-import model.PathScroll;
-import model.PathToText;
+import model.*;
 import sun.awt.image.ImageWatched;
 
 import javax.swing.*;
@@ -296,24 +293,27 @@ public class PathfindingController extends Controller implements Initializable {
         hasPath = true;
         PathToText pathToText = new PathToText(nodesOnPath);
 
-        LinkedList<String> pathsByFloor = pathToText.getDetailedPath();
-        //pathText.setText(pathToText.getDetailedPath());
+        TextInfo pathsByFloor = pathToText.getDetailedPath();
 
+        if(pathsByFloor.getFloorStrings().size() == pathsByFloor.getNumberOfAccordions()){
+            System.out.println("yo");
+            for(int i=0; i < pathsByFloor.getNumberOfAccordions(); i++){
+                System.out.println(" kk");
+                TitledPane tp = new TitledPane();
+                allPanes.add(tp);
+                Label text = new Label("Floor " + pathsByFloor.getCurrentFloors().get(i));
+                addText.getPanes().add(tp);
+                VBox content = new VBox();
+                text.setText(pathsByFloor.getFloorStrings().get(i));
+                tp.setText("Floor " + pathsByFloor.getCurrentFloors().get(i));
+                content.getChildren().add(text);
+                tp.setContent(content);
 
-        for(int i=0; i <= pathsByFloor.size(); i++){
-            TitledPane tp = new TitledPane();
-            allPanes.add(tp);
-            Label text = new Label("Floor ");
-            addText.getPanes().add(tp);
-            VBox content = new VBox();
-            text.setText(pathsByFloor.get(i));
-            //tp.setText("Floor ??");
-            content.getChildren().add(text);
-            tp.setContent(content);
-
-
-
+            }
+        }else{
+            System.out.println("Error");
         }
+
 
 
 
@@ -409,11 +409,6 @@ public class PathfindingController extends Controller implements Initializable {
 
 
             }
-
-
-
-
-
 
         }*/
         //later check if its on the current node/path change the color of the text
@@ -578,10 +573,10 @@ public class PathfindingController extends Controller implements Initializable {
     public void sendTextClick(ActionEvent actionEvent) {
         String phoneNumber = phoneNumberInput.getText();
         PathToText pathToText = new PathToText(nodesOnPath);
-        LinkedList<String> pathsByFloor = pathToText.getDetailedPath();
+        TextInfo pathsByFloor = pathToText.getDetailedPath();
         StringBuilder path = new StringBuilder();
-        for(int i=0; i <= pathsByFloor.size(); i++){
-            path.append(pathsByFloor.get(i));
+        for(int i=0; i <= pathsByFloor.getNumberOfAccordions(); i++){
+            path.append(pathsByFloor.getFloorStrings().get(i));
         }
         pathToText.SmsSender(path.toString(), new PhoneNumber("+1" + phoneNumber));
     }
