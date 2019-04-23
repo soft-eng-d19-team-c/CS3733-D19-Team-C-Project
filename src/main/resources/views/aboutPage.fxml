@@ -29,7 +29,7 @@
             </Label>
             <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="417.0" text="Professor Wilson Wong, Team Coach: Bailey Sostek">
                <font>
-                  <Font size="32.0" />
+                  <Font size="30.0" />
                </font>
                <VBox.margin>
                   <Insets left="150.0" />
@@ -45,7 +45,7 @@
             </Label>
             <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="266.0" text="Lead Software Engineer - Ryan LaMarche">
                <font>
-                  <Font size="32.0" />
+                  <Font size="30.0" />
                </font>
                <VBox.margin>
                   <Insets left="150.0" />

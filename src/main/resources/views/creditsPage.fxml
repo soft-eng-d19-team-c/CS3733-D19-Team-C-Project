@@ -50,7 +50,7 @@
                         <Insets left="150.0" />
                     </VBox.margin>
                 </Label>
-                <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="307.0" text="Other APIs used:">
+                <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="307.0" text="External APIs used:">
                     <font>
                         <Font size="30.0" />
                     </font>
@@ -66,7 +66,7 @@
                         <Insets left="150.0" />
                     </VBox.margin>
                 </Label>
-                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="405.0">
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="405.0" text="Jasypt">
                     <font>
                         <Font size="30.0" />
                     </font>
@@ -74,7 +74,7 @@
                         <Insets left="150.0" />
                     </VBox.margin>
                 </Label>
-                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="361.0">
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="361.0" text="FontAwesomeFX">
                     <font>
                         <Font size="30.0" />
                     </font>
@@ -82,7 +82,7 @@
                         <Insets left="150.0" />
                     </VBox.margin>
                 </Label>
-                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="285.0">
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="285.0" text="JFoenix">
                     <font>
                         <Font size="30.0" />
                     </font>
@@ -90,7 +90,7 @@
                         <Insets left="150.0" />
                     </VBox.margin>
                 </Label>
-                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="295.0">
+                <Label maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="295.0" text="JFXtras">
                     <font>
                         <Font size="30.0" />
                     </font>
