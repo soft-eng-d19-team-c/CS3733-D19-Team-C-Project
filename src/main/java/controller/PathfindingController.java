@@ -5,21 +5,29 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.twilio.type.PhoneNumber;
-import javafx.animation.Animation;
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.StrokeTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -30,8 +38,12 @@ import javafx.util.Duration;
 import javafx.scene.control.Label;
 import model.*;
 import sun.awt.image.ImageWatched;
+import model.Edge;
+import model.Node;
+import model.PathScroll;
+import model.PathToText;
+import net.kurobako.gesturefx.GesturePane;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,26 +52,35 @@ import java.util.ResourceBundle;
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
+    @FXML private AnchorPane pathfindingScreen;
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
-    @FXML private Pane mapImgPane;
+    @FXML private Group zoomGroup;
+    @FXML private GesturePane mapImgPane;
+    @FXML private VBox findPathBar;
+//    @FXML private Pane mapImgPane;
     @FXML private AutocompleteSearchBarController searchController_origController;
     @FXML private AutocompleteSearchBarController searchController_destController;
     @FXML private NavController navController;
     @FXML private JFXTextArea phoneNumberInput;
     @FXML private JFXButton phoneNumberBtn;
     @FXML private JFXButton clearBtn;
+    @FXML private JFXButton Floor4;
     @FXML private JFXButton Floor3;
     @FXML private JFXButton Floor2;
     @FXML private JFXButton Floor1;
     @FXML private JFXButton Ground;
     @FXML private JFXButton L1;
     @FXML private JFXButton L2;
+    @FXML private JFXButton setStartBtn;
+    @FXML private JFXButton goFromNodeBtn;
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML private Pane nodePopUpPane;
+    @FXML private Label popUpLongName;
     @FXML
     protected Accordion addText;
 
@@ -108,7 +129,6 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
 //         pathText.setText(null);
         danceBtn.setSelected(false);
@@ -124,15 +144,15 @@ public class PathfindingController extends Controller implements Initializable {
         findLocationNodeID = null;
         searchController_origController.refresh();
         searchController_destController.refresh();
-        searchController_destController.setLocation(null);
+        searchController_destController.setLocation((String) null);
         autocompletesearchbarController.refresh();
-        autocompletesearchbarController.setLocation(null);
+        autocompletesearchbarController.setLocation((String) null);
         handicapBtn.setSelected(false);
         Main.info.getAlgorithm().refresh();
-        hasPath = false;
         currentFloor = (String) Main.screenController.getData("floor");
         if (currentFloor == null)
             currentFloor = Main.info.getKioskLocation().getFloor();
+        allButtons.add(Floor4);
         allButtons.add(Floor3);
         allButtons.add(Floor2);
         allButtons.add(Floor1);
@@ -140,25 +160,28 @@ public class PathfindingController extends Controller implements Initializable {
         allButtons.add(L1);
         allButtons.add(L2);
         pathScrollBar.setVisible(false);
-        clearBtn.setVisible(false);
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
+        nodePopUpPane.setVisible(false);
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
+            nodesOnPath = new LinkedList<>();
+            setHasPath(false);
         });
-
-
             /*
                 Load images into the cache with MULTITEHRADING
              */
 
         new Thread(() -> {
-            if (!imageCache.containsKey("03_thethirdfloor.png")) {
-                imageCache.put("03_thethirdfloor.png", new Image(String.valueOf(getClass().getResource("/img/03_thethirdfloor.png"))));
+            if (!imageCache.containsKey("3_NoIcons.png")) {
+                imageCache.put("3_NoIcons.png", new Image(String.valueOf(getClass().getResource("/img/3_NoIcons.png"))));
             }
             if (!imageCache.containsKey("02_thesecondfloor_withbookablelocations.png")) {
                 imageCache.put("02_thesecondfloor_withbookablelocations.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor_withbookablelocations.png"))));
+            }
+            if (!imageCache.containsKey("02_thesecondfloor.png")) {
+                imageCache.put("02_thesecondfloor.png", new Image(String.valueOf(getClass().getResource("/img/02_thesecondfloor.png"))));
             }
             if (!imageCache.containsKey("01_thefirstfloor.png")) {
                 imageCache.put("01_thefirstfloor.png", new Image(String.valueOf(getClass().getResource("/img/01_thefirstfloor.png"))));
@@ -185,6 +208,17 @@ public class PathfindingController extends Controller implements Initializable {
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
     }
 
+    /**
+     * adds and removes the event filter on the modes depending on if there is a path on the screen
+     * @param b true or false
+     * @author Fay Whittall
+     */
+    private void setHasPath(boolean b){
+        if(b) hasPath = true;
+        else hasPath = false;
+        setClickPathFind();
+    }
+
 
     /**
      * Draws all nodes and edges on current floor.
@@ -203,7 +237,7 @@ public class PathfindingController extends Controller implements Initializable {
         black = new Color(0, 0, 0, 1);
         red = new Color(1, 0,0,1);
 
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
 
@@ -217,10 +251,11 @@ public class PathfindingController extends Controller implements Initializable {
             double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
             circle.setCenterX(mapX + n.getX() / mapScale);
             circle.setCenterY(mapY + n.getY() / mapScale);
-            circle.setRadius(3.0);
+            circle.setRadius(4.2);
             circle.setFill(black);
-            mapImgPane.getChildren().add(circle);
+            zoomGroup.getChildren().add(circle);
             nodeCircles.put(n.getID(), circle);
+            circle.getProperties().put("node", n);
         }
         for (Edge e : edges) {
             if (!(nodeCircles.containsKey(e.getStartNode()) && nodeCircles.containsKey(e.getEndNode()))) {
@@ -232,14 +267,25 @@ public class PathfindingController extends Controller implements Initializable {
                 line.endXProperty().bind(nodeCircles.get(e.getEndNode()).centerXProperty());
                 line.endYProperty().bind(nodeCircles.get(e.getEndNode()).centerYProperty());
                 line.setStroke(black);
-                mapImgPane.getChildren().add(line);
+                line.setMouseTransparent(true);
+                zoomGroup.getChildren().add(line);
+
             }
         }
+
         if (findLocationNodeID != null && nodeCircles.containsKey(findLocationNodeID)) {
-            showFoundNode(nodeCircles.get(findLocationNodeID), Color.ORANGERED);
-        }
-        else if(nodeCircles.containsKey(Main.info.getKioskLocation().getID())){
-            showFoundNode(nodeCircles.get(Main.info.getKioskLocation().getID()), Color.GREEN);
+            Circle foundNode = nodeCircles.get(findLocationNodeID);
+
+            foundNode.setRadius(6.0);
+            foundNode.setFill(Color.ORANGERED);
+            foundNode.toFront();
+
+            ScaleTransition st = new ScaleTransition(Duration.millis(2000), foundNode);
+            st.setByX(1.2);
+            st.setByY(1.2);
+            st.setCycleCount(Animation.INDEFINITE);
+            st.setAutoReverse(true);
+            st.play();
         }
     }
 
@@ -258,8 +304,6 @@ public class PathfindingController extends Controller implements Initializable {
         st.setAutoReverse(true);
         st.play();
     }
-
-
     /*
 
 
@@ -290,7 +334,7 @@ public class PathfindingController extends Controller implements Initializable {
         generateNodesAndEdges(nodesOnPath);
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
-        hasPath = true;
+        setHasPath(true);
         PathToText pathToText = new PathToText(nodesOnPath);
 
         TextInfo pathsByFloor = pathToText.getDetailedPath();
@@ -322,11 +366,12 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setDisable(false);
         clearBtn.setVisible(false);
         displayAllNodes();
-        hasPath = false;
+        setHasPath(false);
         nodesOnPath.clear();
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
     }
+
 
     /**
      * Allows scroll to work when the scrollbar is scrolled
@@ -344,13 +389,13 @@ public class PathfindingController extends Controller implements Initializable {
      * Right now, if you switch floors, it just changes the ones that should be redrawn to red
      * @author Fay Whittall
      */
-    @SuppressWarnings("Duplicates")
     private void scroll(){
         int oldPosition = pathScroll.getOldPosition();
         int newPosition = (int) pathScrollBar.getValue();
         boolean forwards = false;
         if (oldPosition < newPosition)
             forwards = true;
+
         Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
         //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
         if(newPosition == (int) pathScrollBar.getMax()){
@@ -359,34 +404,10 @@ public class PathfindingController extends Controller implements Initializable {
         else{
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                if (forwards){
+                if (forwards)
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
-                    for(int i = 0; i < oldPosition; i++){
-                        Node n = nodesOnPathArray[i];
-                        if(n.getFloor().equals(currentFloor)){
-                            Circle nodeCircle = nodeCircles.get(n.getID());
-                            nodeCircle.setFill(red);
-                            if (nodeLines.containsKey(n.getID())){
-                                Line nodeLine = nodeLines.get(n.getID());
-                                nodeLine.setStroke(red);
-                            }
-                        }
-                    }
-                }
-                else{
+                else
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
-                    for(int i = nodesOnPathArray.length - 1; i > newPosition; i--){
-                        Node n = nodesOnPathArray[i];
-                        if(n.getFloor().equals(currentFloor)){
-                            Circle nodeCircle = nodeCircles.get(n.getID());
-                            nodeCircle.setFill(black);
-                            if (nodeLines.containsKey(n.getID())){
-                                Line nodeLine = nodeLines.get(n.getID());
-                                nodeLine.setStroke(black);
-                            }
-                        }
-                    }
-                }
             }
             for(Node n: nodesToRedraw){
                 if(nodeCircles.containsKey(n.getID())){
@@ -444,7 +465,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         for (Node n : nodes) {
             if (n.getFloor().equals(currentFloor)) { // checks if node is on the current floor
                 Circle circle = new Circle();
@@ -461,10 +482,10 @@ public class PathfindingController extends Controller implements Initializable {
                     line.endYProperty().bind(circle.centerYProperty());
                     line.setStroke(c);
                     line.setStrokeWidth(3.0);
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                     nodeLines.put(n.getID(), line);
                 }
-                mapImgPane.getChildren().add(circle);
+                zoomGroup.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
             } else {
@@ -494,6 +515,7 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
+
     /*
 
         DANCE PARTY STUFF
@@ -502,7 +524,7 @@ public class PathfindingController extends Controller implements Initializable {
      */
     @SuppressWarnings("Duplicates")
     public void dancePartyBtnClick(ActionEvent actionEvent) {
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -536,9 +558,9 @@ public class PathfindingController extends Controller implements Initializable {
                         st.setCycleCount(Animation.INDEFINITE);
                         st.setAutoReverse(true);
                         st.play();
-                        mapImgPane.getChildren().add(line);
+                        zoomGroup.getChildren().add(line);
                     }
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
                 prev = n;
@@ -560,7 +582,7 @@ public class PathfindingController extends Controller implements Initializable {
                     ft.setAutoReverse(true);
                     ft.setCycleCount(Animation.INDEFINITE);
                     ft.play();
-                    mapImgPane.getChildren().add(circle);
+                    zoomGroup.getChildren().add(circle);
                     nodeCircles.put(n.getID(), circle);
                 }
 
@@ -580,7 +602,7 @@ public class PathfindingController extends Controller implements Initializable {
                     st.setCycleCount(Animation.INDEFINITE);
                     st.setAutoReverse(true);
                     st.play();
-                    mapImgPane.getChildren().add(line);
+                    zoomGroup.getChildren().add(line);
                 }
             }
             for (Circle c : nodeCircles.values()) {
@@ -604,10 +626,6 @@ public class PathfindingController extends Controller implements Initializable {
         Color color = new Color(r, g, b, 1);
         return color;
     }
-
-
-
-
     /*
 
 
@@ -615,19 +633,22 @@ public class PathfindingController extends Controller implements Initializable {
 
 
      */
-
     public void updateFloorImg(String floor) {
         if (floor.equals("Ground")){
             floor = "G";
         }
         String floorURL;
         switch (floor) {
+            case "4":
+                floorURL = "02_thesecondfloor_withbookablelocations.png";
+                currentFloorButton = Floor4;
+                break;
             case "3":
                 floorURL = "03_thethirdfloor.png";
                 currentFloorButton = Floor3;
                 break;
             case "2":
-                floorURL = "02_thesecondfloor_withbookablelocations.png";
+                floorURL = "02_thesecondfloor.png";
                 currentFloorButton = Floor2;
                 break;
             case "1":
@@ -670,7 +691,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
-        mapImgPane.getChildren().remove(1, mapImgPane.getChildren().size());
+        zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         updateFloorImg(floor);
         if (hasPath) {
             generateNodesAndEdges(nodesOnPath, c);
@@ -678,47 +699,57 @@ public class PathfindingController extends Controller implements Initializable {
             displayAllNodes();
         }
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        setClickPathFind();
+    }
+    public void floor4BtnClick(ActionEvent actionEvent) {
+        changeFloor("4");
+//        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("G");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
-        pathScrollBar.setValue(0);
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
     }
 
     public void changeButtonColor(Button button){
+
         switch (currentFloor){
+            case "4": currentFloorButton = Floor4;
+                Floor4.setStyle("-fx-background-color: -success");
+                Floor3.setStyle("-fx-background-color: -secondary");
+                Floor2.setStyle(" -fx-background-color: -secondary");
+                Floor1.setStyle(" -fx-background-color: -secondary");
+                Ground.setStyle(" -fx-background-color: -secondary");
+                L1.setStyle(" -fx-background-color: -secondary");
+                L2.setStyle(" -fx-background-color: -secondary");
+                break;
             case "3": currentFloorButton = Floor3;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 Floor3.setStyle("-fx-background-color: -success");
                 Floor2.setStyle(" -fx-background-color: -secondary");
                 Floor1.setStyle(" -fx-background-color: -secondary");
@@ -728,6 +759,7 @@ public class PathfindingController extends Controller implements Initializable {
 
                 break;
             case "2": currentFloorButton = Floor2;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle("-fx-background-color: -success");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor1.setStyle(" -fx-background-color: -secondary");
@@ -736,6 +768,7 @@ public class PathfindingController extends Controller implements Initializable {
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
             case "1": currentFloorButton = Floor1;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 Floor1.setStyle("-fx-background-color: -success");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
@@ -744,6 +777,7 @@ public class PathfindingController extends Controller implements Initializable {
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
             case "G": currentFloorButton = Ground;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 Ground.setStyle(" -fx-background-color: -success");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
@@ -752,6 +786,7 @@ public class PathfindingController extends Controller implements Initializable {
                 L2.setStyle(" -fx-background-color: -secondary");
                 break;
             case "L1": currentFloorButton = L1;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 L1.setStyle("-fx-background-color: -success");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
@@ -761,6 +796,7 @@ public class PathfindingController extends Controller implements Initializable {
 
                 break;
             case "L2": currentFloorButton = L2;
+                Floor4.setStyle(" -fx-background-color: -secondary");
                 L2.setStyle(" -fx-background-color: -success");
                 Floor3.setStyle(" -fx-background-color: -secondary");
                 Floor2.setStyle(" -fx-background-color: -secondary");
@@ -775,16 +811,8 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void colorFloorsOnPath(LinkedList<Node> node_onPath, String currentFloor) {
         //if the floor has paths drawn on it setStyle(" -fx-background-color: -primary")
-        // start by setting all floors to "off"
-        Floor3.setStyle("-fx-background-color: -secondary");
-        Floor2.setStyle("-fx-background-color: -secondary");
-        Floor1.setStyle("-fx-background-color: -secondary");
-        Ground.setStyle("-fx-background-color: -secondary");
-        L1.setStyle("-fx-background-color: -secondary");
-        L2.setStyle("-fx-background-color: -secondary");
-
-        // get all floors on path
-        LinkedList<String> allFloors = new LinkedList<>();
+        if (hasPath) {
+            LinkedList<String> allFloors = new LinkedList<>();
 
         for (int i = 0; i < node_onPath.size(); i++) {
             String floor = node_onPath.get(i).getFloor();
@@ -795,51 +823,85 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
 
-        // color floors on path as blue
-        for (int i = 0; i < allFloors.size(); i++) {
-            String floor = allFloors.get(i);
-            switch (floor) {
+            for (int i = 0; i < allFloors.size(); i++) {
+                String floor = allFloors.get(i);
+                switch (floor) {
+                    case "4":
+                        Floor4.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "3":
+                        Floor3.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "2":
+                        Floor2.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "1":
+                        Floor1.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "Ground":
+                        Ground.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "L1":
+                        L1.setStyle("-fx-background-color: -primary");
+                        break;
+                    case "L2":
+                        L2.setStyle("-fx-background-color: -primary");
+                        break;
+                }
+
+                if ((!(floor.equals(currentFloor))) && (!(allFloors.contains(floor)))) {
+                    switch (floor) {
+                        case "4":
+                            Floor4.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "3":
+                            Floor3.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "2":
+                            Floor2.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "1":
+                            Floor1.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "Ground":
+                            Ground.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "L1":
+                            L1.setStyle("-fx-background-color: -secondary");
+                            break;
+                        case "L2":
+                            L2.setStyle("-fx-background-color: -secondary");
+                            break;
+                    }
+                }
+
+            }
+
+            switch (currentFloor) {
+                case "4":
+                    Floor4.setStyle("-fx-background-color: -success");
+                    break;
                 case "3":
-                    Floor3.setStyle("-fx-background-color: -primary");
+                    Floor3.setStyle("-fx-background-color: -success");
                     break;
                 case "2":
-                    Floor2.setStyle("-fx-background-color: -primary");
+                    Floor2.setStyle("-fx-background-color: -success");
                     break;
                 case "1":
-                    Floor1.setStyle("-fx-background-color: -primary");
+                    Floor1.setStyle("-fx-background-color: -success");
                     break;
-                case "G":
-                    Ground.setStyle("-fx-background-color: -primary");
+                case "Ground":
+                    Ground.setStyle("-fx-background-color: -success");
                     break;
                 case "L1":
-                    L1.setStyle("-fx-background-color: -primary");
+                    L1.setStyle("-fx-background-color: -success");
                     break;
                 case "L2":
-                    L2.setStyle("-fx-background-color: -primary");
+                    L2.setStyle("-fx-background-color: -success");
                     break;
             }
-        }
 
-        // set current floor to green
-        switch (currentFloor) {
-            case "3":
-                Floor3.setStyle("-fx-background-color: -success");
-                break;
-            case "2":
-                Floor2.setStyle("-fx-background-color: -success");
-                break;
-            case "1":
-                Floor1.setStyle("-fx-background-color: -success");
-                break;
-            case "G":
-                Ground.setStyle("-fx-background-color: -success");
-                break;
-            case "L1":
-                L1.setStyle("-fx-background-color: -success");
-                break;
-            case "L2":
-                L2.setStyle("-fx-background-color: -success");
-                break;
+
         }
     }
 
@@ -848,6 +910,90 @@ public class PathfindingController extends Controller implements Initializable {
         changeFloor(autocompletesearchbarController.getNodeFloor());
         displayAllNodes();
         searchWrapper.setVisible(false);
+    }
+    /*
+
+    CLICK TO FIND PATH
+
+
+     */
+
+    /**
+     * Adds and removes the event filter
+     * @author Fay Whittall
+     */
+    public void setClickPathFind(){
+        for(Node n : nodes){
+            Circle c = nodeCircles.get(n.getID());
+            if(hasPath){
+                c.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodeClickPathfindHandler);
+            }
+            else {
+                c.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeClickPathfindHandler);
+                c.setCursor(Cursor.HAND);
+            }
+        }
+    }
+
+    /**
+     * Allows for pathfinding just by clicking on a node
+     * @author Fay Whittall
+     */
+    EventHandler nodeClickPathfindHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                Circle circle = (Circle) me.getTarget();
+                Node n = (Node) circle.getProperties().get("node");
+                if(n.getX() < 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() + 50);
+                }
+                else if(n.getX() >= 2500 && n.getY() < 1700){
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() + 50);
+                }
+                else if(n.getX() < 2500 && n.getY() >= 1700){
+                    nodePopUpPane.relocate(me.getX() + 490, me.getY() - 115 + 50);
+                }
+                else{
+                    nodePopUpPane.relocate(me.getX() - 438 + 490, me.getY() - 115 + 50);
+                }
+                nodePopUpPane.setVisible(true);
+                popUpLongName.setText(n.getLongName());
+                setStartBtn.setOnAction((event) -> {
+                    searchController_origController.setLocation(n);
+                });
+                goFromNodeBtn.setOnAction((event) -> {
+                    searchController_destController.setLocation(n);
+                    makePath();
+                });
+                mapImgPane.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                findPathBar.addEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                setStartBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                goFromNodeBtn.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+                nodePopUpPane.toFront();
+            }
+        }
+    };
+
+    EventHandler nodePopUpRemoveHandler = new EventHandler<MouseEvent>(){
+        public void handle(javafx.scene.input.MouseEvent me){
+            if (me.getButton().equals(MouseButton.PRIMARY)) {
+                nodePopUpPane.setVisible(false);
+                pathfindingScreen.removeEventFilter(MouseEvent.MOUSE_PRESSED, nodePopUpRemoveHandler);
+            }
+        }
+    };
+
+    public void scrolling(ScrollEvent scrollEvent) {
+        zoomGroup.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+                Point2D pivotOnTarget = mapImgPane.targetPointAt(new Point2D(e.getX(), e.getY()))
+                        .orElse(mapImgPane.targetPointAtViewportCentre());
+                // increment of scale makes more sense exponentially instead of linearly
+                mapImgPane.animate(Duration.millis(200))
+                        .interpolateWith(Interpolator.EASE_BOTH)
+                        .zoomBy(mapImgPane.getCurrentScale(), pivotOnTarget);
+            }
+        });
     }
 }
 
