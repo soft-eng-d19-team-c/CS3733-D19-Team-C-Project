@@ -7,7 +7,6 @@ import jfxtras.scene.control.agenda.Agenda;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.*;
@@ -20,15 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingCalendar {
-    private static class UserSession {
-        public static Session getSession() {
-            Configuration configuration = new Configuration().configure();
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            Session session = sessionFactory.openSession();
-            return session;
-        }
-    }
+//    private static class UserSession {
+//        public static Session getSession() {
+//            Configuration configuration = new Configuration().configure();
+//            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+//            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+//            Session session = sessionFactory.openSession();
+//            return session;
+//        }
+//    }
 //    @Entity
 //    @Access(AccessType.FIELD)
 //    @Table(name = "Appointment")
@@ -57,7 +56,7 @@ public class BookingCalendar {
             this.id = id;
         }
     }
-    private static Session session = UserSession.getSession();
+//    private static Session session = UserSession.getSession();
 
     public int addNewAppointment(Agenda.AppointmentImplLocal newAppointment){
 //        AppointmentEntity appointmentEntity = new AppointmentEntity();
@@ -98,7 +97,7 @@ public class BookingCalendar {
             PreparedStatement ps = Database.getConnection().prepareStatement(hql);
             ps.setTimestamp(1, Timestamp.valueOf(startTime));
             ps.setTimestamp(2, Timestamp.valueOf(endTime));
-            rs = ps.executeQuery(hql);
+            rs = ps.executeQuery();
             while(rs.next()) {
                 Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
                         .withLocation(rs.getString("LOCATION"))

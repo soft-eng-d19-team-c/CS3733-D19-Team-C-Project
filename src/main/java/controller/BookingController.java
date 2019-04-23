@@ -152,13 +152,10 @@ public class BookingController extends Controller implements Initializable {
         locationBox.setButtonCell(locationBoxFactory.call(null));
         agenda.setAllowDragging(true);
         agenda.setAllowResize(true);
-        BookableLocation b = (BookableLocation) locationBox.getValue();
-        String location_s = b.getID();
         agenda.newAppointmentCallbackProperty().set((localDateTimeRange) -> {
             Agenda.AppointmentImplLocal appointmentImplLocal = new BookingCalendar().new Appointment()
                     .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
-                    .withLocation(location_s)
                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
             int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
