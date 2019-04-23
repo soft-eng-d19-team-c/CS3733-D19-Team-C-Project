@@ -1,7 +1,7 @@
 package model;
 
+import base.Database;
 import jfxtras.scene.control.agenda.Agenda;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -9,10 +9,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BookingCalendar {
     private static class UserSession {
@@ -34,30 +34,14 @@ public class BookingCalendar {
         private Timestamp startTime;
         private Timestamp endTime;
         String description;
-        public int getId() {
-            return id;
-        }
-        public void setId(int id) {
-            this.id = id;
-        }
-        public String getDescription() {
-            return description;
-        }
-        public void setDescription(String description) {
-            this.description = description;
-        }
-        public Timestamp getStartTime() {
-            return startTime;
-        }
-        public void setStartTime(Timestamp startTime) {
-            this.startTime = startTime;
-        }
-        public Timestamp getEndTime() {
-            return endTime;
-        }
-        public void setEndTime(Timestamp endTime) {
-            this.endTime = endTime;
-        }
+        public int getId() { return id; }
+        public void setId(int id) { this.id = id; }
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+        public Timestamp getStartTime() { return startTime; }
+        public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
+        public Timestamp getEndTime() { return endTime; }
+        public void setEndTime(Timestamp endTime) { this.endTime = endTime; }
     }
     public class Appointment extends Agenda.AppointmentImplLocal{
         private int id;
@@ -68,43 +52,63 @@ public class BookingCalendar {
             this.id = id;
         }
     }
-
     private static Session session = UserSession.getSession();
 
     public int addNewAppointment(Agenda.AppointmentImplLocal newAppointment){
-        AppointmentEntity appointmentEntity = new AppointmentEntity();
-        appointmentEntity.setStartTime(Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
-        appointmentEntity.setEndTime(Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
-        appointmentEntity.setDescription(newAppointment.getDescription());
-        session.beginTransaction();
-        session.save(appointmentEntity);
-        session.getTransaction().commit();
-        //returns generated id value
-        return appointmentEntity.getId();
-    }
-    private List<AppointmentEntity> getAppointmentEntities(LocalDateTime startTime, LocalDateTime endTime){
-        String hql = "FROM AppointmentEntity a where a.startTime between :startTime and :endTime";
-        Query query = session.createQuery(hql);
-        query.setParameter("startTime",Timestamp.valueOf(startTime));
-        query.setParameter("endTime",Timestamp.valueOf(endTime));
-        List results = query.list();
-        return results;
-    }
-    public List<Appointment> getAppointments(LocalDateTime startTime,LocalDateTime endTime){
-        List<AppointmentEntity> entityList =getAppointmentEntities(startTime,endTime);
-        List<Appointment> appointmentList = new ArrayList<>();
-        for(AppointmentEntity entity:entityList){
-            Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
-                    .withStartLocalDateTime(entity.getStartTime().toLocalDateTime())
-                    .withEndLocalDateTime(entity.getEndTime().toLocalDateTime())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
-            appointmentImplLocal.setDescription(entity.getDescription());
-            Appointment appointment = (Appointment)appointmentImplLocal;
-            appointment.setId(entity.getId());
-            appointmentList.add(appointment);
+//        AppointmentEntity appointmentEntity = new AppointmentEntity();
+//        appointmentEntity.setStartTime(Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
+//        appointmentEntity.setEndTime(Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
+//        appointmentEntity.setDescription(newAppointment.getDescription());
+//        session.beginTransaction();
+//        session.save(appointmentEntity);
+//        session.getTransaction().commit();
+//        //returns generated id value
+//        return appointmentEntity.getId();
+        boolean executed = false;
+        String sqlCmd = "insert into BOOKINGS (LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND)  values (?,?,?,?)";
+        ResultSet rs;
+        int ID = -1;
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd, new String[] { "ID_COLUMN"} );
+            ps.setString(1, newAppointment.getLocation());
+            ps.setString(2, newAppointment.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
+            ps.setTimestamp(4, Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
+            executed = ps.execute(); //returns a boolean
+            System.out.println("New Appointment.insert " + executed);
+            rs = ps.getGeneratedKeys();
+            while(rs.next()) {
+                ID = rs.getInt("ID");
+            }
         }
-        return appointmentList;
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ID;
     }
+//    private List<AppointmentEntity> getAppointmentEntities(LocalDateTime startTime, LocalDateTime endTime){
+//        String hql = "FROM AppointmentEntity a where a.startTime between :startTime and :endTime";
+//        Query query = session.createQuery(hql);
+//        query.setParameter("startTime",Timestamp.valueOf(startTime));
+//        query.setParameter("endTime",Timestamp.valueOf(endTime));
+//        List results = query.list();
+//        return results;
+//    }
+//    public List<Appointment> getAppointments(LocalDateTime startTime,LocalDateTime endTime){
+//        List<AppointmentEntity> entityList =getAppointmentEntities(startTime,endTime);
+//        List<Appointment> appointmentList = new ArrayList<>();
+//        for(AppointmentEntity entity:entityList){
+//            Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
+//                    .withStartLocalDateTime(entity.getStartTime().toLocalDateTime())
+//                    .withEndLocalDateTime(entity.getEndTime().toLocalDateTime())
+//                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+//            appointmentImplLocal.setDescription(entity.getDescription());
+//            Appointment appointment = (Appointment)appointmentImplLocal;
+//            appointment.setId(entity.getId());
+//            appointmentList.add(appointment);
+//        }
+//        return appointmentList;
+//    }
     public void deleteAppointment(int id){
         AppointmentEntity entity = (AppointmentEntity)session.get(AppointmentEntity.class,id);
         session.beginTransaction();
