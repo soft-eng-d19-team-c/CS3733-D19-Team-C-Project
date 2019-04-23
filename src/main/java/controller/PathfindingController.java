@@ -272,15 +272,15 @@ public class PathfindingController extends Controller implements Initializable {
 
         SequentialTransition animations = new SequentialTransition();
 
+        if(animations.getChildren().size() > 0){
+            changeFloor(nodesOnPathArray[0].getFloor());
+        }
         for(int i = 0; i < nodesOnPathArray.length - 1; i++){
 
             /*
                 TODO This doesn't need to happen in the for loop.
                  We probably just want to do this once for the first floor before we even start this loop ya know?
              */
-            if(animations.getChildren().size() > 0){
-                changeFloor(nodesOnPathArray[0].getFloor());
-            }
 
           /*  if(i != 0){
                 Node prev = nodesOnPathArray[i - 1];
@@ -685,23 +685,12 @@ public class PathfindingController extends Controller implements Initializable {
 
 
     public void changeFloor(String floor) {
-        /*
-             TODO we don't need to do this here, because this changeFloor() just overloads
-                the other changeFloor() method so it's kinda redundant to do it here as well.
-         */
-        Gif.toFront();
         changeFloor(floor, Color.BLACK);
     }
 
     public void changeFloor(String floor, Color c) {
         currentFloor = floor;
         clearMap();
-        /*
-            TODO we are bringing the Gif to the front, then => drawing nodes and edges again
-                which are all going to be on top of the Gif.
-                It'll probably work if you move the Gif.toFront() to the end of this method.
-         */
-        Gif.toFront();
         updateFloorImg(floor);
         if (hasPath) {
             generateNodesAndEdges(nodesOnPath, c);
@@ -709,6 +698,7 @@ public class PathfindingController extends Controller implements Initializable {
             displayAllNodes();
         }
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        Gif.toFront();
     }
 
     public void floor3BtnClick(ActionEvent actionEvent) {
