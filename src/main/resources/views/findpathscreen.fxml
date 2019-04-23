@@ -238,11 +238,6 @@
             </VBox>
          </children>
       </Pane>
-      <Label fx:id="groundLabel" styleClass="under-text" text="G" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="525.0" />
-      <Label fx:id="l1Label" styleClass="under-text" text="L1" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="525.0" />
-      <Label fx:id="l2Label" styleClass="under-text" text="L2" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="525.0" />
-      <Label fx:id="flr3Label" styleClass="under-text" text="3" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="525.0" />
-      <Label fx:id="flr2Label" styleClass="under-text" text="2" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="525.0" />
-      <Label fx:id="flr1Label" styleClass="under-text" text="1" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="525.0" />
+      <AnchorPane fx:id="labelAnchor" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
