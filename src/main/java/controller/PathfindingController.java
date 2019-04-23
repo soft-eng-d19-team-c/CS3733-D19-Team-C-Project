@@ -102,7 +102,7 @@ public class PathfindingController extends Controller implements Initializable {
 
 
     LinkedList<TitledPane> allPanes = new LinkedList<>();
-
+    int counter=0; //current pane
 
 
     @Override
@@ -298,7 +298,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void makePath(){
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-
+        addText.getPanes().remove(0, allPanes.size());
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
@@ -341,6 +341,7 @@ public class PathfindingController extends Controller implements Initializable {
 
         colorFloorsOnPath(nodesOnPath, currentFloor);
         createScrollBarLabels(pathsByFloor);
+        addText.setExpandedPane(allPanes.getFirst());
     }
 
     public void clearBtnClick(ActionEvent e){
@@ -353,6 +354,7 @@ public class PathfindingController extends Controller implements Initializable {
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
         removeAllLabels();
+        addText.getPanes().remove(0, allPanes.size());
     }
 
     /**
@@ -387,7 +389,9 @@ public class PathfindingController extends Controller implements Initializable {
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
                 if (forwards){
+                    counter++;
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                    addText.setExpandedPane(allPanes.get(counter));
                     for(int i = 0; i < oldPosition; i++){
                         Node n = nodesOnPathArray[i];
                         if(n.getFloor().equals(currentFloor)){
@@ -401,7 +405,9 @@ public class PathfindingController extends Controller implements Initializable {
                     }
                 }
                 else{
+                    counter--;
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+                    addText.setExpandedPane(allPanes.get(counter));
                     for(int i = nodesOnPathArray.length - 1; i > newPosition; i--){
                         Node n = nodesOnPathArray[i];
                         if(n.getFloor().equals(currentFloor)){
@@ -434,27 +440,7 @@ public class PathfindingController extends Controller implements Initializable {
         }
         pathScroll.setOldPosition(newPosition);
 
-        for(int i=0; i<= allPanes.size(); i++){
 
-            /*
-            switch (allPanes.get(i)){
-                case : addText.setExpandedPane(floor4);
-                    break;
-                case "3": addText.setExpandedPane(floor3);
-                    break;
-                case "2": addText.setExpandedPane(floor2);
-                    break;
-                case "1": addText.setExpandedPane(floor1);
-                    break;
-                case "G": addText.setExpandedPane(ground);
-                    break;
-                case "L1": addText.setExpandedPane(l1);
-                    break;
-                case "L2": addText.setExpandedPane(l2);
-                    break;
-
-            }*/
-        }
 
     }
 
