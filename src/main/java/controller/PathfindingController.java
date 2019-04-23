@@ -419,7 +419,8 @@ public class PathfindingController extends Controller implements Initializable {
         firstL.getLabel().setVisible(false);
         for (int i = 1; i < nodesOnPath.size() - 1; i++) {
             if (!nodesOnPathArray[i].getFloor().equals(nodesOnPathArray[i - 1].getFloor())) {
-                ScrollBarLabel newL = new ScrollBarLabel(i * (500 / nodesOnPath.size()), nodesOnPathArray[i].getFloor());
+                double scrollWidth = pathScrollBar.getLayoutBounds().getMaxX() - pathScrollBar.getLayoutBounds().getMinX();
+                ScrollBarLabel newL = new ScrollBarLabel(i * ( (int)scrollWidth / nodesOnPath.size()), nodesOnPathArray[i].getFloor());
                 allLabels.add(newL);
                 newL.getLabel().setVisible(false); //Hide the created Labels
             }
