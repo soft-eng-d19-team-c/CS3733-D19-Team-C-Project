@@ -198,6 +198,11 @@ public class PathfindingController extends Controller implements Initializable {
 
         //need to revove through a loop
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+        if (addText != null)
+            addText.getPanes().remove(0, allPanes.size());
+        counter =0;
+        allPanes.clear();
+
     }
 
     /**
