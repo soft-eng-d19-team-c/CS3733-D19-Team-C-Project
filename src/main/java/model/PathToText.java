@@ -22,7 +22,7 @@ public class PathToText{
     }
 
     public TextInfo getDetailedPath(LinkedList<Node> listOfNodes){
-        System.out.println("**********************Doing ptt**********************");
+//        System.out.println("**********************Doing ptt**********************");
         /*
         StringBuilder textPath = new StringBuilder();
         //get start
@@ -170,7 +170,7 @@ public class PathToText{
                             text)
                     .create();
 
-            System.out.println(message.getSid());
+//            System.out.println(message.getSid());
     }
 
     public TextInfo getDetailedPath(){
