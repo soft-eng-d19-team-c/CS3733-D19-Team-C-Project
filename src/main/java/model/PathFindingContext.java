@@ -59,7 +59,7 @@ public class PathFindingContext {
 
     @SuppressWarnings("Duplicates")
     public void refresh() {
-        System.out.println("------------------ TEST -------------- refresh()");
+//        System.out.println("------------------ TEST -------------- refresh()");
         /*
         This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
         using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These
@@ -117,8 +117,8 @@ public class PathFindingContext {
     public LinkedList<Node> findPath(String startNode, String endNode){
 
 
-        System.out.println(this.nodesList.toString());
-        System.out.println(this.adjacencyList.toString());
+//        System.out.println(this.nodesList.toString());
+//        System.out.println(this.adjacencyList.toString());
 
 
 
@@ -143,8 +143,9 @@ public class PathFindingContext {
 
     @SuppressWarnings("Duplicates")
     public void refreshForRobots() {
-        System.out.println("------------------ TEST -------------- refreshForRobots()");
+//        System.out.println("------------------ TEST -------------- refreshForRobots()");
         /*
+
         This queries the database and obtains two Hashmaps: one in which Nodes can be accessed
         using NodeIDs, and one in which all edges of can be accessed when given a NodeID. These
         are used in the A* algorithm and are saved in this class as nodesList and adjacencyList,
@@ -186,6 +187,6 @@ public class PathFindingContext {
             e.printStackTrace();
         }
 
-        System.out.println(this.adjacencyList.toString());
+//        System.out.println(this.adjacencyList.toString());
     }
 }
