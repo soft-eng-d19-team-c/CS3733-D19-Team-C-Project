@@ -283,6 +283,7 @@ public class PathfindingController extends Controller implements Initializable {
     public void makePath(){
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
+
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
         pathScroll = new PathScroll(nodesOnPath);
         nodesOnPathArray = pathScroll.getNodesOnPath();
@@ -295,6 +296,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.setVisible(true);
         clearBtn.setVisible(true);
         generateNodesAndEdges(nodesOnPath);
+
         phoneNumberBtn.setDisable(false);
         danceBtn.setSelected(false);
         setHasPath(true);
@@ -312,6 +314,7 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPath.clear();
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        mapImgPane.reset();
     }
 
 
@@ -334,11 +337,19 @@ public class PathfindingController extends Controller implements Initializable {
     private void scroll(){
         int oldPosition = pathScroll.getOldPosition();
         int newPosition = (int) pathScrollBar.getValue();
+        double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+        double x = 0;
+        double y = 0;
         boolean forwards = false;
         if (oldPosition < newPosition)
             forwards = true;
 
         Node[] nodesToRedraw = pathScroll.getNodesInRange(newPosition);
+        for(Node n : nodesToRedraw) {
+            x = (double) n.getX() / mapScale;
+            y = (double) n.getY() / mapScale;
+            mapImgPane.animate(Duration.millis(400)).centreOn(new Point2D(x, y));
+        }
         //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
         if(newPosition == (int) pathScrollBar.getMax()){
             generateNodesAndEdges(nodesOnPath, Color.RED);
@@ -346,10 +357,13 @@ public class PathfindingController extends Controller implements Initializable {
         else{
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
-                if (forwards)
+                if (forwards) {
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
-                else
+                }
+                else {
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+                }
+
             }
             for(Node n: nodesToRedraw){
                 if(nodeCircles.containsKey(n.getID())){
@@ -357,7 +371,9 @@ public class PathfindingController extends Controller implements Initializable {
                     if (nodeCircle.getFill().equals(black)){
                         nodeCircle.setFill(red);
                     }
-                    else nodeCircle.setFill(black);
+                    else {
+                        nodeCircle.setFill(black);
+                    }
                 }
                 if (nodeLines.containsKey(n.getID())){
                     Line nodeLine = nodeLines.get(n.getID());
@@ -383,6 +399,8 @@ public class PathfindingController extends Controller implements Initializable {
         String prev = null;
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
+        double x = 0;
+        double y = 0;
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         for (Node n : nodes) {
@@ -407,6 +425,10 @@ public class PathfindingController extends Controller implements Initializable {
                 zoomGroup.getChildren().add(circle);
                 nodeCircles.put(n.getID(), circle);
                 prev = n.getID();
+//                mapImgPane.reset();
+                x = (double) n.getX() / mapScale;
+                y = (double) n.getY() / mapScale;
+                mapImgPane.animate(Duration.millis(400)).zoomTo(2.5, new Point2D(x, y));
             } else {
                 prev = null;
             }
@@ -608,14 +630,20 @@ public class PathfindingController extends Controller implements Initializable {
         currentFloor = floor;
         zoomGroup.getChildren().remove(1, zoomGroup.getChildren().size());
         updateFloorImg(floor);
-        if (hasPath) {
+        double x = 0;
+        double y = 0;
+        double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
+        mapImgPane.reset();
+        if(hasPath) {
             generateNodesAndEdges(nodesOnPath, c);
         } else {
             displayAllNodes();
         }
+
         colorFloorsOnPath(nodesOnPath, currentFloor);
         setClickPathFind();
     }
+
     public void floor4BtnClick(ActionEvent actionEvent) {
         changeFloor("4");
 //        colorFloorsOnPath(nodesOnPath, currentFloor);
