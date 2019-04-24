@@ -82,25 +82,7 @@ public class BookLocationMapController extends Controller implements Initializab
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                bookRandomDesks();
-                draw();
-            }
-        }));
-        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-        fiveSecondsWonder.play();
 
-        new Thread(()->{
-            try {
-                Thread.sleep(1000 * 30); // waits two minutes and stops the timeline
-                System.out.println("Stopping timer");
-                fiveSecondsWonder.stop();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     @SuppressWarnings("Duplicates")
@@ -117,7 +99,7 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @SuppressWarnings("Duplicates")
     private void draw() {
-        System.out.println("Draw");
+//        System.out.println("Draw");
         bookingLocations = BookableLocation.getAllBookingLocations();
         bookings = Booking.getBookingsDuring(new Timestamp(System.currentTimeMillis()));
 
@@ -272,13 +254,35 @@ public class BookLocationMapController extends Controller implements Initializab
                 Booking booking = new Booking(bookingLocation, description.getText(), tsStart, tsEnd, Main.user.getUsername(), 0);
                 if(!booking.hasConflicts()){
                     booking.insert();
-                    System.out.println("Booked desk: " + b.getTitle() + " for " + length + " seconds");
+//                    System.out.println("Booked desk: " + b.getTitle() + " for " + length + " seconds");
                 } else {
-                    System.out.println("Conflict when booking desk: " + b.getTitle());
+//                    System.out.println("Conflict when booking desk: " + b.getTitle());
                 }
             }
         }
 
+    }
+
+    public void startSimulation(ActionEvent actionEvent){
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                bookRandomDesks();
+                draw();
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+
+        new Thread(()->{
+            try {
+                Thread.sleep(1000 * 60 * 2); // waits two minutes and stops the timeline
+//                System.out.println("Stopping timer");
+                fiveSecondsWonder.stop();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
 
