@@ -18,6 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -28,8 +30,12 @@ import model.PathScroll;
 import model.PathToText;
 
 import javax.swing.*;
+import java.io.File;
 import java.net.URL;
 import java.util.*;
+
+import static javax.print.attribute.standard.MediaSizeName.C;
+import javafx.scene.media.AudioClip;
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
@@ -269,8 +275,10 @@ public class PathfindingController extends Controller implements Initializable {
         double imgHeight = (Gif.getFitHeight() / 2);
         double mapX = findPathImgView.getLayoutX();
         double mapY = findPathImgView.getLayoutY();
+
         danceBtn.setDisable(true);
         pathScrollBar.setDisable(true);
+
         Gif.setLayoutX(((mapX + Main.info.getKioskLocation().getX()) / mapScale) - imgWidth);
         Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY()) / mapScale) - imgHeight);
         Gif.toFront();
@@ -303,16 +311,16 @@ public class PathfindingController extends Controller implements Initializable {
                 Circle c = nodeCircles.get(l_start.getID());
                 Circle c2 = nodeCircles.get(l_dest.getID());
                 if (c != null)
-                    c.setFill(Color.GOLDENROD);
+                    c.setFill(Color.YELLOW);
                 if (c2 != null)
-                    c2.setFill(Color.GOLDENROD);
+                    c2.setFill(Color.YELLOW);
             });
 
-
-            double startX = ((start.getX()/mapScale)- imgHeight);
-            double startY = (((start.getY())/mapScale ) - imgWidth);
-            double endX = (((dest.getX())/mapScale) - imgHeight);
-            double endY = (((dest.getY())/mapScale) - imgWidth);
+            //Positioning calculations
+            double startX = ((start.getX()/mapScale)- imgWidth);
+            double startY = (((start.getY())/mapScale ) - imgHeight);
+            double endX = (((dest.getX())/mapScale) - imgWidth);
+            double endY = (((dest.getY())/mapScale) - imgHeight);
 
             line.setStartX(startX - 523);
             line.setStartY(startY - 225);
@@ -326,31 +334,18 @@ public class PathfindingController extends Controller implements Initializable {
                 path.setOnFinished(event -> changeFloor(l_dest.getFloor()));
             }
 
-            /*if(i == (nodesOnPathArray.length -1)){
-                Gif.setVisible(false);
-                playBtn.setVisible(false);
-                danceBtn.setDisable(false);
-            }*/
-
             animations.getChildren().add(path);
         }
-
-        /*
-            TODO We can do something like this to get the last child of the animation sequence
-                and set its "onFinishedEvent" to re-enable all the stuff. Then, right before
-                we play the animation we disable the stuff we want to disable. Then we play the
-                animation.
-         */
 
         Node l2_dest = dest;
         animations.getChildren().get(animations.getChildren().size() - 1).setOnFinished(event -> {
             if (!l2_dest.getFloor().equals(currentFloor)) {
                 changeFloor(l2_dest.getFloor());
             }
-            nodeCircles.get(l2_dest.getID()).setFill(Color.DARKSEAGREEN);
+            nodeCircles.get(l2_dest.getID()).setFill(Color.YELLOW);
             new Thread(() -> {
                 try {
-                    Thread.sleep(1247);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -546,10 +541,15 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
+   MediaPlayer mp;
+    private void playAudio(){
+        Media file = new Media(new File("C:\\Users\\Linda\\IdeaProjects\\CS3733-D19-Team-C-Project2\\src\\main\\java\\controller\\music.mp3").toURI().toString());
+         mp = new MediaPlayer(file);
+         mp.play();
+    }
+
     /*
-
         DANCE PARTY STUFF
-
 
      */
     @SuppressWarnings("Duplicates")
@@ -559,6 +559,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         if (danceBtn.isSelected() && hasPath) {
+            playAudio();
             pathScrollBar.setDisable(true);
             Node prev = null;
             for (Node n : nodesOnPath) {
@@ -599,6 +600,7 @@ public class PathfindingController extends Controller implements Initializable {
                 c.toFront();
             }
         } else if (danceBtn.isSelected() && !hasPath) {
+            playAudio();
             for (Node n : nodes) {
                 if (n.getFloor().equals(currentFloor)) {
                     Circle circle = new Circle();
@@ -644,6 +646,7 @@ public class PathfindingController extends Controller implements Initializable {
             pathScroll.setOldPosition(0);
             scroll();
         } else {
+            mp.stop();
             displayAllNodes();
         }
     }
