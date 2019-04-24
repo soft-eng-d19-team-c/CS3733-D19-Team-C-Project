@@ -47,9 +47,7 @@ public class PrescriptionService {
 
     @SuppressWarnings("Duplicates")
     public boolean insert(){
-
         boolean executed = false;
-
         String sqlCmd = "insert into PRESCRIPTIONREQUESTS (PATIENTID, USERSUBMITTEDBY, DRUG, DATETIMESUBMITTED) values (?,?,?,?)";
 //        java.sql.Date sqlSubmitDate = new java.sql.Date(dateTimeSubmitted.getTime()); //because ps.setDate takes an sql.date, not a util.date
         try {
@@ -61,13 +59,10 @@ public class PrescriptionService {
             executed = ps.execute(); //returns a boolean
             System.out.println("PrescriptionService.insert " + executed);
         }
-
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return executed;
-
     }
 
     //Returns an observable list of all SANITATIONREQUESTS for JavaFX's sake
