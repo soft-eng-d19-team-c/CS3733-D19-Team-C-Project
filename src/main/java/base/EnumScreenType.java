@@ -1,7 +1,6 @@
 package base;
 
-public enum
-EnumScreenType {
+public enum EnumScreenType {
     NODETABLE("/views/nodeTable.fxml"),
     NODEEDIT("/views/nodeEdit.fxml"),
     EDITMAP("/views/mapeditpage.fxml"),
@@ -42,6 +41,8 @@ EnumScreenType {
     WELCOME("/views/screensaver.fxml"),
     ABOUT("/views/aboutPage.fxml"),
     ADMIN("/views/adminDashboard.fxml"),
+    FEEDBACK("/views/feedback.fxml"),
+    FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml"),
     APIS("/views/apiDashboard.fxml"),
     PATHFINDINGROBOT("/views/ROBOT_findpathscreen.fxml"),
     CREDITS("/views/creditsPage.fxml");

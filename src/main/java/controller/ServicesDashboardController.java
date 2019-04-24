@@ -1,9 +1,9 @@
 package controller;
 
-//import api.ServiceException;
+import api.ServiceException;
 import base.EnumScreenType;
 import base.Main;
-//import base.PrescriptionRequestAPI;
+import base.PrescriptionRequestAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

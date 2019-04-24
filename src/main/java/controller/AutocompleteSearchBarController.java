@@ -100,7 +100,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         longNameTranslator = new HashMap<>();
         //make the translator
         for (Node n : nodes) {
-           longNameTranslator.put(n.getLongName(), n);
+            longNameTranslator.put(n.getLongName(), n);
         }
         acSuggestions.setSuggestionsCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
             @Override

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FeedbackController">
+   <children>
+      <ImageView fx:id="backgroundimage" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+      <Label style="-fx-alignment: center;" styleClass="h1" text="Give us Feedback!" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+         <children>
+            <FontAwesomeIconView fill="#008000" glyphName="SMILE_ALT" size="400" />
+            <FontAwesomeIconView fill="FFFF00" glyphName="MEH_ALT" size="400" />
+            <FontAwesomeIconView fill="#FF0000" glyphName="FROWN_ALT" size="400" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+         <children>
+            <JFXButton onAction="#goodBtnClick" prefHeight="400.0" prefWidth="500.0" text=" " HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton onAction="#okBtnClick" prefHeight="400.0" prefWidth="500.0" text=" " HBox.hgrow="ALWAYS">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton onAction="#badBtnClick" prefHeight="400.0" prefWidth="500.0" text=" " HBox.hgrow="ALWAYS">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-lg" />
+               </styleClass>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets left="400.0" right="400.0" />
+         </padding>
+      </HBox>
+      <Label alignment="CENTER" text="Thank you for your feedback! We will use your response to make our App better!" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="900.0">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

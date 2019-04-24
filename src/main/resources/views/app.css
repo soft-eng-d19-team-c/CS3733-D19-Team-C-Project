@@ -6,6 +6,7 @@
     -secondary-dark:#C7C7C7;
     -white:#ffffff;
     -black:#000000;
+    -warning:#ffc107;
     -danger:#dc3545;
     -danger-dark: #c03141;
     -success:#28a745;
@@ -186,3 +187,18 @@
     -fx-text-fill: -white;
     -fx-cursor: hand;
 }
+
+.btn-feedback{
+    -fx-text-fill: -black;
+    -fx-background-color: -white;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 18;
+    -fx-min-width: 100;
+    -fx-max-width: 200;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+/* override default css for pie chart */
+.default-color0.chart-pie { -fx-pie-color: -success; }
+.default-color1.chart-pie { -fx-pie-color: -warning; }
+.default-color2.chart-pie { -fx-pie-color: -danger; }

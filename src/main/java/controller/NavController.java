@@ -154,4 +154,8 @@ public class NavController extends Controller implements Initializable {
         hm.put("loggedout", true);
         Main.screenController.setScreen(EnumScreenType.LOGIN, hm, false);
     }
+
+    public void feedbackBtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.FEEDBACK);
+    }
 }
