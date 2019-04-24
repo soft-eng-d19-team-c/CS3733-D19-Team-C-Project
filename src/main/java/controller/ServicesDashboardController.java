@@ -89,12 +89,12 @@ public class ServicesDashboardController extends Controller implements Initializ
     }
 
     public void prescriptionAPIButtonClick(ActionEvent actionEvent) {
-        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
-        try {
-            api.run(0,0,1920,1080,null,null,null);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+//        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
+//        try {
+//            api.run(0,0,1920,1080,null,null,null);
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**

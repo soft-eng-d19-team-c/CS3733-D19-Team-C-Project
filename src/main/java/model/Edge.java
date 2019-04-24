@@ -20,6 +20,25 @@ public class Edge {
         this.endNode = endNode;
     }
 
+    @SuppressWarnings("Duplicates")
+    public static LinkedList<Edge> getEdgesForRobot() {
+        LinkedList<Edge> edges = new LinkedList<>();
+        String sqlStmt = "SELECT DISTINCT FULLEREDGES.EDGEID, FULLEREDGES.STARTNODE, FULLEREDGES.ENDNODE FROM FULLEREDGES INNER JOIN FULLERNODES ON FULLEREDGES.STARTNODE = FULLERNODES.NODEID OR FULLEREDGES.ENDNODE = FULLERNODES.NODEID";
+        try {
+            Statement stmt = Database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String edgeID = rs.getString("EDGEID");
+                String startNode = rs.getString("STARTNODE");
+                String endNode = rs.getString("ENDNODE");
+                edges.add(new Edge(edgeID, startNode, endNode));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return edges;
+    }
+
     public String getEdgeId() {
         return edgeId;
     }

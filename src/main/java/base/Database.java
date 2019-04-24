@@ -101,7 +101,18 @@ public final class Database {
                 String createEdgesTable = "create table EDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint EDGES_NODES_STARTNODE_fk references NODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint EDGES_NODES_ENDNODE_fk references NODES (NODEID) on update no action on delete cascade)";
                 String EdgesTableUINDEX = "create unique index EDGES_EDGEID_uindex	on EDGES (EDGEID)";
                 String EdgesTablePK = "alter table EDGES add constraint EDGES_pk primary key (EDGEID)";
+
+                //create Fuller Nodes table
+                String createFullerNodesTable = "create table FULLERNODES (NODEID varchar(255) not null, XCOORD int, YCOORD int, FLOOR varchar(255), BUILDING varchar(255), NODETYPE varchar(255), LONGNAME varchar(255), SHORTNAME varchar(255))";
+                String FullerNodesTableUINDEX = "create unique index FULLERNODES_NODEID_uindex on FULLERNODES (NODEID)";
+                String FullerNodesTablePK = "alter table FULLERNODES add constraint FULLERNODES_pk primary key (NODEID)";
+
+                //create Fuller edges table
+                String createFullerEdgesTable = "create table FULLEREDGES (EDGEID varchar(255) not null, STARTNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_STARTNODE_fk references FULLERNODES (NODEID) on update no action on delete cascade, ENDNODE varchar(255) not null constraint FULLEREDGES_FULLERNODES_ENDNODE_fk references FULLERNODES (NODEID) on update no action on delete cascade)";
+                String FullerEdgesTableUINDEX = "create unique index FULLEREDGES_EDGEID_uindex	on FULLEREDGES (EDGEID)";
+                String FullerEdgesTablePK = "alter table FULLEREDGES add constraint FULLEREDGES_pk primary key (EDGEID)";
             /*
+
                     USER STUFF
              */
                 // create users table
@@ -176,20 +187,8 @@ public final class Database {
                 String giftStoreRequestsTableUINDEX = "create unique index GIFTSTOREREQUESTS_ID_uindex on GIFTSTOREREQUESTS (ID)";
                 String giftStoreRequestTablePK = "alter table GIFTSTOREREQUESTS add constraint GIFTSTOREREQUESTS_pk primary key (ID)";
 
-                // feedback
-                String createFeedbackTable = "create table feedback(ID int generated always as identity,level int not null, DATETIMESUBMITTED timestamp)";
-                String feedbackTableUINDEX = "create unique index feedback_ID_uindex on feedback (ID)";
-                String feedbackTablePK = "alter table feedback add constraint feedback_pk primary key (ID)";
 
-                // paths
-                String createPathsTable = "create table paths(ID int generated always as identity,startNodeID varchar(255) constraint paths_NODES_NODEID_fk references NODES, endNodeID varchar(255) constraint paths_NODES_NODEID_fk_2 references NODES, algorithm varchar(255), count int)";
-                String pathsTableUINDEX = "create unique index paths_ID_uindex on paths (ID)";
-                String pathsTablePK = "alter table paths add constraint paths_pk primary key (ID)";
 
-                // searched nodes
-                String createSearchesTable = "create table searches(NODEID varchar(255) not null constraint searches_NODES_NODEID_fk references NODES, count int)";
-                String searchesTableUINDEX = "create unique index searches_NODEID_uindex on searches (NODEID)";
-                String searchesTablePK = "alter table searches add constraint searches_pk primary key (NODEID)";
 
                 try {
                     // create nodes and edges first
@@ -246,18 +245,14 @@ public final class Database {
                     tableStmt.executeUpdate(createPrescriptionServiceTable);
                     tableStmt.executeUpdate(PrescriptionUINDEX);
                     tableStmt.executeUpdate(PrescriptionTablePK);
-                    // feedback
-                    tableStmt.executeUpdate(createFeedbackTable);
-                    tableStmt.executeUpdate(feedbackTableUINDEX);
-                    tableStmt.executeUpdate(feedbackTablePK);
-                    // paths
-                    tableStmt.executeUpdate(createPathsTable);
-                    tableStmt.executeUpdate(pathsTableUINDEX);
-                    tableStmt.executeUpdate(pathsTablePK);
-                    // searches
-                    tableStmt.executeUpdate(createSearchesTable);
-                    tableStmt.executeUpdate(searchesTableUINDEX);
-                    tableStmt.executeUpdate(searchesTablePK);
+                    // FULLER NODE STUFF
+                    tableStmt.executeUpdate(createFullerNodesTable);
+                    tableStmt.executeUpdate(FullerNodesTableUINDEX);
+                    tableStmt.executeUpdate(FullerNodesTablePK);
+                    tableStmt.executeUpdate(createFullerEdgesTable);
+                    tableStmt.executeUpdate(FullerEdgesTableUINDEX);
+                    tableStmt.executeUpdate(FullerEdgesTablePK);
+
                 } catch (SQLException e) {
                     if (e.getSQLState().equals("X0Y32")) {
                         // table exists
@@ -321,6 +316,57 @@ public final class Database {
                         }
                     }
                 }
+
+            // import fuller nodes
+            System.out.println("Attempting to import fuller nodes from /data/fuller_nodes.csv...");
+            csvFile = getClass().getResource("/data/fuller_nodes.csv");
+            try {
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                while ((line = br.readLine()) != null) {
+                    String[] nodeData = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String nodeID = nodeData[0];
+                    int xcoord = parseInt(nodeData[1]);
+                    int ycoord = parseInt(nodeData[2]);
+                    String floor = nodeData[3];
+                    String building = nodeData[4];
+                    String nodeType = nodeData[5];
+                    String longName = nodeData[6];
+                    String shortName = nodeData[7];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "insert into FULLERNODES (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                    try {
+                        ps = this.connection.prepareStatement(sqlCmd);
+                        ps.setString(1, nodeID);
+                        ps.setInt(2, xcoord);
+                        ps.setInt(3, ycoord);
+                        ps.setString(4, floor);
+                        ps.setString(5, building);
+                        ps.setString(6, nodeType);
+                        ps.setString(7, longName);
+                        ps.setString(8, shortName);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
 
                 System.out.println("Attempting to import nodes from /data/booking_locations_nodes.csv...");
@@ -416,6 +462,47 @@ public final class Database {
                         }
                     }
                 }
+
+            // import fuller edges
+            System.out.println("Attempting to import fuller edges from /data/fuller_edges.csv...");
+            csvFile = getClass().getResource("/data/fuller_edges.csv");
+            try {
+                br = new BufferedReader(new InputStreamReader(csvFile.openStream()));
+                while ((line = br.readLine()) != null) {
+                    String[] edgeData = line.split(cvsSplitBy); // split by comma
+                    // get fields
+                    String edgeID = edgeData[0];
+                    String startNode = edgeData[1];
+                    String endNode = edgeData[2];
+                    // prepare the insert sql statement with room to insert variables
+                    PreparedStatement ps = null;
+                    String sqlCmd = "insert into FULLEREDGES (EDGEID, STARTNODE, ENDNODE) values (?, ?, ?)";
+                    try {
+                        ps = this.connection.prepareStatement(sqlCmd);
+                        ps.setString(1, edgeID);
+                        ps.setString(2, startNode);
+                        ps.setString(3, endNode);
+                        ps.execute();
+                    } catch (SQLException e) {
+                        if (e.getSQLState().equals("23505")) { // duplicate key, update instead of insert
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
                 // import booking edges
                 System.out.println("Attempting to import edges from /data/booking_location_edges.csv...");
