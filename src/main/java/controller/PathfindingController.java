@@ -391,8 +391,8 @@ public class PathfindingController extends Controller implements Initializable {
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
                 if (forwards){
-                    counter++;
                     changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                    counter++;
                     addText.setExpandedPane(allPanes.get(counter));
                     for(int i = 0; i < oldPosition; i++){
                         Node n = nodesOnPathArray[i];
