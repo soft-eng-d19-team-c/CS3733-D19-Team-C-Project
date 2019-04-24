@@ -97,8 +97,9 @@ public class ServicesDashboardController extends Controller implements Initializ
 //        }
 //    }
 
-    public void apiButtonClick(ActionEvent actionEvent){
+    public void apiButtonClick(ActionEvent actionEvent) {
         Main.screenController.setScreen(EnumScreenType.APIS);
+    }
     /**
      * Routing method for IT.
      * @author Ryan LaMarche

@@ -60,8 +60,7 @@ dependencies {
             [group: 'edu.wpi.cs3733.d19.teamD', name: 'BabySitting', version:'1.0.4'],
             [group: 'edu.wpi.cs3733.d19.teamG', name: 'TeamGFloral', version:'1.0.1'],
             [group: 'edu.wpi.cs3733.d19.teamB', name: 'TeamBEmergency', version:'1.0.1'],
-            [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0'],
-            files('libs/include.jar')
+            [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0']
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -77,8 +76,7 @@ dependencies {
             [group: 'edu.wpi.cs3733.d19.teamD', name: 'BabySitting', version:'1.0.4'],
             [group: 'edu.wpi.cs3733.d19.teamG', name: 'TeamGFloral', version:'1.0.1'],
             [group: 'edu.wpi.cs3733.d19.teamB', name: 'TeamBEmergency', version:'1.0.1'],
-            [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0'],
-            files('libs/include.jar')
+            [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0']
     )
 }
 
