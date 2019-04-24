@@ -30,6 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.*;
 import net.kurobako.gesturefx.GesturePane;
@@ -44,6 +45,7 @@ import java.util.ResourceBundle;
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
     @FXML private AnchorPane pathfindingScreen;
+    @FXML private AnchorPane labelAnchor;
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
@@ -77,6 +79,8 @@ public class PathfindingController extends Controller implements Initializable {
     ScrollPane scroll=new ScrollPane();
 
 
+    //Labels for the floors along the scroll-bar
+
     private LinkedList<Node> nodes;
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodesOnPath;
@@ -98,6 +102,10 @@ public class PathfindingController extends Controller implements Initializable {
 
     LinkedList<TitledPane> allPanes = new LinkedList<>();
 
+
+
+    // List of Floor Labels for the scrollbar
+    LinkedList<ScrollBarLabel> allLabels = new LinkedList<>();
 
 
     @Override
@@ -141,6 +149,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         nodePopUpPane.setVisible(false);
+        removeAllLabels();
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
@@ -184,6 +193,17 @@ public class PathfindingController extends Controller implements Initializable {
 
         //need to revove through a loop
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
+        // Set all the slider labels to invisible
+        /*
+        l1Label.setVisible(false);
+        l2Label.setVisible(false);
+        groundLabel.setVisible(false);
+        flr1Label.setVisible(false);
+        flr2Label.setVisible(false);
+        flr3Label.setVisible(false);
+        */
+
+        labelAnchor.setMouseTransparent(true);
     }
 
     /**
@@ -344,6 +364,7 @@ public class PathfindingController extends Controller implements Initializable {
         }
 
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        createScrollBarLabels();
     }
 
     public void clearBtnClick(ActionEvent e){
@@ -355,6 +376,7 @@ public class PathfindingController extends Controller implements Initializable {
         nodesOnPath.clear();
         danceBtn.setSelected(false);
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        removeAllLabels();
     }
 
 
@@ -436,6 +458,116 @@ public class PathfindingController extends Controller implements Initializable {
         }
 
     }
+
+
+    /**
+     * Kyle
+     */
+    private void removeAllLabels(){
+        //labelAnchor.getChildren().remove(0, allLabels.size()); // remove it from the parent
+        for (int i = 0; i < allLabels.size(); i++) {
+            allLabels.get(i).getLabel().setVisible(false); // Hide everything
+        }
+        allLabels.clear();
+    }
+
+    /**
+     * Kyle
+     */
+    private void createScrollBarLabels(){
+        //First Remove ALL of the labels that exist from previous path finds
+        if (allLabels.size() > 0){
+            removeAllLabels();
+        }
+        // now add New ones
+        ScrollBarLabel firstL = new ScrollBarLabel(0, nodesOnPathArray[0].getFloor());
+        allLabels.add(firstL);
+        firstL.getLabel().setVisible(false);
+        for (int i = 1; i < nodesOnPath.size() - 1; i++) {
+            if (!nodesOnPathArray[i].getFloor().equals(nodesOnPathArray[i - 1].getFloor())) {
+                double scrollWidth = pathScrollBar.getLayoutBounds().getMaxX() - pathScrollBar.getLayoutBounds().getMinX();
+                ScrollBarLabel newL = new ScrollBarLabel(i * ( (int)scrollWidth / nodesOnPath.size()), nodesOnPathArray[i].getFloor());
+                allLabels.add(newL);
+                newL.getLabel().setVisible(false); //Hide the created Labels
+            }
+        }
+        for (int i = 0; i < allLabels.size(); i++){
+            System.out.println("Showing a Label");
+            allLabels.get(i).getLabel().setVisible(true); //Show the created Labels
+            // Label Size
+            allLabels.get(i).getLabel().setFont(Font.font("Arial Black", 30.0));
+            // White Text
+            allLabels.get(i).getLabel().setTextFill(Color.WHITE);
+            // Add the label to the path finding screen anchor page
+            labelAnchor.getChildren().add(allLabels.get(i).getLabel());
+            // Bring it to the front
+            allLabels.get(i).getLabel().toFront();
+            // Relocate it to the correct position
+            allLabels.get(i).getLabel().relocate(allLabels.get(i).getLocation() + 10, 525);
+            System.out.println(allLabels.get(i).getLocation());
+        }
+    }
+
+
+
+    /**
+     * Move the floor labels
+     * @author: Kyle Heavey unless it doesn't work in which case I didn't do it
+     */
+
+    /*
+    private void moveFloorLabels(){
+        System.out.println("I'm moving Labels Here!");
+        // The scroll bar spans from pixel 10 to pixel 530
+        float pixelsPerStep = 500 / (float)nodesOnPath.size();  // This is how many steps we need to move the label by
+        System.out.println(nodesOnPath.size());
+        System.out.println(pixelsPerStep);
+
+        moveLabels(0, nodesOnPathArray[0]); // Add a label for the first node
+                                                    // depending on which step it is
+        for (int i = 1; i < nodesOnPath.size() - 1; i++){   //increment through each node in the list
+                                                            //starting at 1 so I can check the "first" node
+                                                            //and compare it to the actual first node and the
+                                                            //second to last node and compare it to the first
+            String floor = nodesOnPathArray[i].getFloor();
+            Label l = new Label();
+            if (!nodesOnPathArray[i].getFloor().equals(nodesOnPathArray[i-1].getFloor())){    // if the floor of the current node
+                                                                                        // is NOT the same as the last floor
+                // Add a new label
+                System.out.println("Floor Change Here. There should only be 2 floor changes");
+                moveLabels( (i * pixelsPerStep), nodesOnPathArray[i]);
+            }
+        }
+    }
+    */
+
+    /** Helper for the moveFloorLabels function
+     * @Param: a distance to move the label and a node that indicate the floor change
+     * @Author: Kyle Heavey
+     */
+    /*
+    void moveLabels(float distance, Node n){
+        float relocateDist = distance + 20; // offset
+        if (n.getFloor().equals("G")){
+            groundLabel.relocate(relocateDist, 525);
+        }
+        if (n.getFloor().equals("L1")){
+            l1Label.relocate(relocateDist, 525);
+        }
+        if (n.getFloor().equals("L2")){
+            l2Label.relocate(relocateDist,525);
+        }
+        if (n.getFloor().equals("1")){
+            flr1Label.relocate(relocateDist, 525);
+        }
+        if (n.getFloor().equals("2")){
+            flr2Label.relocate(distance, 525);
+        }
+        if (n.getFloor().equals("3")){
+            flr3Label.relocate(relocateDist, 525);
+        }
+    }
+    */
 
     private void generateNodesAndEdges(LinkedList<Node> nodes) {
         generateNodesAndEdges(nodes, Color.BLACK);
@@ -798,6 +930,25 @@ public class PathfindingController extends Controller implements Initializable {
         //if the floor has paths drawn on it setStyle(" -fx-background-color: -primary")
         if (hasPath) {
             LinkedList<String> allFloors = new LinkedList<>();
+        // start by setting all floors to "off"
+        Floor3.setStyle("-fx-background-color: -secondary");
+        Floor2.setStyle("-fx-background-color: -secondary");
+        Floor1.setStyle("-fx-background-color: -secondary");
+        Ground.setStyle("-fx-background-color: -secondary");
+        L1.setStyle("-fx-background-color: -secondary");
+        L2.setStyle("-fx-background-color: -secondary");
+
+        /*
+        groundLabel.setVisible(false);
+        l1Label.setVisible(false);
+        l2Label.setVisible(false);
+        flr3Label.setVisible(false);
+        flr2Label.setVisible(false);
+        flr1Label.setVisible(false);
+        */
+
+        // get all floors on path
+//        LinkedList<String> allFloors = new LinkedList<>();
 
         for (int i = 0; i < node_onPath.size(); i++) {
             String floor = node_onPath.get(i).getFloor();

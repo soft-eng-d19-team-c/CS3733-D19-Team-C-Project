@@ -35,7 +35,7 @@
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </GridPane.margin>
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <font>
                   <Font size="40.0" />
@@ -43,7 +43,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#interpreterButtonClick" styleClass="floor-select-button" text="Interpreter" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -54,7 +54,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#internalTransButtonClick" styleClass="floor-select-button" text="Transportation (Internal)" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -65,7 +65,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#externalTransButtonClick" styleClass="floor-select-button" text="Transportation (External)" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -76,7 +76,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#securityButtonClick" styleClass="floor-select-button" text="Security" textFill="WHITE" GridPane.columnIndex="2">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -87,7 +87,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#ITButtonClick" styleClass="floor-select-button" text="IT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -98,7 +98,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#giftStoreButtonClick" styleClass="floor-select-button" text="Gift Store" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -109,7 +109,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#religiousButtonClick" styleClass="floor-select-button" text="Religious" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -120,7 +120,7 @@
             </JFXButton>
             <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#floristButtonClick" styleClass="floor-select-button" text="Florist" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <padding>
-                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" top="45.0" />
                </padding>
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
