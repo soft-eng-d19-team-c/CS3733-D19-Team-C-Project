@@ -1076,6 +1076,39 @@ public class PathfindingController extends Controller implements Initializable {
             }
 
 
+        } else {
+            Floor4.setStyle("-fx-background-color: -secondary");
+            Floor3.setStyle("-fx-background-color: -secondary");
+            Floor2.setStyle("-fx-background-color: -secondary");
+            Floor1.setStyle("-fx-background-color: -secondary");
+            Ground.setStyle("-fx-background-color: -secondary");
+            L1.setStyle("-fx-background-color: -secondary");
+            L2.setStyle("-fx-background-color: -secondary");
+
+            switch (currentFloor) {
+                case "4":
+                    Floor4.setStyle("-fx-background-color: -success");
+                    break;
+                case "3":
+                    Floor3.setStyle("-fx-background-color: -success");
+                    break;
+                case "2":
+                    Floor2.setStyle("-fx-background-color: -success");
+                    break;
+                case "1":
+                    Floor1.setStyle("-fx-background-color: -success");
+                    break;
+                case "G":
+                    Ground.setStyle("-fx-background-color: -success");
+                    break;
+                case "L1":
+                    L1.setStyle("-fx-background-color: -success");
+                    break;
+                case "L2":
+                    L2.setStyle("-fx-background-color: -success");
+                    break;
+            }
+
         }
     }
 
