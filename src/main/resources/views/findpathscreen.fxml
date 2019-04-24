@@ -250,5 +250,10 @@
             </VBox>
          </children>
       </Pane>
+      <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="btn-primary-v2" text="Robot Pathfinding" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
