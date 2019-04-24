@@ -199,6 +199,9 @@ public class ROBOTPathfindingController extends Controller implements Initializa
         nodesOnPath = Main.info.getAlgorithm().findPath(orig_nodeID, dest_nodeID);
         System.out.println(nodesOnPath.toString());
         generateNodesAndEdges(nodesOnPath);
+        PathToText pathToText = new PathToText(nodesOnPath);
+        TextInfo pathsByFloor = pathToText.getDetailedPath();
+        System.out.println("Path made");
     }
 
     private void generateNodesAndEdges(LinkedList<Node> nodes) {

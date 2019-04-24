@@ -11,6 +11,8 @@ public enum EnumScreenType {
     SEARCHLOCATION("/views/searchLocation.fxml"),
     BOOKLOCATIONSCALENDAR("/views/bookLocationCalendar.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
+    //Robot viewsROBOT_findpathscreen.fxml
+    ROBOTSCREEN("/views/ROBOT_findpathscreen.fxml"),
     // services
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
     SANITATIONSERVICE("/views/sanitationService.fxml"),

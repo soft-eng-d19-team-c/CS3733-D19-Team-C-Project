@@ -24,7 +24,7 @@ public class MainFXML extends Application {
     @Override
     public void start(Stage s) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.PATHFINDINGROBOT.getPath())));
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.WELCOME.getPath())));
             s.setScene(scene);
             Main.screenController = new Facade(s.getScene());
             Main.idleMonitor = new IdleMonitor(Duration.seconds(30),

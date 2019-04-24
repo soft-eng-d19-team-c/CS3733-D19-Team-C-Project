@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
@@ -308,7 +309,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void makePath(){
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-
+        System.out.println("%%%%%%%%%%%%%%%Makin a path%%%%%%%%%%%%%%%%%%%");
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         if (orig_nodeID == null || dest_nodeID == null)
@@ -977,14 +978,7 @@ public class PathfindingController extends Controller implements Initializable {
     };
 
     public void robotButtonClick(ActionEvent actionEvent){
-        new Thread(()->{
-        try {
-            RobotPOST.doPost();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }).start();
-
+        Main.screenController.setScreen(EnumScreenType.ROBOTSCREEN);
     }
 
     public void scrolling(ScrollEvent scrollEvent) {

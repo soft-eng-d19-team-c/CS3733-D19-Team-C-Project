@@ -23,6 +23,7 @@ public class PathToText{
     }
 
     public TextInfo getDetailedPath(LinkedList<Node> listOfNodes){
+        System.out.println("**********************Doing ptt**********************");
         /*
         StringBuilder textPath = new StringBuilder();
         //get start
