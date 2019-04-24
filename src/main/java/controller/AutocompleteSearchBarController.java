@@ -17,7 +17,6 @@ import javafx.util.Callback;
 import model.LevenshteinDistance;
 import model.Node;
 import model.SearchParameters;
-import model.SearchAnalytics;
 
 import java.net.URL;
 import java.util.*;
@@ -101,7 +100,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         longNameTranslator = new HashMap<>();
         //make the translator
         for (Node n : nodes) {
-           longNameTranslator.put(n.getLongName(), n);
+            longNameTranslator.put(n.getLongName(), n);
         }
         acSuggestions.setSuggestionsCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
             @Override
@@ -122,7 +121,6 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             acTextInput.setText(event.getObject().getShortName());
             nodeID.setText(event.getObject().getID());
             this.nodeFloor = event.getObject().getFloor();
-            new SearchAnalytics(event.getObject().getID());
         });
         dropDownsOpen = false;
         ObservableList<String> differentFloors = //set the dropdown in the fxml
