@@ -6,8 +6,11 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,9 +28,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import model.BookableLocation;
 import model.Booking;
 
+import java.awt.print.Book;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -69,12 +74,15 @@ public class BookLocationMapController extends Controller implements Initializab
         mapImgView.fitWidthProperty().bind(circlePane.widthProperty());
         mapImgView.fitHeightProperty().bind(circlePane.heightProperty());
         bookingLocations = BookableLocation.getAllBookingLocations();
+        bookRandomDesks();
         locationBox.setItems(bookingLocations);
         locationBox.setCellFactory(locationBoxFactory);
         locationBox.setButtonCell(locationBoxFactory.call(null));
         duration.setText("");
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
+
+
     }
 
     @SuppressWarnings("Duplicates")
@@ -91,6 +99,11 @@ public class BookLocationMapController extends Controller implements Initializab
 
     @SuppressWarnings("Duplicates")
     private void draw() {
+//        System.out.println("Draw");
+        bookingLocations = BookableLocation.getAllBookingLocations();
+        bookings = Booking.getBookingsDuring(new Timestamp(System.currentTimeMillis()));
+
+//        circlePane.getChildren().clear();
         bookableLocationId = 0;
         circlePane.getChildren().remove(1, circlePane.getChildren().size());
         // image real size / image display size => scale
@@ -104,7 +117,7 @@ public class BookLocationMapController extends Controller implements Initializab
             c.setCenterX(mapX + x / mapScale);
             c.setCenterY(mapY + y / mapScale);
             c.setFill(Color.GREEN);
-            c.setRadius(10.0);
+            c.setRadius(8.0);
             c.getProperties().put("BookableLocation", b);
             bookingLocationsIndexMap.put(b.getID(), bookableLocationId);
             bookableLocationId ++;
@@ -121,7 +134,7 @@ public class BookLocationMapController extends Controller implements Initializab
             c.setCenterX(mapX + x / mapScale);
             c.setCenterY(mapY + y / mapScale);
             c.setFill(Color.RED);
-            c.setRadius(10.0);
+            c.setRadius(8.0);
             Tooltip t = new Tooltip(b.getBookedLocation().getTitle());
             Tooltip.install(c, t);
             circlePane.getChildren().add(c);
@@ -159,11 +172,16 @@ public class BookLocationMapController extends Controller implements Initializab
             errorText.setText("Error: The time you are trying to book has already past");
             return;
         }
+        System.out.println("1");
+
         Booking b = new Booking(bookingLocation, description.getText(), tsStart, tsEnd, Main.user.getUsername(), 0);
+        System.out.println("2");
+
         if(b.hasConflicts()){
             errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
         } else {
             b.insert();
+            System.out.println("3");
             Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR);
         }
     }
@@ -204,4 +222,68 @@ public class BookLocationMapController extends Controller implements Initializab
             }
         }
     };
+
+
+    @SuppressWarnings("Duplicates")
+    private void bookRandomDesks(){
+        LinkedList<BookableLocation> desks = new LinkedList<>();
+
+        // get all desks
+        for (BookableLocation b : bookingLocations){
+            if (b.getType().equals("DESK") || b.getType().equals("BANK")){
+                desks.add(b);
+            }
+        }
+
+        // Create random bookings
+        for (BookableLocation b : desks){
+            // 10% chance of booking a desk
+            if (Math.random() < 0.1){
+                String bookingLocation = b.getID();
+                LocalDate date = LocalDate.now();
+                LocalTime localTime = LocalTime.now();
+
+                int length = (int) (Math.random() * 15.0 + 5.0);
+
+
+                int lengthInMillis = length * 1000; // random time between 5 to 30 seconds
+                Calendar cal = Calendar.getInstance();
+                cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
+                Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
+                Timestamp tsEnd = new Timestamp(cal.getTimeInMillis() + lengthInMillis);
+                Booking booking = new Booking(bookingLocation, description.getText(), tsStart, tsEnd, Main.user.getUsername(), 0);
+                if(!booking.hasConflicts()){
+                    booking.insert();
+//                    System.out.println("Booked desk: " + b.getTitle() + " for " + length + " seconds");
+                } else {
+//                    System.out.println("Conflict when booking desk: " + b.getTitle());
+                }
+            }
+        }
+
+    }
+
+    public void startSimulation(ActionEvent actionEvent){
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                bookRandomDesks();
+                draw();
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+
+        new Thread(()->{
+            try {
+                Thread.sleep(1000 * 60 * 2); // waits two minutes and stops the timeline
+//                System.out.println("Stopping timer");
+                fiveSecondsWonder.stop();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
 }

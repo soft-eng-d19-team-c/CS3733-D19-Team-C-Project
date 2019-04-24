@@ -45,6 +45,30 @@ public class Node {
         return nodes;
     }
 
+    @SuppressWarnings("Duplicates")
+    public static LinkedList<Node> getSearchableRobotNodes() {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM FULLERNODES";
+        try {
+            Statement stmt = Database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, floor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
+    }
+
 
     public String getID() {
         return ID;
@@ -280,14 +304,17 @@ public class Node {
 
 
 
-    // Floor 3  4
-    // Floor 2  3
-    // Floor 1  2
+    // Floor 4  6
+    // Floor 3  5
+    // Floor 2  4
+    // Floor 1  3
+    // Ground   2
     // Floor L1 1
     // Floor L2 0
     //used when determining the distance between floors
     public int getFloorNumber(){
         switch (this.floor){
+            case "4": return 6;
             case "3": return 5;
             case "2": return 4;
             case "1": return 3;

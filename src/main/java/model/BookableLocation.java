@@ -78,4 +78,8 @@ public class BookableLocation {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }

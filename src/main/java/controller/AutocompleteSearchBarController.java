@@ -41,6 +41,14 @@ public class AutocompleteSearchBarController extends Controller implements Initi
             this.acTextInput.setText("");
     }
 
+    public void setLocation(Node node){
+        this.nodeID.setText(node.getID());
+        if(node != null)
+            this.acTextInput.setText(node.getShortName());
+        else
+            this.acTextInput.setText("");
+    }
+
     private void setSearchMethod(){
         switch (Main.info.getSearchType()) {
             case LEVENSHTEIN:
@@ -107,6 +115,7 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         initialize(location, resources);
     }
 
+    @SuppressWarnings("Duplicates")
     public void refresh() {
         nodes = Node.getSearchableNodes();
         acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
@@ -116,6 +125,17 @@ public class AutocompleteSearchBarController extends Controller implements Initi
         }
         this.setLocation(Main.info.getKioskLocation().getID());
         this.nodeFloor = Main.info.getKioskLocation().getFloor();
+        setSearchMethod();
+    }
+
+    @SuppressWarnings("Duplicates")
+    public void refreshForRobots() {
+        nodes = Node.getSearchableRobotNodes();
+        acSuggestions.getSuggestions().remove(0, acSuggestions.getSuggestions().size());
+        for (Node n : nodes) {
+            if (n.getLongName() != null)
+                acSuggestions.getSuggestions().add(n);
+        }
         setSearchMethod();
     }
 }
