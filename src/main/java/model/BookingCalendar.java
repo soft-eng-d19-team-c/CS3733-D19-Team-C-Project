@@ -97,25 +97,25 @@ public class BookingCalendar {
     public String getGroup (String location){
         System.out.println(location);
         String result = "";
-        if      (location.equals("Classroom 1")){result = "group1";}
-        else if (location.equals("Classroom 2")){result = "group2";}
-        else if (location.equals("Classroom 3")){result = "group3";}
-        else if (location.equals("Classroom 4")){result = "group4";}
-        else if (location.equals("Classroom 5")){result = "group5";}
-        else if (location.equals("Classroom 6")){result = "group6";}
-        else if (location.equals("Classroom 7")){result = "group7";}
-        else if (location.equals("Classroom 8")){result = "group8";}
-        else if (location.equals("Work Zone 1")){result = "group9";}
-        else if (location.equals("Work Zone 2")){result = "group10";}
-        else if (location.equals("Work Zone 3")){result = "group11";}
-        else if (location.equals("Work Zone 4")){result = "group12";}
-        else if (location.equals("Work Zone 5")){result = "group13";}
-        else if (location.equals("Amphiteather")){result = "group14";}
+        if (location.equals("CLASS1")){result = "group1";}
+        else if (location.equals("CLASS2")){result = "group2";}
+        else if (location.equals("CLASS3")){result = "group3";}
+        else if (location.equals("CLASS4")){result = "group4";}
+        else if (location.equals("CLASS5")){result = "group5";}
+        else if (location.equals("CLASS6")){result = "group6";}
+        else if (location.equals("CLASS7")){result = "group7";}
+        else if (location.equals("CLASS8")){result = "group8";}
+        else if (location.equals("WZ1")){result = "group9";}
+        else if (location.equals("WZ2")){result = "group10";}
+        else if (location.equals("WZ3")){result = "group11";}
+        else if (location.equals("WZ4")){result = "group12";}
+        else if (location.equals("WZ5")){result = "group13";}
+        else if (location.equals("AM1")){result = "group14";}
         return result;
     }
     public List<Appointment> getAppointments(LocalDateTime startTime, LocalDateTime endTime){
         List<Appointment> result = FXCollections.observableArrayList();
-        String hql = "select BOOKINGS.ID, LOCATION, DESCRIPTION, DATETIMESTART, DATETIMEEND, USERCOMPLETEDBY, B.ID AS B_ID, TYPE, TITLE, XCOORD, YCOORD FROM BOOKINGS LEFT JOIN BOOKINGLOCATIONS AS B ON BOOKINGS.LOCATION = B.ID WHERE DATETIMESTART > ? AND DATETIMEEND < ?";
+        String hql = "SELECT * FROM BOOKINGS WHERE DATETIMESTART > ? AND DATETIMEEND < ?";
         ResultSet rs;
         try {
             PreparedStatement ps = Database.getConnection().prepareStatement(hql);
@@ -124,11 +124,11 @@ public class BookingCalendar {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Agenda.AppointmentImplLocal appointmentImplLocal= new Appointment()
-                        .withLocation(rs.getString("TITLE"))
+                        .withLocation(rs.getString("LOCATION"))
                         .withDescription(rs.getString("DESCRIPTION"))
                         .withStartLocalDateTime(rs.getTimestamp("DATETIMESTART").toLocalDateTime())
                         .withEndLocalDateTime(rs.getTimestamp("DATETIMEEND").toLocalDateTime())
-                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup(rs.getString("TITLE"))));
+                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup(rs.getString("LOCATION"))));
                 Appointment appointment = (Appointment)appointmentImplLocal;
                 appointment.setId(rs.getInt("ID"));
                 result.add(appointment);

@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,7 +37,6 @@ public class BookingController extends Controller implements Initializable {
     @FXML private NavController navController;
     private BookingCalendar.Appointment selectedAppointment;
     private ObservableList<BookableLocation> bookingLocations;
-    private HashMap<String, String> bookIDLocation = new HashMap<>();
 
     //    @FXML public ImageView backgroundImage;
 //    @FXML public NavController navController;
@@ -92,20 +90,20 @@ public class BookingController extends Controller implements Initializable {
     public String getGroup (String location){
         System.out.println(location);
         String result = "";
-        if          (location == "Classroom 1"){result = "group1";}
-        else if (location.equals("Classroom 2")){result = "group2";}
-        else if (location.equals("Classroom 3")){result = "group3";}
-        else if (location.equals("Classroom 4")){result = "group4";}
-        else if (location.equals("Classroom 5")){result = "group5";}
-        else if (location.equals("Classroom 6")){result = "group6";}
-        else if (location.equals("Classroom 7")){result = "group7";}
-        else if (location.equals("Classroom 8")){result = "group8";}
-        else if (location.equals("Work Zone 1")){result = "group9";}
-        else if (location.equals("Work Zone 2")){result = "group10";}
-        else if (location.equals("Work Zone 3")){result = "group11";}
-        else if (location.equals("Work Zone 4")){result = "group12";}
-        else if (location.equals("Work Zone 5")){result = "group13";}
-        else if (location.equals("Amphiteather")){result = "group14";}
+        if (location == "CLASS1"){result = "group1";}
+        else if (location.equals("CLASS2")){result = "group2";}
+        else if (location.equals("CLASS3")){result = "group3";}
+        else if (location.equals("CLASS4")){result = "group4";}
+        else if (location.equals("CLASS5")){result = "group5";}
+        else if (location.equals("CLASS6")){result = "group6";}
+        else if (location.equals("CLASS7")){result = "group7";}
+        else if (location.equals("CLASS8")){result = "group8";}
+        else if (location.equals("WZ1")){result = "group9";}
+        else if (location.equals("WZ2")){result = "group10";}
+        else if (location.equals("WZ3")){result = "group11";}
+        else if (location.equals("WZ4")){result = "group12";}
+        else if (location.equals("WZ5")){result = "group13";}
+        else if (location.equals("AM1")){result = "group14";}
         else {result = "group0";}
         return result;
     }
@@ -116,7 +114,7 @@ public class BookingController extends Controller implements Initializable {
         Date selected = calendar.getCalendar().getTime();
         LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         BookableLocation b = (BookableLocation) locationBox.getValue();
-        String location_s = b.getTitle();
+        String location_s = b.getID();
         Agenda.AppointmentImplLocal newAppointment = new BookingCalendar().new Appointment()
                 .withStartLocalDateTime(startTime.getValue().atDate(date))
                 .withEndLocalDateTime(endTime.getValue().atDate(date))
@@ -152,11 +150,6 @@ public class BookingController extends Controller implements Initializable {
         selectedAppointment.setStartLocalDateTime(startTime.getValue().atDate(date));
         selectedAppointment.setEndLocalDateTime(endTime.getValue().atDate(date));
         selectedAppointment.setDescription(description.getText());
-        BookableLocation b = (BookableLocation) locationBox.getValue();
-        String location_s = b.getTitle();
-        selectedAppointment.setLocation(location_s);
-        // TODO: !!!!!!!!!!!!!!!!!!!!!!!
-//        selectedAppointment.setAppointmentGroup(appointmentgroup.getGroup(location_s));
         bookingCalendar.updateAppointment(selectedAppointment);
         updateAgenda();
         agenda.refresh();
@@ -164,7 +157,7 @@ public class BookingController extends Controller implements Initializable {
 
     private void updateAppointment() { }
 
-    private void updateAgenda(){
+    private void updateAgenda(){;
         agenda.localDateTimeRangeCallbackProperty().set(param -> {
              List<BookingCalendar.Appointment> list = bookingCalendar.getAppointments(param.getStartLocalDateTime(), param.getEndLocalDateTime());
                     agenda.appointments().clear();
@@ -192,8 +185,8 @@ public class BookingController extends Controller implements Initializable {
             Agenda.AppointmentImplLocal appointmentImplLocal = new BookingCalendar().new Appointment()
                     .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
-                    .withLocation("Amphiteathe")
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup("Amphiteathe")));
+                    .withLocation("AM1")
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup("AM1")));
             int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
             a.setId(id);
@@ -217,7 +210,6 @@ public class BookingController extends Controller implements Initializable {
                     startTime.setValue(selectedAppointment.getStartLocalDateTime().toLocalTime());
                     endTime.setValue(selectedAppointment.getEndLocalDateTime().toLocalTime());
                     description.setText(selectedAppointment.getDescription());
-                    locationBox.setValue(selectedAppointment.getLocation());
                     return null;
                 }
         );
@@ -231,7 +223,6 @@ public class BookingController extends Controller implements Initializable {
                 public void updateItem(BookableLocation item, boolean empty) {
                     super.updateItem(item, empty);
                     if(item!=null && !empty){
-                        bookIDLocation.put(item.getID(), item.getTitle());
                         setText(item.getTitle());
                     }
                 }
