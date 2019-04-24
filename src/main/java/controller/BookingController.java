@@ -184,7 +184,7 @@ public class BookingController extends Controller implements Initializable {
                     .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
                     .withLocation("AM1")
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group23"));
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup("AM1")));
             int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
             a.setId(id);
