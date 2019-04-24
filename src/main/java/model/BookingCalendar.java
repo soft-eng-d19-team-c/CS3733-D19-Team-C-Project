@@ -96,21 +96,21 @@ public class BookingCalendar {
     }
     public String getGroup (String location){
         System.out.println(location);
-        String result = "group1";
-        if (location == "CLASS1"){result = "group1";}
-        if (location == "CLASS2"){result = "group2";}
-        if (location == "CLASS3"){result = "group3";}
-        if (location == "CLASS4"){result = "group4";}
-        if (location == "CLASS5"){result = "group5";}
-        if (location == "CLASS6"){result = "group6";}
-        if (location == "CLASS7"){result = "group7";}
-        if (location == "CLASS8"){result = "group8";}
-        if (location == "WZ1"){result = "group9";}
-        if (location == "WZ2"){result = "group10";}
-        if (location == "WZ3"){result = "group11";}
-        if (location == "WZ4"){result = "group12";}
-        if (location == "WZ5"){result = "group13";}
-        if (location == "AM1"){result = "group14";}
+        String result = "";
+        if (location.equals("CLASS1")){result = "group1";}
+        else if (location.equals("CLASS2")){result = "group2";}
+        else if (location.equals("CLASS3")){result = "group3";}
+        else if (location.equals("CLASS4")){result = "group4";}
+        else if (location.equals("CLASS5")){result = "group5";}
+        else if (location.equals("CLASS6")){result = "group6";}
+        else if (location.equals("CLASS7")){result = "group7";}
+        else if (location.equals("CLASS8")){result = "group8";}
+        else if (location.equals("WZ1")){result = "group9";}
+        else if (location.equals("WZ2")){result = "group10";}
+        else if (location.equals("WZ3")){result = "group11";}
+        else if (location.equals("WZ4")){result = "group12";}
+        else if (location.equals("WZ5")){result = "group13";}
+        else if (location.equals("AM1")){result = "group14";}
         return result;
     }
     public List<Appointment> getAppointments(LocalDateTime startTime, LocalDateTime endTime){

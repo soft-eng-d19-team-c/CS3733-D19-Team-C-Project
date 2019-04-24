@@ -88,21 +88,21 @@ public class BookingController extends Controller implements Initializable {
 
     public String getGroup (String location){
         System.out.println(location);
-        String result = "group1";
+        String result = "";
         if (location == "CLASS1"){result = "group1";}
-        else if (location == "CLASS2"){result = "group2";}
-        else if (location == "CLASS3"){result = "group3";}
-        else if (location == "CLASS4"){result = "group4";}
-        else if (location == "CLASS5"){result = "group5";}
-        else if (location == "CLASS6"){result = "group6";}
-        else if (location == "CLASS7"){result = "group7";}
-        else if (location == "CLASS8"){result = "group8";}
-        else if (location == "WZ1"){result = "group9";}
-        else if (location == "WZ2"){result = "group10";}
-        else if (location == "WZ3"){result = "group11";}
-        else if (location == "WZ4"){result = "group12";}
-        else if (location == "WZ5"){result = "group13";}
-        else if (location == "AM1"){result = "group14";}
+        else if (location.equals("CLASS2")){result = "group2";}
+        else if (location.equals("CLASS3")){result = "group3";}
+        else if (location.equals("CLASS4")){result = "group4";}
+        else if (location.equals("CLASS5")){result = "group5";}
+        else if (location.equals("CLASS6")){result = "group6";}
+        else if (location.equals("CLASS7")){result = "group7";}
+        else if (location.equals("CLASS8")){result = "group8";}
+        else if (location.equals("WZ1")){result = "group9";}
+        else if (location.equals("WZ2")){result = "group10";}
+        else if (location.equals("WZ3")){result = "group11";}
+        else if (location.equals("WZ4")){result = "group12";}
+        else if (location.equals("WZ5")){result = "group13";}
+        else if (location.equals("AM1")){result = "group14";}
         else {result = "group0";}
         return result;
     }
@@ -176,12 +176,15 @@ public class BookingController extends Controller implements Initializable {
         locationBox.setButtonCell(locationBoxFactory.call(null));
         agenda.setAllowDragging(true);
         agenda.setAllowResize(true);
+        agenda.setEditAppointmentCallback( (appointment) -> {
+            return null;
+        });
         agenda.newAppointmentCallbackProperty().set((localDateTimeRange) -> {
             Agenda.AppointmentImplLocal appointmentImplLocal = new BookingCalendar().new Appointment()
                     .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group23"))
-            ;
+                    .withLocation("AM1")
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group23"));
             int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
             a.setId(id);
