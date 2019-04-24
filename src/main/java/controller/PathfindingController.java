@@ -140,6 +140,7 @@ public class PathfindingController extends Controller implements Initializable {
         pathScrollBar.valueProperty().removeListener(pathBarScrollListener);
         updateFloorImg(currentFloor);
         nodePopUpPane.setVisible(false);
+        clearBtn.setVisible(false);
         Platform.runLater(() -> {
             displayAllNodes();
             changeButtonColor(currentFloorButton);
@@ -191,8 +192,12 @@ public class PathfindingController extends Controller implements Initializable {
      * @author Fay Whittall
      */
     private void setHasPath(boolean b){
-        if(b) hasPath = true;
-        else hasPath = false;
+        if(b) {
+            hasPath = true;
+        }
+        else {
+            hasPath = false;
+        }
         setClickPathFind();
     }
 
@@ -295,7 +300,8 @@ public class PathfindingController extends Controller implements Initializable {
     public void makePath(){
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         if (addText != null)
-            addText.getPanes().remove(0, allPanes.size());
+            if (allPanes.size() != 0)
+                addText.getPanes().remove(0, allPanes.size());
 
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
@@ -399,16 +405,20 @@ public class PathfindingController extends Controller implements Initializable {
         }
         //hard-coded bug fix - make the whole path red if it is at the end of the scroll bar
         if(newPosition == (int) pathScrollBar.getMax()){
-            generateNodesAndEdges(nodesOnPath, Color.RED);
+            Node n = nodesOnPathArray[newPosition -1];
+            if(nodeCircles.containsKey(n.getID())){
+                Circle nodeCircle = nodeCircles.get(n.getID());
+                nodeCircle.setFill(red);
+            }
         }
-        else{
+        else {
             //draw the nodes again red if moving forward, draw them again black if moving backward
-            if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
+            if (!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))) {
                 if (forwards) {
-                    if(!useDifferentFloor){
+                    if (!useDifferentFloor) {
                         changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
                     }
-                    for(int i = 0; i < oldPosition; i++) {
+                    for (int i = 0; i < oldPosition; i++) {
                         Node n = nodesOnPathArray[i];
                         if (n.getFloor().equals(currentFloor)) {
                             Circle nodeCircle = nodeCircles.get(n.getID());
@@ -420,22 +430,21 @@ public class PathfindingController extends Controller implements Initializable {
                         }
                     }
                     counter++;
-                    if (counter >= allPanes.size()){
-                        counter = allPanes.size()-1;
+                    if (counter >= allPanes.size()) {
+                        counter = allPanes.size() - 1;
                     }
                     if (allPanes.size() != 0 || allPanes.size() != -1)
                         addText.setExpandedPane(allPanes.get(counter));
-                }
-                else{
-                    if(!useDifferentFloor){
+                } else {
+                    if (!useDifferentFloor) {
                         changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
                     }
-                    for(int i = nodesOnPathArray.length - 1; i > newPosition; i--){
+                    for (int i = nodesOnPathArray.length - 1; i > newPosition; i--) {
                         Node n = nodesOnPathArray[i];
-                        if(n.getFloor().equals(currentFloor)){
+                        if (n.getFloor().equals(currentFloor)) {
                             Circle nodeCircle = nodeCircles.get(n.getID());
                             nodeCircle.setFill(black);
-                            if (nodeLines.containsKey(n.getID())){
+                            if (nodeLines.containsKey(n.getID())) {
                                 Line nodeLine = nodeLines.get(n.getID());
                                 nodeLine.setStroke(black);
                             }
@@ -448,22 +457,20 @@ public class PathfindingController extends Controller implements Initializable {
                         addText.setExpandedPane(allPanes.get(counter));
                 }
             }
-            for(Node n: nodesToRedraw){
-                if(nodeCircles.containsKey(n.getID())){
+            for (Node n : nodesToRedraw) {
+                if (nodeCircles.containsKey(n.getID())) {
                     Circle nodeCircle = nodeCircles.get(n.getID());
-                    if (nodeCircle.getFill().equals(black)){
+                    if (nodeCircle.getFill().equals(black)) {
                         nodeCircle.setFill(red);
-                    }
-                    else {
+                    } else {
                         nodeCircle.setFill(black);
                     }
                 }
-                if (nodeLines.containsKey(n.getID())){
+                if (nodeLines.containsKey(n.getID())) {
                     Line nodeLine = nodeLines.get(n.getID());
-                    if(nodeLine.getStroke().equals(black)){
+                    if (nodeLine.getStroke().equals(black)) {
                         nodeLine.setStroke(red);
-                    }
-                    else nodeLine.setStroke(black);
+                    } else nodeLine.setStroke(black);
                 }
             }
         }
