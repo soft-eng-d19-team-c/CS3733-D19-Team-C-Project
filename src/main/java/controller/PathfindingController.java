@@ -541,12 +541,12 @@ public class PathfindingController extends Controller implements Initializable {
         }
     }
 
-   MediaPlayer mp;
-    private void playAudio(){
-        Media file = new Media(new File("C:\\Users\\Linda\\IdeaProjects\\CS3733-D19-Team-C-Project2\\src\\main\\java\\controller\\music.mp3").toURI().toString());
-         mp = new MediaPlayer(file);
-         mp.play();
-    }
+//   MediaPlayer mp;
+//    private void playAudio(){
+//        Media file = new Media(new File("C:\\Users\\Linda\\IdeaProjects\\CS3733-D19-Team-C-Project2\\src\\main\\java\\controller\\music.mp3").toURI().toString());
+//         mp = new MediaPlayer(file);
+//         mp.play();
+//    }
 
     /*
         DANCE PARTY STUFF
@@ -559,7 +559,7 @@ public class PathfindingController extends Controller implements Initializable {
         double mapY = findPathImgView.getLayoutY();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
         if (danceBtn.isSelected() && hasPath) {
-            playAudio();
+            //playAudio();
             pathScrollBar.setDisable(true);
             Node prev = null;
             for (Node n : nodesOnPath) {
@@ -600,7 +600,7 @@ public class PathfindingController extends Controller implements Initializable {
                 c.toFront();
             }
         } else if (danceBtn.isSelected() && !hasPath) {
-            playAudio();
+           // playAudio();
             for (Node n : nodes) {
                 if (n.getFloor().equals(currentFloor)) {
                     Circle circle = new Circle();
@@ -646,7 +646,7 @@ public class PathfindingController extends Controller implements Initializable {
             pathScroll.setOldPosition(0);
             scroll();
         } else {
-            mp.stop();
+          //  mp.stop();
             displayAllNodes();
         }
     }
