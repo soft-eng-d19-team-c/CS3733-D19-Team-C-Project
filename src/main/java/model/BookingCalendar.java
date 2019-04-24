@@ -1,6 +1,7 @@
 package model;
 
 import base.Database;
+import base.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jfxtras.scene.control.agenda.Agenda;
@@ -72,8 +73,12 @@ public class BookingCalendar {
         ResultSet rs;
         int ID = -1;
         try {
-            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd, new String[] { "ID_COLUMN"} );
-            ps.setString(1, newAppointment.getLocation());
+            String defaultLocation = newAppointment.getLocation();
+            if (newAppointment.getLocation() == null){
+                defaultLocation = "Undecided";
+            }
+            PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd, new String[]{"ID"} );
+            ps.setString(1, defaultLocation);
             ps.setString(2, newAppointment.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
             ps.setTimestamp(4, Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
@@ -81,13 +86,32 @@ public class BookingCalendar {
             System.out.println("New Appointment.insert " + executed);
             rs = ps.getGeneratedKeys();
             while(rs.next()) {
-                ID = rs.getInt("ID");
+                ID = rs.getInt(1);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
         return ID;
+    }
+    public String getGroup (String location){
+        System.out.println(location);
+        String result = "group1";
+        if (location == "CLASS1"){result = "group1";}
+        if (location == "CLASS2"){result = "group2";}
+        if (location == "CLASS3"){result = "group3";}
+        if (location == "CLASS4"){result = "group4";}
+        if (location == "CLASS5"){result = "group5";}
+        if (location == "CLASS6"){result = "group6";}
+        if (location == "CLASS7"){result = "group7";}
+        if (location == "CLASS8"){result = "group8";}
+        if (location == "WZ1"){result = "group9";}
+        if (location == "WZ2"){result = "group10";}
+        if (location == "WZ3"){result = "group11";}
+        if (location == "WZ4"){result = "group12";}
+        if (location == "WZ5"){result = "group13";}
+        if (location == "AM1"){result = "group14";}
+        return result;
     }
     public List<Appointment> getAppointments(LocalDateTime startTime, LocalDateTime endTime){
         List<Appointment> result = FXCollections.observableArrayList();
@@ -104,7 +128,7 @@ public class BookingCalendar {
                         .withDescription(rs.getString("DESCRIPTION"))
                         .withStartLocalDateTime(rs.getTimestamp("DATETIMESTART").toLocalDateTime())
                         .withEndLocalDateTime(rs.getTimestamp("DATETIMEEND").toLocalDateTime())
-                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup(rs.getString("LOCATION"))));
                 Appointment appointment = (Appointment)appointmentImplLocal;
                 appointment.setId(rs.getInt("ID"));
                 result.add(appointment);
@@ -149,5 +173,18 @@ public class BookingCalendar {
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
+        String str = "UPDATE BOOKINGS SET LOCATION = ?, DESCRIPTION = ? , DATETIMESTART = ?, DATETIMEEND = ? WHERE ID = ?";
+        try {
+            PreparedStatement ps = Database.getConnection().prepareStatement(str);
+//            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            ps.setString(1, newAppointment.getLocation());
+            ps.setString(2, newAppointment.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(newAppointment.getStartLocalDateTime()));
+            ps.setTimestamp(4, Timestamp.valueOf(newAppointment.getEndLocalDateTime()));
+            ps.setInt(5, newAppointment.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

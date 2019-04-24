@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,11 +28,11 @@ import java.util.ResourceBundle;
 
 public class BookingController extends Controller implements Initializable {
     BookingCalendar bookingCalendar = new BookingCalendar();
+    @FXML private JFXTimePicker startTime;
+    @FXML private JFXTimePicker endTime;
     @FXML private ComboBox locationBox;
     @FXML private Agenda agenda;
     @FXML private CalendarPicker calendar;
-    @FXML private LocalTimeTextField startTime;
-    @FXML private LocalTimeTextField endTime;
     @FXML private TextArea description;
     private BookingCalendar.Appointment selectedAppointment;
     private ObservableList<BookableLocation> bookingLocations;
@@ -85,6 +86,27 @@ public class BookingController extends Controller implements Initializable {
 //        bookingAgenda.setDisplayedLocalDateTime(LocalDate.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(), datePicker.getValue().getDayOfMonth()).atTime(12,00));
 //    }
 
+    public String getGroup (String location){
+        System.out.println(location);
+        String result = "group1";
+        if (location == "CLASS1"){result = "group1";}
+        else if (location == "CLASS2"){result = "group2";}
+        else if (location == "CLASS3"){result = "group3";}
+        else if (location == "CLASS4"){result = "group4";}
+        else if (location == "CLASS5"){result = "group5";}
+        else if (location == "CLASS6"){result = "group6";}
+        else if (location == "CLASS7"){result = "group7";}
+        else if (location == "CLASS8"){result = "group8";}
+        else if (location == "WZ1"){result = "group9";}
+        else if (location == "WZ2"){result = "group10";}
+        else if (location == "WZ3"){result = "group11";}
+        else if (location == "WZ4"){result = "group12";}
+        else if (location == "WZ5"){result = "group13";}
+        else if (location == "AM1"){result = "group14";}
+        else {result = "group0";}
+        return result;
+    }
+
     @FXML
     void addAppointment(ActionEvent event) {
         int id;
@@ -93,12 +115,13 @@ public class BookingController extends Controller implements Initializable {
         BookableLocation b = (BookableLocation) locationBox.getValue();
         String location_s = b.getID();
         Agenda.AppointmentImplLocal newAppointment = new BookingCalendar().new Appointment()
-                .withStartLocalDateTime(startTime.getLocalTime().atDate(date))
-                .withEndLocalDateTime(endTime.getLocalTime().atDate(date))
+                .withStartLocalDateTime(startTime.getValue().atDate(date))
+                .withEndLocalDateTime(endTime.getValue().atDate(date))
                 .withDescription(description.getText())
                 .withLocation(location_s)
-                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup(location_s)));
         id = bookingCalendar.addNewAppointment(newAppointment);
+        System.out.println(newAppointment.getAppointmentGroup().toString());
         BookingCalendar.Appointment a = (BookingCalendar.Appointment)newAppointment;
         a.setId(id);
         agenda.appointments().add(a);
@@ -123,8 +146,8 @@ public class BookingController extends Controller implements Initializable {
             selected = calendar.getCalendar().getTime();
         }
         LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        selectedAppointment.setStartLocalDateTime(startTime.getLocalTime().atDate(date));
-        selectedAppointment.setEndLocalDateTime(endTime.getLocalTime().atDate(date));
+        selectedAppointment.setStartLocalDateTime(startTime.getValue().atDate(date));
+        selectedAppointment.setEndLocalDateTime(endTime.getValue().atDate(date));
         selectedAppointment.setDescription(description.getText());
         bookingCalendar.updateAppointment(selectedAppointment);
         updateAgenda();
@@ -144,6 +167,7 @@ public class BookingController extends Controller implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         try { updateAgenda(); }
         catch (Exception e){ e.printStackTrace(); }
         bookingLocations = BookableLocation.getAllBookingLocations();
@@ -156,7 +180,8 @@ public class BookingController extends Controller implements Initializable {
             Agenda.AppointmentImplLocal appointmentImplLocal = new BookingCalendar().new Appointment()
                     .withStartLocalDateTime(localDateTimeRange.getStartLocalDateTime())
                     .withEndLocalDateTime(localDateTimeRange.getEndLocalDateTime())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group23"))
+            ;
             int id = bookingCalendar.addNewAppointment(appointmentImplLocal);
             BookingCalendar.Appointment a = (BookingCalendar.Appointment)appointmentImplLocal;
             a.setId(id);
@@ -177,8 +202,8 @@ public class BookingController extends Controller implements Initializable {
         agenda.actionCallbackProperty().set(param ->
                 {
                     selectedAppointment = (BookingCalendar.Appointment)param;
-                    startTime.setLocalTime(selectedAppointment.getStartLocalDateTime().toLocalTime());
-                    endTime.setLocalTime(selectedAppointment.getEndLocalDateTime().toLocalTime());
+                    startTime.setValue(selectedAppointment.getStartLocalDateTime().toLocalTime());
+                    endTime.setValue(selectedAppointment.getEndLocalDateTime().toLocalTime());
                     description.setText(selectedAppointment.getDescription());
                     return null;
                 }
