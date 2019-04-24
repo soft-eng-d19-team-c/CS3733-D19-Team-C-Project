@@ -1,11 +1,14 @@
 package controller;
 
+//import api.ServiceException;
 import base.EnumScreenType;
 import base.Main;
+//import base.PrescriptionRequestAPI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -85,9 +88,15 @@ public class ServicesDashboardController extends Controller implements Initializ
         Main.screenController.setScreen(EnumScreenType.PRESCRIPTIONSERVICE);
     }
 
-    public void apiButtonClick(ActionEvent actionEvent) {
-        Main.screenController.setScreen(EnumScreenType.APIS);
+    public void prescriptionAPIButtonClick(ActionEvent actionEvent) {
+//        PrescriptionRequestAPI api = new PrescriptionRequestAPI();
+//        try {
+//            api.run(0,0,1920,1080,null,null,null);
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
     }
+
     /**
      * Routing method for IT.
      * @author Ryan LaMarche
