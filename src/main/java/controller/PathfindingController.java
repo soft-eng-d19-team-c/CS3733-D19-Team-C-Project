@@ -183,6 +183,8 @@ public class PathfindingController extends Controller implements Initializable {
         }).start();
 
         labelAnchor.setMouseTransparent(true);
+        clearBtn.setVisible(false);
+
 
         if (addText != null){
             addText.getPanes().remove(0, allPanes.size());
