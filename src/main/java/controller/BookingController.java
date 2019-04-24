@@ -1,5 +1,6 @@
 package controller;
 
+import base.Main;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,9 +17,11 @@ import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.LocalTimeTextField;
 import jfxtras.scene.control.agenda.Agenda;
 import model.BookableLocation;
+import model.Booking;
 import model.BookingCalendar;
 
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -114,9 +117,27 @@ public class BookingController extends Controller implements Initializable {
         int id;
         Date selected = calendar.getCalendar().getTime();
         LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (startTime.getValue() == null || endTime.getValue() == null || locationBox.getValue() == null){
+            errorText.setText("ERROR: please fill in the required fields");
+            return;
+        }
+        LocalDateTime time_start = LocalDateTime.of(date, startTime.getValue());
+        if (time_start.isBefore(LocalDateTime.now())){
+            errorText.setText("ERROR: you can only schedule for the future");
+            return;
+        }
+        if (endTime.getValue().isBefore(startTime.getValue())){
+            errorText.setText("ERROR: Please set the end time after the start time. ");
+            return;
+        }
         BookableLocation b = (BookableLocation) locationBox.getValue();
         String location_s = b.getID();
         String summary_s = b.getTitle();
+        Booking booking = new Booking(location_s, description.getText(), Timestamp.valueOf(startTime.getValue().atDate(date)), Timestamp.valueOf(endTime.getValue().atDate(date)), Main.user.getUsername(), 0);
+        if(booking.hasConflicts()) {
+            errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
+            return;
+        }
         Agenda.AppointmentImplLocal newAppointment = new BookingCalendar().new Appointment()
                 .withStartLocalDateTime(startTime.getValue().atDate(date))
                 .withEndLocalDateTime(endTime.getValue().atDate(date))
@@ -131,6 +152,7 @@ public class BookingController extends Controller implements Initializable {
         agenda.appointments().add(a);
         agenda.refresh();
         updateAppointment();
+        errorText.setText("");
     }
 
     @FXML
@@ -139,21 +161,44 @@ public class BookingController extends Controller implements Initializable {
         bookingCalendar.deleteAppointment(selectedAppointment.getId());
         updateAgenda();
         agenda.refresh();
+        startTime.setValue(LocalTime.now());
+        endTime.setValue(null);
+        locationBox.setValue(null);
+        description.setText(null);
+        errorText.setText("");
     }
 
     @FXML
     void updateAppointment(ActionEvent event) {
         Date selected;
+        if (startTime.getValue().isBefore(LocalTime.now()) || endTime.getValue().isBefore(LocalTime.now())){
+            errorText.setText("ERROR: you can only schedule for the future");
+            return;
+        }
+        if (endTime.getValue().isBefore(startTime.getValue())){
+            errorText.setText("ERROR: Please set the end time after the start time. ");
+            return;
+        }
         if( calendar.getCalendar()==null){
             selected = Date.from(selectedAppointment.getStartLocalDateTime().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
         }else {
             selected = calendar.getCalendar().getTime();
         }
         LocalDate date = selected.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        BookableLocation b = (BookableLocation) locationBox.getValue();
+        String location_s = b.getID();
+        Booking booking = new Booking(location_s, description.getText(), Timestamp.valueOf(startTime.getValue().atDate(date)), Timestamp.valueOf(endTime.getValue().atDate(date)), Main.user.getUsername(), 0);
+        if(booking.hasConflicts()) {
+            errorText.setText("Error: There is a booking that conflicts with this time. Try another time or location.");
+            return;
+        }
         selectedAppointment.setStartLocalDateTime(startTime.getValue().atDate(date));
         selectedAppointment.setEndLocalDateTime(endTime.getValue().atDate(date));
         selectedAppointment.setDescription(description.getText());
+        selectedAppointment.setLocation(location_s);
+        selectedAppointment.setAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(getGroup(location_s)));
         bookingCalendar.updateAppointment(selectedAppointment);
+        errorText.setText("");
         updateAgenda();
         agenda.refresh();
     }
