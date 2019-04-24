@@ -373,8 +373,10 @@ public class PathfindingController extends Controller implements Initializable {
         colorFloorsOnPath(nodesOnPath, currentFloor);
         mapImgPane.reset();
         removeAllLabels();
-        addText.getPanes().remove(0, allPanes.size());
+        if (allPanes.size() <= 0)
+            addText.getPanes().remove(0, allPanes.size());
         allPanes.clear();
+
     }
 
 
