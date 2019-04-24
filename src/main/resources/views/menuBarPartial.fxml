@@ -24,7 +24,7 @@
          <children>
             <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXButton fx:id="mapButton" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#mapButtonClick" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
+                  <JFXButton fx:id="mapButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" maxWidth="200.0" minWidth="200.0" onAction="#mapButtonClick" styleClass="btn-menubar" text="Map" textOverrun="CLIP">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -196,7 +196,10 @@
             </JFXButton>
          </children>
       </Pane>
-      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0" />
-      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="45.0" />
+      <JFXButton fx:id="logoutButton" maxWidth="200.0" minWidth="200.0" onAction="#logoutButtonClick" styleClass="btn-menulogout" text="Logout" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="5.0">
+         <padding>
+            <Insets bottom="30.0" top="30.0" />
+         </padding></JFXButton>
+      <Label fx:id="clock" style="-fx-font-size: 3em;" styleClass="text-white" text="" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="20.0" />
    </children>
 </AnchorPane>

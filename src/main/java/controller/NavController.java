@@ -73,8 +73,6 @@ public class NavController extends Controller implements Initializable {
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         });
-
-
     }
 
     public void mapButtonClick(ActionEvent actionEvent) {
@@ -136,11 +134,13 @@ public class NavController extends Controller implements Initializable {
             adminView.setVisible(true);
             logoutButton.setVisible(true);
             loginButton.setVisible(false);
+
         } else {
             bookRoom.setVisible(false);
             adminView.setVisible(false);
             logoutButton.setVisible(false);
             loginButton.setVisible(true);
+
         }
     }
 
