@@ -145,6 +145,9 @@ public class Booking {
             if(((this.dateTimeStart.getTime() > bStartTime) && (this.dateTimeStart.getTime() < bEndTime)) || ((this.dateTimeEnd.getTime() > bStartTime) && (this.dateTimeEnd.getTime() < bEndTime))) {
                 return true;
             }
+            if(((bStartTime > this.dateTimeStart.getTime()) && (bEndTime < this.dateTimeStart.getTime())) || ((bStartTime > this.dateTimeEnd.getTime()) && (bEndTime < this.dateTimeEnd.getTime()))) {
+                return true;
+            }
         }
         return false;
     }
@@ -210,7 +213,9 @@ public class Booking {
 
     public static ObservableList<Booking> getAllBooking() {
         ObservableList<Booking> result = FXCollections.observableArrayList();
-        String str = "SELECT * FROM BOOKINGS";
+//        String str = "SELECT * FROM BOOKINGS ";
+        String str = "SELECT * FROM BOOKINGS LEFT JOIN BOOKINGLOCATIONS ON BOOKINGS.LOCATION = BOOKINGLOCATIONS.ID WHERE BOOKINGLOCATIONS.TYPE <> 'DESK'";
+//        `SELECT * FROM BOOKINGS LEFT JOIN BOOKINGLOCATIONS ON BOOKINGS.LOCATION = BOOKINGLOCATIONS.ID WHERE BOOKINGLOCATIONS.TYPE <> 'DESK'`
         try {
             Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
