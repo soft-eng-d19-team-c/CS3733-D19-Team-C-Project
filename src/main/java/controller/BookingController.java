@@ -253,6 +253,11 @@ public class BookingController extends Controller implements Initializable {
             LocalTime lt = LocalTime.NOON;
             agenda.setDisplayedLocalDateTime(LocalDateTime.of(ld, lt));
             updateAgenda();
+            errorText.setText("");
+            startTime.setValue(LocalTime.now());
+            endTime.setValue(null);
+            locationBox.setValue(null);
+            description.setText(null);
         });
         agenda.appointmentChangedCallbackProperty().set(param ->{
                     bookingCalendar.updateAppointment((BookingCalendar.Appointment)param);
