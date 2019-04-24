@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 public class NavController extends Controller implements Initializable {
     @FXML public JFXButton mapButton;
@@ -35,15 +34,6 @@ public class NavController extends Controller implements Initializable {
     @FXML public Pane adminSelectBar;
     @FXML public Pane loginSelectBar;
     @FXML public JFXButton logoutButton;
-
-    // All Icons
-    @FXML public FontAwesomeIconView mapIcon;
-    @FXML public FontAwesomeIconView searchIcon;
-    @FXML public FontAwesomeIconView serviceIcon;
-    @FXML public FontAwesomeIconView bookIcon;
-    @FXML public FontAwesomeIconView userIcon;
-    @FXML public FontAwesomeIconView loginIcon;
-    @FXML public FontAwesomeIconView logoutIcon;
 
     private LinkedList<Pane> selectBars;
 
@@ -67,13 +57,6 @@ public class NavController extends Controller implements Initializable {
         selectBars.add(bookSelectBar);
         selectBars.add(adminSelectBar);
         selectBars.add(loginSelectBar);
-        mapIcon.setMouseTransparent(true);
-        searchIcon.setMouseTransparent(true);
-        serviceIcon.setMouseTransparent(true);
-        bookIcon.setMouseTransparent(true);
-        userIcon.setMouseTransparent(true);
-        loginIcon.setMouseTransparent(true);
-        logoutIcon.setMouseTransparent(true);
 
         Platform.runLater(() -> {
             Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
@@ -152,20 +135,12 @@ public class NavController extends Controller implements Initializable {
             logoutButton.setVisible(true);
             loginButton.setVisible(false);
 
-            loginIcon.setVisible(false);
-            logoutIcon.setVisible(true);
-            bookIcon.setVisible(true);
-            userIcon.setVisible(true);
         } else {
             bookRoom.setVisible(false);
             adminView.setVisible(false);
             logoutButton.setVisible(false);
             loginButton.setVisible(true);
 
-            loginIcon.setVisible(true);
-            logoutIcon.setVisible(false);
-            bookIcon.setVisible(false);
-            userIcon.setVisible(false);
         }
     }
 
