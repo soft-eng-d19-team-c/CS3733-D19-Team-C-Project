@@ -52,9 +52,12 @@ public class Feedback {
                         break;
                 }
             }
-            result.add(new PieChart.Data("Good", goodCounter));
-            result.add(new PieChart.Data("OK", okCounter));
-            result.add(new PieChart.Data("Bad", badCounter));
+            PieChart.Data goodData = new PieChart.Data("Happy", goodCounter);
+            result.add(goodData);
+            PieChart.Data okData = new PieChart.Data("Neutral", okCounter);
+            result.add(okData);
+            PieChart.Data badData = new PieChart.Data("Sad", badCounter);
+            result.add(badData);
         } catch (SQLException e) {
             e.printStackTrace();
         }

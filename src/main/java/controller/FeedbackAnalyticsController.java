@@ -1,14 +1,17 @@
 package controller;
 
+import com.sun.javafx.charts.Legend;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import model.Feedback;
 import model.PathAnalytics;
 import model.SearchAnalytics;
 
@@ -29,6 +32,28 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.ADMINVIEW);
         anchorP.getChildren().remove(1, anchorP.getChildren().size());
+
+        // pie chart stuff
+        PieChart pc = new PieChart(Feedback.getPieChartData());
+//        for (PieChart.Data d : pc.getData()) {
+//            switch (d.getName()) {
+//                case "Happy":
+//                    d.getNode().setStyle("-fx-pie-color: green;");
+//                    break;
+//                case "Neutral":
+//                    d.getNode().setStyle("-fx-pie-color: yellow;");
+//                    break;
+//                case "Sad":
+//                    d.getNode().setStyle("-fx-pie-color: red;");
+//                    break;
+//            }
+//        }
+        pc.setLabelsVisible(false);
+        pc.setTitle("User Feedback");
+        pc.setLayoutX(700);
+        pc.setLayoutY(150);
+        anchorP.getChildren().add(pc);
+
         // bar chart stuff
         CategoryAxis x = new CategoryAxis();
         x.setTickLabelFill(Color.TRANSPARENT);
@@ -39,7 +64,7 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
         bc.setTitle("Most Frequently Used Paths");
         bc.getData().addAll(PathAnalytics.getPathAnalyticsData());
         bc.setLayoutX(400);
-        bc.setLayoutY(550);
+        bc.setLayoutY(575);
         anchorP.getChildren().add(bc);
 
         // bar chart stuff
@@ -52,7 +77,7 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
         bc1.setTitle("Most Searched for Locations");
         bc1.getData().addAll(SearchAnalytics.getPathAnalyticsData());
         bc1.setLayoutX(900);
-        bc1.setLayoutY(550);
+        bc1.setLayoutY(575);
         anchorP.getChildren().add(bc1);
     }
 
