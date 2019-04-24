@@ -87,6 +87,7 @@ public class PathfindingController extends Controller implements Initializable {
     private JFXButton playBtn;
 
     private LinkedList<Node> nodes;
+    private double defaultScale;
     private LinkedList<Edge> edges;
     private LinkedList<Node> nodesOnPath;
     private Node[] nodesOnPathArray;
@@ -116,6 +117,8 @@ public class PathfindingController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        defaultScale = mapImgPane.getCurrentScale();
+        mapImgPane.zoomTo(defaultScale, new Point2D(0, 0));
         nodesOnPath = new LinkedList<>();
         navController.setActiveTab(NavTypes.MAP);
 //         pathText.setText(null);
@@ -316,9 +319,22 @@ public class PathfindingController extends Controller implements Initializable {
 
     //nodesOnPathArray
     public void playBtnClick(ActionEvent actionEvent) {
+        double currentScale = mapImgPane.getCurrentScale();
+        mapImgPane.zoomTo(defaultScale, new Point2D(0, 0));
 
-       // mapImgPane.reset();
+        int xMov = 70;
+        int yMov = 85;
 
+        if((currentScale != defaultScale) ){
+            xMov = 50; //positive
+            yMov = 156; // negative
+        }
+
+        else if(( mapImgPane.getCurrentScale() == currentScale)){
+            xMov = 70;
+            yMov = 85;
+        }
+        mapImgPane.setDisable(true);
         for (Circle c : nodeCircles.values()) {
             c.setFill(Color.BLACK);
             c.setRadius(10);
@@ -380,10 +396,10 @@ public class PathfindingController extends Controller implements Initializable {
             double endX = ((mapX + (dest.getX())/mapScale) - imgWidth);
             double endY = ((mapY + (dest.getY())/mapScale) - imgHeight);
 
-            line.setStartX(startX + 70);
-            line.setStartY(startY - 85);
-            line.setEndX(endX + 70); //75
-            line.setEndY(endY - 85); //115
+            line.setStartX(startX + xMov);//70
+            line.setStartY(startY - yMov);//85
+            line.setEndX(endX + xMov); //75
+            line.setEndY(endY - yMov); //115
 
             path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
@@ -412,6 +428,7 @@ public class PathfindingController extends Controller implements Initializable {
                 danceBtn.setDisable(false);
                 pathScrollBar.setDisable(false);
                 playBtn.setDisable(false);
+                mapImgPane.setDisable(false);
                 for(int i = 0; i < allButtons.size(); i++){
                     allButtons.get(i).setDisable(false);
                 }
