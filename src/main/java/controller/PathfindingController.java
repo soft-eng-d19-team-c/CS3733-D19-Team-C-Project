@@ -183,6 +183,12 @@ public class PathfindingController extends Controller implements Initializable {
         }).start();
 
         labelAnchor.setMouseTransparent(true);
+
+        if (addText != null){
+            addText.getPanes().remove(0, allPanes.size());
+            allPanes.clear();
+        }
+
     }
 
     /**
@@ -340,6 +346,7 @@ public class PathfindingController extends Controller implements Initializable {
         }
 
         colorFloorsOnPath(nodesOnPath, currentFloor);
+        //if(allPanes != null)
         addText.setExpandedPane(allPanes.getFirst());
         createScrollBarLabels();
     }
