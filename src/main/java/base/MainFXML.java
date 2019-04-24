@@ -5,10 +5,16 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+
+/*
+import static controller.PathfindingController.mp;
+import static controller.PathfindingController.stopAudio;
+*/
 
 /**
  * The Main class for the JavaFX application. This class spawns the JavaFX application and creates

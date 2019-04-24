@@ -1,6 +1,7 @@
 package base;
 
 import javafx.event.Event;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.*;
 
@@ -63,6 +64,9 @@ public final class ApplicationInformation {
             Main.user.logout();
             Main.screenController.clearHistory();
             Main.screenController.setScreen(EnumScreenType.WELCOME);
+                    /*if(mp.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+                        stopAudio();
+                    }*/
             }, true);
         Main.idleMonitor.register(Main.screenController.getPrimaryScene(), Event.ANY);
     }
