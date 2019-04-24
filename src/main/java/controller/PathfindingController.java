@@ -188,7 +188,7 @@ public class PathfindingController extends Controller implements Initializable {
 
 
         if (addText != null){
-            addText.getPanes().remove(0, allPanes.size());
+            addText.getPanes().clear();//.remove(0, allPanes.size());
             allPanes.clear();
         }
 
@@ -309,7 +309,8 @@ public class PathfindingController extends Controller implements Initializable {
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         if (addText != null || allPanes == null) {
             if (allPanes.size() != 0) {
-                addText.getPanes().remove(0, allPanes.size());
+                addText.getPanes().clear();//.remove(0, allPanes.size());
+                allPanes.clear();
             }
         }
 
@@ -377,7 +378,7 @@ public class PathfindingController extends Controller implements Initializable {
         removeAllLabels();
         if (addText != null) {
             if (allPanes.size() != 0) {
-                addText.getPanes().remove(0, allPanes.size());
+                addText.getPanes().clear();//.remove(0, allPanes.size());
             }
         }
         allPanes.clear();
@@ -401,7 +402,11 @@ public class PathfindingController extends Controller implements Initializable {
      * Right now, if you switch floors, it just changes the ones that should be redrawn to red
      * @author Fay Whittall
      */
-    private void scroll(){
+    @SuppressWarnings("Duplicates")
+    private void scroll(boolean useDifferentFloor){
+        if(useDifferentFloor){
+            pathScroll.setOldPosition(0);
+        }
         int oldPosition = pathScroll.getOldPosition();
         int newPosition = (int) pathScrollBar.getValue();
         double mapScale = findPathImgView.getImage().getWidth() / findPathImgView.getFitWidth();
@@ -429,21 +434,49 @@ public class PathfindingController extends Controller implements Initializable {
             //draw the nodes again red if moving forward, draw them again black if moving backward
             if(!(nodesOnPathArray[newPosition].getFloor().equals(currentFloor))){
                 if (forwards) {
+                    if(!useDifferentFloor){
+                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+                    }
+                    for(int i = 0; i < oldPosition; i++) {
+                        Node n = nodesOnPathArray[i];
+                        if (n.getFloor().equals(currentFloor)) {
+                            Circle nodeCircle = nodeCircles.get(n.getID());
+                            nodeCircle.setFill(red);
+                            if (nodeLines.containsKey(n.getID())) {
+                                Line nodeLine = nodeLines.get(n.getID());
+                                nodeLine.setStroke(red);
+                            }
+                        }
+                    }
                     counter++;
                     if (counter >= allPanes.size()){
                         counter = allPanes.size()-1;
                     }
                     if (allPanes.size() != 0 || allPanes.size() != -1)
                         addText.setExpandedPane(allPanes.get(counter));
-                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
+//                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.BLACK);
                 }
                 else{
+                    if(!useDifferentFloor){
+                        changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+                    }
+                    for(int i = nodesOnPathArray.length - 1; i > newPosition; i--){
+                        Node n = nodesOnPathArray[i];
+                        if(n.getFloor().equals(currentFloor)){
+                            Circle nodeCircle = nodeCircles.get(n.getID());
+                            nodeCircle.setFill(black);
+                            if (nodeLines.containsKey(n.getID())){
+                                Line nodeLine = nodeLines.get(n.getID());
+                                nodeLine.setStroke(black);
+                            }
+                        }
+                    }
                     counter--;
                     if (counter < 0)
                         counter = 0;
                     if (allPanes.size() != 0)
                         addText.setExpandedPane(allPanes.get(counter));
-                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
+//                    changeFloor(nodesOnPathArray[newPosition].getFloor(), Color.RED);
                 }
             }
             for(Node n: nodesToRedraw){
@@ -465,9 +498,10 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
         pathScroll.setOldPosition(newPosition);
+    }
 
-
-
+    private void scroll(){
+        scroll(false);
     }
 
 
@@ -841,6 +875,11 @@ public class PathfindingController extends Controller implements Initializable {
     }
     public void floor4BtnClick(ActionEvent actionEvent) {
         changeFloor("4");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -849,6 +888,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void floor3BtnClick(ActionEvent actionEvent) {
         changeFloor("3");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -857,6 +901,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void floor2BtnClick(ActionEvent actionEvent) {
         changeFloor("2");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -865,6 +914,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void floor1BtnClick(ActionEvent actionEvent) {
         changeFloor("1");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -873,6 +927,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void groundBtnClick(ActionEvent actionEvent) {
         changeFloor("G");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -881,6 +940,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void L1BtnClick(ActionEvent actionEvent) {
         changeFloor("L1");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
@@ -889,6 +953,11 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void L2BtnClick(ActionEvent actionEvent) {
         changeFloor("L2");
+        danceBtn.setSelected(false);
+        pathScrollBar.setDisable(false);
+        if(hasPath){
+            scroll(true);
+        }
         if (addText != null)
             if (addText.getExpandedPane() != null)
                 addText.getExpandedPane().setExpanded(false);
