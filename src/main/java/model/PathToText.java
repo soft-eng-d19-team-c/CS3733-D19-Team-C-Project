@@ -3,6 +3,7 @@ package model;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ public class PathToText{
         this.nodes = nodes;
     }
 
-    public TextInfo getDetailedPath(LinkedList<Node> listOfNodes){
+    public String getDetailedPath(LinkedList<Node> listOfNodes){
         /*
         StringBuilder textPath = new StringBuilder();
         //get start
@@ -39,118 +40,72 @@ public class PathToText{
 
         return textPath.toString();
         */
-        //System.out.println("in fcn");
         String strRobotInstructions;
-        //StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
-        LinkedList<StringBuilder> floorStrings = new LinkedList<>();
-        floorStrings.add(new StringBuilder());
-        LinkedList<String> allSwitches = new LinkedList<>();
+        StringBuilder textPath = new StringBuilder("Starting at " + listOfNodes.getLast().getLongName() + "\n");
         Node[] nodesArray = listOfNodes.toArray(new Node[listOfNodes.size()]);
         Collections.reverse(Arrays.asList(nodesArray));
         Node prev, curr, next;
-
         for (int i = 1; i < nodesArray.length - 1; i++) {
-            //System.out.println("in first loop");
-            prev = nodesArray[i - 1];
-            String currentFloor = nodesArray[i].getFloor();
-            String nextFloor = nodesArray[i + 1].getFloor();
-
-            if (!currentFloor.equals(nextFloor)) {
-                floorStrings.add(new StringBuilder());
-            }
-        }
-//        System.out.println(floorStrings.size());
-
-        floorStrings.get(0).append("Starting at " + listOfNodes.getLast().getLongName() + "\n");
-        int floorNum =0;
-        allSwitches.add(nodesArray[1].getFloor());
-
-        for (int i = 1; i < nodesArray.length - 1; i++) {
-            //System.out.println("in 2nd loop");
             prev = nodesArray[i - 1];
             curr = nodesArray[i];
             next = nodesArray[i + 1];
 
-           // for(int j =0; j <= floorStrings.size(); j++){
-                //System.out.println(floorStrings.get(floorNum).toString());
-
-                if (!curr.getFloor().equals(next.getFloor())) {
-                    allSwitches.add(next.getFloor());
-                    if (curr.getFloorNumber() > next.getFloorNumber()) {
-                        //textPath.append("Go down a floor at " + curr.getLongName() + "\n");
-                        floorStrings.get(floorNum).append("Go down a floor at " + curr.getLongName() + "\n");
-                        floorNum++;
-                    } else {
-                        //textPath.append("Go up a floor at " + curr.getLongName() + "\n");
-                        floorStrings.get(floorNum).append("Go up a floor at " + curr.getLongName() + "\n");
-                        floorNum++;
-                    }
+            if (!curr.getFloor().equals(next.getFloor())) {
+                if (curr.getFloorNumber() > next.getFloorNumber()) {
+                    textPath.append("Go down a floor at " + curr.getLongName() + "\n");
                 } else {
-//                    System.out.println(floorNum);
-                    if(curr.getFloor().equals(next.getFloor())){
-                        Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
-                        Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
-
-                        EnumDirectionType dir = v_prev.getDirection(v_next);
-
-                        switch (dir) {
-                            case LEFT:
-                                //textPath.append("Take a left at " + curr.getLongName());
-                                floorStrings.get(floorNum).append("Take a left at " + curr.getLongName());
-                                robotInstructions.append('L');
-                                break;
-                            case RIGHT:
-                                //textPath.append("Take a right at " + curr.getLongName());
-                                floorStrings.get(floorNum).append("Take a right at " + curr.getLongName());
-                                robotInstructions.append('R');
-                                break;
-                            case STRAIGHT:
-                                //textPath.append("Continue straight past " + curr.getLongName());
-                                floorStrings.get(floorNum).append("Continue straight past " + curr.getLongName());
-                                robotInstructions.append('S');
-                                break;
-                            default:
-                                System.err.println("Default case in direction switch");
-                        }
-
-                        robotInstructions.append(',');
-
-                        // 3ft = 8px
-                        double distance = findEuclideanDistance(curr, next) * 3 / 8;
-
-                        //textPath.append(String.format(" distance: %.0fft\n", distance));
-                        floorStrings.get(floorNum).append(String.format(" distance: %.0fft\n", distance));
-
-
-                        double inches = distance / 12.0;
-                        int robotInches = (int) inches;
-                        robotInstructions.append(robotInches);
-                        robotInstructions.append(',');
-
-
-                    }
+                    textPath.append("Go up a floor at " + curr.getLongName() + "\n");
                 }
-            //}
+            } else {
+
+                Vector2D v_prev = new Vector2D(curr.getX(), curr.getY(), prev.getX(), prev.getY());
+                Vector2D v_next = new Vector2D(curr.getX(), curr.getY(), next.getX(), next.getY());
+
+                EnumDirectionType dir = v_prev.getDirection(v_next);
+
+                switch (dir) {
+                    case LEFT:
+                        textPath.append("Take a left at " + curr.getLongName());
+                        robotInstructions.append('L');
+                        break;
+                    case RIGHT:
+                        textPath.append("Take a right at " + curr.getLongName());
+                        robotInstructions.append('R');
+                        break;
+                    case STRAIGHT:
+                        textPath.append("Continue straight past " + curr.getLongName());
+                        robotInstructions.append('S');
+                        break;
+                    default:
+                        System.err.println("Default case in direction switch");
+                }
+
+                robotInstructions.append(',');
+
+                // 3ft = 8px
+                double distance = findEuclideanDistance(curr, next) * 3 / 8;
+
+                textPath.append(String.format(" distance: %.0fft\n", distance));
 
 
+                double inches = distance / 12.0;
+                int robotInches = (int) inches;
+                robotInstructions.append(robotInches);
+                robotInstructions.append(',');
 
 
+            }
         }
 
-        floorStrings.get(floorNum).append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
+        textPath.append("Finally, arrive at " + listOfNodes.getFirst().getLongName() + "\n");
 
         strRobotInstructions = robotInstructions.toString();
         postMe = strRobotInstructions.substring(0, strRobotInstructions.length() - 1); //Get rid of the last extra comma
 //        System.out.println(textPath.toString());
 
-        LinkedList<String> textsByFloor = new LinkedList<>();
-        for(int k=0; k < floorStrings.size(); k++){
-            textsByFloor.add(floorStrings.get(k).toString());
-        }
-//        System.out.println(allSwitches);
-        return new TextInfo(textsByFloor, allSwitches);
+        return textPath.toString();
 
-//return textPath.toString();
+
 
     }
 
@@ -172,7 +127,7 @@ public class PathToText{
             System.out.println(message.getSid());
     }
 
-    public TextInfo getDetailedPath(){
+    public String getDetailedPath(){
         return getDetailedPath(nodes);
     }
 

@@ -1,7 +1,6 @@
 package base;
 
-public enum
-EnumScreenType {
+public enum EnumScreenType {
     NODETABLE("/views/nodeTable.fxml"),
     NODEEDIT("/views/nodeEdit.fxml"),
     EDITMAP("/views/mapeditpage.fxml"),
@@ -39,9 +38,7 @@ EnumScreenType {
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
     WELCOME("/views/screensaver.fxml"),
     ABOUT("/views/aboutPage.fxml"),
-    ADMIN("/views/adminDashboard.fxml"),
-    APIS("/views/apiDashboard.fxml"),
-    CREDITS("/views/creditsPage.fxml");
+    ADMIN("/views/adminDashboard.fxml");
 
     protected String path;
 
