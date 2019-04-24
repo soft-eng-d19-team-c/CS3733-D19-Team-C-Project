@@ -145,7 +145,7 @@ public class PathFindingContext {
         Node temp = goalNode;
         path.add(temp);
 
-        while (!temp.equals(endNode)){
+        while (!temp.equals(endNode) && temp != null){
             temp = pathValues.get(temp).getPreviousNode();
             path.add(temp);
         }
