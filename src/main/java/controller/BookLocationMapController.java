@@ -31,6 +31,7 @@ import model.Booking;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -41,17 +42,20 @@ import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class BookLocationMapController extends Controller implements Initializable {
-    public ImageView backgroundImage;
-    @FXML private JFXTimePicker Duration;
+    @FXML private ImageView backgroundImage;
+    @FXML private JFXTimePicker endTimePicker;
+    @FXML private JFXDatePicker endDatePicker;
+    @FXML private JFXTimePicker startTimePicker;
+    @FXML private JFXDatePicker startDatePicker;
+    private int Duration;
     @FXML private JFXTextArea description;
     @FXML private ComboBox<BookableLocation> locationBox;
     @FXML private Text errorText;
-    @FXML private JFXDatePicker datePicker;
-    @FXML private JFXTimePicker timePicker;
     @FXML private ImageView mapImgView;
     @FXML private Pane circlePane;
 
-    private LinkedList<Booking> bookings;
+    private LinkedList<Booking> bookings = new LinkedList<>();
+    private LinkedList<Booking> bookinge = new LinkedList<>();
     private ObservableList<BookableLocation> bookingLocations;
     @FXML private NavController navController;
     private HashMap<String, Integer> bookingLocationsIndexMap = new HashMap<>();
@@ -67,27 +71,36 @@ public class BookLocationMapController extends Controller implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         backgroundImage.setImage(Main.screenController.getBackgroundImage());
         navController.setActiveTab(NavTypes.BOOKROOM);
-        datePicker.setValue(LocalDate.now());
-        timePicker.setValue(LocalTime.now());
+        startDatePicker.setValue(LocalDate.now());
+        startTimePicker.setValue(LocalTime.now());
+        endTimePicker.setValue(null);
+        endDatePicker.setValue(null);
         mapImgView.fitWidthProperty().bind(circlePane.widthProperty());
         mapImgView.fitHeightProperty().bind(circlePane.heightProperty());
         bookingLocations = BookableLocation.getAllBookingLocations();
         locationBox.setItems(bookingLocations);
         locationBox.setCellFactory(locationBoxFactory);
         locationBox.setButtonCell(locationBoxFactory.call(null));
-        Duration.set24HourView(true);
-        Duration.setValue(LocalTime.parse("00:00:00"));
         Platform.runLater(() -> inputChanged(null));
         errorText.setText("");
     }
 
     @SuppressWarnings("Duplicates")
     public void inputChanged(ActionEvent event) {
-        LocalDate d = datePicker.getValue();
-        LocalTime t = timePicker.getValue();
+        LocalDate sd = startDatePicker.getValue();
+        LocalTime st = startTimePicker.getValue();
+        LocalDate ed = endDatePicker.getValue();
+        LocalTime et = endTimePicker.getValue();
         Calendar cal = Calendar.getInstance();
-        cal.set(d.getYear(), d.getMonthValue() - 1, d.getDayOfMonth(), t.getHour(), t.getMinute());
+        cal.set(sd.getYear(), sd.getMonthValue() - 1, sd.getDayOfMonth(), st.getHour(), st.getMinute());
         Timestamp ts = new Timestamp(cal.getTimeInMillis());
+        Timestamp te;
+        if (ed != null && et != null){
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(ed.getYear(), ed.getMonthValue() - 1, ed.getDayOfMonth(), et.getHour(), et.getMinute());
+            te = new Timestamp(cal2.getTimeInMillis());
+            bookinge = Booking.getBookingsDuring(te);
+        }
         bookings = Booking.getBookingsDuring(ts);
         draw();
         errorText.setText("");
@@ -130,6 +143,18 @@ public class BookLocationMapController extends Controller implements Initializab
             Tooltip.install(c, t);
             circlePane.getChildren().add(c);
         }
+        for (Booking b : bookinge) {
+            int x = b.getBookedLocation().getX();
+            int y = b.getBookedLocation().getY();
+            Circle c = new Circle();
+            c.setCenterX(mapX + x / mapScale);
+            c.setCenterY(mapY + y / mapScale);
+            c.setFill(Color.RED);
+            c.setRadius(10.0);
+            Tooltip t = new Tooltip(b.getBookedLocation().getTitle());
+            Tooltip.install(c, t);
+            circlePane.getChildren().add(c);
+        }
     }
 
     public void bookRoomBtnClick(ActionEvent actionEvent) {
@@ -138,24 +163,29 @@ public class BookLocationMapController extends Controller implements Initializab
             errorText.setText("Error: Please select a classroom to book.");
             return;
         }
+        if (endDatePicker.getValue() == null || endTimePicker.getValue() == null) {
+            errorText.setText("Error: End Time must not be empty");
+            return;
+        }
         //needs to update some sort of schedule saying which rooms are booked for certain times
         String bookingLocation = locationBox.getValue().getID();
 
-        LocalDate date = datePicker.getValue();
-        LocalTime localTime = timePicker.getValue();
-        LocalTime inputDuration = Duration.getValue();
-        LocalTime helper = LocalTime.parse("00:00:00");
-        helper.until(inputDuration, HOURS);
-
-        if (Duration.getValue() == null) {
-            errorText.setText("Error: Duration must not be empty");
+        LocalDate startDate = startDatePicker.getValue();
+        LocalTime startTime = startTimePicker.getValue();
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+        LocalDate endDate = endDatePicker.getValue();
+        LocalTime endTime = endTimePicker.getValue();
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+        startDateTime.until(endDateTime, HOURS);
+        int lengthInMillis = (int)startDateTime.until(endDateTime, HOURS) * 60 * 60 * 1000;
+        Calendar cal = Calendar.getInstance();
+        cal.set(startDate.getYear(), startDate.getMonthValue() - 1, startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute());
+        Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
+        Timestamp tsEnd = Timestamp.valueOf(endDateTime);
+        if (tsEnd.before(tsStart)){
+            errorText.setText("ERROR: The end time must be set to after the start time");
             return;
         }
-        int lengthInMillis = (int)helper.until(inputDuration, HOURS) * 60 * 60 * 1000;
-        Calendar cal = Calendar.getInstance();
-        cal.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), localTime.getHour(), localTime.getMinute());
-        Timestamp tsStart = new Timestamp(cal.getTimeInMillis());
-        Timestamp tsEnd = new Timestamp(cal.getTimeInMillis() + lengthInMillis);
         if (tsStart.before(Calendar.getInstance().getTime())){
             errorText.setText("Error: The time you are trying to book has already past");
             return;

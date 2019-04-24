@@ -20,15 +20,15 @@
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1450.0" AnchorPane.topAnchor="0.0" />
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="white-box" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="150.0">
          <children>
-            <JFXTimePicker fx:id="Duration" layoutX="28.0" layoutY="268.0" onAction="#inputChanged" />
-            <Label layoutX="28.0" layoutY="244.0" text="Duration" />
+            <JFXTimePicker fx:id="endTimePicker" layoutX="28.0" layoutY="268.0" onAction="#inputChanged" promptText="Enter End Time" />
+            <JFXDatePicker fx:id="endDatePicker" layoutX="28.0" layoutY="232.0" onAction="#inputChanged" promptText="Enter End Date" />
+            <JFXTimePicker fx:id="startTimePicker" layoutX="28.0" layoutY="166.0" onAction="#inputChanged" promptText="Enter Start Time" />
+            <JFXDatePicker fx:id="startDatePicker" layoutX="28.0" layoutY="130.0" onAction="#inputChanged" promptText="Enter Start Date" />
          </children></Pane>
       <Label alignment="CENTER" text="Booked Locations" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="135.0">
          <font>
             <Font size="60.0" />
          </font></Label>
-      <JFXDatePicker fx:id="datePicker" layoutX="51.0" layoutY="263.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="263.0" />
-      <JFXTimePicker fx:id="timePicker" layoutX="51.0" layoutY="323.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="323.0" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="750.0">
          <children>
             <JFXButton fx:id="bookRoomBtn" alignment="CENTER" onAction="#bookRoomBtnClick" styleClass="floor-select-button" text="Book">
