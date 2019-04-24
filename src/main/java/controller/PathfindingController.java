@@ -473,7 +473,6 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
         for (int i = 0; i < allLabels.size(); i++){
-            System.out.println("Showing a Label");
             allLabels.get(i).getLabel().setVisible(true); //Show the created Labels
             // Label Size
             allLabels.get(i).getLabel().setFont(Font.font("Arial Black", 30.0));
@@ -483,7 +482,6 @@ public class PathfindingController extends Controller implements Initializable {
             labelAnchor.getChildren().add(allLabels.get(i).getLabel());
             // Bring it to the front
             allLabels.get(i).getLabel().toFront();
-            System.out.println("Moving a Label to the front");
             // Relocate it to the correct position
             allLabels.get(i).getLabel().relocate(allLabels.get(i).getLocation() + 10, 570);
             System.out.println(allLabels.get(i).getLocation());
