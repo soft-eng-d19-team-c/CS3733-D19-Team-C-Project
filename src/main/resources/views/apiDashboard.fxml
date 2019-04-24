@@ -35,12 +35,12 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Label text="Team B" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                <Label GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Label text="Team D" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                <Label text="Team B" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -77,17 +77,6 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                     </GridPane.margin>
                 </JFXButton>
-                <JFXButton fx:id="babySittingButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#babySittingButtonClick" styleClass="floor-select-button" text="Baby Sitting (Broken)" textFill="WHITE" GridPane.columnIndex="2">
-                    <padding>
-                        <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
-                    </padding>
-                    <font>
-                        <Font size="40.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                    </GridPane.margin>
-                </JFXButton>
                 <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#FloralButtonClick" styleClass="floor-select-button" text="Floral Request" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <padding>
                         <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
@@ -99,7 +88,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                     </GridPane.margin>
                 </JFXButton>
-                <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#emergencyButtonClick" styleClass="floor-select-button" text="Emergency" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#emergencyButtonClick" styleClass="floor-select-button" text="Emergency" textFill="WHITE" GridPane.columnIndex="2">
                     <padding>
                         <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
                     </padding>
