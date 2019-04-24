@@ -43,7 +43,6 @@ public enum EnumScreenType {
     ADMIN("/views/adminDashboard.fxml"),
     FEEDBACK("/views/feedback.fxml"),
     FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml"),
-//    ADMIN("/views/adminDashboard.fxml"),
     APIS("/views/apiDashboard.fxml"),
     PATHFINDINGROBOT("/views/ROBOT_findpathscreen.fxml"),
     CREDITS("/views/creditsPage.fxml");

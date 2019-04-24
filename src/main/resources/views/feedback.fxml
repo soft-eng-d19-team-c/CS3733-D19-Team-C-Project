@@ -17,9 +17,9 @@
       <Label style="-fx-alignment: center;" styleClass="h1" text="Give us Feedback!" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
          <children>
-            <FontAwesomeIconView fill="#48a449" glyphName="SMILE_ALT" size="400" />
-            <FontAwesomeIconView glyphName="MEH_ALT" size="400" />
-            <FontAwesomeIconView fill="#d74040" glyphName="FROWN_ALT" size="400" />
+            <FontAwesomeIconView fill="#008000" glyphName="SMILE_ALT" size="400" />
+            <FontAwesomeIconView fill="FFFF00" glyphName="MEH_ALT" size="400" />
+            <FontAwesomeIconView fill="#FF0000" glyphName="FROWN_ALT" size="400" />
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">

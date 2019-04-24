@@ -38,19 +38,19 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
 
         // pie chart stuff
         PieChart pc = new PieChart(Feedback.getPieChartData());
-//        for (PieChart.Data d : pc.getData()) {
-//            switch (d.getName()) {
-//                case "Happy":
-//                    d.getNode().setStyle("-fx-pie-color: green;");
-//                    break;
-//                case "Neutral":
-//                    d.getNode().setStyle("-fx-pie-color: yellow;");
-//                    break;
-//                case "Sad":
-//                    d.getNode().setStyle("-fx-pie-color: red;");
-//                    break;
-//            }
-//        }
+        for (PieChart.Data d : pc.getData()) {
+            switch (d.getName()) {
+                case "Happy":
+                    d.getNode().setStyle("-fx-pie-color: green;");
+                    break;
+                case "Neutral":
+                    d.getNode().setStyle("-fx-pie-color: yellow;");
+                    break;
+                case "Sad":
+                    d.getNode().setStyle("-fx-pie-color: red;");
+                    break;
+            }
+        }
         pc.setLabelsVisible(false);
         pc.setTitle("User Feedback");
         pc.setLayoutX(700);
