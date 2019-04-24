@@ -24,14 +24,14 @@ public class MainFXML extends Application {
     @Override
     public void start(Stage s) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.BOOKLOCATIONSCALENDAR.getPath())));
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(EnumScreenType.WELCOME.getPath())));
             s.setScene(scene);
             Main.screenController = new Facade(s.getScene());
             Main.idleMonitor = new IdleMonitor(Duration.seconds(30),
                 () -> {
                     Main.user.logout();
                     Main.screenController.clearHistory();
-                    Main.screenController.setScreen(EnumScreenType.BOOKLOCATIONSCALENDAR);
+                    Main.screenController.setScreen(EnumScreenType.WELCOME);
             }, true);
             Main.idleMonitor.register(scene, Event.ANY);
             s.getIcons().add(new Image("img/icon.png"));
