@@ -54,6 +54,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private ToggleButton danceBtn;
     @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
+    @FXML private ImageView Gif;
     @FXML private AnchorPane findPathView;
     @FXML private Group zoomGroup;
     @FXML private GesturePane mapImgPane;
@@ -325,6 +326,10 @@ public class PathfindingController extends Controller implements Initializable {
         danceBtn.setDisable(true);
         pathScrollBar.setDisable(true);
 
+        for(int i = 0; i < allButtons.size(); i++){
+            allButtons.get(i).setDisable(true);
+        }
+
         Gif.setLayoutX(((mapX + Main.info.getKioskLocation().getX()) / mapScale) - imgWidth);
         Gif.setLayoutY(((mapY + Main.info.getKioskLocation().getY()) / mapScale) - imgHeight);
         Gif.toFront();
@@ -357,9 +362,9 @@ public class PathfindingController extends Controller implements Initializable {
                 Circle c = nodeCircles.get(l_start.getID());
                 Circle c2 = nodeCircles.get(l_dest.getID());
                 if (c != null)
-                    c.setFill(Color.YELLOW);
+                    c.setFill(Color.LIMEGREEN);
                 if (c2 != null)
-                    c2.setFill(Color.YELLOW);
+                    c2.setFill(Color.LIMEGREEN);
             });
 
             //Positioning calculations
@@ -388,7 +393,7 @@ public class PathfindingController extends Controller implements Initializable {
             if (!l2_dest.getFloor().equals(currentFloor)) {
                 changeFloor(l2_dest.getFloor());
             }
-            nodeCircles.get(l2_dest.getID()).setFill(Color.YELLOW);
+            nodeCircles.get(l2_dest.getID()).setFill(Color.LIMEGREEN);
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
@@ -399,6 +404,9 @@ public class PathfindingController extends Controller implements Initializable {
                 danceBtn.setDisable(false);
                 pathScrollBar.setDisable(false);
                 playBtn.setDisable(false);
+                for(int i = 0; i < allButtons.size(); i++){
+                    allButtons.get(i).setDisable(false);
+                }
             }).start();
         });
 
