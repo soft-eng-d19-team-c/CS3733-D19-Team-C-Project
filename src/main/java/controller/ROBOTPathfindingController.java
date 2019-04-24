@@ -36,6 +36,8 @@ import java.util.ResourceBundle;
 
 public class ROBOTPathfindingController extends Controller implements Initializable {
     @FXML private AnchorPane pathfindingScreen;
+    @FXML private ToggleButton danceBtn;
+    @FXML private ToggleButton handicapBtn;
     @FXML private ImageView findPathImgView;
     @FXML private AnchorPane findPathView;
     @FXML private Group zoomGroup;

@@ -1,39 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.lang.String?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane prefHeight="52.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutocompleteSearchBarController">
+<AnchorPane prefHeight="32.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutocompleteSearchBarController">
    <children>
        <JFXTextField fx:id="nodeID" visible="false" AnchorPane.topAnchor="30.0" />
-      <VBox prefHeight="70.0" prefWidth="394.0">
-         <children>
-            <HBox prefHeight="47.0" prefWidth="394.0">
-               <children>
-                   <JFXTextField fx:id="acTextInput" prefHeight="32.0" prefWidth="276.0" promptText="Search for a location...">
+       <JFXTextField fx:id="acTextInput" prefHeight="32.0" prefWidth="333.0" promptText="Search for a location...">
       </JFXTextField>
-                   <JFXButton fx:id="filterBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#filterBtnClick" prefWidth="100.0" text="Advanced">
-                       <styleClass>
-                           <String fx:value="btn" />
-                           <String fx:value="btn-primary-v2" />
-                           <String fx:value="btn-sm" />
-                   </styleClass>
-                   </JFXButton>
-               </children>
-            </HBox>
-            <HBox fx:id="dropdowns" prefHeight="104.0" prefWidth="394.0">
-               <children>
-                  <ComboBox fx:id="floors" onAction="#floorBoxClick" prefWidth="150.0" promptText="Floor" />
-                  <ComboBox fx:id="types" onAction="#typeBoxClick" prefWidth="150.0" promptText="Type" />
-               </children>
-            </HBox>
-            <ComboBox fx:id="nodesBox" onAction="#nodesBoxClick" prefWidth="300.0" promptText="Nodes" />
-         </children>
-      </VBox>
    </children>
 </AnchorPane>
