@@ -181,25 +181,6 @@ public class PathfindingController extends Controller implements Initializable {
                 imageCache.put("00_thelowerlevel2.png", new Image(String.valueOf(getClass().getResource("/img/00_thelowerlevel2.png"))));
             }
         }).start();
-        /*
-        // Create Root Pane.
-        //not all of the text is being shown
-        VBox root = new VBox();
-        root.setPadding(new Insets(20, 10, 30, 10));
-        root.getChildren().addAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        Scene scene = new Scene(root, 300, 200);*/
-
-        //need to revove through a loop
-        //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-        // Set all the slider labels to invisible
-        /*
-        l1Label.setVisible(false);
-        l2Label.setVisible(false);
-        groundLabel.setVisible(false);
-        flr1Label.setVisible(false);
-        flr2Label.setVisible(false);
-        flr3Label.setVisible(false);
-        */
 
         labelAnchor.setMouseTransparent(true);
     }
@@ -493,8 +474,9 @@ public class PathfindingController extends Controller implements Initializable {
             labelAnchor.getChildren().add(allLabels.get(i).getLabel());
             // Bring it to the front
             allLabels.get(i).getLabel().toFront();
+            System.out.println("Moving a Label to the front");
             // Relocate it to the correct position
-            allLabels.get(i).getLabel().relocate(allLabels.get(i).getLocation() + 10, 525);
+            allLabels.get(i).getLabel().relocate(allLabels.get(i).getLocation() + 10, 570);
             System.out.println(allLabels.get(i).getLocation());
         }
     }
