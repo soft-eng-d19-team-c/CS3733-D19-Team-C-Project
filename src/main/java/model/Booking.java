@@ -213,7 +213,9 @@ public class Booking {
 
     public static ObservableList<Booking> getAllBooking() {
         ObservableList<Booking> result = FXCollections.observableArrayList();
-        String str = "SELECT * FROM BOOKINGS";
+//        String str = "SELECT * FROM BOOKINGS ";
+        String str = "SELECT * FROM BOOKINGS LEFT JOIN BOOKINGLOCATIONS ON BOOKINGS.LOCATION = BOOKINGLOCATIONS.ID WHERE BOOKINGLOCATIONS.TYPE <> 'DESK'";
+//        `SELECT * FROM BOOKINGS LEFT JOIN BOOKINGLOCATIONS ON BOOKINGS.LOCATION = BOOKINGLOCATIONS.ID WHERE BOOKINGLOCATIONS.TYPE <> 'DESK'`
         try {
             Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(str);
