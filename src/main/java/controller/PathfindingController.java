@@ -303,7 +303,8 @@ public class PathfindingController extends Controller implements Initializable {
     public void makePath(){
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
         if (addText != null)
-            addText.getPanes().remove(0, allPanes.size());
+            if (allPanes.size() != 0)
+                addText.getPanes().remove(0, allPanes.size());
 
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
@@ -731,7 +732,7 @@ public class PathfindingController extends Controller implements Initializable {
 
      */
     public void updateFloorImg(String floor) {
-        if (floor.equals("Ground")){
+        if (floor.equals("G")){
             floor = "G";
         }
         String floorURL;
@@ -978,7 +979,7 @@ public class PathfindingController extends Controller implements Initializable {
                     case "1":
                         Floor1.setStyle("-fx-background-color: -primary");
                         break;
-                    case "Ground":
+                    case "G":
                         Ground.setStyle("-fx-background-color: -primary");
                         break;
                     case "L1":
@@ -1003,7 +1004,7 @@ public class PathfindingController extends Controller implements Initializable {
                         case "1":
                             Floor1.setStyle("-fx-background-color: -secondary");
                             break;
-                        case "Ground":
+                        case "G":
                             Ground.setStyle("-fx-background-color: -secondary");
                             break;
                         case "L1":
@@ -1030,7 +1031,7 @@ public class PathfindingController extends Controller implements Initializable {
                 case "1":
                     Floor1.setStyle("-fx-background-color: -success");
                     break;
-                case "Ground":
+                case "G":
                     Ground.setStyle("-fx-background-color: -success");
                     break;
                 case "L1":
