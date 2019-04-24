@@ -388,6 +388,7 @@ public class PathfindingController extends Controller implements Initializable {
             path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
             // change floor stuff here
+
             if (!start.getFloor().equals(dest.getFloor())) {
                 path.setOnFinished(event -> changeFloor(l_dest.getFloor()));
             }
