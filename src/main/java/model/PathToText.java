@@ -22,6 +22,7 @@ public class PathToText{
     }
 
     public TextInfo getDetailedPath(LinkedList<Node> listOfNodes){
+        System.out.println("**********************Doing ptt**********************");
         /*
         StringBuilder textPath = new StringBuilder();
         //get start
@@ -122,10 +123,10 @@ public class PathToText{
                         floorStrings.get(floorNum).append(String.format(" distance: %.0fft\n", distance));
 
 
-                        double inches = distance / 12.0;
-                        int robotInches = (int) inches;
-                        robotInstructions.append(robotInches);
-                        robotInstructions.append(',');
+                double inches = distance * 12.0;
+                int robotInches = (int) inches;
+                robotInstructions.append(robotInches);
+                robotInstructions.append(',');
 
 
                     }

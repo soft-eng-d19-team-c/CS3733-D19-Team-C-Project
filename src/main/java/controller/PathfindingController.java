@@ -1,5 +1,6 @@
 package controller;
 
+import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
@@ -31,12 +32,14 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.*;
 import net.kurobako.gesturefx.GesturePane;
+import model.*;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 
 public class PathfindingController extends Controller implements Initializable {
     public AutocompleteSearchBarController autocompletesearchbarController;
@@ -67,6 +70,7 @@ public class PathfindingController extends Controller implements Initializable {
     @FXML private JFXTextArea pathText;
     @FXML private JFXSlider pathScrollBar;
     @FXML private Pane searchWrapper;
+    @FXML private JFXButton robotButton;
     @FXML private Pane nodePopUpPane;
     @FXML private Label popUpLongName;
     @FXML
@@ -305,7 +309,7 @@ public class PathfindingController extends Controller implements Initializable {
 
     public void makePath(){
         //addText.getPanes().removeAll(floor4, floor3, floor2, floor1, ground, l1, l2);
-
+        System.out.println("%%%%%%%%%%%%%%%Makin a path%%%%%%%%%%%%%%%%%%%");
         String orig_nodeID = searchController_origController.getNodeID();
         String dest_nodeID = searchController_destController.getNodeID();
         if (orig_nodeID == null || dest_nodeID == null)
@@ -972,6 +976,10 @@ public class PathfindingController extends Controller implements Initializable {
             }
         }
     };
+
+    public void robotButtonClick(ActionEvent actionEvent){
+        Main.screenController.setScreen(EnumScreenType.ROBOTSCREEN);
+    }
 
     public void scrolling(ScrollEvent scrollEvent) {
         zoomGroup.setOnMouseClicked(e -> {
