@@ -776,6 +776,7 @@ public class PathfindingController extends Controller implements Initializable {
         if (imageCache.containsKey(floorURL)) {
             findPathImgView.setImage(imageCache.get(floorURL));
         } else {
+            System.out.println(floorURL);
             Image newImage = new Image(String.valueOf(getClass().getResource("/img/" + floorURL)));
             imageCache.put(floorURL, newImage);
             findPathImgView.setImage(newImage);
