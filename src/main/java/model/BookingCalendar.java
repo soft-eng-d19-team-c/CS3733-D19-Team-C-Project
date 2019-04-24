@@ -75,7 +75,7 @@ public class BookingCalendar {
         try {
             String defaultLocation = newAppointment.getLocation();
             if (newAppointment.getLocation() == null){
-                defaultLocation = "Undecided";
+                defaultLocation = "AM1";
             }
             PreparedStatement ps = Database.getConnection().prepareStatement(sqlCmd, new String[]{"ID"} );
             ps.setString(1, defaultLocation);
@@ -111,6 +111,7 @@ public class BookingCalendar {
         else if (location.equals("WZ4")){result = "group12";}
         else if (location.equals("WZ5")){result = "group13";}
         else if (location.equals("AM1")){result = "group14";}
+        else {result = "group0";}
         return result;
     }
     public List<Appointment> getAppointments(LocalDateTime startTime, LocalDateTime endTime){
