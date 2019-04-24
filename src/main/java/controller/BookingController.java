@@ -34,6 +34,7 @@ public class BookingController extends Controller implements Initializable {
     @FXML private Agenda agenda;
     @FXML private CalendarPicker calendar;
     @FXML private TextArea description;
+    @FXML private NavController navController;
     private BookingCalendar.Appointment selectedAppointment;
     private ObservableList<BookableLocation> bookingLocations;
 
@@ -176,6 +177,7 @@ public class BookingController extends Controller implements Initializable {
         locationBox.setButtonCell(locationBoxFactory.call(null));
         agenda.setAllowDragging(true);
         agenda.setAllowResize(true);
+        navController.setActiveTab(NavTypes.ADMINVIEW);
         agenda.setEditAppointmentCallback( (appointment) -> {
             return null;
         });
