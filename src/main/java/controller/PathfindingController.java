@@ -759,7 +759,7 @@ public class PathfindingController extends Controller implements Initializable {
 
      */
     public void updateFloorImg(String floor) {
-        if (floor.equals("Ground")){
+        if (floor.equals("G")){
             floor = "G";
         }
         String floorURL;
@@ -1010,7 +1010,7 @@ public class PathfindingController extends Controller implements Initializable {
                     case "1":
                         Floor1.setStyle("-fx-background-color: -primary");
                         break;
-                    case "Ground":
+                    case "G":
                         Ground.setStyle("-fx-background-color: -primary");
                         break;
                     case "L1":
@@ -1035,7 +1035,7 @@ public class PathfindingController extends Controller implements Initializable {
                         case "1":
                             Floor1.setStyle("-fx-background-color: -secondary");
                             break;
-                        case "Ground":
+                        case "G":
                             Ground.setStyle("-fx-background-color: -secondary");
                             break;
                         case "L1":
@@ -1062,7 +1062,7 @@ public class PathfindingController extends Controller implements Initializable {
                 case "1":
                     Floor1.setStyle("-fx-background-color: -success");
                     break;
-                case "Ground":
+                case "G":
                     Ground.setStyle("-fx-background-color: -success");
                     break;
                 case "L1":

@@ -142,7 +142,7 @@
          </children>
       </VBox>
       <fx:include fx:id="nav" source="menuBarPartial.fxml" />
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="270.0" prefWidth="130.0" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="180.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="270.0" prefWidth="130.0" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="200.0">
          <children>
             <JFXButton fx:id="Floor4" contentDisplay="CENTER" onAction="#floor4BtnClick" styleClass="floor-select-button" text="     4     ">
                <VBox.margin>

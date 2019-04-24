@@ -23,7 +23,6 @@ public class apiDashboardController extends Controller implements Initializable 
     @FXML
     private NavController navController;
     @FXML private ImageView backgroundimage;
-    @FXML private JFXButton babySittingButton;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -34,7 +33,6 @@ public class apiDashboardController extends Controller implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
-        babySittingButton.setDisable(true);
     }
 
     public void prescriptionServicesButtonClick(ActionEvent actionEvent){
@@ -54,17 +52,6 @@ public class apiDashboardController extends Controller implements Initializable 
         }
     }
 
-    public void babySittingButtonClick(ActionEvent actionEvent){
-        try {
-            Connection conn = DBControllerAPI.dbConnect();
-//            DBControllerAPI.addUser(File yourNodeFile,conn);
-            DBControllerAPI.closeConnection(conn);
-
-            new Babysitting().run(0,0,1920,1080,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void FloralButtonClick(ActionEvent actionEvent){
         FloralApi floralApi = new FloralApi();

@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookLocationMapController">
    <children>
       <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1450.0" AnchorPane.topAnchor="0.0" />
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="white-box" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="150.0">
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="white-box" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="150.0">
          <children>
             <JFXTimePicker fx:id="endTimePicker" layoutX="28.0" layoutY="268.0" onAction="#inputChanged" promptText="Enter End Time" />
             <JFXDatePicker fx:id="endDatePicker" layoutX="28.0" layoutY="232.0" onAction="#inputChanged" promptText="Enter End Date" />
@@ -29,7 +29,7 @@
          <font>
             <Font size="60.0" />
          </font></Label>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="750.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="750.0">
          <children>
             <JFXButton fx:id="bookRoomBtn" alignment="CENTER" onAction="#bookRoomBtnClick" styleClass="floor-select-button" text="Book">
                <font>
