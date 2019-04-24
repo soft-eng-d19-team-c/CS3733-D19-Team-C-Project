@@ -23,9 +23,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="editMapButton" onAction="#editMapButtonClick" prefHeight="120.0" prefWidth="500.0" styleClass="floor-select-button" text="Edit Map" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" visible="false">
+            <JFXButton fx:id="editMapButton" onAction="#editMapButtonClick" prefHeight="120.0" prefWidth="500.0" styleClass="floor-select-button" text="Edit Map" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="44.0" />
                </font>
@@ -45,6 +46,11 @@
                   <Font size="50.0" />
                </font>
             </Label>
+            <JFXButton fx:id="viewFeedbackButton" onAction="#viewFeedbackButtonClick" prefHeight="120.0" prefWidth="500.0" styleClass="floor-select-button" text="View Feedback" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </JFXButton>
          </children>
       </GridPane>
    </children>

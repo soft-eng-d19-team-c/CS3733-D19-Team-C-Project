@@ -182,7 +182,7 @@
          </children>
       </VBox>
       <fx:include fx:id="Buttons" source="backandhomebuttonpartial.fxml" />
-      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="150.0">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="150.0">
          <children>
             <Pane prefHeight="100.0" prefWidth="100.0">
                <children>
