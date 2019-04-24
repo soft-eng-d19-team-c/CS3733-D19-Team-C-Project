@@ -145,6 +145,9 @@ public class Booking {
             if(((this.dateTimeStart.getTime() > bStartTime) && (this.dateTimeStart.getTime() < bEndTime)) || ((this.dateTimeEnd.getTime() > bStartTime) && (this.dateTimeEnd.getTime() < bEndTime))) {
                 return true;
             }
+            if(((bStartTime > this.dateTimeStart.getTime()) && (bEndTime < this.dateTimeStart.getTime())) || ((bStartTime > this.dateTimeEnd.getTime()) && (bEndTime < this.dateTimeEnd.getTime()))) {
+                return true;
+            }
         }
         return false;
     }
