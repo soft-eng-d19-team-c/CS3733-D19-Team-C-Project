@@ -42,8 +42,7 @@ public enum EnumScreenType {
     ABOUT("/views/aboutPage.fxml"),
     ADMIN("/views/adminDashboard.fxml"),
     FEEDBACK("/views/feedback.fxml"),
-    FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml");
-    ADMIN("/views/adminDashboard.fxml"),
+    FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml"),
     APIS("/views/apiDashboard.fxml"),
     PATHFINDINGROBOT("/views/ROBOT_findpathscreen.fxml"),
     CREDITS("/views/creditsPage.fxml");

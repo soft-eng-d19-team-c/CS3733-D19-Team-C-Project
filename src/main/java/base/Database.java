@@ -187,6 +187,14 @@ public final class Database {
                 String giftStoreRequestsTableUINDEX = "create unique index GIFTSTOREREQUESTS_ID_uindex on GIFTSTOREREQUESTS (ID)";
                 String giftStoreRequestTablePK = "alter table GIFTSTOREREQUESTS add constraint GIFTSTOREREQUESTS_pk primary key (ID)";
 
+                /*
+                 * Feedback Table oh god why am i making this
+                 */
+
+                String feedbackTable = "create table FEEDBACK(ID int generated always as identity, int level, DATETIMESUBMITTED timestamp)";
+                String feedbackTableUINDEX = "create unique index FEEDBACK_ID_UINDEX on FEEDBACK (ID)";
+                String feedbackTableTablePK = "alter table FEEDBACK add constraint FEEDBACK primary key (ID)";
+
 
 
 
@@ -252,6 +260,11 @@ public final class Database {
                     tableStmt.executeUpdate(createFullerEdgesTable);
                     tableStmt.executeUpdate(FullerEdgesTableUINDEX);
                     tableStmt.executeUpdate(FullerEdgesTablePK);
+
+                    //Feedback
+                    tableStmt.executeUpdate(feedbackTable);
+                    tableStmt.executeUpdate(feedbackTableUINDEX);
+                    tableStmt.executeUpdate(feedbackTableTablePK);
 
                 } catch (SQLException e) {
                     if (e.getSQLState().equals("X0Y32")) {
