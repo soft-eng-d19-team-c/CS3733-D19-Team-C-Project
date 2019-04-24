@@ -26,7 +26,7 @@
          </font></Label>
       <JFXDatePicker fx:id="datePicker" layoutX="51.0" layoutY="263.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="263.0" />
       <JFXTimePicker fx:id="timePicker" layoutX="51.0" layoutY="323.0" onAction="#inputChanged" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="323.0" />
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="750.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="17.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="1470.0" AnchorPane.topAnchor="750.0">
          <children>
             <JFXButton fx:id="bookRoomBtn" alignment="CENTER" onAction="#bookRoomBtnClick" styleClass="floor-select-button" text="Book">
                <font>
@@ -34,6 +34,11 @@
                </font>
             </JFXButton>
             <JFXButton fx:id="goCalendarBtn" onAction="#goCalendarBtnClick" styleClass="floor-select-button-selected" text="Calendar">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="simButton" alignment="CENTER" onAction="#startSimulation" styleClass="floor-select-button" text="Start Simulation">
                <font>
                   <Font size="30.0" />
                </font>

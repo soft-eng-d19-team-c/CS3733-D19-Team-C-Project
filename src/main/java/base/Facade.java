@@ -77,7 +77,7 @@ public final class Facade {
         this.backgroundImage = new Image(String.valueOf(getClass().getResource("/img/background.png")));
         Platform.runLater(() -> {
             System.out.println("Attempting to load first screen into cacheMachine on thread: " + Thread.currentThread().getId() + "...");
-            loadNewScreen(EnumScreenType.PATHFINDING);
+//            loadNewScreen(EnumScreenType.PATHFINDING);
             System.out.println("Successfully loaded first screen into cacheMachine...");
         });
     }
