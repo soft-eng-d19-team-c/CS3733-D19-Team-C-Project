@@ -280,14 +280,17 @@ public class Node {
 
 
 
-    // Floor 3  4
-    // Floor 2  3
-    // Floor 1  2
+    // Floor 4  6
+    // Floor 3  5
+    // Floor 2  4
+    // Floor 1  3
+    // Ground   2
     // Floor L1 1
     // Floor L2 0
     //used when determining the distance between floors
     public int getFloorNumber(){
         switch (this.floor){
+            case "4": return 6;
             case "3": return 5;
             case "2": return 4;
             case "1": return 3;
