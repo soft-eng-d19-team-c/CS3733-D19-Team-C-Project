@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import static java.lang.Math.floor;
 import static java.lang.Math.sqrt;
 
 public class PathToText{
