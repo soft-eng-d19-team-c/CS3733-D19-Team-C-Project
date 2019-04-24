@@ -217,6 +217,14 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </JFXButton>
+                  <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="floor-select-button" text="Robot Pathfinding">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-10.0" />
+                     </VBox.margin>
+                  </JFXButton>
                </children>
                <padding>
                   <Insets left="40.0" />
@@ -254,10 +262,5 @@
             </VBox>
          </children>
       </Pane>
-      <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="floor-select-button" text="Robot Pathfinding" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="80.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </JFXButton>
    </children>
 </AnchorPane>
