@@ -317,6 +317,8 @@ public class PathfindingController extends Controller implements Initializable {
     //nodesOnPathArray
     public void playBtnClick(ActionEvent actionEvent) {
 
+       // mapImgPane.reset();
+
         for (Circle c : nodeCircles.values()) {
             c.setFill(Color.BLACK);
             c.setRadius(10);
@@ -353,7 +355,7 @@ public class PathfindingController extends Controller implements Initializable {
             Line line = new Line();
             path.setNode(Gif);
             path.setPath(line);
-            path.setDuration(Duration.millis(200));
+            path.setDuration(Duration.millis(300));
 
             start = nodesOnPathArray[i];
             dest = nodesOnPathArray[i + 1];
@@ -367,21 +369,21 @@ public class PathfindingController extends Controller implements Initializable {
                 Circle c = nodeCircles.get(l_start.getID());
                 Circle c2 = nodeCircles.get(l_dest.getID());
                 if (c != null)
-                    c.setFill(Color.LIMEGREEN);
+                    c.setFill(Color.RED);
                 if (c2 != null)
-                    c2.setFill(Color.LIMEGREEN);
+                    c2.setFill(Color.RED);
             });
 
             //Positioning calculations
-            double startX = ((start.getX()/mapScale)- imgWidth);
-            double startY = (((start.getY())/mapScale ) - imgHeight);
-            double endX = (((dest.getX())/mapScale) - imgWidth);
-            double endY = (((dest.getY())/mapScale) - imgHeight);
+            double startX = ((mapX +(start.getX())/mapScale)- imgWidth);
+            double startY = ((mapY + (start.getY())/mapScale ) - imgHeight);
+            double endX = ((mapX + (dest.getX())/mapScale) - imgWidth);
+            double endY = ((mapY + (dest.getY())/mapScale) - imgHeight);
 
-            line.setStartX(startX - 523);
-            line.setStartY(startY - 225);
-            line.setEndX(endX - 523);
-            line.setEndY(endY - 225);
+            line.setStartX(startX + 70);
+            line.setStartY(startY - 85);
+            line.setEndX(endX + 70); //75
+            line.setEndY(endY - 85); //115
 
             path.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
@@ -398,7 +400,7 @@ public class PathfindingController extends Controller implements Initializable {
             if (!l2_dest.getFloor().equals(currentFloor)) {
                 changeFloor(l2_dest.getFloor());
             }
-            nodeCircles.get(l2_dest.getID()).setFill(Color.LIMEGREEN);
+            nodeCircles.get(l2_dest.getID()).setFill(Color.RED);
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
