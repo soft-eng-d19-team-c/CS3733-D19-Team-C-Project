@@ -2,6 +2,7 @@ package controller;
 
 import base.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import model.Feedback;
 
@@ -9,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FeedbackController extends Controller implements Initializable {
+    @FXML private NavController navController;
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -16,7 +18,7 @@ public class FeedbackController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // do nothingggg
+        navController.setActiveTab(NavTypes.NONE);
     }
 
 

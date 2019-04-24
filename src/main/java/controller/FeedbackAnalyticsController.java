@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class FeedbackAnalyticsController extends Controller implements Initializable {
     @FXML private AnchorPane anchorP;
+    @FXML private NavController navController;
 
     @Override
     public void init(URL location, ResourceBundle resources) {
@@ -26,7 +27,8 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
     @Override
     @SuppressWarnings("Duplicates")
     public void initialize(URL location, ResourceBundle resources) {
-        anchorP.getChildren().remove(0, anchorP.getChildren().size());
+        navController.setActiveTab(NavTypes.ADMINVIEW);
+        anchorP.getChildren().remove(1, anchorP.getChildren().size());
         // bar chart stuff
         CategoryAxis x = new CategoryAxis();
         x.setTickLabelFill(Color.TRANSPARENT);
@@ -36,6 +38,8 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
         BarChart bc = new BarChart<>(x, y);
         bc.setTitle("Most Frequently Used Paths");
         bc.getData().addAll(PathAnalytics.getPathAnalyticsData());
+        bc.setLayoutX(400);
+        bc.setLayoutY(550);
         anchorP.getChildren().add(bc);
 
         // bar chart stuff
@@ -47,8 +51,9 @@ public class FeedbackAnalyticsController extends Controller implements Initializ
         BarChart bc1 = new BarChart<>(x1, y1);
         bc1.setTitle("Most Searched for Locations");
         bc1.getData().addAll(SearchAnalytics.getPathAnalyticsData());
+        bc1.setLayoutX(900);
+        bc1.setLayoutY(550);
         anchorP.getChildren().add(bc1);
-        bc1.setLayoutX(500);
     }
 
 }
