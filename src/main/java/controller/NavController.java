@@ -3,12 +3,19 @@ package controller;
 import base.EnumScreenType;
 import base.Main;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -30,6 +37,12 @@ public class NavController extends Controller implements Initializable {
 
     private LinkedList<Pane> selectBars;
 
+    // clock
+    private int hour;
+    private int minute;
+    private String minuteAsString;
+    @FXML private Label clock;
+
     @Override
     public void init(URL location, ResourceBundle resources) {
         initialize(location, resources);
@@ -44,6 +57,24 @@ public class NavController extends Controller implements Initializable {
         selectBars.add(bookSelectBar);
         selectBars.add(adminSelectBar);
         selectBars.add(loginSelectBar);
+
+        Platform.runLater(() -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                minute = LocalDateTime.now().getMinute();
+                minuteAsString = minute < 10 ? "0" + minute : "" + minute;
+                hour = LocalDateTime.now().getHour();
+                String suffix = hour < 12 ? " am" : " pm";
+                hour %= 12;
+                hour = hour == 0 ? 12 : hour;
+                this.clock.setText(hour + ":" + (minuteAsString) + suffix);
+            }),
+                new KeyFrame(Duration.seconds(1))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        });
+
+
     }
 
     public void mapButtonClick(ActionEvent actionEvent) {
@@ -122,5 +153,9 @@ public class NavController extends Controller implements Initializable {
         HashMap<String, Object> hm = new HashMap<>();
         hm.put("loggedout", true);
         Main.screenController.setScreen(EnumScreenType.LOGIN, hm, false);
+    }
+
+    public void feedbackBtnClick(ActionEvent actionEvent) {
+        Main.screenController.setScreen(EnumScreenType.FEEDBACK);
     }
 }

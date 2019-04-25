@@ -11,6 +11,8 @@ public enum EnumScreenType {
     SEARCHLOCATION("/views/searchLocation.fxml"),
     BOOKLOCATIONSCALENDAR("/views/bookLocationCalendar.fxml"),
     VIEWBOOKINGS("/views/bookedLocationsTable.fxml"),
+    //Robot viewsROBOT_findpathscreen.fxml
+    ROBOTSCREEN("/views/ROBOT_findpathscreen.fxml"),
     // services
     SERVICESDASHBOARD("/views/servicesDashboard.fxml"),
     SANITATIONSERVICE("/views/sanitationService.fxml"),
@@ -38,7 +40,12 @@ public enum EnumScreenType {
     FLORISTSERVICETABLE("/views/floristServiceRequestTable.fxml"),
     WELCOME("/views/screensaver.fxml"),
     ABOUT("/views/aboutPage.fxml"),
-    ADMIN("/views/adminDashboard.fxml");
+    ADMIN("/views/adminDashboard.fxml"),
+    FEEDBACK("/views/feedback.fxml"),
+    FEEDBACKANAYTICS("/views/feedbackAnalytics.fxml"),
+    APIS("/views/apiDashboard.fxml"),
+    PATHFINDINGROBOT("/views/ROBOT_findpathscreen.fxml"),
+    CREDITS("/views/creditsPage.fxml");
 
     protected String path;
 

@@ -28,7 +28,7 @@ public class SanitationServiceController extends Controller implements Initializ
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         description.setText(null);
-        autoCompleteTextController.setLocation(null);
+        autoCompleteTextController.setLocation((String) null);
         navController.setActiveTab(NavTypes.SERVICEREQUESTS);
         backgroundimage.setImage(Main.screenController.getBackgroundImage());
     }

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
+
+<AnchorPane fx:id="pathfindingScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ROBOTPathfindingController">
+   <children>
+       <GesturePane fx:id="mapImgPane" layoutX="561.0" layoutY="135.0" onScroll="#scrolling" prefHeight="946.0" prefWidth="1360.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="561.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="135.0">
+           <content>
+               <Group id="Group" fx:id="zoomGroup">
+                   <ImageView fx:id="findPathImgView" fitHeight="1015.0" fitWidth="1577.0" layoutX="-14.0" pickOnBounds="true" preserveRatio="true" />
+               </Group>
+           </content>
+       </GesturePane>
+       <!--<Pane fx:id="nodePopUpPane" layoutX="500.0" layoutY="500.0" prefHeight="115.0" prefWidth="438.0" styleClass="white-box">-->
+           <!--<children>-->
+               <!--<VBox layoutX="38.0" prefHeight="122.0" prefWidth="389.0" spacing="20.0">-->
+                   <!--<children>-->
+                       <!--<Label fx:id="popUpLongName" styleClass="field-question-text" />-->
+                       <!--<HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">-->
+                           <!--<children>-->
+                               <!--<JFXButton fx:id="setStartBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Start Here">-->
+                                   <!--<font>-->
+                                       <!--<Font size="20.0" />-->
+                                   <!--</font>-->
+                               <!--</JFXButton>-->
+                               <!--<JFXButton fx:id="goFromNodeBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Go Here">-->
+                                   <!--<font>-->
+                                       <!--<Font size="20.0" />-->
+                                   <!--</font>-->
+                               <!--</JFXButton>-->
+                           <!--</children>-->
+                       <!--</HBox>-->
+                   <!--</children>-->
+               <!--</VBox>-->
+           <!--</children>-->
+       <!--</Pane>-->
+      <Pane layoutX="114.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" styleClass="blue-boxes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="0.0" />
+      <VBox fx:id="findPathBar" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1360.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label styleClass="header-text" text="Find Path">
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </Label>
+            <Pane minHeight="400.0" minWidth="540.0" prefHeight="400.0" prefWidth="540.0" styleClass="white-box">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <children>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="540.0" prefHeight="400.0" prefWidth="540.0" spacing="20.0">
+                     <children>
+                        <Label styleClass="field-question-text" text="Where are you?">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin></Label>
+                        <fx:include fx:id="searchController_orig" source="autocompleteSearchBar.fxml" />
+                        <Label styleClass="field-question-text" text="Where do you want to go?">
+                           <VBox.margin>
+                              <Insets top="-15.0" />
+                           </VBox.margin></Label>
+                        <fx:include fx:id="searchController_dest" source="autocompleteSearchBar.fxml" />
+                        <HBox prefHeight="44.0" prefWidth="214.0" spacing="20.0">
+                           <children>
+                              <JFXButton fx:id="goBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goBtnClick" prefHeight="49.0" prefWidth="164.0" styleClass="btn-primary-v2" text="GO">
+                              <font>
+                                 <Font size="20.0" />
+                              </font>
+                           </JFXButton>
+                              <!--<JFXButton fx:id="clearBtn" alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="156.0" styleClass="btn-primary-v2" text="Clear">-->
+                                 <!--<font>-->
+                                    <!--<Font size="20.0" />-->
+                                 <!--</font>-->
+                              <!--</JFXButton>-->
+                           </children>
+                           <VBox.margin>
+                              <Insets top="-13.0" />
+                           </VBox.margin>
+                          </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="50.0" right="150.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </Pane>
+            <!--<JFXSlider fx:id="pathScrollBar">-->
+               <!--<VBox.margin>-->
+                  <!--<Insets left="20.0" right="20.0" />-->
+               <!--</VBox.margin></JFXSlider>-->
+            <!--<Pane minHeight="400.0" minWidth="540.0" prefHeight="400.0" prefWidth="540.0" styleClass="white-box">-->
+               <!--<VBox.margin>-->
+                  <!--<Insets left="10.0" right="10.0" top="50.0" />-->
+               <!--</VBox.margin>-->
+               <!--<children>-->
+                  <!--<VBox minWidth="540.0" prefHeight="400.0" prefWidth="540.0">-->
+                     <!--<children>-->
+                        <!--<Label styleClass="field-question-text" text="Directions">-->
+                           <!--<VBox.margin>-->
+                              <!--<Insets top="20.0" />-->
+                           <!--</VBox.margin>-->
+                        <!--</Label>-->
+                        <!--<Accordion fx:id="addText" layoutX="100.0" layoutY="900.0" visible="true" AnchorPane.rightAnchor="50.0">-->
+                        <!--</Accordion>-->
+                        <!--&lt;!&ndash;<JFXTextArea fx:id="pathText" editable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="540.0">&ndash;&gt;-->
+                           <!--&lt;!&ndash;<VBox.margin>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<Insets right="50.0" />&ndash;&gt;-->
+                           <!--&lt;!&ndash;</VBox.margin>&ndash;&gt;-->
+                           <!--&lt;!&ndash;<padding>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<Insets right="50.0" />&ndash;&gt;-->
+                           <!--&lt;!&ndash;</padding>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</JFXTextArea>&ndash;&gt;-->
+                     <!--</children>-->
+                     <!--<padding>-->
+                        <!--<Insets left="50.0" right="50.0" />-->
+                     <!--</padding>-->
+                  <!--</VBox>-->
+               <!--</children></Pane>-->
+         </children>
+      </VBox>
+      <fx:include fx:id="nav" source="menuBarPartial.fxml" />
+      <!--<Pane prefHeight="270.0" prefWidth="200.0" styleClass="white-box" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="1370.0" AnchorPane.topAnchor="150.0">-->
+         <!--<children>-->
+            <!--<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="270.0" prefWidth="130.0">-->
+               <!--<children>-->
+                  <!--&lt;!&ndash;<Label styleClass="field-question-text" text="Floor">&ndash;&gt;-->
+                     <!--&lt;!&ndash;<VBox.margin>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<Insets left="10.0" />&ndash;&gt;-->
+                     <!--&lt;!&ndash;</VBox.margin>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</Label>&ndash;&gt;-->
+                  <!--<JFXButton fx:id="Floor4" contentDisplay="CENTER" styleClass="floor-select-button" text="     4     ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="Floor3" contentDisplay="CENTER" styleClass="floor-select-button" text="     3     ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="Floor2" contentDisplay="CENTER" styleClass="floor-select-button" text="     2     ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="Floor1" contentDisplay="CENTER" styleClass="floor-select-button" text="     1     ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="Ground" contentDisplay="CENTER" styleClass="floor-select-button" text="Ground">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="L1" contentDisplay="CENTER" styleClass="floor-select-button" text="    L1    ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+                  <!--<JFXButton fx:id="L2" contentDisplay="CENTER" styleClass="floor-select-button" text="    L2    ">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets left="7.0" top="5.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+               <!--</children>-->
+               <!--<padding>-->
+                  <!--<Insets bottom="10.0" left="30.0" top="10.0" />-->
+               <!--</padding>-->
+            <!--</VBox>-->
+         <!--</children></Pane>-->
+      <!--<Pane prefHeight="207.0" prefWidth="400.0" styleClass="white-box" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="55.0">-->
+         <!--<children>-->
+            <!--<VBox prefHeight="207.0" prefWidth="400.0">-->
+               <!--<children>-->
+                  <!--<Label styleClass="field-question-text" text="Send Directions to your Phone">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets bottom="10.0" top="20.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</Label>-->
+                  <!--<JFXTextArea fx:id="phoneNumberInput" prefHeight="96.0" prefWidth="360.0">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets bottom="30.0" right="40.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXTextArea>-->
+                  <!--<JFXButton fx:id="phoneNumberBtn" alignment="CENTER" prefHeight="25.0" prefWidth="90.0" styleClass="btn-primary-v2" text="Send Text">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets bottom="20.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</JFXButton>-->
+               <!--</children>-->
+               <!--<padding>-->
+                  <!--<Insets left="40.0" />-->
+               <!--</padding>-->
+            <!--</VBox>-->
+         <!--</children>-->
+      <!--</Pane>-->
+      <!--<Pane fx:id="searchWrapper" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="575.0" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="135.0">-->
+         <!--<children>-->
+            <!--<ImageView fitHeight="200.0" fitWidth="520.0">-->
+               <!--<image>-->
+                  <!--<Image url="@../img/drop down menu.png" />-->
+               <!--</image>-->
+            <!--</ImageView>-->
+            <!--<VBox prefHeight="200.0" prefWidth="520.0">-->
+               <!--<children>-->
+                  <!--<Label styleClass="field-question-text" text="Search for a Location">-->
+                     <!--<VBox.margin>-->
+                        <!--<Insets top="10.0" />-->
+                     <!--</VBox.margin>-->
+                  <!--</Label>-->
+                  <!--<JFXButton fx:id="searchBtn" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" styleClass="btn-primary-v2" text="Search">-->
+                     <!--<font>-->
+                        <!--<Font size="20.0" />-->
+                     <!--</font>-->
+                  <!--</JFXButton>-->
+               <!--</children>-->
+               <!--<padding>-->
+                  <!--<Insets left="50.0" top="30.0" />-->
+               <!--</padding>-->
+            <!--</VBox>-->
+         <!--</children>-->
+      <!--</Pane>-->
+      <JFXButton fx:id="robotButton" onAction="#robotButtonClick" styleClass="btn-primary-v2" text="SEND TO ROBOT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

@@ -1,6 +1,7 @@
 package base;
 
 import controller.Controller;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -8,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.Stack;
 
 /**
@@ -17,8 +20,7 @@ import java.util.Stack;
  * @author Ryan LaMarche
  */
 public final class Facade {
-    private HashMap<EnumScreenType, Parent> screens;
-    private HashMap<EnumScreenType, Controller> controllers;
+    private HashMap<EnumScreenType, ScreenCacheMachine> cacheMachine;
     private Scene primaryScene;
     private HashMap<String, Object> data;
     private Stack<EnumScreenType> history;
@@ -26,18 +28,58 @@ public final class Facade {
     private Image backgroundImage; // for caching
 
     /**
+     * This class is used for storing information about screens as they are loaded so we can cache them.
+     * @author Ryan LaMarche
+     */
+    private final class ScreenCacheMachine {
+        private Parent parent;
+        private Controller controller;
+        private URL location;
+        private ResourceBundle resources;
+
+        ScreenCacheMachine(Parent parent, Controller controller, URL location, ResourceBundle resources) {
+            this.parent = parent;
+            this.controller = controller;
+            this.location = location;
+            this.resources = resources;
+        }
+
+        Parent getParent() {
+            return parent;
+        }
+
+        Controller getController() {
+            return controller;
+        }
+
+        URL getLocation() {
+            return location;
+        }
+
+        ResourceBundle getResources() {
+            return resources;
+        }
+    }
+
+
+
+    /**
      * Creates a Facade.
      * @author Ryan LaMarche
      * @param s
      */
     public Facade(Scene s) {
-        this.screens = new HashMap<>();
-        this.controllers= new HashMap<>();
+        this.cacheMachine = new HashMap<>();
         this.data = new HashMap<>();
         this.primaryScene = s;
         this.history = new Stack<>();
         this.prevType = EnumScreenType.PATHFINDING;
         this.backgroundImage = new Image(String.valueOf(getClass().getResource("/img/background.png")));
+        Platform.runLater(() -> {
+            System.out.println("Attempting to load first screen into cacheMachine on thread: " + Thread.currentThread().getId() + "...");
+//            loadNewScreen(EnumScreenType.PATHFINDING);
+            System.out.println("Successfully loaded first screen into cacheMachine...");
+        });
     }
 
     /**
@@ -45,7 +87,7 @@ public final class Facade {
      * @author Fay Whittall
      * @return primary scene
      */
-    protected Scene getPrimaryScene() {
+    Scene getPrimaryScene() {
         return primaryScene;
     }
 
@@ -82,10 +124,10 @@ public final class Facade {
             this.history.push(prevType);
         }
         this.prevType = type;
-        if (this.screens.containsKey(type)) {
-            loadCachedScreen(type);
+        if (this.cacheMachine.containsKey(type)) {
+            this.primaryScene.setRoot(loadCachedScreen(type));
         } else {
-            loadNewScreen(type);
+            this.primaryScene.setRoot(loadNewScreen(type));
         }
     }
 
@@ -94,16 +136,23 @@ public final class Facade {
      * @param type
      * @author Ryan LaMarche
      */
-    private void loadNewScreen(EnumScreenType type) {
+    private Parent loadNewScreen(EnumScreenType type) {
+        FXMLLoader loader;
+        Parent newRoot = null;
+        Controller newController = null;
+        ResourceBundle newResources = null;
+        URL newLocation = getClass().getResource(type.getPath());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
-            Parent newRoot = loader.load();
-            this.screens.put(type, newRoot);
-            this.controllers.put(type, loader.getController());
-            this.primaryScene.setRoot(newRoot);
+            loader = new FXMLLoader(newLocation);
+            newRoot = loader.load();
+            newController = loader.getController();
+            newResources = loader.getResources();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        ScreenCacheMachine newCacheMachine = new ScreenCacheMachine(newRoot, newController, newLocation, newResources);
+        this.cacheMachine.put(type, newCacheMachine);
+        return newRoot;
     }
 
     /**
@@ -111,10 +160,10 @@ public final class Facade {
      * @param type
      * @author Ryan LaMarche
      */
-    private void loadCachedScreen(EnumScreenType type) {
-        this.primaryScene.setRoot(this.screens.get(type));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getPath()));
-        this.controllers.get(type).init(getClass().getResource(type.getPath()), loader.getResources());
+    private Parent loadCachedScreen(EnumScreenType type) {
+        ScreenCacheMachine temp = this.cacheMachine.get(type);
+        temp.getController().init(temp.getLocation(), temp.getResources());
+        return temp.getParent();
     }
 
     /**

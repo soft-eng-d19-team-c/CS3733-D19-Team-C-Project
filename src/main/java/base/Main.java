@@ -21,7 +21,6 @@ public class Main {
         } catch (AuthException e) {
             e.printStackTrace();
         }
-        MainFXML app = new MainFXML();
-        app.main(args);
+        MainFXML.main(args);
     }
 }

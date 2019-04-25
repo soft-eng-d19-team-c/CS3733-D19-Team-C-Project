@@ -24,7 +24,31 @@ public class Node {
     @SuppressWarnings("Duplicates")
     public static LinkedList<Node> getSearchableNodes() {
         LinkedList<Node> nodes = new LinkedList<>();
-        String sqlStmt = "SELECT * FROM NODES where NODETYPE <> 'HALL'";
+        String sqlStmt = "SELECT * FROM NODES where NODETYPE <> 'HALL' AND NODETYPE <> 'BOOKHALL' AND NODETYPE <> 'SIDEWALK'";
+        try {
+            Statement stmt = Database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sqlStmt);
+            while (rs.next()) {
+                String nodeID = rs.getString("NODEID");
+                int x = rs.getInt("XCOORD");
+                int y = rs.getInt("YCOORD");
+                String floor = rs.getString("FLOOR");
+                String building = rs.getString("BUILDING");
+                String nodeType = rs.getString("NODETYPE");
+                String shortName = rs.getString("SHORTNAME");
+                String longName = rs.getString("LONGNAME");
+                nodes.add(new Node(nodeID, x, y, floor, building, nodeType, longName, shortName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nodes;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public static LinkedList<Node> getSearchableRobotNodes() {
+        LinkedList<Node> nodes = new LinkedList<>();
+        String sqlStmt = "SELECT * FROM FULLERNODES";
         try {
             Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sqlStmt);

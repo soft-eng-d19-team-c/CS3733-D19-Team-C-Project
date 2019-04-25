@@ -50,8 +50,15 @@ public class BreadthFirstSearch implements IPathFind {
                     if (!pathValues.containsKey(n)) {
                         pathValues.put(n, new PathValue(n, currentNode));
                     }
-
                     PathValue path = pathValues.get(n);
+                    //prevents any stairs from being searched for
+                    if(isHandicap &&
+                            currentNode.getNodeType().equals("STAI") &&
+                            n.getNodeType().equals("STAI") &&
+                            n != startNode  &&
+                            n != endNode){
+                        path.setVisited(true);
+                    }
                     if (!path.visited()) { //we do not need to add nodes that have already been visited
                         queue.add(path);
                     }
